@@ -3,10 +3,10 @@
     <div class="userBody"> 
       <div class="userMain">
         <el-row class="container">
-          <el-col :span="6">
+          <el-col :span="5">
             <user-left></user-left>
           </el-col>
-          <el-col :span="18">
+          <el-col :span="19">
             <el-row>
               <user-header></user-header>
             </el-row>
@@ -20,10 +20,13 @@
   </div>
 </template>
 <script>
+import {mapState} from 'vuex'
 import UserHeader from "@/components/user/userAdmin/UserHeader";
 import UserLeft from "@/components/user/userAdmin/UserLeft";
 import UserContent from "@/components/user/userAdmin/UserContent";
 export default {
+        computed: {
+        ...mapState(['modelShow'])},
   name: "yrUser",
   data() {
     return {};
@@ -50,9 +53,9 @@ export default {
   height:82%;
 }
 .user .container{height:100%;}
-.el-col-6,.el-col-18{height:100%;box-sizing: border-box;display:flex;flex-direction: column;}
-.el-col-18 .el-row:nth-of-type(1){height:50px;}
-.el-col-18 .el-row:nth-of-type(2){flex:1;}
+.el-col-5,.el-col-19{height:100%;box-sizing: border-box;display:flex;flex-direction: column;}
+.el-col-19 .el-row:nth-of-type(1){height:50px;}
+.el-col-19 .el-row:nth-of-type(2){flex:1;}
 </style>
 
 
