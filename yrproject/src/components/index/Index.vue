@@ -2,6 +2,7 @@
     <div>
        <a @click="loginModel">登录</a>
        <a @click="userModel">用户中心</a>
+       
        <yr-login v-if="loginSHow"></yr-login>
        <yr-user v-if="userShow"></yr-user>
     </div>
