@@ -1,8 +1,27 @@
 <template>
   <div class="userLeft">
-    <ul v-for="(item,index) in this.liMenu" :key="index">
+    <div class="userImg">
+      <img src="" alt="">
+      <span>用户名:CK chen</span>
+      <span>余额:50000.00</span>
+      <span>等级:少尉</span>
+    </div>
+    <div class="userBtn">
+     <el-row>
+       <el-button type="warning">充值</el-button>
+     </el-row>
+     <el-row>
+        <el-button type="warning">提现</el-button>
+     </el-row>
+     <el-row>
+          <el-button type="warning">资金归集</el-button>
+     </el-row>
+    </div>
+   <div class="liMenu">
+       <ul v-for="(item,index) in this.liMenu" :key="index">
       <li @click="goPage(item.id)">{{item.msg}}</li>
     </ul>
+   </div>
   </div>
 </template>
 <script>
@@ -95,9 +114,13 @@ export default {
 </script>
 <style>
 .userLeft {
-  min-height: 800px;
-  border-right: 1px solid #ddd;
+  color:#fff;
+  background:#364150;
+  height:100%;
 }
+.userImg{height:180px;display:flex;flex-direction: column;align-items: center;justify-content: space-around;}
+.userBtn{text-align: center;}
+.el-button{width:70%;margin-bottom:14px;background:#E6CF68;border:none;color:#836426;}
 </style>
 
 
