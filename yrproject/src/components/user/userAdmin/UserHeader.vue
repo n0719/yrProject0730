@@ -1,29 +1,41 @@
 <template>
     <div class="userHeader">
        <div class="headerLeft">
-sss
+         <span>首页</span><span>会员中心</span><span></span><span>{{this.urlName}}</span>
        </div>
        <div class="headerRight">
-           ss
-           <img src="" alt="">
+           <img src="../../../assets/user/guanbi.png"  @click="closeModel" alt="">
        </div>
     </div>
 </template>
 <script>
+import {mapState} from 'vuex'
 export default {
-    name:"userHeader"
+    computed: {
+        ...mapState(['urlName'])},
+    name:"userHeader",
+    methods:{
+        closeModel(){
+                this.$store.commit("modelShow", false);
+               
+        }
+    }
+  
 }
 </script>
 <style>
 .userHeader{
     background:#2B3643;
     height:50px;
-    line-height:50px;
+    align-items: center;
    color:#836426;
    display: flex;
    justify-content: space-between;
+   padding:0 30px;
 }
- 
+.userHeader .headerLeft span{letter-spacing: 0.8px;font-size:14px;font-family: PingFang SC Regular;}
+.userHeader .headerLeft span:last-child{color:#fff;}
+.userHeader .headerRight img{width:18px;height:18px;}
 </style>
 
 

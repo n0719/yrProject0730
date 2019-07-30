@@ -1,7 +1,7 @@
 <template>
   <div class="userLeft">
     <div class="userImg">
-      <img src="" alt="">
+      <img src="../../../assets/user/userImg.png" alt="">
       <span>用户名:CK chen</span>
       <span>余额:50000.00</span>
       <span>等级:少尉</span>
@@ -17,10 +17,16 @@
           <el-button type="warning">资金归集</el-button>
      </el-row>
     </div>
-   <div class="liMenu">
-       <ul v-for="(item,index) in this.liMenu" :key="index">
-      <li @click="goPage(item.id)">{{item.msg}}</li>
-    </ul>
+   <div class="liMenu" >
+     <ul >
+         <li v-for="(item,index) in this.liMenu" :key="index" :class = "active == index+1 ? 'addclass' : '' " >
+               <a @click="goPage(item.id)">{{item.msg}}</a>
+         </li>
+     </ul>
+       
+   
+     
+  
    </div>
   </div>
 </template>
@@ -29,6 +35,8 @@ export default {
   name: "userLeft",
   data() {
     return {
+      urlName:"",
+      active : -1,
       liMenu: [
         {
           id: 1,
@@ -75,36 +83,49 @@ export default {
   },
   methods: {
     goPage(id) {
+      this.active = id
       switch (id) {
         case id =1:
           this.$router.push({ path: "/myPay" });
+          this.$store.commit("changeUname", "我的账户");
           break;
         case id=2:
           this.$router.push({ path: "/bankCard" });
+          this.$store.commit("changeUname", "银行卡管理");
+          
           break;
          case id=3:
           this.$router.push({ path: "/myDiscount" });
+          this.$store.commit("changeUname", "我的优惠");
           break;
            case id=4:
           this.$router.push({ path: "/edTransform" });
+          this.$store.commit("changeUname", "额度转换");
           break;
            case id=5:
           this.$router.push({ path: "/moneyDealings" });
+          this.$store.commit("changeUname", "资金往来");
           break;
            case id=6:
           this.$router.push({ path: "/teamOverview" });
+          this.$store.commit("changeUname", "团队总览");
           break;
            case id=7:
           this.$router.push({ path: "/subordAdmin" });
+          this.$store.commit("changeUname", "下级管理");
           break;
            case id=8:
           this.$router.push({ path: "/gameRecords" });
+
+          this.$store.commit("changeUname", "游戏记录");
           break;
            case id=9:
           this.$router.push({ path: "/webNotice" });
+          this.$store.commit("changeUname", "网站公告");
           break;
            case id=10:
           this.$router.push({ path: "/returnHome" });
+           this.$store.commit("changeUname", "返回首页");
           break; 
         default:
       }
@@ -118,9 +139,20 @@ export default {
   background:#364150;
   height:100%;
 }
-.userImg{height:180px;display:flex;flex-direction: column;align-items: center;justify-content: space-around;}
+.userImg{height:180px;display:flex;flex-direction: column;align-items: center;justify-content: space-around;padding:42px 0;}
+.userImg img{border-radius:50%;}
+.userImg span{color:#E6CF68;letter-spacing: 1.8px;}
 .userBtn{text-align: center;}
-.el-button{width:70%;margin-bottom:14px;background:#E6CF68;border:none;color:#836426;}
+.userBtn .el-button{width:70%;margin-bottom:14px;background:#E6CF68;border:none;color:#836426;}
+.liMenu{text-align:left;}
+.liMenu li{margin-bottom:2px;transition:all 0.3s linear;}
+
+.liMenu a{background:none;border:none;width:100%;text-align:left;padding-left:25%;color:#fff;display:block;height:42px;line-height:40px;box-sizing: border-box;cursor: pointer;}
+.liMenu  .addclass{
+   background:rgba(230,207,104,0.3);
+}
+.liMenu li:hover{background:rgba(230,207,104,0.4);}
+
 </style>
 
 
