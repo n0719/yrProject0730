@@ -1,7 +1,7 @@
 <template>
   <div class="user">
     <div class="userBody"> 
-      <div class="userMain">
+      <div class="userMain" :class="winWidth>1920?'aaa':'bbb'">
         <el-row class="container">
           <el-col :span="5">
             <user-left></user-left>
@@ -29,7 +29,14 @@ export default {
         ...mapState(['modelShow'])},
   name: "yrUser",
   data() {
-    return {};
+    return {
+        winWidth:document.documentElement.clientWidth,
+        aaa:"1465px",
+        bbb:"75%"
+    };
+  },
+  mounted(){
+  console.log(this.winWidth)
   },
   components: {
     UserHeader,
@@ -39,6 +46,7 @@ export default {
 };
 </script>
 <style>
+
 .user {
   position: fixed;
   width: 100%;
@@ -52,6 +60,8 @@ export default {
   width:75%;
   height:82%;
 }
+.aaa{width:1465px;}
+.bbb{width:75%;}
 .user .container{height:100%;}
 .el-col-5,.el-col-19{height:100%;box-sizing: border-box;display:flex;flex-direction: column;}
 .el-col-19 .el-row:nth-of-type(1){height:50px;}

@@ -2,9 +2,11 @@
     <div>
        <a @click="loginModel">登录</a>
        <a @click="userModel">用户中心</a>
-       
-       <yr-login v-if="loginSHow"></yr-login>
-       <yr-user v-if="userShow"></yr-user>
+   
+      <transition><yr-login v-if="loginSHow"></yr-login></transition> 
+      <transition name="fade">
+            <yr-user v-if="userShow"></yr-user>
+      </transition>
     </div>
 </template>
 <script>
@@ -13,7 +15,8 @@ import Login from '@/components/user/login/Login'
 import User from '@/components/user/User'
 export default {
     computed: {
-        ...mapState(['modelShow'])},
+        ...mapState(['umodelShow','lmodelShow'])
+        },
     name:"login",
     data(){
         return {
@@ -21,19 +24,27 @@ export default {
             userShow:""
         }
     },
-    mounted(){
-        this.loginSHow=this.modelSHow;
-        this.userShow=this.modelSHow;
-    },
+   
     methods:{
          loginModel(){
              this.loginSHow=true;
              this.userSHow=false;
          },
          userModel(){
-             this.loginSHow=false;
-             this.userShow=true;
-         }
+            //  this.loginSHow=this.lmodelShow;
+            //  this.userShow=!this.userShow;
+           this.$store.commit("umodelShow",true)
+           this.userShow=!this.userShow
+          
+         },
+    },
+   
+    watch:{
+        umodelShow(newName,oldName){
+          if(oldName==true){
+              this.userShow=false;
+          }
+        }
     },
     components:{
         yrLogin:Login,
@@ -44,6 +55,12 @@ export default {
 <style>
  
 
+.fade-enter, .fade-leave-to {
+  opacity: 0
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
 </style>
 
 
