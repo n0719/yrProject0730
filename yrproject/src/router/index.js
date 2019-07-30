@@ -4,9 +4,7 @@ import Router from 'vue-router'
  import Index from '@/components/index/Index'
  import User from '@/components/user/User'
 //  import Login from '@/components/user/login/Login'
-
 Vue.use(Router)
-
 export default new Router({
   routes: [
     {
