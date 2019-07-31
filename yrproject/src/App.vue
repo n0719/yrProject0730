@@ -9,7 +9,12 @@
 import Index from '@/components/index/Index'
 export default {
   name: 'App',
-  components:{yrIndex:Index}
+  components:{yrIndex:Index},
+  data(){
+    return {
+     
+    }
+  }
 }
 </script>
 

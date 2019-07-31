@@ -6,6 +6,7 @@
        <div class="headerRight">
            <img src="../../../assets/user/guanbi.png"  @click="closeModel" alt="">
        </div>
+     
     </div>
 </template>
 <script>
@@ -16,9 +17,13 @@ export default {
     name:"userHeader",
     methods:{
         closeModel(){
-                this.$store.commit("modelShow", false);
-               
+               this.$store.commit("umodelShow",false);
+            
         }
+    },
+   
+    mounted(){
+       
     }
   
 }
