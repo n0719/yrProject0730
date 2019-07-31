@@ -1,9 +1,11 @@
 <template>
   <!-- 我的账户 -->
-  <div class="myPay">
-    <div class="myPayTop">
+  <div class="contentMain">
+    <div class="contentMainTop">
       <el-row class="container">
-        <el-row class="payNav"><span></span>我的账户</el-row>
+        <el-row class="payNav">
+          <span></span>我的账户
+        </el-row>
         <el-row>
           <el-col :span="6">
             <span>余额(元)</span>
@@ -24,9 +26,94 @@
         </el-row>
       </el-row>
     </div>
-      <div class="myPayContent">
+    <div class="contentMainContent">
       <el-row class="container">
-        <el-row class="payNav"><span></span>我的账户</el-row>
+        <el-row class="payNav">
+          <span></span>查询
+        </el-row>
+        <el-row class="contentMainTable">
+          <span>时间：</span>
+          <el-date-picker
+            v-model="dataStarrt"
+            type="date"
+            placeholder="选择日期"
+            value-format="yyyy-MM-dd"
+          ></el-date-picker>
+          <span>至：</span>
+          <el-date-picker
+            v-model="dataEnd"
+            type="date"
+            placeholder="选择日期"
+            value-format="yyyy-MM-dd"
+          ></el-date-picker>
+          <el-button type="primary" class="btnColor">查询</el-button>
+          <el-tabs v-model="activeName" @tab-click="handleClick">
+            <el-tab-pane label="昨天" name="first">
+              <el-table :data="tableData" stripe style="width: 100%" class="recoredTable">
+                <el-table-column prop="type" label="游戏种类" width></el-table-column>
+                <el-table-column prop="num" label="投注笔数" width></el-table-column>
+                <el-table-column prop="effectiveNum" label="有效投注"></el-table-column>
+                <el-table-column prop="return" label="返回佣金"></el-table-column>
+                <el-table-column prop="defeat" label="实际亏盈"></el-table-column>
+                <el-table-column prop="bonus" label="优惠奖金"></el-table-column>
+              </el-table>
+            </el-tab-pane>
+            <el-tab-pane label="今天" name="second">
+              <el-table :data="tableData" stripe style="width: 100%" class="recoredTable">
+                <el-table-column prop="type" label="游戏种类" width></el-table-column>
+                <el-table-column prop="num" label="投注笔数" width></el-table-column>
+                <el-table-column prop="effectiveNum" label="有效投注"></el-table-column>
+                <el-table-column prop="return" label="返回佣金"></el-table-column>
+                <el-table-column prop="defeat" label="实际亏盈"></el-table-column>
+                <el-table-column prop="bonus" label="优惠奖金"></el-table-column>
+              </el-table>
+            </el-tab-pane>
+            <el-tab-pane label="上周" name="third">
+              <el-table :data="tableData" stripe style="width: 100%" class="recoredTable">
+                <el-table-column prop="type" label="游戏种类" width></el-table-column>
+                <el-table-column prop="num" label="投注笔数" width></el-table-column>
+                <el-table-column prop="effectiveNum" label="有效投注"></el-table-column>
+                <el-table-column prop="return" label="返回佣金"></el-table-column>
+                <el-table-column prop="defeat" label="实际亏盈"></el-table-column>
+                <el-table-column prop="bonus" label="优惠奖金"></el-table-column>
+              </el-table>
+            </el-tab-pane>
+            <el-tab-pane label="上月" name="fourth">
+              <el-table :data="tableData" stripe style="width: 100%" class="recoredTable">
+                <el-table-column prop="type" label="游戏种类" width></el-table-column>
+                <el-table-column prop="num" label="投注笔数" width></el-table-column>
+                <el-table-column prop="effectiveNum" label="有效投注"></el-table-column>
+                <el-table-column prop="return" label="返回佣金"></el-table-column>
+                <el-table-column prop="defeat" label="实际亏盈"></el-table-column>
+                <el-table-column prop="bonus" label="优惠奖金"></el-table-column>
+              </el-table>
+            </el-tab-pane>
+            <el-tab-pane label="本月" name="five">
+              <el-table :data="tableData" stripe style="width: 100%" class="recoredTable">
+                <el-table-column prop="type" label="游戏种类" width></el-table-column>
+                <el-table-column prop="num" label="投注笔数" width></el-table-column>
+                <el-table-column prop="effectiveNum" label="有效投注"></el-table-column>
+                <el-table-column prop="return" label="返回佣金"></el-table-column>
+                <el-table-column prop="defeat" label="实际亏盈"></el-table-column>
+                <el-table-column prop="bonus" label="优惠奖金"></el-table-column>
+              </el-table>
+            </el-tab-pane>
+          </el-tabs>
+        </el-row>
+        <el-row class="contentMainBottom">
+           <div>
+              <p>
+                  <el-button type="primary" round>复制链接</el-button>
+                  <el-button type="primary" round>注册下级会员</el-button>
+              </p>
+              <p>
+                  推广链接：http://cqbet.vip/r?i=mkcidl
+              </p>
+           </div>
+           <div>
+               <img src="../../../../assets/user/ewm.png" alt="">
+           </div>
+        </el-row>
       </el-row>
     </div>
   </div>
@@ -34,54 +121,125 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      dataStarrt: "",
+      dataEnd: "",
+      tableData: [
+        {
+          type: "彩票游戏",
+          num: "1",
+          effectiveNum: "0",
+          return: "0",
+          defeat: "0",
+          bonus: "0"
+        },
+        {
+          type: "真人视讯",
+          num: "0",
+          effectiveNum: "0",
+          return: "0",
+          defeat: "0",
+          bonus: "0"
+        },
+        {
+          type: "老虎机",
+          num: "0",
+          effectiveNum: "0",
+          return: "0",
+          defeat: "0",
+          bonus: "0"
+        },
+        {
+          type: "棋牌",
+          num: "0",
+          effectiveNum: "0",
+          return: "0",
+          defeat: "0",
+          bonus: "0"
+        },
+        {
+          type: "体育",
+          num: "0",
+          effectiveNum: "0",
+          return: "0",
+          defeat: "0",
+          bonus: "0"
+        }
+      ],
+      activeName: "first"
+    };
+  },
+  methods: {
+    handleClick(tab, event) {
+      console.log(tab, event);
+    }
   }
 };
 </script>
 <style>
-.myPay {
+@import "../../../../assets/search.css";
+.el-date-editor.el-input,
+.el-date-editor.el-input__inner {
+  width: 140px;
+}
+.contentMain {
   padding: 20px;
-  display:flex;
+  display: flex;
   flex-direction: column;
-  height:100%;
+  height: 100%;
   box-sizing: border-box;
 }
-.myPayTop{margin-bottom:20px;height:186px; background: #fff;}
-.payNav{display:flex;padding-left:35px;align-items: center;color:#836426; padding:18px 0 0 35px;}
-.payNav span{height:14px;border-right:4px solid #836426;margin-right:5px;}
-.myPayTop .container {
+.contentMainTop {
+  margin-bottom: 20px;
+  height: 186px;
+  background: #fff;
+}
+.payNav {
+  display: flex;
+  padding-left: 35px;
+  align-items: center;
+  color: #836426;
+  padding: 18px 0 0 35px;
+}
+.payNav span {
+  height: 14px;
+  border-right: 4px solid #836426;
+  margin-right: 5px;
+}
+.contentMainTop .container {
   height: 168px;
   display: flex;
   flex-direction: column;
 }
-.myPayTop .container .el-row:nth-of-type(1) {
+.contentMainTop .container .el-row:nth-of-type(1) {
   /* padding:18px 0 0 35px; */
- 
 }
-.myPayTop .container .el-row:nth-of-type(2) {
+.contentMainTop .container .el-row:nth-of-type(2) {
   flex: 1;
-  display:flex;align-items: center;
+  display: flex;
+  align-items: center;
 }
-.myPayTop .el-col-6 {
+.contentMainTop .el-col-6 {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 60%;
-  border-right:1px solid #707070;
+  border-right: 1px solid #707070;
   flex-direction: column;
 }
-.myPayTop .el-col-6:nth-of-type(4){border:none;}
-.myPayTop .el-col-6 span {
+.contentMainTop .el-col-6:nth-of-type(4) {
+  border: none;
+}
+.contentMainTop .el-col-6 span {
   text-align: center;
   letter-spacing: 1px;
   margin: 1px 0;
 }
-.myPayTop .el-col-6 span:nth-of-type(2) {
+.contentMainTop .el-col-6 span:nth-of-type(2) {
   font-size: 34px;
   color: #836426;
 }
 
-.myPayContent{background:#fff;flex:1;}
 </style>
 
 

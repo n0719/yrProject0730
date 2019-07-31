@@ -157,7 +157,7 @@ export default {
   background:#364150;
   height:100%;
 }
-.userImg{height:180px;display:flex;flex-direction: column;align-items: center;justify-content: space-around;padding:42px 0;}
+.userImg{height:180px;display:flex;flex-direction: column;align-items: center;justify-content: space-around;padding:42px 0 20px 0;}
 .userImg img{border-radius:50%;}
 .userImg span{color:#E6CF68;letter-spacing: 1.8px;}
 .userBtn{text-align: center;}
