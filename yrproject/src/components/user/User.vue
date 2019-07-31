@@ -6,12 +6,14 @@
           <el-col :span="5">
             <user-left></user-left>
           </el-col>
-          <el-col :span="19">
-            <el-row>
+          <el-col :span="19" class="row19">
+            <el-row class="rowTop">
               <user-header></user-header>
             </el-row>
-            <el-row>
-              <user-content></user-content>
+            <el-row class="rowBottom">
+                 <user-content>
+                   <router-view></router-view>
+                 </user-content>
             </el-row>
           </el-col>
         </el-row>
@@ -63,9 +65,9 @@ export default {
 .aaa{width:1465px;}
 .bbb{width:75%;}
 .user .container{height:100%;}
-.el-col-5,.el-col-19{height:100%;box-sizing: border-box;display:flex;flex-direction: column;}
-.el-col-19 .el-row:nth-of-type(1){height:50px;}
-.el-col-19 .el-row:nth-of-type(2){flex:1;}
+.userMain .el-col-5,.el-col-19{height:100%;box-sizing: border-box;display:flex;flex-direction: column;}
+.userMain .rowTop{height:50px;}
+.userMain .rowBottom{flex:1;}
 </style>
 
 

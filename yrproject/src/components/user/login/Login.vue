@@ -1,11 +1,10 @@
 <template>
   <div class="login common-color">
     <div class="bounced">
-      <!-- 登录 -->
       <div v-show="maskShow==0">
         <div class="bounced-header flex-box-between">
           <div>登录</div>
-          <img src="../../../assets/user/guanbi.png" alt />
+          <img src="../../../assets/user/guanbi.png" @click="closeModel" alt />
         </div>
         <div class="bounced-body">
           <img src="../../../assets/user/loginIcon.png" alt class="login-icon" />
@@ -28,11 +27,9 @@
         </div>
       </div>
       <!-- 注册 -->
-      <div  v-show="maskShow==1">
+      <div v-show="maskShow==1">
         <div class="bounced-header flex-box-between">
-          <div>
-            注册
-          </div>
+          <div>注册</div>
           <img src="../../../assets/user/guanbi.png" alt />
         </div>
         <div class="bounced-body">
@@ -43,18 +40,36 @@
           </div>
           <div class="flex-box common-color mg-b-10">
             <label>密码：</label>
-            <el-input class="input-row flex-con"  placeholder="请输入密码" v-model="regPwd" type="password"></el-input>
+            <el-input
+              class="input-row flex-con"
+              placeholder="请输入密码"
+              v-model="regPwd"
+              type="password"
+            ></el-input>
           </div>
           <div class="flex-box common-color mg-b-10">
             <label>确认密码：</label>
-            <el-input class="input-row flex-con" placeholder="请重复输入密码" v-model="regRepeatPwd" type="password"></el-input>
+            <el-input
+              class="input-row flex-con"
+              placeholder="请重复输入密码"
+              v-model="regRepeatPwd"
+              type="password"
+            ></el-input>
           </div>
           <div class="flex-box common-color mg-b-10">
             <label>邀请人：</label>
-            <el-input class="input-row flex-con" placeholder="请输入邀请人" v-model="inviteUser" type="text"></el-input>
+            <el-input
+              class="input-row flex-con"
+              placeholder="请输入邀请人"
+              v-model="inviteUser"
+              type="text"
+            ></el-input>
           </div>
           <div class="text-left">
-            <el-checkbox v-model="checkedDeal">我已阅读<span class="colorRed">《用户协议》</span></el-checkbox>
+            <el-checkbox v-model="checkedDeal">
+              我已阅读
+              <span class="colorRed">《用户协议》</span>
+            </el-checkbox>
           </div>
           <el-button class="btn" @click="maskShow=2">提交</el-button>
           <div class="flex-box-between fs12">
@@ -64,38 +79,43 @@
       </div>
       <!-- 注册成功 -->
       <div v-show="maskShow==2">
-          <div class="bounced-header text-right">
+        <div class="bounced-header text-right">
           <img src="../../../assets/user/guanbi.png" alt />
         </div>
         <div class="bounced-body">
-          <img src="../../../assets/user/userSuccess.png" alt="" class="mg-b-30 mg-t-50">
-          <div class="mg-b-10"> 申请成功！</div>
-          <div class="color-black">5s后<span class="colorRed comeBack hoverCursor" @click="maskShow=0">返回登录页</span></div>
+          <img src="../../../assets/user/userSuccess.png" alt class="mg-b-30 mg-t-50" />
+          <div class="mg-b-10">申请成功！</div>
+          <div class="color-black">
+            5s后
+            <span class="colorRed comeBack hoverCursor" @click="maskShow=0">返回登录页</span>
           </div>
+        </div>
       </div>
       <!-- 忘记密码1 -->
       <div v-show="maskShow==3">
-         <div class="bounced-header flex-box-between">
-          <div>
-            找回密码
-          </div>
+        <div class="bounced-header flex-box-between">
+          <div>找回密码</div>
           <img src="../../../assets/user/guanbi.png" alt />
         </div>
         <div class="bounced-body">
           <img src="../../../assets/user/loginIcon.png" alt class="login-icon" />
           <div class="flex-box common-color mg-b-10">
             <label>手机号码：</label>
-            <div  class="input-row flex-box flex-con">
-               <el-input placeholder="请输入手机号码" v-model="forgetPhone"></el-input>
-               <el-button @click="getCode" class="codeBtn" :class="isVerify?'btn_default':'btn'">{{isVerify?'重新验证':'手机验证'}}</el-button>
+            <div class="input-row flex-box flex-con">
+              <el-input placeholder="请输入手机号码" v-model="forgetPhone"></el-input>
+              <el-button
+                @click="getCode"
+                class="codeBtn"
+                :class="isVerify?'btn_default':'btn'"
+              >{{isVerify?'重新验证':'手机验证'}}</el-button>
             </div>
           </div>
           <div class="flex-box common-color mg-b-10">
             <label>验证码：</label>
-             <div  class="input-row flex-box flex-con">
-               <el-input placeholder="请输入验证码" v-model="forgetCode" type="number"></el-input>
-               <img src="../../../assets/user/codeSuccess.png" alt="">
-            </div>  
+            <div class="input-row flex-box flex-con">
+              <el-input placeholder="请输入验证码" v-model="forgetCode" type="number"></el-input>
+              <img src="../../../assets/user/codeSuccess.png" alt />
+            </div>
           </div>
           <div class="prompt fs12">验证码错误，请重新输入</div>
           <el-button @click="maskShow=4" class="btn">提交</el-button>
@@ -104,23 +124,31 @@
           </div>
         </div>
       </div>
-       <!-- 忘记密码2 设置密码-->
+      <!-- 忘记密码2 设置密码-->
       <div v-show="maskShow==4">
-         <div class="bounced-header flex-box-between">
-          <div>
-            找回密码
-          </div>
+        <div class="bounced-header flex-box-between">
+          <div>找回密码</div>
           <img src="../../../assets/user/guanbi.png" alt />
         </div>
         <div class="bounced-body">
           <img src="../../../assets/user/loginIcon.png" alt class="login-icon" />
           <div class="flex-box common-color mg-b-10">
             <label>新密码：</label>
-            <el-input class="input-row flex-con"  placeholder="请输入新密码" v-model="regPwd" type="password"></el-input>
+            <el-input
+              class="input-row flex-con"
+              placeholder="请输入新密码"
+              v-model="regPwd"
+              type="password"
+            ></el-input>
           </div>
           <div class="flex-box common-color mg-b-10">
             <label>确认密码：</label>
-            <el-input class="input-row flex-con" placeholder="再次输入新密码" v-model="regRepeatPwd" type="password"></el-input>
+            <el-input
+              class="input-row flex-con"
+              placeholder="再次输入新密码"
+              v-model="regRepeatPwd"
+              type="password"
+            ></el-input>
           </div>
           <div class="prompt fs12">两次密码输入不相同请重新输入</div>
           <el-button @click="maskShow=5" class="btn">提交</el-button>
@@ -128,14 +156,14 @@
       </div>
       <!-- 忘记密码3 设置成功-->
       <div v-show="maskShow==5">
-          <div class="bounced-header text-right">
-            <img src="../../../assets/user/guanbi.png" alt />
-          </div>
+        <div class="bounced-header text-right">
+          <img src="../../../assets/user/guanbi.png" alt />
+        </div>
         <div class="bounced-body">
-          <img src="../../../assets/user/userSuccess.png" alt="" class="mg-b-30 mg-t-50">
+          <img src="../../../assets/user/userSuccess.png" alt class="mg-b-30 mg-t-50" />
           <div class="mg-b-10">设置成功</div>
           <div class="colorRed comeBack hoverCursor" @click="maskShow=0">去登录</div>
-          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -144,25 +172,29 @@
 export default {
   data() {
     return {
-      maskShow:0,//0登录 1注册 2注册成功 3忘记密码 4设置密码 5设置成功
+      maskShow: 0, //0登录 1注册 2注册成功 3忘记密码 4设置密码 5设置成功
       loginCount: "",
       loginPwd: "",
-      regCount:"",
-      regPwd:"",
-      regRepeatPwd:"",
-      inviteUser:"",
-      forgetPhone:'',
-      forgetCode:'',
-      regPwd:'',
-      regRepeatPwd:'',
-      checkedDeal:false,
-      isVerify:false,
-      pwdError:true
+      regCount: "",
+      regPwd: "",
+      regRepeatPwd: "",
+      inviteUser: "",
+      forgetPhone: "",
+      forgetCode: "",
+      regPwd: "",
+      regRepeatPwd: "",
+      checkedDeal: false,
+      isVerify: false,
+      pwdError: true
     };
   },
-  methods:{
-    getCode(){
+  methods: {
+    getCode() {
       this.isVerify = true;
+    },
+    closeModel() {
+      this.$store.commit("lmodelShow", false);
+      console.log(1);
     }
   }
 };
@@ -213,7 +245,7 @@ export default {
   /* margin-bottom: 10px; */
 }
 .input-row label {
-  margin-left:15px;
+  margin-left: 15px;
 }
 .el-input {
   width: auto;
@@ -244,7 +276,7 @@ export default {
   color: #ff0000;
   text-align: left;
 }
-.btn{
+.btn {
   background: #e6cf68;
   width: 100%;
   color: #333;
@@ -257,7 +289,7 @@ export default {
   border-color: #e6cf68;
   background-color: #e6cf68;
 }
-.btn_default{
+.btn_default {
   background: #eee;
   color: #836426;
   border-color: #eee;
@@ -271,25 +303,26 @@ export default {
 .forget {
   color: rgba(131, 100, 38, 0.5);
 }
-.flex-box label{
+.flex-box label {
   width: 70px;
-      text-align: justify;
-    text-align-last: justify;
-    text-justify: distribute-all-lines;
+  text-align: justify;
+  text-align-last: justify;
+  text-justify: distribute-all-lines;
 }
-.hoverCursor:hover{
+.hoverCursor:hover {
   cursor: pointer;
 }
-.colorRed{
-  color: #FF0000;
+.colorRed {
+  color: #ff0000;
 }
-.el-checkbox,.el-checkbox__input.is-checked+.el-checkbox__label{
-  color:#999999;
+.el-checkbox,
+.el-checkbox__input.is-checked + .el-checkbox__label {
+  color: #999999;
 }
-.comeBack{
+.comeBack {
   text-decoration: underline;
 }
-.codeBtn{
+.codeBtn {
   width: auto;
   margin: 5px 0;
 }
