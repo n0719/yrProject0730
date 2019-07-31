@@ -43,3 +43,6 @@ input,textarea,select  {outline: none;}
 .fs12{
     font-size: 12px;
 }
+.text-left{
+    text-align: left;
+}
