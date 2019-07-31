@@ -1,7 +1,8 @@
 <template>
   <div class="login common-color">
     <div class="bounced">
-      <div v-show="maskShow==0">
+      <!-- 登录 -->
+      <div v-show="maskShow==0" class="loginBox">
         <div class="bounced-header flex-box-between">
           <div>登录</div>
           <img src="../../../assets/user/guanbi.png" @click="closeModel" alt />
@@ -19,10 +20,10 @@
             <el-input placeholder="请输入密码" v-model="loginPwd" type="password"></el-input>
           </div>
           <div v-show="!pwdError" class="prompt fs12">密码错误</div>
-          <el-button class="btn">登录</el-button>
+          <el-button class="btn" @click="login">登录</el-button>
           <div class="flex-box-between fs12">
-            <div @click="maskShow=1" class="hoverCursor">立即注册</div>
-            <div @click="maskShow=3" class="forget hoverCursor">忘记密码</div>
+            <div @click="maskStatus(1)" class="hoverCursor">立即注册</div>
+            <div @click="maskStatus(3)" class="forget hoverCursor">忘记密码</div>
           </div>
         </div>
       </div>
@@ -30,7 +31,7 @@
       <div v-show="maskShow==1">
         <div class="bounced-header flex-box-between">
           <div>注册</div>
-          <img src="../../../assets/user/guanbi.png" alt />
+          <img src="../../../assets/user/guanbi.png" @click="closeModel" alt />
         </div>
         <div class="bounced-body">
           <img src="../../../assets/user/loginIcon.png" alt class="login-icon" />
@@ -71,23 +72,23 @@
               <span class="colorRed">《用户协议》</span>
             </el-checkbox>
           </div>
-          <el-button class="btn" @click="maskShow=2">提交</el-button>
+          <el-button class="btn" @click="register">提交</el-button>
           <div class="flex-box-between fs12">
-            <div @click="maskShow=0" class="hoverCursor">返回登录</div>
+            <div @click="maskStatus(0)" class="hoverCursor">返回登录</div>
           </div>
         </div>
       </div>
       <!-- 注册成功 -->
       <div v-show="maskShow==2">
         <div class="bounced-header text-right">
-          <img src="../../../assets/user/guanbi.png" alt />
+          <img src="../../../assets/user/guanbi.png" @click="closeModel" alt />
         </div>
         <div class="bounced-body">
           <img src="../../../assets/user/userSuccess.png" alt class="mg-b-30 mg-t-50" />
           <div class="mg-b-10">申请成功！</div>
           <div class="color-black">
-            5s后
-            <span class="colorRed comeBack hoverCursor" @click="maskShow=0">返回登录页</span>
+            {{countDown}}s后
+            <span class="colorRed comeBack hoverCursor" @click="goLogin()">返回登录页</span>
           </div>
         </div>
       </div>
@@ -95,7 +96,7 @@
       <div v-show="maskShow==3">
         <div class="bounced-header flex-box-between">
           <div>找回密码</div>
-          <img src="../../../assets/user/guanbi.png" alt />
+          <img src="../../../assets/user/guanbi.png" @click="closeModel" alt />
         </div>
         <div class="bounced-body">
           <img src="../../../assets/user/loginIcon.png" alt class="login-icon" />
@@ -114,13 +115,13 @@
             <label>验证码：</label>
             <div class="input-row flex-box flex-con">
               <el-input placeholder="请输入验证码" v-model="forgetCode" type="number"></el-input>
-              <img src="../../../assets/user/codeSuccess.png" alt />
+              <img src="../../../assets/user/codeSuccess.png" alt v-show="codeStatus==2" />
             </div>
           </div>
-          <div class="prompt fs12">验证码错误，请重新输入</div>
-          <el-button @click="maskShow=4" class="btn">提交</el-button>
+          <div v-show="codeStatus==1" class="prompt fs12">验证码错误，请重新输入</div>
+          <el-button @click="forgetPwd" class="btn" :disabled="isDisabled">提交</el-button>
           <div class="flex-box-between fs12">
-            <div @click="maskShow=0" class="hoverCursor">返回登录</div>
+            <div @click="maskStatus(0)" class="hoverCursor">返回登录</div>
           </div>
         </div>
       </div>
@@ -128,7 +129,7 @@
       <div v-show="maskShow==4">
         <div class="bounced-header flex-box-between">
           <div>找回密码</div>
-          <img src="../../../assets/user/guanbi.png" alt />
+          <img src="../../../assets/user/guanbi.png" @click="closeModel" alt />
         </div>
         <div class="bounced-body">
           <img src="../../../assets/user/loginIcon.png" alt class="login-icon" />
@@ -137,7 +138,7 @@
             <el-input
               class="input-row flex-con"
               placeholder="请输入新密码"
-              v-model="regPwd"
+              v-model="newPwd"
               type="password"
             ></el-input>
           </div>
@@ -146,23 +147,23 @@
             <el-input
               class="input-row flex-con"
               placeholder="再次输入新密码"
-              v-model="regRepeatPwd"
+              v-model="newRepeatPwd"
               type="password"
             ></el-input>
           </div>
-          <div class="prompt fs12">两次密码输入不相同请重新输入</div>
-          <el-button @click="maskShow=5" class="btn">提交</el-button>
+          <div v-show="!setStatus" class="prompt fs12">两次密码输入不相同请重新输入</div>
+          <el-button @click="setPwd" class="btn">提交</el-button>
         </div>
       </div>
       <!-- 忘记密码3 设置成功-->
       <div v-show="maskShow==5">
         <div class="bounced-header text-right">
-          <img src="../../../assets/user/guanbi.png" alt />
+          <img src="../../../assets/user/guanbi.png" @click="closeModel" alt />
         </div>
         <div class="bounced-body">
           <img src="../../../assets/user/userSuccess.png" alt class="mg-b-30 mg-t-50" />
           <div class="mg-b-10">设置成功</div>
-          <div class="colorRed comeBack hoverCursor" @click="maskShow=0">去登录</div>
+          <div class="colorRed comeBack hoverCursor" @click="maskStatus(0)">去登录</div>
         </div>
       </div>
     </div>
@@ -181,20 +182,114 @@ export default {
       inviteUser: "",
       forgetPhone: "",
       forgetCode: "",
-      regPwd: "",
-      regRepeatPwd: "",
+      newPwd: "",
+      newRepeatPwd: "",
       checkedDeal: false,
       isVerify: false,
-      pwdError: true
+      pwdError: true,
+      codeStatus: 0,
+      setStatus: true,
+      countDown: "",
+      isDisabled:true,
+      phoneReg:/^((\d{3,4})|\d{3,4}-)?\d{7,8}(-\d+)*$/i,
     };
+  },
+  watch: {
+    maskShow(val) {
+      if (val == 2) {
+        this.goLogin(true);
+      }
+    }
   },
   methods: {
     getCode() {
       this.isVerify = true;
     },
+    maskStatus(code) {
+      this.maskShow = code;
+      this.loginCount = "";
+      this.loginPwd = "";
+      this.regCount = "";
+      this.regPwd = "";
+      this.regRepeatPwd = "";
+      this.checkedDeal = false;
+      this.forgetPhone = "";
+      this.forgetCode = "";
+      this.codeStatus = 0;
+      this.newPwd = "";
+      this.newRepeatPwd = "";
+    },
     closeModel() {
       this.$store.commit("lmodelShow", false);
       console.log(1);
+    },
+    goLogin(isGo) {
+      const TIME_COUNT = 5;
+      if (isGo) {
+        this.countDown = TIME_COUNT;
+        this.timer = setInterval(() => {
+          if (this.countDown > 0 && this.countDown <= TIME_COUNT) {
+            this.countDown--;
+          } else {
+            clearInterval(this.timer);
+            this.maskStatus(0);
+          }
+        }, 1000);
+      } else {
+        clearInterval(this.timer);
+        this.maskStatus(0);
+      }
+    },
+    login() {
+      if (this.loginCount == "") {
+        this.$message.error("请输入账户");
+      }else if(!this.phoneReg.test(this.loginCount)){
+        this.$message.error("账户输入有误");
+      } else if (this.loginPwd == "") {
+        this.$message.error("请输入密码");
+        this.pwdError = false;
+      } else {
+        this.closeModel();
+      }
+    },
+    register() {
+      if (this.regCount == "") {
+        this.$message.error("请输入账号");
+      } else if (this.regPwd == "") {
+        this.$message.error("请输入密码");
+      } else if (this.regRepeatPwd == "") {
+        this.$message.error("请输入确认密码");
+      } else if (this.regPwd !== this.regRepeatPwd) {
+        this.$message.error("两次输入密码不一致");
+        this.setStatus = false;
+      } else if (!this.checkedDeal) {
+        this.$message.error("请勾选同意用户协议");
+      } else {
+        this.maskStatus(2);
+      }
+    },
+    forgetPwd() {
+      if (this.forgetPhone == "") {
+        this.$message.error("请输入手机号");
+      }else if(!this.phoneReg.test(this.forgetPhone)){
+        this.$message.error("手机号输入有误");
+      } else if (this.forgetCode == "") {
+        this.$message.error("请输入验证码");
+        this.codeStatus = 1;
+      } else {
+        this.maskStatus(4);
+      }
+    },
+    setPwd() {
+      if (this.newPwd == "") {
+        this.$message.error("请输入密码");
+      } else if (this.newRepeatPwd == "") {
+        this.$message.error("请输入确认密码");
+      } else if (this.newPwd !== this.newRepeatPwd) {
+        this.$message.error("两次输入密码不一致");
+      } else {
+        this.maskStatus(5);
+      }
     }
   }
 };
@@ -300,6 +395,11 @@ export default {
   border-color: #eee;
   background-color: #eee;
 }
+.btn.is-disabled, .btn.is-disabled:focus, .btn.is-disabled:hover{
+  background: #eee;
+  color: #836426;
+  border-color: #eee;
+}
 .forget {
   color: rgba(131, 100, 38, 0.5);
 }
@@ -308,6 +408,9 @@ export default {
   text-align: justify;
   text-align-last: justify;
   text-justify: distribute-all-lines;
+}
+.loginBox label {
+  width: 50px;
 }
 .hoverCursor:hover {
   cursor: pointer;
