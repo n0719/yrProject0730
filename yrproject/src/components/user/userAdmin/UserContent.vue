@@ -1,15 +1,15 @@
 <template>
-    <div class="userContent1">
+    <div class="userContent">
       <router-view></router-view>
     </div>
 </template>
 <script>
 export default {
-    name:"userContent",
+     name:"userContent",
 }
 </script>
 <style>
- .userContent1{background:#E9F1F9;height:100%;box-sizing: border-box;}
+  .userContent{background:#E9F1F9;height:100%;box-sizing: border-box;} 
 </style>
 
 

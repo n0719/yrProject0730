@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 // 
- import Index from '@/components/index/Index'
+Vue.use(Router)
+
  import UserContent from '@/components/user/userAdmin/UserContent'
-//  import Login from '@/components/user/login/Login'
-// 
+ import UserLeft from '@/components/user/userAdmin/UserLeft'
+//
 import MyPay from '@/components/user/userAdmin/userMenu/MyPay'
 import BankCard from '@/components/user/userAdmin/userMenu/BankCard'
 import EdTransform from '@/components/user/userAdmin/userMenu/EdTransform'
@@ -15,15 +16,13 @@ import SubordAdmin from '@/components/user/userAdmin/userMenu/SubordAdmin'
 import TeamOverview from '@/components/user/userAdmin/userMenu/TeamOverview'
 import WebNotice from '@/components/user/userAdmin/userMenu/WebNotice'
 import Mydiscount from '@/components/user/userAdmin/userMenu/Mydiscount'
-Vue.use(Router)
+
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'index',
-      component: Index
+      path:"/",
+      redirect:"/myPay"
     },
-  
     {
       path: '/userContent',
       name: 'userContent',
@@ -32,7 +31,7 @@ export default new Router({
         {
           path:"/myPay",
           name:"myPay",
-          component:MyPay
+          component:MyPay,
         },
         {
           path:"/bankCard",
@@ -80,8 +79,13 @@ export default new Router({
           component:Mydiscount
         },
       ],
-      redirect:"/myPay"
+ 
+    },
+    {
+      path:"/userLeft",
+      name:"userLeft",
+      component:UserLeft
     }
   ],
-  redirect:"/"
+
 })

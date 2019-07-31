@@ -27,14 +27,17 @@ export default {
    
     methods:{
          loginModel(){
-             this.loginSHow=true;
-             this.userSHow=false;
+          
+          this.$store.commit("lmodelShow",true)
+  this.userShow=false;
+           this.loginSHow=!this.loginShow;;
          },
          userModel(){
             //  this.loginSHow=this.lmodelShow;
             //  this.userShow=!this.userShow;
            this.$store.commit("umodelShow",true)
-           this.userShow=!this.userShow
+           this.userShow=!this.userShow;
+           this.loginSHow=false;
           
          },
     },
@@ -43,6 +46,11 @@ export default {
         umodelShow(newName,oldName){
           if(oldName==true){
               this.userShow=false;
+          }
+        },
+        lmodelShow(newName,oldName){
+          if(oldName==true){
+              this.loginSHow=false;
           }
         }
     },

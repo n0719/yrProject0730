@@ -3,7 +3,7 @@
     <div class="bounced">
       <div class="bounced-header">
         <div>登录</div>
-        <img src="../../../assets/user/guanbi.png" alt />
+        <img src="../../../assets/user/guanbi.png" @click="closeModel" alt />
       </div>
       <div class="bounced-body">
           <img src="../../../assets/user/loginIcon.png" alt="" class="login-icon">
@@ -34,6 +34,12 @@ export default {
             userCount: '',
             userPwd:''
         }
+    }
+    ,methods:{
+      closeModel(){
+           this.$store.commit("lmodelShow",false);
+           console.log(1)
+      }
     }
 };
 </script>
