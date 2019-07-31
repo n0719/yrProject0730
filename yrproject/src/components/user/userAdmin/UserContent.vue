@@ -1,5 +1,5 @@
 <template>
-    <div class="userContent">
+    <div class="userContent1">
       <router-view></router-view>
     </div>
 </template>
@@ -9,7 +9,7 @@ export default {
 }
 </script>
 <style>
- .userContent{background:#E9F1F9;height:100%;}
+ .userContent1{background:#E9F1F9;height:100%;box-sizing: border-box;}
 </style>
 
 

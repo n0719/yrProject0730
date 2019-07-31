@@ -18,10 +18,12 @@
      </el-row>
     </div>
    <div class="liMenu" >
-     <ul >
-         <li v-for="(item,index) in this.liMenu" :key="index" :class = "active == index+1 ? 'addclass' : '' " >
-               <a @click="goPage(item.id)">{{item.msg}}</a>
+     <ul>
+         <li  v-for="(item,index) in liMenu" :key="index" :class = "active == index+1 ? 'addclass' : ''" >
+               <a  @click="goPage(item.id)" :style="imgList[index]">{{item.msg}}</a>
+                <!-- <a  @click="goPage(item.id)" :style="bg">{{item.msg}}</a> -->
          </li>
+         <li style="background:url(../../../assets/user/iconName0.png)"></li>
      </ul>
        
    
@@ -37,6 +39,21 @@ export default {
     return {
       urlName:"",
       active : -1,
+ 　  imgList:[
+   {backgroundImage:"url("+require('../../../assets/user/iconName0.png')+")"},
+   {backgroundImage:"url("+require('../../../assets/user/iconName1.png')+")"},
+   {backgroundImage:"url("+require('../../../assets/user/iconName2.png')+")"},
+   {backgroundImage:"url("+require('../../../assets/user/iconName3.png')+")"},
+   {backgroundImage:"url("+require('../../../assets/user/iconName4.png')+")"},
+   {backgroundImage:"url("+require('../../../assets/user/iconName5.png')+")"},
+   {backgroundImage:"url("+require('../../../assets/user/iconName6.png')+")"},
+   {backgroundImage:"url("+require('../../../assets/user/iconName7.png')+")"},
+   {backgroundImage:"url("+require('../../../assets/user/iconName8.png')+")"},
+   {backgroundImage:"url("+require('../../../assets/user/iconName9.png')+")"}
+ ],
+      iconName:[
+        'user','eleme'
+      ],
       liMenu: [
         {
           id: 1,
@@ -81,6 +98,7 @@ export default {
       ]
     };
   },
+
   methods: {
     goPage(id) {
       this.active = id
@@ -145,9 +163,9 @@ export default {
 .userBtn{text-align: center;}
 .userBtn .el-button{width:70%;margin-bottom:14px;background:#E6CF68;border:none;color:#836426;}
 .liMenu{text-align:left;}
-.liMenu li{margin-bottom:2px;transition:all 0.3s linear;}
+.liMenu li{margin-bottom:2px;transition:all 0.3s linear;display:flex;align-items: center;padding-left:25%;cursor: pointer;}
 
-.liMenu a{background:none;border:none;width:100%;text-align:left;padding-left:25%;color:#fff;display:block;height:42px;line-height:40px;box-sizing: border-box;cursor: pointer;}
+.liMenu a{border:none;width:100%;text-align:left;color:#fff;display:block;height:42px;line-height:40px;box-sizing: border-box;background-repeat:no-repeat;padding-left:30px;background-position:0 7px;}
 .liMenu  .addclass{
    background:rgba(230,207,104,0.3);
 }
