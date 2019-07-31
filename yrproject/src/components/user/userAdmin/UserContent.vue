@@ -1,15 +1,19 @@
 <template>
-    <div class="userContent1">
-      <router-view></router-view>
-    </div>
+  <div class="userContent1">
+    <router-view></router-view>
+  </div>
 </template>
 <script>
 export default {
-    name:"userContent",
-}
+  name: "userContent"
+};
 </script>
 <style>
- .userContent1{background:#E9F1F9;height:100%;box-sizing: border-box;}
+.userContent1 {
+  background: #e9f1f9;
+  height: 100%;
+  box-sizing: border-box;
+}
 </style>
 
 

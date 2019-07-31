@@ -40,9 +40,32 @@ input,textarea,select  {outline: none;}
 .common-color{
     color: #836426;
 }
+.color-black{
+    color: #333;
+}
 .fs12{
     font-size: 12px;
 }
 .text-left{
     text-align: left;
+}
+.text-right{
+    text-align: right;
+}
+.mg-b-30{
+    margin-bottom: 30px;
+}
+.mg-b-15{
+    margin-bottom: 15px;
+}
+.mg-b-10{
+    margin-bottom: 10px;
+}
+.mg-t-50{
+    margin-top: 50px;
+}
+/* 清楚inputnumber下默认样式 */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
 }
