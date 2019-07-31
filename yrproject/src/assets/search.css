@@ -63,10 +63,16 @@
     border: 1px solid #836426;
     margin-left: 21px;
     cursor: pointer;
+    color: #836426;
+  }
+  /* tab hover样式 */
+  .el-tabs__item:hover{
+    color: #836426;
   }
   .el-tabs__content {
     margin-top: 14px;
   }
+  /* 表格底部边框 */
   .el-tabs__nav-wrap::after,.el-table__body-wrapper::after {
     background: none;
     border:none;
@@ -77,3 +83,16 @@
   .contentMainBottom p{text-align: right;}
   .contentMainBottom p:last-child{letter-spacing: 2px;}
   .contentMainBottom>div:first-child{margin-right:10px;display: flex;flex-direction: column;justify-content: space-around;margin-bottom:10px;}
+  .el-table::before{
+    height: 0;
+  }
+  /* 分页样式 */
+  .el-pagination.is-background .el-pager li:not(.disabled):hover,.el-pagination.is-background .btn-next, .el-pagination.is-background .btn-prev, .el-pagination.is-background .el-pager li,.el-pagination.is-background .btn-prev:disabled{
+    color: #836426;
+    background-color: #fff;
+    border:1px solid #707070;
+  }
+  .el-pagination.is-background .el-pager li:not(.disabled).active{
+    color: #836426;
+    background: #E6CF68;
+  }

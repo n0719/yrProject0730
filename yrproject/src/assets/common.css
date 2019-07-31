@@ -52,8 +52,14 @@ input,textarea,select  {outline: none;}
 .text-right{
     text-align: right;
 }
+.text-center{
+    text-align: center;
+}
 .mg-b-30{
     margin-bottom: 30px;
+}
+.mg-b-20{
+    margin-bottom: 20px;
 }
 .mg-b-15{
     margin-bottom: 15px;
@@ -63,6 +69,12 @@ input,textarea,select  {outline: none;}
 }
 .mg-t-50{
     margin-top: 50px;
+}
+.mg-t-30{
+    margin-top: 30px;
+}
+.mg-r-20{
+    margin-right: 20px;
 }
 /* 清楚inputnumber下默认样式 */
 input::-webkit-outer-spin-button,
