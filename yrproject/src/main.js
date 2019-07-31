@@ -6,6 +6,7 @@ import router from './router'
 import store from './store/index'
 import "babel-polyfill"
 import ElementUI from 'element-ui'
+
 import "element-ui/lib/theme-chalk/index.css"
 
 Vue.use(ElementUI)
