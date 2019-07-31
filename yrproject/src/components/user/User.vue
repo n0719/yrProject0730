@@ -1,7 +1,7 @@
 <template>
   <div class="user">
     <div class="userBody"> 
-      <div class="userMain" :class="[winWidth>1920?'aaa':'bbb',winWidth<1600?'ccc':'bbb']">
+      <div class="userMain" :class="[winWidth>1920?'aaa':'bbb',winWidth<1600?'ccc':'aaa']">
         <el-row class="container">
           <el-col :span="5">
             <user-left></user-left>
