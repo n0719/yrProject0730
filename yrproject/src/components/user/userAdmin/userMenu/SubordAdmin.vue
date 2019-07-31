@@ -2,11 +2,11 @@
   <!-- 团队总览 -->
   <div class="contentMain">
     <div class="contentMainContent">
-      <el-table-column class="container">
+      <el-row class="container">
         <el-row class="payNav">
           <span></span>下级管理
         </el-row>
-        <el-table-column class="contentMainTable">
+        <el-row class="contentMainTable">
           <span class="common-color">下级管理：</span>
           <el-input v-model="playerAccount" placeholder="输入玩家账号" class="mg-r-20"></el-input>
           <el-button type="primary" class="btnColor" @click="search">查询</el-button>
@@ -24,12 +24,11 @@
             <el-table-column prop="level" label="下级总数"></el-table-column>
             <el-table-column prop="time" label="创建时间"></el-table-column>
           </el-table>
-        </el-table-column>
-          <el-row class="ewmShare">
-        <ewm-share></ewm-share>
+        </el-row>
+        <el-row class="ewmShare">
+          <ewm-share></ewm-share>
+        </el-row>
       </el-row>
-      </el-table-column>
-    
     </div>
   </div>
 </template>
@@ -87,11 +86,11 @@ export default {
   methods: {
     search() {
       this.tableData = [];
-    },
-  },
-     components: {
-      EwmShare: EwmShare
     }
+  },
+  components: {
+    EwmShare: EwmShare
+  }
 };
 </script>
 <style>
