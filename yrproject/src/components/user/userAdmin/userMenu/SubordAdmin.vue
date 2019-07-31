@@ -25,10 +25,11 @@
             <el-table-column prop="time" label="创建时间"></el-table-column>
           </el-table>
         </el-table-column>
-      </el-table-column>
-      <el-row class="ewmShare">
+          <el-row class="ewmShare">
         <ewm-share></ewm-share>
       </el-row>
+      </el-table-column>
+    
     </div>
   </div>
 </template>
@@ -87,10 +88,10 @@ export default {
     search() {
       this.tableData = [];
     },
-    components: {
+  },
+     components: {
       EwmShare: EwmShare
     }
-  }
 };
 </script>
 <style>

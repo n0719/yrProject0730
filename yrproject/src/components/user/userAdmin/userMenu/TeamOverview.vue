@@ -86,14 +86,16 @@
             </el-tab-pane>
           </el-tabs>
         </el-row>
-      </el-row>
-    </div>
-    <el-row class="ewmShare">
+           <el-row class="ewmShare">
                 <ewm-share></ewm-share>
             </el-row>
+      </el-row>
+    </div>
+
   </div>
 </template>
 <script>
+import EwmShare from "@/components/user/userAdmin/userMenu/EwmShare";
 export default {
   data() {
     return {
@@ -161,6 +163,9 @@ export default {
     handleClick(tab, event) {
       console.log(tab, event);
     }
+  },
+  components:{
+    EwmShare:EwmShare
   }
 };
 </script>

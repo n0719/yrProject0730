@@ -82,11 +82,12 @@
                 :total="50">
                 </el-pagination>
         </el-row>
-      </el-row>
-    </div>
-    <el-row class="ewmShare">
+          <el-row class="ewmShare">
                 <ewm-share></ewm-share>
             </el-row>
+      </el-row>
+    </div>
+  
   </div>
 
 </template>
@@ -185,11 +186,12 @@ export default {
   methods: {
     handleClick(tab, event) {
       console.log(tab, event);
-    },
-      components:{
+    }
+   
+  },
+     components:{
         EwmShare:EwmShare
     }
-  }
 };
 </script>
 <style>
