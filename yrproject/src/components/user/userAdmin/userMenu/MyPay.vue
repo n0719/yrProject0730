@@ -100,25 +100,15 @@
             </el-tab-pane>
           </el-tabs>
         </el-row>
-        <el-row class="contentMainBottom">
-           <div>
-              <p>
-                  <el-button type="primary" round>复制链接</el-button>
-                  <el-button type="primary" round>注册下级会员</el-button>
-              </p>
-              <p>
-                  推广链接：http://cqbet.vip/r?i=mkcidl
-              </p>
-           </div>
-           <div>
-               <img src="../../../../assets/user/ewm.png" alt="">
-           </div>
-        </el-row>
+         <el-row class="ewmShare">
+             <ewm-share></ewm-share>
+         </el-row>
       </el-row>
     </div>
   </div>
 </template>
 <script>
+import EwmShare from "@/components/user/userAdmin/userMenu/EwmShare";
 export default {
   data() {
     return {
@@ -168,6 +158,9 @@ export default {
       ],
       activeName: "first"
     };
+  },
+  components:{
+      EwmShare:EwmShare
   },
   methods: {
     handleClick(tab, event) {
@@ -239,7 +232,8 @@ export default {
   font-size: 34px;
   color: #836426;
 }
-
+.ewmShare{height:100%;}
+.ewmShare>div{height:100%;display:flex;justify-content: flex-end;align-items: flex-end;}
 </style>
 
 

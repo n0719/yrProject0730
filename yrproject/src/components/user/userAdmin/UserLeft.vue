@@ -1,29 +1,30 @@
 <template>
   <div class="userLeft">
     <div class="userImg">
-      <img src="../../../assets/user/userImg.png" alt="">
+      <img src="../../../assets/user/userImg.png" @click="selfUser" alt="">
       <span>用户名:CK chen</span>
       <span>余额:50000.00</span>
       <span>等级:少尉</span>
     </div>
     <div class="userBtn">
      <el-row>
-       <el-button type="warning">充值</el-button>
+       <el-button type="warning" @click="recharge">
+        充值
+       </el-button>
      </el-row>
      <el-row>
-        <el-button type="warning">提现</el-button>
+        <el-button type="warning" @click="cashwithdrawal">提现</el-button>
      </el-row>
      <el-row>
-          <el-button type="warning">资金归集</el-button>
+          <el-button type="warning" @click="cashsweep">资金归集</el-button>
      </el-row>
     </div>
-   <div class="liMenu" >
+   <div class="liMenu">
      <ul>
          <li  v-for="(item,index) in liMenu" :key="index" :class = "active == index+1 ? 'addclass' : ''" >
                <a  @click="goPage(item.id)" :style="imgList[index]">{{item.msg}}</a>
                 <!-- <a  @click="goPage(item.id)" :style="bg">{{item.msg}}</a> -->
          </li>
-         <li style="background:url(../../../assets/user/iconName0.png)"></li>
      </ul>
        
    
@@ -94,7 +95,8 @@ export default {
          {
           id: 10,
           msg: "返回首页"
-        }
+        },
+      
       ]
     };
   },
@@ -145,8 +147,29 @@ export default {
           this.$router.push({ path: "/returnHome" });
            this.$store.commit("changeUname", "返回首页");
           break; 
+     
         default:
       }
+    },
+    recharge(){
+      this.$router.push({ path: "/recharge" });
+      this.$store.commit("changeUname", "充值");
+       this.active=-1;
+    },
+     cashwithdrawal(){
+      this.$router.push({ path: "/cashwithdrawal" });
+      this.$store.commit("changeUname", "提现");
+       this.active=-1;
+    },
+     cashsweep(){
+      this.$router.push({ path: "/cashsweep" });
+      this.$store.commit("changeUname", "资金归集");
+       this.active=-1;
+    },
+    selfUser(){
+        this.$router.push({ path: "/selfUser" });
+      this.$store.commit("changeUname", "个人资料");
+      this.active=-1;
     }
   }
 };

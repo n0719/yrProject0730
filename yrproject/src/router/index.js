@@ -16,7 +16,13 @@ import SubordAdmin from '@/components/user/userAdmin/userMenu/SubordAdmin'
 import TeamOverview from '@/components/user/userAdmin/userMenu/TeamOverview'
 import WebNotice from '@/components/user/userAdmin/userMenu/WebNotice'
 import Mydiscount from '@/components/user/userAdmin/userMenu/Mydiscount'
+// 
+import Cashsweep from '@/components/user/userAdmin/userMenu/Cashsweep'
+import Cashwithdrawal from '@/components/user/userAdmin/userMenu/Cashwithdrawal'
+import Recharge from '@/components/user/userAdmin/userMenu/Recharge'
 
+//
+import SelfUser from '@/components/user/userAdmin/userMenu/selfUser/SelfUser'
 export default new Router({
   routes: [
     {
@@ -77,6 +83,26 @@ export default new Router({
           path:"/mydiscount",
           name:"mydiscount",
           component:Mydiscount
+        },
+        {
+          path:"/recharge",
+          name:"recharge",
+          component:Recharge
+        },
+        {
+          path:"/cashwithdrawal",
+          name:"cashwithdrawal",
+          component:Cashwithdrawal
+        },
+        {
+          path:"/cashsweep",
+          name:"cashsweep",
+          component:Cashsweep
+        },
+        {
+          path:"/selfUser",
+          name:"selfUser",
+          component:SelfUser
         },
       ],
  

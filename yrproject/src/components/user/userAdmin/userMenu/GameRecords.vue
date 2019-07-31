@@ -82,25 +82,16 @@
                 :total="50">
                 </el-pagination>
         </el-row>
-        <el-row class="contentMainBottom">
-           <div>
-              <p>
-                  <el-button type="primary" round>复制链接</el-button>
-                  <el-button type="primary" round>注册下级会员</el-button>
-              </p>
-              <p>
-                  推广链接：http://cqbet.vip/r?i=mkcidl
-              </p>
-           </div>
-           <div>
-               <img src="../../../../assets/user/ewm.png" alt="">
-           </div>
-        </el-row>
       </el-row>
     </div>
+    <el-row class="ewmShare">
+                <ewm-share></ewm-share>
+            </el-row>
   </div>
+
 </template>
 <script>
+import EwmShare from "@/components/user/userAdmin/userMenu/EwmShare";
 export default {
   data() {
     return {
@@ -194,6 +185,9 @@ export default {
   methods: {
     handleClick(tab, event) {
       console.log(tab, event);
+    },
+      components:{
+        EwmShare:EwmShare
     }
   }
 };

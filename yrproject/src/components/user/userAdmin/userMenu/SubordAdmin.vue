@@ -2,15 +2,21 @@
   <!-- 团队总览 -->
   <div class="contentMain">
     <div class="contentMainContent">
-      <el-row class="container">
+      <el-table-column class="container">
         <el-row class="payNav">
           <span></span>下级管理
         </el-row>
-        <el-row class="contentMainTable">
+        <el-table-column class="contentMainTable">
           <span class="common-color">下级管理：</span>
           <el-input v-model="playerAccount" placeholder="输入玩家账号" class="mg-r-20"></el-input>
           <el-button type="primary" class="btnColor" @click="search">查询</el-button>
-          <el-table :data="tableData" stripe style="width: 100%" class="recoredTable mg-t-30" empty-text="暂无记录">
+          <el-table
+            :data="tableData"
+            stripe
+            style="width: 100%"
+            class="recoredTable mg-t-30"
+            empty-text="暂无记录"
+          >
             <el-table-column prop="uid" label="ID" width></el-table-column>
             <el-table-column prop="account" label="账号" width></el-table-column>
             <el-table-column prop="name" label="姓名"></el-table-column>
@@ -18,24 +24,16 @@
             <el-table-column prop="level" label="下级总数"></el-table-column>
             <el-table-column prop="time" label="创建时间"></el-table-column>
           </el-table>
-        </el-row>
-        <el-row class="contentMainBottom">
-          <div>
-            <p class="mg-b-10">
-              <el-button type="primary" round>复制链接</el-button>
-              <el-button type="primary" round>注册下级会员</el-button>
-            </p>
-            <p>推广链接：http://cqbet.vip/r?i=mkcidl</p>
-          </div>
-          <div>
-            <img src="../../../../assets/user/ewm.png" alt />
-          </div>
-        </el-row>
+        </el-table-column>
+      </el-table-column>
+      <el-row class="ewmShare">
+        <ewm-share></ewm-share>
       </el-row>
     </div>
   </div>
 </template>
 <script>
+import EwmShare from "@/components/user/userAdmin/userMenu/EwmShare";
 export default {
   data() {
     return {
@@ -86,8 +84,11 @@ export default {
     };
   },
   methods: {
-    search(){
-       this.tableData = []; 
+    search() {
+      this.tableData = [];
+    },
+    components: {
+      EwmShare: EwmShare
     }
   }
 };
