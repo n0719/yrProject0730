@@ -1,7 +1,7 @@
 <template>
   <div class="user">
     <div class="userBody"> 
-      <div class="userMain" :class="winWidth>1920?'aaa':'bbb'">
+      <div class="userMain" :class="[winWidth>1920?'aaa':'bbb',winWidth<1600?'ccc':'bbb']">
         <el-row class="container">
           <el-col :span="5">
             <user-left></user-left>
@@ -34,7 +34,8 @@ export default {
     return {
         winWidth:document.documentElement.clientWidth,
         aaa:"1465px",
-        bbb:"75%"
+        bbb:"75%",
+        ccc:"90%"
     };
   },
   mounted(){
@@ -64,6 +65,7 @@ export default {
 }
 .aaa{width:1465px;}
 .bbb{width:75%;}
+.ccc{width:90%;}
 .user .container{height:100%;}
 .userMain .el-col-5,.el-col-19{height:100%;box-sizing: border-box;display:flex;flex-direction: column;}
 .userMain .rowTop{height:50px;}

@@ -45,29 +45,29 @@
   .el-table th.is-leaf {
     border-bottom: none;
   }
-  .el-tabs__header {
+  .contentMainTable  .el-tabs__header {
     position: absolute;
     right: 40px;
     top: 20px;
   }
-  .el-tabs__active-bar {
+ .el-tabs__active-bar {
     display: none;
   }
-  .el-tabs__item.is-active {
+  .contentMainTable .el-tabs__item.is-active {
     background: #e6cf68;
     color: #836426;
   }
-  .el-tabs__item {
+  .contentMainTable .el-tabs__item {
     padding: 0 15px !important;
     border-radius: 5px;
     border: 1px solid #836426;
     margin-left: 21px;
     cursor: pointer;
   }
-  .el-tabs__content {
+  .contentMainTable .el-tabs__content {
     margin-top: 14px;
   }
-  .el-tabs__nav-wrap::after,.el-table__body-wrapper::after {
+   .el-tabs__nav-wrap::after,.el-table__body-wrapper::after {
     background: none;
     border:none;
   }
