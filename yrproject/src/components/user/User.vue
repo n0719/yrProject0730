@@ -48,7 +48,8 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
+
 
 .user {
   position: fixed;

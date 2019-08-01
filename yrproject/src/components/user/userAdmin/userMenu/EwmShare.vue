@@ -4,7 +4,7 @@
            <div>
               <p>
                   <el-button type="primary" round>复制链接</el-button>
-                  <el-button type="primary" round>注册下级会员</el-button>
+                  <el-button type="primary" round @click="navSubordMems">注册下级会员</el-button>
               </p>
               <p>
                   推广链接：http://cqbet.vip/r?i=mkcidl
@@ -18,10 +18,20 @@
 </template>
 <script>
 export default {
-    
+    data(){
+        return {
+
+        }
+    },
+    methods:{
+        navSubordMems(){
+               this.$router.push({ path: "/subordMems" });
+                 this.$store.commit("changeUname", "下级会员注册");
+        }
+    }
 }
 </script>
-<style>
+<style >
  .contentMainBottom{flex:1;display:flex;justify-content: flex-end;align-items: flex-end;padding:0 37px 30px 0; }
   .contentMainBottom .el-button.is-round{padding:6px 15px;font-size:12px;background:#E6CF68;color:#836426;border:none;}
   .contentMainBottom p{text-align: right;}

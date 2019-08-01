@@ -86,16 +86,14 @@
             </el-tab-pane>
           </el-tabs>
         </el-row>
-           <el-row class="ewmShare">
-                <ewm-share></ewm-share>
-            </el-row>
+
       </el-row>
     </div>
 
   </div>
 </template>
 <script>
-import EwmShare from "@/components/user/userAdmin/userMenu/EwmShare";
+
 export default {
   data() {
     return {
@@ -164,13 +162,12 @@ export default {
       console.log(tab, event);
     }
   },
-  components:{
-    EwmShare:EwmShare
-  }
+
 };
 </script>
-<style>
+<style >
 @import "../../../../assets/search.css";
+.el-date-editor.el-input, .el-date-editor.el-input__inner{width:initial;}
 .el-date-editor.el-input,
 .el-date-editor.el-input__inner {
   width: 140px;

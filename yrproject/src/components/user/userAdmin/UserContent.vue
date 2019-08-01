@@ -8,7 +8,7 @@ export default {
      name:"userContent",
 }
 </script>
-<style>
+<style >
   .userContent{background:#E9F1F9;height:100%;box-sizing: border-box;} 
 </style>
 

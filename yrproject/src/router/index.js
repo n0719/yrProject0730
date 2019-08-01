@@ -21,8 +21,10 @@ import Cashsweep from '@/components/user/userAdmin/userMenu/Cashsweep'
 import Cashwithdrawal from '@/components/user/userAdmin/userMenu/Cashwithdrawal'
 import Recharge from '@/components/user/userAdmin/userMenu/Recharge'
 
-//
+//会员中心
 import SelfUser from '@/components/user/userAdmin/userMenu/selfUser/SelfUser'
+//下级会员注册
+import SubordMems from '@/components/user/userAdmin/userMenu/subordMembs/SubordMems'
 export default new Router({
   routes: [
     {
@@ -103,6 +105,11 @@ export default new Router({
           path:"/selfUser",
           name:"selfUser",
           component:SelfUser
+        },
+        {
+          path:"/subordMems",
+          name:"subordMems",
+          component:SubordMems
         },
       ],
  

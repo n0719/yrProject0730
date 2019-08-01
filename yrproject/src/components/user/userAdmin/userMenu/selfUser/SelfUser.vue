@@ -1,7 +1,7 @@
 <template>
-  <div class="contentMain">
+  <div class="contentMain ">
     <div class="contentMainDIv selfUser">
-      <el-tabs v-model="activeName">
+      <el-tabs v-model="activeName" class="selfTab">
         <el-tab-pane label="个人资料" name="first">
           <div class="first flex-box-center">
             <el-form ref="ruleForm" :model="ruleForm" label-width="100px" :rules="rules">
@@ -64,7 +64,7 @@
                 <el-input placeholder="请输入验证码"></el-input>
                 <el-button class="yzBtn">验证</el-button>
               </el-form-item>
-              <el-form-item label="出生日期： " prop="uBirth">
+              <el-form-item label="出生日期：" class="birth" prop="uBirth">
                 <el-date-picker
                   v-model="ruleForm.uBirth"
                   type="date"
@@ -150,6 +150,7 @@
                 <el-button type="default">取消</el-button>
                 <el-button type="default" @click="submitForm(ruleForm)">提交</el-button>
               </el-form-item>
+            
             </el-form>
           </div>
         </el-tab-pane>
@@ -159,6 +160,7 @@
 </template>
 <script>
 export default {
+
   data() {
     return {
       activeName: "first",
@@ -174,7 +176,7 @@ export default {
         uaddress: "",
         ubirth: ""
       },
-      imageUrl: "",
+      imageUrl: "../../../../../assets/user/userImg.png",
       rules: {
         //个人资料验证
         uName: [
@@ -361,7 +363,8 @@ export default {
   }
 };
 </script>
-<style>
+<style >
+.selfUser{padding:25px 35px 0 35px;}
 .el-input__inner {
   border: 1px solid #836426;
 }
@@ -377,33 +380,7 @@ export default {
   padding: 25px 35px 0 35px;
   box-sizing: border-box;
 }
-.selfUser .el-tabs__active-bar {
-  display: none;
-}
-.selfUser .el-tabs__nav {
-  width: 100%;
-}
-.selfUser .el-tabs__item {
-  width: 33.3%;
-  text-align: center;
-  background: #eee;
-  color: #836426;
-  font-size: 13px;
-  height: 44px;
-  line-height: 44px;
-  margin-right: 1px;
-}
-.selfUser .el-tabs__item.is-active {
-  background: #e6cf68;
-  color: #836426;
-}
-.selfUser .el-form {
-  width: 360px;
-  text-align: center;
-}
-.el-form-item {
-  margin-left: -99px;
-}
+
 /* 头像上传 */
 .selfUser .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
@@ -430,14 +407,7 @@ export default {
   height: 76px;
   display: block;
 }
-.selfUser .subBtn button {
-  width: 160px;
-  height: 44px;
-  background: #e6cf68;
-  color: #836426;
-  cursor: pointer;
-  margin-top: 20px;
-}
+
 .el-button:focus,
 .el-button:hover {
   background: #e6cf68;

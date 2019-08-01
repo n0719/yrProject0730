@@ -294,7 +294,7 @@ export default {
   }
 };
 </script>
-<style>
+<style >
 .login {
   position: fixed;
   width: 100%;

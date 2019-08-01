@@ -82,9 +82,7 @@
                 :total="50">
                 </el-pagination>
         </el-row>
-          <el-row class="ewmShare">
-                <ewm-share></ewm-share>
-            </el-row>
+
       </el-row>
     </div>
   
@@ -92,7 +90,7 @@
 
 </template>
 <script>
-import EwmShare from "@/components/user/userAdmin/userMenu/EwmShare";
+
 export default {
   data() {
     return {
@@ -189,12 +187,11 @@ export default {
     }
    
   },
-     components:{
-        EwmShare:EwmShare
-    }
+
 };
 </script>
-<style>
+ <style scoped>
+
 @import "../../../../assets/search.css";
 .el-date-editor.el-input,
 .el-date-editor.el-input__inner {
@@ -213,7 +210,7 @@ export default {
   height: 186px;
   background: #fff;
 }
-.payNav {
+/* .payNav {
   display: flex;
   padding-left: 35px;
   align-items: center;
@@ -224,7 +221,7 @@ export default {
   height: 14px;
   border-right: 4px solid #836426;
   margin-right: 5px;
-}
+} */
 .contentMainTop .container {
   height: 168px;
   display: flex;

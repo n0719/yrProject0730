@@ -169,8 +169,9 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 @import "../../../../assets/search.css";
+.container{height:100%;}
 .el-date-editor.el-input,
 .el-date-editor.el-input__inner {
   width: 140px;
@@ -187,7 +188,7 @@ export default {
   height: 186px;
   background: #fff;
 }
-.payNav {
+/* .payNav {
   display: flex;
   padding-left: 35px;
   align-items: center;
@@ -198,7 +199,7 @@ export default {
   height: 14px;
   border-right: 4px solid #836426;
   margin-right: 5px;
-}
+} */
 .contentMainTop .container {
   height: 168px;
   display: flex;
@@ -235,5 +236,6 @@ export default {
 .ewmShare{height:100%;}
 .ewmShare>div{height:100%;display:flex;justify-content: flex-end;align-items: flex-end;}
 </style>
+
 
 

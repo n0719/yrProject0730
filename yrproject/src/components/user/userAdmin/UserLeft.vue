@@ -174,7 +174,8 @@ export default {
   }
 };
 </script>
-<style>
+ <style scoped>
+
 .userLeft {
   color:#fff;
   background:#364150;
