@@ -57,19 +57,22 @@ export default {
   bottom: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
+      overflow-x:hidden;
 }
-.userBody{displaY:flex;justify-content:center;align-items:center;height:100%;width:100%;}
+.userBody{displaY:flex;justify-content:center;align-items:center;min-height:100%;width:100%;overflow-y:auto;}
 .userMain {
   width:75%;
-  height:82%;
+  height:896px;
 }
 .aaa{width:1465px;}
 .bbb{width:75%;}
-.ccc{width:90%;}
+.ccc{width:90%;margin:30px 0;}
 .user .container{height:100%;}
 .userMain .el-col-5,.el-col-19{height:100%;box-sizing: border-box;display:flex;flex-direction: column;}
 .userMain .rowTop{height:50px;}
-.userMain .rowBottom{flex:1;}
+.userMain .rowBottom{flex:1;overflow-y:auto;}
+
 </style>
 
 

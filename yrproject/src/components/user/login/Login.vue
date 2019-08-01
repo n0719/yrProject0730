@@ -305,7 +305,7 @@ export default {
   text-align: Center;
   z-index: 5;
 }
-.bounced {
+.login .bounced {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -314,7 +314,7 @@ export default {
   min-height: 400px;
   background: #fff;
 }
-.bounced-header {
+.login .bounced-header {
   background: #2b3643;
   color: #e6cf68;
   height: 50px;
@@ -323,50 +323,35 @@ export default {
   padding-right: 24px;
   font-size: 17px;
 }
-.bounced-header img {
+.login .bounced-header img {
   width: 18px;
   height: 18px;
 }
-.bounced-body {
+.login .bounced-body {
   padding: 50px 80px;
 }
-.login-icon {
+.login .login-icon {
   width: 180px;
   margin-bottom: 60px;
 }
-.input-row {
+.login .input-row {
   border-bottom: 1px solid #836426;
   font-size: 14px;
   /* margin-bottom: 10px; */
 }
-.input-row label {
+.login .input-row label {
   margin-left: 15px;
 }
-.el-input {
+.login.el-input {
   width: auto;
 }
-.el-input input {
+.login .el-input input {
   padding: 0 10px;
   border: 0;
   border-radius: 0;
   color: #836426;
 }
-.el-input input::-webkit-input-placeholder {
-  /* WebKit browsers */
-  color: rgba(131, 100, 38, 0.3);
-}
-.el-input input:-moz-placeholder {
-  /* Mozilla Firefox 4 to 18 */
-  color: rgba(131, 100, 38, 0.3);
-}
-.el-input input::-moz-placeholder {
-  /* Mozilla Firefox 19+ */
-  color: rgba(131, 100, 38, 0.3);
-}
-.el-input input:-ms-input-placeholder {
-  /* Internet Explorer 10+ */
-  color: rgba(131, 100, 38, 0.3);
-}
+
 .prompt {
   color: #ff0000;
   text-align: left;
