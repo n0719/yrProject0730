@@ -35,6 +35,7 @@ export default new Router({
       path: '/userContent',
       name: 'userContent',
       component: UserContent,
+      sss:UserContent,
       children:[
         {
           path:"/myPay",

@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <yr-index></yr-index>
+
   </div>
 </template>
 
@@ -8,11 +9,15 @@
 import Index from '@/components/index/Index'
 export default {
   name: 'App',
+
   components:{yrIndex:Index},
   data(){
     return {
-     
+    
     }
+  },
+    methods:{
+  
   }
 }
 </script>

@@ -2,13 +2,15 @@
   <div>
     <a @click="loginModel">登录</a>
     <a @click="userModel">用户中心</a>
-
+     
     <transition name="fade">
       <yr-login v-if="loginSHow"></yr-login>
     </transition>
     <transition name="fade">
-      <yr-user v-if="userShow"></yr-user>
-    </transition>
+      <yr-user v-if="userShow">
+      </yr-user>
+          </transition>
+     
   </div>
 </template>
 <script>
@@ -20,10 +22,12 @@ export default {
     ...mapState(["umodelShow", "lmodelShow"])
   },
   name: "login",
+  
   data() {
     return {
       loginSHow: "",
-      userShow: ""
+      userShow: "",
+      
     };
   },
 
@@ -39,7 +43,8 @@ export default {
       this.$store.commit("umodelShow", true);
       this.userShow = !this.userShow;
       this.loginSHow = false;
-    }
+    },
+   
   },
 
   watch: {

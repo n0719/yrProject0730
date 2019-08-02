@@ -43,6 +43,14 @@ input,textarea,select  {outline: none;}
     align-items: center;
     justify-content: center;
 }
+.flex-box-column {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+  align-items:center ;
+  justify-content: flex-end;
+}
 .flex-con {
     -webkit-box-flex: 1;
     -webkit-flex: 1;
