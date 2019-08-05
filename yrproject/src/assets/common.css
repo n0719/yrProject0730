@@ -6,6 +6,10 @@ ul,li,ol {list-style-type: none;}
 a{text-decoration: none;}
 img {border:0;}
 input,textarea,select  {outline: none;}
+.el-button:focus, .el-button:hover{background:#E6CF68;color:#836426;border-color:none;}
+.yrBtn{
+  background:#E6CF68;color:#836426;border-color:none;
+}
 .el-input input::-webkit-input-placeholder {
     /* WebKit browsers */
     color: rgba(131, 100, 38, 0.3);
