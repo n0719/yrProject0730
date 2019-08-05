@@ -190,7 +190,7 @@ export default {
       codeStatus: 0,
       setStatus: true,
       countDown: "",
-      isDisabled:true,
+      isDisabled:false,
       phoneReg:/^((\d{3,4})|\d{3,4}-)?\d{7,8}(-\d+)*$/i,
     };
   },
@@ -295,7 +295,7 @@ export default {
 };
 </script>
 <style >
-.userLogin .login {
+.login {
   position: fixed;
   width: 100%;
   top: 0;
@@ -305,7 +305,7 @@ export default {
   text-align: Center;
   z-index: 5;
 }
-.userLogin .login .bounced {
+.login .bounced {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -314,7 +314,7 @@ export default {
   min-height: 400px;
   background: #fff;
 }
-.userLogin .login .bounced-header {
+.login .bounced-header {
   background: #2b3643;
   color: #e6cf68;
   height: 50px;
@@ -323,7 +323,7 @@ export default {
   padding-right: 24px;
   font-size: 17px;
 }
-.userLogin .login .bounced-header img {
+.login .bounced-header img {
   width: 18px;
   height: 18px;
 }
