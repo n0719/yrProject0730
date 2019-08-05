@@ -50,8 +50,8 @@
           <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="昨天" name="first">
               <el-table :data="tableData" stripe style="width: 100%" class="recoredTable">
-                <el-table-column prop="type" label="游戏种类" width></el-table-column>
-                <el-table-column prop="num" label="投注笔数" width></el-table-column>
+                <el-table-column prop="type" label="游戏种类" class="a111"></el-table-column>
+                <el-table-column prop="num" label="投注笔数"></el-table-column>
                 <el-table-column prop="effectiveNum" label="有效投注"></el-table-column>
                 <el-table-column prop="return" label="返回佣金"></el-table-column>
                 <el-table-column prop="defeat" label="实际亏盈"></el-table-column>
@@ -170,7 +170,11 @@ export default {
 };
 </script>
 <style>
+<<<<<<< HEAD
 @import "../../../../assets/search.css";
+=======
+/* @import "../../../../assets/search.css"; */
+>>>>>>> e77afadd6aaf6604964039e6dd4271cfbcd6e471
 .container{height:100%;}
 .el-date-editor.el-input,
 .el-date-editor.el-input__inner {

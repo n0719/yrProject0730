@@ -1,24 +1,24 @@
 <template>
   <div id="app">
-    <yr-index></yr-index>
-
+    <yr-index>
+     
+    </yr-index>
   </div>
 </template>
 
 <script>
 import Index from '@/components/index/Index'
+
 export default {
   name: 'App',
 
   components:{yrIndex:Index},
   data(){
     return {
-    
+     
     }
   },
-    methods:{
-  
-  }
+   
 }
 </script>
 
@@ -32,6 +32,7 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 } */
+html,body{height:100%;}
 body{font-family:PingFang SC;font-size:14px;}
-
+#app{height:100%;}
 </style>
