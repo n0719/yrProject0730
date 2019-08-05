@@ -94,7 +94,7 @@ export default {
 };
 </script>
 <style>
-@import "../../../../assets/search.css";
+/* @import "../../../../assets/search.css"; */
 .subordAdmin .el-date-editor.el-input,
 .subordAdmin .el-date-editor.el-input__inner {
   width: 140px;
@@ -126,6 +126,9 @@ export default {
 }
 .subordAdmin .el-input__inner {
   border-color: #836426;
+}
+.subordAdmin .el-input{
+  width: auto;
 }
 </style>
 

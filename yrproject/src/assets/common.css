@@ -131,8 +131,7 @@ input::-webkit-inner-spin-button {
     box-sizing: border-box;
   }
   .contentMainDIv{width:100%;height:100%;background:#fff;}
-  .ewmShare{height:100%;}
-  .ewmShare>div{height:100%;display:flex;justify-content: flex-end;align-items: flex-end;}
+ 
 
   /*  */
   .payNav {
