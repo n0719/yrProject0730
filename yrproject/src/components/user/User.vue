@@ -2,7 +2,7 @@
   <div class="user">
     <div class="userBody"> 
       <div class="userMain" :class="[winWidth>1920?'aaa':'bbb',winWidth<1600?'ccc':'aaa']">
-          <el-row class="container">
+          <el-row class="container ab">
           <el-col :span="5">
             <user-left></user-left>
           </el-col>
@@ -18,7 +18,6 @@
           </el-col>
         </el-row>
        </div>
-  
     </div>
   </div>
 </template>
@@ -62,18 +61,18 @@ export default {
       overflow-y: auto;
       overflow-x:hidden;
 }
-.userBody{displaY:flex;justify-content:center;align-items:center;min-height:100%;width:100%;overflow-y:auto;}
+.userBody{displaY:flex;justify-content:center;align-items:center;width:100%;height:100%;padding:50px 0;box-sizing: border-box;}
 .userMain {
   width:75%;
   /* min-height:896px; */
 }
  .user .aaa{width:1465px;}
 .user .bbb{width:75%;}
-.user .ccc{width:90%;margin:30px 0;}
-.user .container{min-height:896px;width:100%;display: flex;flex-direction: row;}
+.user .ccc{width:80%;margin:30px 0;}
+.user .ab{min-height:950px;width:100%;display: flex;flex-direction: row;}
 
- .el-col-5{flex:1;}
- .el-col-5,.el-col-19{box-sizing: border-box;display:flex;flex-direction: column;}
+ .user .el-col-5{flex-direction: column;}
+ .user .el-col-19{box-sizing: border-box;display:flex;flex-direction: column;display:flex;flex-direction: column;}
 .user .userMain .rowTop{height:50px;}
 .user .userMain .rowBottom{flex:1;overflow-y:auto;}
 

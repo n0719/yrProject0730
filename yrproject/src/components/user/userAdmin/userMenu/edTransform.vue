@@ -2,7 +2,7 @@
   <!-- 额度转换 -->
   <div class="contentMain edTransform">
     <div class="contentMainContent">
-      <el-row class="container">
+      <el-row class="container" >
         <el-row class="payNav">
           <span></span>团队余额
         </el-row>
@@ -24,7 +24,7 @@
           <span></span>额度转换
         </el-row>
         <el-row v-if="step==1">
-          <el-row class="flex-box-center">
+          <el-row class="flex-box-center" >
             <el-form ref="form" :model="form" label-width="80px">
               <el-form-item label="转出：">
                 <el-select v-model="form.roleOut" placeholder="请选择活动区域">

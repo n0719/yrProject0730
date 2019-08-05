@@ -220,6 +220,7 @@ export default {
 .teamoverview .el-input__inner{
     border-color: #836426;
 }
+.teamoverview .el-table__header , .teamoverview .el-table__body{width:100%!important;}
 </style>
 
 

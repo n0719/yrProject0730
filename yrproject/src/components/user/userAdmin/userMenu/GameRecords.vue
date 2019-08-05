@@ -215,6 +215,7 @@ export default {
 .gameRecords  .el-input__inner{
     border-color: #836426;
 }
+.gameRecords .el-table__header , .gameRecords .el-table__body{width:100%!important;}
 </style>
 
 
