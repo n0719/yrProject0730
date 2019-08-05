@@ -5,6 +5,11 @@ Vue.use(Router)
 
  import UserContent from '@/components/user/userAdmin/UserContent'
  import UserLeft from '@/components/user/userAdmin/UserLeft'
+ //
+ import Index from '@/components/index/Index'
+ 
+ import Main from '@/components/index/index/Main'
+ import Discount from '@/components/index/index/Discount'
 //
 import MyPay from '@/components/user/userAdmin/userMenu/MyPay'
 import BankCard from '@/components/user/userAdmin/userMenu/BankCard'
@@ -28,8 +33,23 @@ import SubordMems from '@/components/user/userAdmin/userMenu/subordMembs/SubordM
 export default new Router({
   routes: [
     {
-      path:"/",
-      redirect:"/myPay"
+      path:'/',
+      name:"index",
+      component:Index
+    },
+   {
+     path:'/main',
+     name:"main",
+     components:{
+      indexView:Main
+     }
+    },
+    {
+      path:'/discount',
+     name:"discount",
+     components:{
+      indexView:Discount
+     }
     },
     {
       path: '/userContent',

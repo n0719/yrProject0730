@@ -32,6 +32,7 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 } */
+html,body{height:100%;}
 body{font-family:PingFang SC;font-size:14px;}
-
+#app{height:100%;}
 </style>
