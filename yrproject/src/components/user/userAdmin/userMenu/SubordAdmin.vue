@@ -1,6 +1,6 @@
 <template>
   <!-- 团队总览 -->
-  <div class="contentMain">
+  <div class="contentMain subordAdmin">
     <div class="contentMainContent">
       <el-row class="container">
         <el-row class="payNav">
@@ -118,7 +118,7 @@ export default {
   border-right: 4px solid #836426;
   margin-right: 5px;
 }
-.el-input {
+.subordAdmin .el-input {
   width: 200px;
 }
 .container {

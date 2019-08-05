@@ -1,6 +1,6 @@
 <template>
   <div class="login common-color">
-    <div class="bounced">
+    <div class="bounced userLogin">
       <!-- 登录 -->
       <div v-show="maskShow==0" class="loginBox">
         <div class="bounced-header flex-box-between">
@@ -352,7 +352,7 @@ export default {
   color: #836426;
 }
 
-.prompt {
+.userLogin .prompt {
   color: #ff0000;
   text-align: left;
 }
