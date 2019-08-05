@@ -372,8 +372,8 @@ export default {
 .el-input__inner:focus {
   border: 1px solid #836426;
 }
-.el-date-editor.el-input,
-.el-date-editor.el-input__inner {
+.selfUser .el-date-editor.el-input,
+.selfUser .el-date-editor.el-input__inner {
   width: 360px;
 }
 .contentMainDIv {

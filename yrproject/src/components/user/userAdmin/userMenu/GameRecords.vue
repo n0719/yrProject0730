@@ -1,5 +1,5 @@
 <template>
-  <!-- 我的账户 -->
+  <!-- 游戏记录 -->
   <div class="contentMain">
     <div class="contentMainContent">
       <el-row class="container">
@@ -22,7 +22,7 @@
             value-format="yyyy-MM-dd"
           ></el-date-picker>
           <el-button type="primary" class="btnColor">查询</el-button>
-          <el-tabs v-model="activeName" @tab-click="handleClick">
+          <el-tabs v-model="activeName" @tab-click="handleClick" class="gamesList">
             <el-tab-pane label="昨天" name="first">
               <el-table :data="tableData" stripe style="width: 100%" class="recoredTable">
                 <el-table-column prop="num" label="序号" width></el-table-column>
@@ -190,7 +190,7 @@ export default {
 
 };
 </script>
- <style scoped>
+ <style>
 
 @import "../../../../assets/search.css";
 .el-date-editor.el-input,
@@ -258,6 +258,12 @@ export default {
 .el-tabs__content{
     margin-top: 30px;
     margin-bottom: 20px;
+}
+.gamesList{
+  margin-top: 30px;
+}
+.el-input__inner{
+    border-color: #836426;
 }
 </style>
 

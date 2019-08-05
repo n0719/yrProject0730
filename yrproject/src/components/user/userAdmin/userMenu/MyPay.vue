@@ -170,7 +170,11 @@ export default {
 };
 </script>
 <style>
+<<<<<<< HEAD
+@import "../../../../assets/search.css";
+=======
 /* @import "../../../../assets/search.css"; */
+>>>>>>> e77afadd6aaf6604964039e6dd4271cfbcd6e471
 .container{height:100%;}
 .el-date-editor.el-input,
 .el-date-editor.el-input__inner {

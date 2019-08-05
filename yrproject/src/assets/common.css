@@ -108,10 +108,16 @@ input,textarea,select  {outline: none;}
 .mg-t-30{
     margin-top: 30px;
 }
+.mg-t-10{
+  margin-top: 10px;
+}
 .mg-r-20{
     margin-right: 20px;
 }
-/* 清楚inputnumber下默认样式 */
+.pd-l-20{
+  padding-left: 20px;
+}
+/* 清除inputnumber下默认样式 */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
