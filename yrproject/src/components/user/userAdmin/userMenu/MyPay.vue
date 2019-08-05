@@ -169,8 +169,8 @@ export default {
   }
 };
 </script>
-<style scoped>
-@import "../../../../assets/search.css";
+<style>
+/* @import "../../../../assets/search.css"; */
 .container{height:100%;}
 .el-date-editor.el-input,
 .el-date-editor.el-input__inner {
