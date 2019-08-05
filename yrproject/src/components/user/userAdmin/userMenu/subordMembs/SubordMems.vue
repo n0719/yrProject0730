@@ -1,6 +1,6 @@
 <template>
   <div class="contentMain">
-    <div class="contentMainDIv selfUser">
+    <div class="contentMainDIv subMems">
       <el-row class="container">
         <el-row class="payNav">
           <span></span>注册下级会员
@@ -43,19 +43,19 @@ export default {
 };
 </script>
 <style>
-.selfUser{padding:0;}
+.subMems{padding:0;}
 
-.subordSki {
+.subMems .subordSki {
   color: #ff0000;
   padding: 19px 43px;
 }
-.subordMems{padding-right:20px;}
-.subordMems .el-form {
+.subMems .subordMems{padding-right:20px;}
+.subMems .subordMems .el-form {
   width: 450px;
  
 }
 
-.subRadio .el-form-item__content{display:block;}
+.subMems .subRadio .el-form-item__content{display:block;}
 </style>
 
 

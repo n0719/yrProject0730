@@ -1,7 +1,7 @@
 <template>
   <!-- 资金往来 -->
   <div class="contentMain">
-    <div class="contentMainContent">
+    <div class="contentMainContent moneyDealing">
       <el-row class="container">
         <el-row class="payNav">
           <span></span>资金往来
@@ -140,67 +140,29 @@ export default {
 </script>
  <style>
 @import "../../../../assets/search.css";
-.el-date-editor.el-input,
-.el-date-editor.el-input__inner {
+.moneyDealing .el-date-editor.el-input,
+.moneyDealing  .el-date-editor.el-input__inner {
   width: 140px;
   margin: 0 10px;
 }
-.contentMain {
+.moneyDealing  .contentMain {
   padding: 20px;
   display: flex;
   flex-direction: column;
   height: 100%;
   box-sizing: border-box;
 }
-.contentMainTop {
-  margin-bottom: 20px;
-  height: 186px;
-  background: #fff;
-}
-.contentMainTop .container {
-  height: 168px;
-  display: flex;
-  flex-direction: column;
-}
-.contentMainTop .container .el-row:nth-of-type(1) {
-  /* padding:18px 0 0 35px; */
-}
-.contentMainTop .container .el-row:nth-of-type(2) {
-  flex: 1;
-  display: flex;
-  align-items: center;
-}
-.contentMainTop .el-col-6 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 60%;
-  border-right: 1px solid #707070;
-  flex-direction: column;
-}
-.contentMainTop .el-col-6:nth-of-type(4) {
-  border: none;
-}
-.contentMainTop .el-col-6 span {
-  text-align: center;
-  letter-spacing: 1px;
-  margin: 1px 0;
-}
-.contentMainTop .el-col-6 span:nth-of-type(2) {
-  font-size: 34px;
-  color: #836426;
-}
-.el-tabs__content {
+.moneyDealing .el-tabs__content {
   margin-top: 30px;
   margin-bottom: 20px;
 }
-.timeLabel {
+.moneyDealing .timeLabel {
   margin-left: 78px;
 }
-.el-date-editor.datePicker.el-input{
+.moneyDealing .el-date-editor.datePicker.el-input{
     width: 200px;
 }
-.el-input__inner{
+.moneyDealing .el-input__inner{
     border-color: #836426;
 }
 </style>

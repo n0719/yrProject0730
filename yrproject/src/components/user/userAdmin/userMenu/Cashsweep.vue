@@ -166,8 +166,8 @@ export default {
 .cashsweepTable table tbody tr:nth-of-type(even) {
   background: #f2efe9;
 }
-.yjgj{display:flex; flex-direction: column;justify-content: center;align-items: center;height:100%;padding-right:80px;padding-top:30px;}
-.yjgj img{margin-bottom:10px;}
+.cashsweep .yjgj{display:flex; flex-direction: column;justify-content: center;align-items: center;height:100%;padding-right:80px;padding-top:30px;}
+.cashsweep .yjgj img{margin-bottom:10px;}
 </style>
 
 

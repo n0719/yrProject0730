@@ -46,8 +46,10 @@
                     </thead>
                     <tbody>
                       <tr v-for="(item,index) in tableData" :key="index">
-                       
-                        <td><el-checkbox v-show="checkShow1" @change="checkSel(index)"></el-checkbox>{{item.bankName}}</td>
+                        <td>
+                          <el-checkbox v-show="checkShow1" @change="checkSel(index)"></el-checkbox>
+                          {{item.bankName}}
+                        </td>
                         <td>{{item.cardNum}}</td>
                         <td>{{item.openInfor}}</td>
                       </tr>
@@ -56,15 +58,18 @@
                   <el-row class="xz">
                     <el-col :span="24" class="flex-box-column" v-if="!checkShow1">
                       <img src="../../../../assets/user/xinzeng.png" @click="xzBank" alt />
-                     增加绑定卡
+                      增加绑定卡
                     </el-col>
-                         <el-col :span="24" class="flex-box-center" style="align-items:flex-end;" v-else>
-                  <p class="flex-box-column">    <img src="../../../../assets/user/quxiao.png" @click="hideCheck" alt />
-                  
-                  <span>取消</span></p>
-                     <p class='flex-box-column'> <img src="../../../../assets/user/queding.png" @click="conDelete" alt />
-                      <span>确认删除</span>
-                     </p>
+                    <el-col :span="24" class="flex-box-center" style="align-items:flex-end;" v-else>
+                      <p class="flex-box-column">
+                        <img src="../../../../assets/user/quxiao.png" @click="hideCheck" alt />
+
+                        <span>取消</span>
+                      </p>
+                      <p class="flex-box-column">
+                        <img src="../../../../assets/user/queding.png" @click="conDelete" alt />
+                        <span>确认删除</span>
+                      </p>
                     </el-col>
                   </el-row>
                 </el-row>
@@ -114,7 +119,7 @@ export default {
       activeName: "first",
       checkBank: false,
       checkShow1: false,
-          checkList: ['选中且禁用','复选框 A'],
+      checkList: ["选中且禁用", "复选框 A"],
       tableData: [
         {
           uid: 1,
@@ -132,33 +137,34 @@ export default {
     };
   },
   methods: {
-    deleteTrr() {//删除按钮
+    deleteTrr() {
+      //删除按钮
       this.checkShow1 = true;
     },
-    xzBank() {//新增银行卡
+    xzBank() {
+      //新增银行卡
       this.activeName = "second";
     },
- 
-    hideCheck(){//checkBox显示隐藏
-      this.checkShow1=false;
-    },
-    conDelete(){
 
+    hideCheck() {
+      //checkBox显示隐藏
+      this.checkShow1 = false;
     },
-    checkSel(e){
-       console.log(e) 
+    conDelete() {},
+    checkSel(e) {
+      console.log(e);
     }
   }
 };
 </script>
 <style >
-.bankTit {
+.bankTab .bankTit {
   color: #ff0000;
   font-size: 12px;
   padding-left: 15px;
   padding-right: 15px;
 }
-.bankTit img {
+.bankTab .bankTit img {
   width: 14px;
   height: 14px;
   float: right;
@@ -170,37 +176,65 @@ export default {
 .bankTab .selfTab .el-tabs__item {
   width: 50%;
 }
-.selfTab {
+.bankTab .selfTab {
   padding: 0 40px;
 }
 .bankTab .el-table {
   margin-top: 39px;
 }
-.xz .el-col-24 {
-
- 
+.bankTab .xz .el-col-24 {
   height: 380px;
 }
-.xz .el-col-24 img{margin:4px 15px;}
-.raTable table {
-  padding: 0 40px;
-  width:100%;
-  margin-top:39px;
+.bankTab .xz .el-col-24 img {
+  margin: 4px 15px;
 }
-.raTable table td .el-checkbox{position:absolute;left:-40px;top:18px;}
-.raTable table td .el-checkbox__inner{width:22px;height:22px;border-radius:50%;text-align: center;line-height:22px;border:1px solid #836426;}
-.raTable .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner{background:#836426;border-color:#836426;}
-.raTable table td .el-checkbox__inner::after{left:8px;top:5px;}
-.raTable table td{text-align: center;height:50px;position:relative;}
-.raTable table thead tr{background:#E6CF68;color:#836426;}
-.raTable table tbody tr:nth-of-type(odd){background:#fff;}
-.raTable table tbody tr:nth-of-type(even){background:#F2EFE9;}
-.raTable .el-table__body,
-.el-table__footer,
-.el-table__header {
+.bankTab .raTable table {
+  padding: 0 40px;
+  width: 100%;
+  margin-top: 39px;
+}
+.bankTab .raTable table td .el-checkbox {
+  position: absolute;
+  left: -40px;
+  top: 18px;
+}
+.bankTab .raTable table td .el-checkbox__inner {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 22px;
+  border: 1px solid #836426;
+}
+.bankTab .raTable .el-checkbox__input.is-checked .el-checkbox__inner,
+.bankTab .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+  background: #836426;
+  border-color: #836426;
+}
+.bankTab .raTable table td .el-checkbox__inner::after {
+  left: 8px;
+  top: 5px;
+}
+.bankTab .raTable table td {
+  text-align: center;
+  height: 50px;
+  position: relative;
+}
+.bankTab .raTable table thead tr {
+  background: #e6cf68;
+  color: #836426;
+}
+.bankTab .raTable table tbody tr:nth-of-type(odd) {
+  background: #fff;
+}
+.bankTab .raTable table tbody tr:nth-of-type(even) {
+  background: #f2efe9;
+}
+.bankTab .raTable .el-table__body,
+.bankTab .el-table__footer,
+.bankTab .el-table__header {
   table-layout: initial;
 }
-
 </style>
 
 

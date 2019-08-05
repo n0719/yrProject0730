@@ -295,7 +295,7 @@ export default {
 };
 </script>
 <style >
-.login {
+.userLogin .login {
   position: fixed;
   width: 100%;
   top: 0;
@@ -305,7 +305,7 @@ export default {
   text-align: Center;
   z-index: 5;
 }
-.login .bounced {
+.userLogin .login .bounced {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -314,7 +314,7 @@ export default {
   min-height: 400px;
   background: #fff;
 }
-.login .bounced-header {
+.userLogin .login .bounced-header {
   background: #2b3643;
   color: #e6cf68;
   height: 50px;
@@ -323,7 +323,7 @@ export default {
   padding-right: 24px;
   font-size: 17px;
 }
-.login .bounced-header img {
+.userLogin .login .bounced-header img {
   width: 18px;
   height: 18px;
 }
@@ -356,61 +356,61 @@ export default {
   color: #ff0000;
   text-align: left;
 }
-.btn {
+.userLogin .btn {
   background: #e6cf68;
   width: 100%;
   color: #333;
   border-color: #e6cf68;
   margin: 12px 0;
 }
-.btn:focus,
-.btn:hover {
+.userLogin .btn:focus,
+.userLogin .btn:hover {
   color: #333;
   border-color: #e6cf68;
   background-color: #e6cf68;
 }
-.btn_default {
+.userLogin .btn_default {
   background: #eee;
   color: #836426;
   border-color: #eee;
 }
-.btn_default:focus,
-.btn_default:hover {
+.userLogin .btn_default:focus,
+.userLogin .btn_default:hover {
   color: #836426;
   border-color: #eee;
   background-color: #eee;
 }
-.btn.is-disabled, .btn.is-disabled:focus, .btn.is-disabled:hover{
+.userLogin .btn.is-disabled, .btn.is-disabled:focus, .btn.is-disabled:hover{
   background: #eee;
   color: #836426;
   border-color: #eee;
 }
-.forget {
+.userLogin .forget {
   color: rgba(131, 100, 38, 0.5);
 }
-.flex-box label {
+.userLogin .flex-box label {
   width: 70px;
   text-align: justify;
   text-align-last: justify;
   text-justify: distribute-all-lines;
 }
-.loginBox label {
+.userLogin .loginBox label {
   width: 50px;
 }
-.hoverCursor:hover {
+.userLogin .hoverCursor:hover {
   cursor: pointer;
 }
-.colorRed {
+.userLogin .colorRed {
   color: #ff0000;
 }
-.el-checkbox,
-.el-checkbox__input.is-checked + .el-checkbox__label {
+.userLogin .el-checkbox,
+.userLogin .el-checkbox__input.is-checked + .el-checkbox__label {
   color: #999999;
 }
-.comeBack {
+.userLogin .comeBack {
   text-decoration: underline;
 }
-.codeBtn {
+.userLogin .codeBtn {
   width: auto;
   margin: 5px 0;
 }

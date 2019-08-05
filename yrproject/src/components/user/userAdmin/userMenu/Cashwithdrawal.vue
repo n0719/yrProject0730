@@ -54,17 +54,17 @@ export default {
 };
 </script>
 <style >
-.getMOney {
+.bankTab .getMOney {
   padding-left: 71px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   height: 150px;
 }
-td{
+.bankTab td{
     word-wrap:break-word
 }
-.getMOney .el-table{margin-top:0;}
+.bankTab .getMOney .el-table{margin-top:0;}
 .bankTab .getMoneyBtn{background:#E6CF68;color:#836426;}
 
 </style>

@@ -161,30 +161,30 @@ export default {
 </script>
 <style >
 @import "../../../../assets/search.css";
-.el-date-editor.el-input,
-.el-date-editor.el-input__inner {
+.edTransform .el-date-editor.el-input,
+.edTransform .el-date-editor.el-input__inner {
   width: initial;
 }
-.el-date-editor.el-input,
-.el-date-editor.el-input__inner {
+.edTransform .el-date-editor.el-input,
+.edTransform .el-date-editor.el-input__inner {
   width: 140px;
   margin: 0 10px;
 }
-.contentMain {
+.edTransform .contentMain {
   padding: 20px;
   display: flex;
   flex-direction: column;
   height: 100%;
   box-sizing: border-box;
 }
-.payNav {
+.edTransform .payNav {
   display: flex;
   padding-left: 35px;
   align-items: center;
   color: #836426;
   padding: 18px 0 0 35px;
 }
-.payNav span {
+.edTransform .payNav span {
   height: 14px;
   border-right: 4px solid #836426;
   margin-right: 5px;
@@ -194,25 +194,25 @@ export default {
   border: 1px solid #836426;
   border-top: 0;
 }
-.teamTable th {
+.edTransform .teamTable th {
   border-top: 1px solid #836426;
 }
-.teamTable th,
-.teamTable tr,
-.teamTable td {
+.edTransform .teamTable th,
+.edTransform .teamTable tr,
+.edTransform .teamTable td {
   background: #f2efe9;
   font-size: 12px;
   color: #836426;
   text-align: center;
 }
-.teamTable td {
+.edTransform .teamTable td {
   font-size: 14px;
   border-top: 1px solid #836426;
 }
-.teamTable th > .cell {
+.edTransform .teamTable th > .cell {
   font-weight: normal;
 }
-.el-input__inner {
+.edTransform .el-input__inner {
   border-color: #836426;
   color: #836426;
 }
@@ -231,7 +231,7 @@ export default {
   border: 0;
   padding: 12px 66px;
 }
-.noticeNote .el-form-item__content {
+.edTransform .noticeNote .el-form-item__content {
   display: flex;
   align-items: flex-start;
   line-height: 24px;
@@ -239,16 +239,16 @@ export default {
 .edTransform .el-form-item {
   margin-bottom: 14px;
 }
-.preferentialBox {
+.edTransform .preferentialBox {
   width: 656px;
   margin: auto;
   margin-bottom: 50px;
 }
-.preferentialContent {
+.edTransform .preferentialContent {
   padding: 50px 63px 30px;
   border: 1px solid #836426;
 }
-.preferentialTitle {
+.edTransform .preferentialTitle {
   border: 1px solid #836426;
   color: #836426;
   background: rgba(242, 239, 233, 1);
@@ -275,45 +275,45 @@ export default {
   height: 22px;
   background: #fff;
 }
-.error {
+.edTransform .error {
   color: #ff0000;
 }
-.textIndent {
+.edTransform .textIndent {
   text-indent: 2em;
 }
-.prompt {
+.edTransform .prompt {
   line-height: 24px;
 }
 
-.teamBalance {
+.edTransform .teamBalance {
   background: #f2efe9;
   border: 1px solid #836426;
 }
 
-.teamBalance span {
+.edTransform .teamBalance span {
   flex: 1;
   padding: 13px 10px;
   text-align: center;
   line-height: 23px;
 }
-.teamTop {
+.edTransform .teamTop {
   font-size: 12px;
   border-bottom: 1px solid #836426;
 }
-.successBox {
+.edTransform .successBox {
   text-align: center;
   margin: 100px auto;
   font-size: 14px;
 }
-.successBox img {
+.edTransform .successBox img {
   margin: 32px auto;
 }
-.againTrans {
+.edTransform .againTrans {
   text-decoration: underline;
   margin-left: 24px;
   cursor: pointer;
 }
-.errorColor{
+.edTransform .errorColor{
     color: #ff0000;
 }
 </style>

@@ -365,18 +365,18 @@ export default {
 </script>
 <style >
 .selfUser{padding:25px 35px 0 35px;}
-.el-input__inner {
+.selfUser .el-input__inner {
   border: 1px solid #836426;
 }
-.el-input.is-active .el-input__inner,
-.el-input__inner:focus {
+.selfUser .el-input.is-active .el-input__inner,
+.selfUser .el-input__inner:focus {
   border: 1px solid #836426;
 }
 .selfUser .el-date-editor.el-input,
 .selfUser .el-date-editor.el-input__inner {
   width: 360px;
 }
-.contentMainDIv {
+.selfUser .contentMainDIv {
   padding: 25px 35px 0 35px;
   box-sizing: border-box;
 }
@@ -408,8 +408,8 @@ export default {
   display: block;
 }
 
-.el-button:focus,
-.el-button:hover {
+.selfUser .el-button:focus,
+.selfUser .el-button:hover {
   background: #e6cf68;
   color: #836426;
   border: none;
@@ -422,13 +422,13 @@ export default {
 }
 /* .avatar-uploader{display:flex;} */
 /*  */
-.el-form-item__content {
+.selfUser .el-form-item__content {
   display: flex;
 }
-.el-form-item__content {
+.selfUser .el-form-item__content {
   position: relative;
 }
-.yzBtn {
+.selfUser .yzBtn {
   position: absolute;
   right: 1px;
   top: 1px;
@@ -441,10 +441,10 @@ export default {
   color: #836426;
   cursor: pointer;
 }
-.el-form-item {
+.selfUser .el-form-item {
   margin-bottom: 20px;
 }
-.el-alert {
+.selfUser .el-alert {
   position: absolute;
   bottom: -25px;
   left: -16px;
@@ -454,13 +454,13 @@ export default {
   width: 100%;
   font-size: 12px;
 }
-.el-alert--success.is-light {
+.selfUser .el-alert--success.is-light {
   background: none;
 }
-.el-alert.is-center {
+.selfUser .el-alert.is-center {
   justify-content: flex-start;
 }
-.el-alert__title {
+.selfUser .el-alert__title {
   font-size: 12px;
 }
 /*  */
