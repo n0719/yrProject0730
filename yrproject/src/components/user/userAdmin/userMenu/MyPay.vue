@@ -1,7 +1,7 @@
 <template>
   <!-- 我的账户 -->
-  <div class="contentMain">
-    <div class="contentMainTop myPay">
+  <div class="contentMain myPay">
+    <div class="contentMainTop ">
       <el-row class="container">
         <el-row class="payNav">
           <span></span>我的账户
