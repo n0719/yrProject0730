@@ -125,8 +125,9 @@ export default {
 .myDiscount .selfTab .el-tabs__item::before{
     content:"|";
     position: absolute;
-   left:99%;top:0;z-index:5;
+   left:98%;top:0;z-index:5;
    color:rgba(131,100,38,0.2);
+
   
 }
 .myDiscount .el-tabs--card>.el-tabs__header .el-tabs__item.is-active::before{
@@ -135,14 +136,18 @@ export default {
 .myDiscount .el-tabs--card>.el-tabs__header .el-tabs__item.is-active::after{
      content:"|";
      position: absolute;
-     left:-2%;top:0;z-index:6;
+     left:-3%;top:0;z-index:6;
    /* color:rgba(131,100,38,0.2); */
    color:#EEEEEE;
 }
 .myDiscount .selfTab .el-tabs__item:last-of-type::before{
   content:"";
 }
-.myDiscount .selfTab .el-tabs__item{width:10%;  margin-right: 0;position:relative;}
+.myDiscount .selfTab .el-tabs__item:nth-of-type(10){
+    padding-right:0!important;
+}
+.myDiscount .selfTab .el-tabs__item:nth-of-type(2){padding-left:0;}
+.myDiscount .selfTab .el-tabs__item{width:10%;  margin-right: 0;position:relative;padding:0;text-align: center;}
 
 </style>
 
