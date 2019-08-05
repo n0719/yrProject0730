@@ -310,7 +310,7 @@ export default {
 };
 </script>
 <style >
-.recharge {
+.rechargeDiv .recharge {
   margin-top: 21px;
   padding: 0 15px;
 }
@@ -318,87 +318,87 @@ export default {
   background: none;
 }
 
-.recharge .el-tabs__header {
+.rechargeDiv .recharge .el-tabs__header {
   margin: 0;
 }
 
-.recharge .el-radio__input {
+.rechargeDiv .recharge .el-radio__input {
   display: none;
 }
-.recharge .el-radio-group {
+.rechargeDiv .recharge .el-radio-group {
   margin-top: 4px;
   margin-left: 70px;
   margin-top: 20px;
 }
-.recharge .first .el-radio {
+.rechargeDiv .recharge .first .el-radio {
   width: 25%;
   text-align: center;
   padding: 10px 0 6px 0;
   border: 1px dashed #ddd;
   margin-bottom: 5px;
 }
-.recharge .first .radioBorder {
+.rechargeDiv .recharge .first .radioBorder {
   border: 1px solid #ce0012;
   background: #f6eecb;
 }
-.recharge .second .el-radio {
+.rechargeDiv .recharge .second .el-radio {
   width: 226px;
   text-align: center;
   padding: 14px 0 8px 0;
   border: 1px dashed #ddd;
 }
-.recharge .second .radioBorder {
+.rechargeDiv .recharge .second .radioBorder {
   border: 1px solid #ce0012;
   background: #f6eecb;
 }
-.recharge .third .el-radio {
+.rechargeDiv .recharge .third .el-radio {
   width: 226px;
   text-align: center;
   padding: 14px 0 8px 0;
   border: 1px dashed #ddd;
 }
-.recharge .third .radioBorder {
+.rechargeDiv .recharge .third .radioBorder {
   border: 1px solid #ce0012;
   background: #f6eecb;
 }
-.rechargeDiv {
+.rechargeDiv .rechargeDiv {
   display: flex;
   flex-direction: column;
 }
-.rechargeDivTop {
+.rechargeDiv .rechargeDivTop {
   /* height: 460px; */
   background: #fff;
   margin-bottom: 20px;
   padding-bottom: 20px;
 }
-.rechargeDivBottom {
+.rechargeDiv .rechargeDivBottom {
   flex: 1;
   background: #fff;
   display: flex;
   flex-direction: column;
 }
-.nextBtn {
+.rechargeDiv .nextBtn {
   text-align: center;
   margin-top: 30px;
 }
-.nextBtn button {
+.rechargeDiv .nextBtn button {
   background: #e6cf68;
   color: #836426;
   width: 160px;
   height: 42px;
 }
-.rechargeDivBottom .payNav {
+.rechargeDiv .rechargeDivBottom .payNav {
   color: #ff0000;
   margin-bottom: 19px;
 }
-.rechargeDivBottom .payNav span {
+.rechargeDiv .rechargeDivBottom .payNav span {
   border-color: #ff0000;
 }
-.tips .el-col-24 {
+.rechargeDiv .tips .el-col-24 {
   color: #836426;
   padding: 4px 0 0 37px;
 }
-.onlineQq {
+.rechargeDiv .onlineQq {
   flex: 1;
   display: flex;
   justify-content: flex-end;
@@ -406,49 +406,49 @@ export default {
   padding-right: 37px;
   padding-bottom: 30px;
 }
-.onlineQq .el-row {
+.rechargeDiv .onlineQq .el-row {
   display: flex;
   align-items: center;
 }
-.onlineQq .el-row img {
+.rechargeDiv .onlineQq .el-row img {
   margin-left: 29px;
 }
-.onlineQq .el-row span {
+.rechargeDiv .onlineQq .el-row span {
   margin-left: 10px;
 }
 /* 表单 */
-.recharge .el-form {
+.rechargeDiv .recharge .el-form {
   width: 500px;
   margin-top: 30px;
 }
-.recharge .el-form-item {
+.rechargeDiv .recharge .el-form-item {
   margin-bottom: 10px;
 }
-.recharge .selfTab .first .el-tabs__item {
+.rechargeDiv .recharge .selfTab .first .el-tabs__item {
   width: 277px;
   margin-left: 21px;
 }
-.recharge .selfTab .second .el-tabs__item {
+.rechargeDiv .recharge .selfTab .second .el-tabs__item {
   width: 226px;
   margin-left: 21px;
 }
 /*  */
-.payEwm {
+.rechargeDiv .payEwm {
   height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
-.payEwm img {
+.rechargeDiv .payEwm img {
   width: 170px;
   height: 170px;
 }
-.thirdInput{padding-left:70px;}
-.thirdInput .el-col-24{margin-top:15px;}
-.third .tips{font-size:14px;color:#836426;}
-.thirdInput .thirdBtn{text-align: center;margin-top:30px;padding-right:70px;}
-.thirdBtn button{background:#E6CF68;color:#836426;}
+.rechargeDiv .thirdInput{padding-left:70px;}
+.rechargeDiv .thirdInput .el-col-24{margin-top:15px;}
+.rechargeDiv .third .tips{font-size:14px;color:#836426;}
+.rechargeDiv .thirdInput .thirdBtn{text-align: center;margin-top:30px;padding-right:70px;}
+.rechargeDiv .thirdBtn button{background:#E6CF68;color:#836426;}
 </style>
 
 

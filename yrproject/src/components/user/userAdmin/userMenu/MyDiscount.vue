@@ -81,47 +81,47 @@ export default {
 };
 </script>
 <style >
-.discountList {
+.myDiscount .discountList {
   display: flex;
   /* justify-content: space-between; */
   flex-flow: row wrap;
 }
-.discountListItem {
+.myDiscount .discountListItem {
   width: 19%;
   height: 266px;
   margin-right:1.25%;
 }
-.discountListItem:nth-of-type(5n){
+ .myDiscount .discountListItem:nth-of-type(5n){
     margin-right:0;
 }
 
-.discountListItem img {
+.myDiscount .discountListItem img {
   width: 100%;
   height: 100%;
 }
-.itemList {
+.myDiscount .itemList {
   padding: 0 35px;
   margin-top: 13px;
   width: 100%;
 }
-.discountTit {
+.myDiscount .discountTit {
   height: 47px;
   text-align: center;
   line-height: 47px;
   border: 1px solid #eeece6;
 }
-.discountImg {
+.myDiscount .discountImg {
   height: 140px;
   border: 1px dashed #eeece6;
 }
-.discountBtn {
+.myDiscount .discountBtn {
   display: flex;
   justify-content: center;
   align-items: center;
   border: 1px solid #eeece6;
   height: 51px;
 }
-.pagination{text-align: center;margin-top:25px;}
+.myDiscount .pagination{text-align: center;margin-top:25px;}
 .myDiscount .selfTab .el-tabs__item::before{
     content:"|";
     position: absolute;

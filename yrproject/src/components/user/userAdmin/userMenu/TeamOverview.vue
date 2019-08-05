@@ -1,7 +1,7 @@
 <template>
   <!-- 团队总览 -->
   <div class="contentMain">
-    <div class="contentMainContent">
+    <div class="contentMainContent teamoverview">
       <el-row class="container">
         <el-row class="payNav">
           <span></span>查询
@@ -170,9 +170,9 @@ export default {
 </script>
 <style >
 @import "../../../../assets/search.css";
-.el-date-editor.el-input, .el-date-editor.el-input__inner{width:initial;}
-.el-date-editor.el-input,
-.el-date-editor.el-input__inner {
+.teamoverview .el-date-editor.el-input, .el-date-editor.el-input__inner{width:initial;}
+.teamoverview .el-date-editor.el-input,
+.teamoverview .el-date-editor.el-input__inner {
   width: 140px;
   margin: 0 10px;
 }
@@ -183,41 +183,41 @@ export default {
   height: 100%;
   box-sizing: border-box;
 }
-.payNav {
+.teamoverview .payNav {
   display: flex;
   padding-left: 35px;
   align-items: center;
   color: #836426;
   padding: 18px 0 0 35px;
 }
-.payNav span {
+.teamoverview .payNav span {
   height: 14px;
   border-right: 4px solid #836426;
   margin-right: 5px;
 }
-.teamTable{
+.teamoverview .teamTable{
     margin-top: 20px;
     margin-bottom: 30px;
     border: 1px solid #836426;
     border-top:0; 
 }
-.teamTable th{
+.teamoverview .teamTable th{
      border-top: 1px solid #836426;
 }
-.teamTable th, .teamTable tr,.teamTable td{
+.teamoverview .teamTable th, .teamTable tr,.teamTable td{
     background: #f2efe9;
     font-size: 12px;
     color: #836426;
     text-align: center;
 }
-.teamTable td{
+.teamoverview .teamTable td{
     font-size: 14px;
     border-top: 1px solid #836426;
 }
-.teamTable th>.cell{
+.teamoverview .teamTable th>.cell{
     font-weight: normal;
 }
-.el-input__inner{
+.teamoverview .el-input__inner{
     border-color: #836426;
 }
 </style>

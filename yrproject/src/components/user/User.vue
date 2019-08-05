@@ -67,15 +67,15 @@ export default {
   width:75%;
   /* min-height:896px; */
 }
-.aaa{width:1465px;}
-.bbb{width:75%;}
-.ccc{width:90%;margin:30px 0;}
+ .user .aaa{width:1465px;}
+.user .bbb{width:75%;}
+.user .ccc{width:90%;margin:30px 0;}
 .user .container{min-height:896px;width:100%;display: flex;flex-direction: row;}
 
  .el-col-5{flex:1;}
  .el-col-5,.el-col-19{box-sizing: border-box;display:flex;flex-direction: column;}
-.userMain .rowTop{height:50px;}
-.userMain .rowBottom{flex:1;overflow-y:auto;}
+.user .userMain .rowTop{height:50px;}
+.user .userMain .rowBottom{flex:1;overflow-y:auto;}
 
 </style>
 

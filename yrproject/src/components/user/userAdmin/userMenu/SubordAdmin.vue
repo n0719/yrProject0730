@@ -95,36 +95,36 @@ export default {
 </script>
 <style>
 @import "../../../../assets/search.css";
-.el-date-editor.el-input,
-.el-date-editor.el-input__inner {
+.subordAdmin .el-date-editor.el-input,
+.subordAdmin .el-date-editor.el-input__inner {
   width: 140px;
 }
-.contentMain {
+.subordAdmin .contentMain {
   padding: 20px;
   display: flex;
   flex-direction: column;
   height: 100%;
   box-sizing: border-box;
 }
-.payNav {
+.subordAdmin .payNav {
   display: flex;
   padding-left: 35px;
   align-items: center;
   color: #836426;
   padding: 18px 0 0 35px;
 }
-.payNav span {
+.subordAdmin .payNav span {
   height: 14px;
   border-right: 4px solid #836426;
   margin-right: 5px;
 }
-.subordAdmin .el-input {
+.subordAdmin .subordAdmin .el-input {
   width: 200px;
 }
-.container {
+.subordAdmin .container {
   height: 100%;
 }
-.el-input__inner {
+.subordAdmin .el-input__inner {
   border-color: #836426;
 }
 </style>
