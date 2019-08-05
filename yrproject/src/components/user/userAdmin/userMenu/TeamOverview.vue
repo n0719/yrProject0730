@@ -7,6 +7,7 @@
           <span></span>查询
         </el-row>
         <el-row class="contentMainTable">
+          <el-row class="pd-l-20">
           <span class="common-color">时间：</span>
           <el-date-picker
             v-model="dataStarrt"
@@ -22,6 +23,8 @@
             value-format="yyyy-MM-dd"
           ></el-date-picker>
           <el-button type="primary" class="btnColor">查询</el-button>
+          </el-row>
+          
           <el-table :data="teamData" stripe style="width: 100%" class="teamTable">
                 <el-table-column prop="teamBalance" label="当前团队余额(元）" width></el-table-column>
                 <el-table-column prop="teamCharge" label="团队充值(元）" width></el-table-column>

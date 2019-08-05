@@ -25,13 +25,11 @@
             <el-table-column prop="time" label="创建时间"></el-table-column>
           </el-table>
         </el-row>
-           <el-row class="ewmShare">
+        <el-row class="ewmShare">
           <ewm-share></ewm-share>
         </el-row>
       </el-row>
-   
     </div>
- 
   </div>
 </template>
 <script>
@@ -95,7 +93,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style>
 @import "../../../../assets/search.css";
 .el-date-editor.el-input,
 .el-date-editor.el-input__inner {
@@ -123,7 +121,12 @@ export default {
 .el-input {
   width: 200px;
 }
-.container{height:100%;}
+.container {
+  height: 100%;
+}
+.el-input__inner {
+  border-color: #836426;
+}
 </style>
 
 

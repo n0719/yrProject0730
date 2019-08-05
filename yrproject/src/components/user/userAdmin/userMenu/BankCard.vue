@@ -173,7 +173,7 @@ export default {
 .selfTab {
   padding: 0 40px;
 }
-.el-table {
+.bankTab .el-table {
   margin-top: 39px;
 }
 .xz .el-col-24 {

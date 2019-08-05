@@ -64,7 +64,7 @@ export default {
 td{
     word-wrap:break-word
 }
-.el-table{margin-top:0;}
+.getMOney .el-table{margin-top:0;}
 .bankTab .getMoneyBtn{background:#E6CF68;color:#836426;}
 
 </style>
