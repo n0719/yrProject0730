@@ -1,7 +1,7 @@
 <template>
   <!-- 网站公告 -->
   <div class="contentMain">
-    <div class="contentMainContent">
+    <div class="contentMainContent webNotice">
       <el-row class="container">
         <el-row class="payNav">
           <span></span>网站公告
@@ -81,32 +81,32 @@ export default {
 </script>
  <style>
 @import "../../../../assets/search.css";
-.el-collapse {
+.webNotice .el-collapse {
   border: 0;
   padding: 0 5px;
 }
-.el-collapse-item__header {
+.webNotice .el-collapse-item__header {
   border-bottom: 0;
   padding: 0 14px;
   color: #836426;
 }
-.el-collapse-item:nth-child(odd) .el-collapse-item__header {
+ .webNotice .el-collapse-item:nth-child(odd) .el-collapse-item__header {
   background: rgba(131, 100, 38, 0.1);
 }
-.el-collapse-item:nth-child(even) .el-collapse-item__header {
+ .webNotice .el-collapse-item:nth-child(even) .el-collapse-item__header {
   background: rgba(249, 249, 249, 0.1);
 }
-.time {
+ .webNotice .time {
   margin-right: 8px;
 }
-.el-collapse-item__wrap {
+ .webNotice .el-collapse-item__wrap {
   border: 1px solid #836426;
   margin-bottom: 20px;
 }
-.el-collapse-item__content {
+ .webNotice .el-collapse-item__content {
   padding: 20px;
 }
-.el-collapse-item__arrow.is-active {
+ .webNotice .el-collapse-item__arrow.is-active {
   -webkit-transform: rotate(-90deg);
   transform: rotate(-90deg);
 }

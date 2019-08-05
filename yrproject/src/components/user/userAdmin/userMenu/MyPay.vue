@@ -1,7 +1,7 @@
 <template>
   <!-- 我的账户 -->
   <div class="contentMain">
-    <div class="contentMainTop">
+    <div class="contentMainTop myPay">
       <el-row class="container">
         <el-row class="payNav">
           <span></span>我的账户
@@ -50,7 +50,7 @@
           <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="昨天" name="first">
               <el-table :data="tableData" stripe style="width: 100%" class="recoredTable">
-                <el-table-column prop="type" label="游戏种类" class="a111"></el-table-column>
+                <el-table-column prop="type" label="游戏种类"></el-table-column>
                 <el-table-column prop="num" label="投注笔数"></el-table-column>
                 <el-table-column prop="effectiveNum" label="有效投注"></el-table-column>
                 <el-table-column prop="return" label="返回佣金"></el-table-column>
@@ -172,7 +172,7 @@ export default {
 <style>
 @import "../../../../assets/search.css";
 .container{height:100%;}
-.el-date-editor.el-input,
+.myPay .el-date-editor.el-input,
 .el-date-editor.el-input__inner {
   width: 140px;
 }
@@ -183,7 +183,7 @@ export default {
   height: 100%;
   box-sizing: border-box;
 }
-.contentMainTop {
+.myPay .contentMainTop {
   margin-bottom: 20px;
   height: 186px;
   background: #fff;
@@ -200,20 +200,20 @@ export default {
   border-right: 4px solid #836426;
   margin-right: 5px;
 } */
-.contentMainTop .container {
+.myPay .contentMainTop .container {
   height: 168px;
   display: flex;
   flex-direction: column;
 }
-.contentMainTop .container .el-row:nth-of-type(1) {
+.myPay .contentMainTop .container .el-row:nth-of-type(1) {
   /* padding:18px 0 0 35px; */
 }
-.contentMainTop .container .el-row:nth-of-type(2) {
+.myPay .contentMainTop .container .el-row:nth-of-type(2) {
   flex: 1;
   display: flex;
   align-items: center;
 }
-.contentMainTop .el-col-6 {
+.myPay .contentMainTop .el-col-6 {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -221,20 +221,20 @@ export default {
   border-right: 1px solid #707070;
   flex-direction: column;
 }
-.contentMainTop .el-col-6:nth-of-type(4) {
+.myPay .contentMainTop .el-col-6:nth-of-type(4) {
   border: none;
 }
-.contentMainTop .el-col-6 span {
+.myPay .contentMainTop .el-col-6 span {
   text-align: center;
   letter-spacing: 1px;
   margin: 1px 0;
 }
-.contentMainTop .el-col-6 span:nth-of-type(2) {
+.myPay .contentMainTop .el-col-6 span:nth-of-type(2) {
   font-size: 34px;
   color: #836426;
 }
-.ewmShare{height:100%;}
-.ewmShare>div{height:100%;display:flex;justify-content: flex-end;align-items: flex-end;}
+.myPay .ewmShare{height:100%;}
+.myPay .ewmShare>div{height:100%;display:flex;justify-content: flex-end;align-items: flex-end;}
 </style>
 
 
