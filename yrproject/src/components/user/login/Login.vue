@@ -1,5 +1,5 @@
 <template>
-  <div class="login common-color">
+  <div class="login common-color"  @mousewheel.prevent>
     <div class="bounced userLogin">
       <!-- 登录 -->
       <div v-show="maskShow==0" class="loginBox">

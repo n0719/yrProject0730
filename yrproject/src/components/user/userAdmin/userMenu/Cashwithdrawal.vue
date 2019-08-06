@@ -196,6 +196,7 @@ export default {
     return {
       sss: true,
       ssss: "",
+      input:'',
       tableData: [
         {
           id: 1,
