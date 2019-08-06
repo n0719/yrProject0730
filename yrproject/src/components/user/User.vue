@@ -58,6 +58,7 @@ export default {
   bottom: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.1);
+  z-index:10;
 }
 .el-container{width:100%;}
 .userBody {
