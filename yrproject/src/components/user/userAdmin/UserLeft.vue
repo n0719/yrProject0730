@@ -188,7 +188,7 @@ export default {
 .userLeft .userImg span{color:#E6CF68;letter-spacing: 1.8px;}
 .userLeft .userBtn{text-align: center;}
 .userBtn .el-button{width:70%;margin-bottom:14px;background:#E6CF68;border:none;color:#836426;}
-.userLeft .liMenu{text-align:left;}
+.userLeft .liMenu{text-align:left;    padding-bottom: 30px;}
 .userLeft .liMenu li{margin-bottom:2px;transition:all 0.3s linear;display:flex;align-items: center;padding-left:25%;cursor: pointer;}
 
 .userLeft .liMenu a{border:none;width:100%;text-align:left;color:#fff;display:block;height:42px;line-height:40px;box-sizing: border-box;background-repeat:no-repeat;padding-left:30px;background-position:0 7px;}
