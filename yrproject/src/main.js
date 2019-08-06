@@ -6,10 +6,11 @@ import router from './router'
 import store from './store/index'
 import "babel-polyfill"
 import ElementUI from 'element-ui'
-
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 import "element-ui/lib/theme-chalk/index.css"
 
-Vue.use(ElementUI)
+Vue.use(ElementUI,VueAxios,axios)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

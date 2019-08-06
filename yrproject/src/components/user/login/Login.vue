@@ -170,6 +170,7 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
@@ -190,9 +191,12 @@ export default {
       codeStatus: 0,
       setStatus: true,
       countDown: "",
-      isDisabled:false,
-      phoneReg:/^((\d{3,4})|\d{3,4}-)?\d{7,8}(-\d+)*$/i,
+      isDisabled: false,
+      phoneReg: /^((\d{3,4})|\d{3,4}-)?\d{7,8}(-\d+)*$/i
     };
+  },
+  mounted() {
+    this.getRule()
   },
   watch: {
     maskShow(val) {
@@ -202,6 +206,18 @@ export default {
     }
   },
   methods: {
+    getRule() {
+      axios.post("http://a1.w20.vip/Api/ApiDoc/requestRule", {
+          versionName: "MemberAppV001"
+        })
+        .then(response => {
+          localStorage.setItem('rule',JSON.stringify(response.data.data))
+          console.log(response.data.data.Public.login.username)
+        })
+        .catch(error => {
+          console.log(response);
+        });
+    },
     getCode() {
       this.isVerify = true;
     },
@@ -243,7 +259,7 @@ export default {
     login() {
       if (this.loginCount == "") {
         this.$message.error("请输入账户");
-      }else if(!this.phoneReg.test(this.loginCount)){
+      } else if (!this.phoneReg.test(this.loginCount)) {
         this.$message.error("账户输入有误");
       } else if (this.loginPwd == "") {
         this.$message.error("请输入密码");
@@ -271,7 +287,7 @@ export default {
     forgetPwd() {
       if (this.forgetPhone == "") {
         this.$message.error("请输入手机号");
-      }else if(!this.phoneReg.test(this.forgetPhone)){
+      } else if (!this.phoneReg.test(this.forgetPhone)) {
         this.$message.error("手机号输入有误");
       } else if (this.forgetCode == "") {
         this.$message.error("请输入验证码");
@@ -380,7 +396,9 @@ export default {
   border-color: #eee;
   background-color: #eee;
 }
-.userLogin .btn.is-disabled, .btn.is-disabled:focus, .btn.is-disabled:hover{
+.userLogin .btn.is-disabled,
+.btn.is-disabled:focus,
+.btn.is-disabled:hover {
   background: #eee;
   color: #836426;
   border-color: #eee;
