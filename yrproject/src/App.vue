@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <yr-index>
-     
-    </yr-index>
+    <yr-index></yr-index>
   </div>
 </template>
 

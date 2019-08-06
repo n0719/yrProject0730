@@ -1,46 +1,46 @@
 <template>
   <div class="user">
-    <div class="userBody"> 
-      <div class="userMain" :class="[winWidth>1920?'aaa':'bbb',winWidth<1600?'ccc':'aaa']">
-          <el-row class="container">
-          <el-col :span="5">
+    <div class="userBody">
+      <div class="userMain" :class="[winWidth>1920?'aaa':'bbb',winWidth<1600?'ccc':'aaa']" >
+        <el-container>
+          <el-aside width="280px">
             <user-left></user-left>
-          </el-col>
-          <el-col :span="19" class="row19">
-            <el-row class="rowTop">
+          </el-aside>
+          <el-container>
+            <el-header>
               <user-header></user-header>
-            </el-row>
-            <el-row class="rowBottom">
-                 <user-content>
-                   <router-view></router-view>
-                 </user-content>
-            </el-row>
-          </el-col>
-        </el-row>
-       </div>
-  
+            </el-header>
+            <el-main>
+              <user-content>
+                <router-view></router-view>
+              </user-content>
+            </el-main>
+          </el-container>
+        </el-container>
+      </div>
     </div>
   </div>
 </template>
 <script>
-import {mapState} from 'vuex'
+import { mapState } from "vuex";
 import UserHeader from "@/components/user/userAdmin/UserHeader";
 import UserLeft from "@/components/user/userAdmin/UserLeft";
 import UserContent from "@/components/user/userAdmin/UserContent";
 export default {
-        computed: {
-        ...mapState(['modelShow'])},
+  computed: {
+    ...mapState(["modelShow"])
+  },
   name: "yrUser",
   data() {
     return {
-        winWidth:document.documentElement.clientWidth,
-        aaa:"1465px",
-        bbb:"75%",
-        ccc:"90%"
+      winWidth: document.documentElement.clientWidth,
+      aaa: "1465px",
+      bbb: "75%",
+      ccc: "90%"
     };
   },
-  mounted(){
-  console.log(this.winWidth)
+  mounted() {
+    console.log(this.winWidth);
   },
   components: {
     UserHeader,
@@ -50,34 +50,54 @@ export default {
 };
 </script>
 <style scoped>
-
-
+.el-main{padding:0;}
 .user {
   position: fixed;
   width: 100%;
   top: 0;
   bottom: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.5);
-      overflow-y: auto;
-      overflow-x:hidden;
-      z-index: 10;
+  background: rgba(0, 0, 0, 0.1);
 }
-.userBody{displaY:flex;justify-content:center;align-items:center;min-height:100%;width:100%;overflow-y:auto;}
+.el-container{width:100%;}
+.userBody {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 50px 0;
+  box-sizing: border-box;
+}
 .userMain {
-  width:75%;
-  /* min-height:896px; */
+
+  min-height: 896px;
+ 
 }
- .user .aaa{width:1465px;}
-.user .bbb{width:75%;}
-.user .ccc{width:90%;margin:30px 0;}
-.user .container{min-height:896px;width:100%;display: flex;flex-direction: row;}
+.userMain .container {
+  width: 100%;
+}
+.user .aaa {
+  width: 1465px;
+}
+.user .bbb {
+  width: 75%;
+}
+.user .ccc {
+  width: 80%;
+  margin: 30px 0;
+}
+/* .user .ab{min-height:100%;width:100%;display: flex;flex-direction: row; } */
 
- .el-col-5{flex:1;}
- .el-col-5,.el-col-19{box-sizing: border-box;display:flex;flex-direction: column;}
-.user .userMain .rowTop{height:50px;}
-.user .userMain .rowBottom{flex:1;overflow-y:auto;}
-
+/* .userMain .container{flex:1;display:flex;width:100%;} */
+.user .userMain .rowTop {
+  height: 50px;
+}
+.user .userMain .rowBottom {
+  display:flex;
+  flex-direction: column;
+  flex:1;
+}
 </style>
 
 

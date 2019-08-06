@@ -1,5 +1,5 @@
 <template>
-  <div>
+  
     <el-row class="contentMainBottom">
       <div>
         <p>
@@ -12,7 +12,7 @@
         <img src="../../../../assets/user/ewm.png" alt />
       </div>
     </el-row>
-  </div>
+
 </template>
 <script>
 export default {

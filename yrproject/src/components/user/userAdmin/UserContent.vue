@@ -1,6 +1,6 @@
 <template>
   <div class="userContent">
-    <router-view></router-view>
+    <router-view name="abc"></router-view>
     <!-- <router-view v-if="isRouterAlive" name="Recharge"></router-view> -->
   </div>
 </template>
@@ -30,8 +30,10 @@ export default {
 <style >
 .userContent {
   background: #e9f1f9;
-  height: 100%;
-  box-sizing: border-box;
+  height:100%;
+ 
+  /* box-sizing: border-box;  
+ */
 }
 </style>
 

@@ -30,6 +30,7 @@ export default {
 };
 </script>
 <style>
+.el-header{padding:0;height:50px!important;}
 .userHeader {
   background: #2b3643;
   height: 50px;
@@ -37,7 +38,7 @@ export default {
   color: #836426;
   display: flex;
   justify-content: space-between;
-  padding: 0 30px;
+  padding: 0 30px;box-sizing: border-box;
 }
 .userHeader .headerLeft span {
   letter-spacing: 0.8px;

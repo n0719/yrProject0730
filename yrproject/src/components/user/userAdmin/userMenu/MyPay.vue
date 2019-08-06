@@ -49,7 +49,7 @@
           <el-button type="primary" class="btnColor">查询</el-button>
           <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="昨天" name="first">
-              <el-table :data="tableData" stripe style="width: 100%" class="recoredTable">
+              <el-table :data="tableData" stripe  style="width: 100%" class="recoredTable">
                 <el-table-column prop="type" label="游戏种类"></el-table-column>
                 <el-table-column prop="num" label="投注笔数"></el-table-column>
                 <el-table-column prop="effectiveNum" label="有效投注"></el-table-column>
@@ -171,18 +171,19 @@ export default {
 </script>
 <style>
 @import "../../../../assets/search.css";
-.container{height:100%;}
+.mypay .container{height:100%;}
 .myPay .el-date-editor.el-input,
 .el-date-editor.el-input__inner {
   width: 140px;
 }
 .contentMain {
   padding: 20px;
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
   height: 100%;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 }
+.contentMain .container{width:100%;}
 .myPay .contentMainTop {
   margin-bottom: 20px;
   height: 186px;
@@ -233,8 +234,9 @@ export default {
   font-size: 34px;
   color: #836426;
 }
-.myPay .ewmShare{height:100%;}
-.myPay .ewmShare>div{height:100%;display:flex;justify-content: flex-end;align-items: flex-end;}
+/* .myPay .ewmShare{height:100%;}
+.myPay .ewmShare>div{height:100%;display:flex;justify-content: flex-end;align-items: flex-end;} */
+.myPay .el-table__header , .myPay .el-table__body{width:100%!important;}
 </style>
 
 

@@ -165,6 +165,7 @@ export default {
 .moneyDealing .el-input__inner{
     border-color: #836426;
 }
+.moneyDealing .el-table__header , .moneyDealing .el-table__body{width:100%!important;}
 </style>
 
 

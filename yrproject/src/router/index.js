@@ -35,11 +35,13 @@ export default new Router({
     {
       path:'/',
       name:"index",
-      component:Index
+      component:Index,
+      redirect:'/main',
     },
    {
      path:'/main',
      name:"main",
+   
      components:{
       indexView:Main
      }
@@ -54,86 +56,119 @@ export default new Router({
     {
       path: '/userContent',
       name: 'userContent',
-      component: UserContent,
-      sss:UserContent,
+      components:{
+        abc:UserContent
+      },
+
+      // redirect:"/myPay",
       children:[
         {
           path:"/myPay",
           name:"myPay",
-          component:MyPay,
+          components:{
+            abc:MyPay
+          }
         },
         {
           path:"/bankCard",
           name:"bankCard",
-          component:BankCard
+          components:{
+            abc:BankCard
+          }
         },
         {
           path:"/edTransform",
           name:"edTransform",
-          component:EdTransform
+          components:{
+            abc:EdTransform
+          }
         },
         {
           path:"/gameRecords",
           name:"gameRecords",
-          component:GameRecords
+          components:{
+            abc:GameRecords
+          }
         },
         {
           path:"/moneyDealings",
           name:"moneyDealings",
-          component:MoneyDealings
+          components:{
+            abc:MoneyDealings
+          }
         },
         {
           path:"/returnHome",
           name:"returnHome",
-          component:ReturnHome
+          components:{
+            abc:ReturnHome
+          }
         },
         {
           path:"/subordAdmin",
           name:"subordAdmin",
-          component:SubordAdmin
+          components:{
+            abc:SubordAdmin
+          }
         },
         {
           path:"/teamOverview",
           name:"teamOverview",
-          component:TeamOverview
+          components:{
+            abc:TeamOverview
+          }
         },
         {
           path:"/webNotice",
           name:"webNotice",
-          component:WebNotice
+          components:{
+            abc:WebNotice
+          }
         },
         {
           path:"/mydiscount",
           name:"mydiscount",
-          component:Mydiscount
+          components:{
+            abc:Mydiscount
+          }
         },
         {
           path:"/recharge",
           name:"recharge",
-          component:Recharge
+          components:{
+            abc:Recharge
+          }
         },
         {
           path:"/cashwithdrawal",
           name:"cashwithdrawal",
-          component:Cashwithdrawal
+          components:{
+            abc:Cashwithdrawal
+          }
         },
         {
           path:"/cashsweep",
           name:"cashsweep",
-          component:Cashsweep
+          components:{
+            abc:Cashsweep
+          }
         },
         {
           path:"/selfUser",
           name:"selfUser",
-          component:SelfUser
+          components:{
+            abc:SelfUser
+          }
         },
         {
           path:"/subordMems",
           name:"subordMems",
-          component:SubordMems
+          components:{
+            abc:SubordMems
+          }
         },
       ],
- 
+       redirect:'/myPay'
     },
     {
       path:"/userLeft",

@@ -130,6 +130,7 @@ export default {
 .subordAdmin .el-input{
   width: auto;
 }
+.subordAdmin .el-table__header , .subordAdmin .el-table__body{width:100%!important;}
 </style>
 
 
