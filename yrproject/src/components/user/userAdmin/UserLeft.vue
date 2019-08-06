@@ -22,7 +22,7 @@
    <div class="liMenu">
      <ul>
          <li  v-for="(item,index) in liMenu" :key="index" :class = "active == index+1 ? 'addclass' : ''" >
-               <a  @click="goPage(item.id)" :style="imgList[index]">{{item.msg}}</a>
+               <a   @click="goPage(item.id)" :style="imgList[index]" target="/index">{{item.msg}}</a>
                 <!-- <a  @click="goPage(item.id)" :style="bg">{{item.msg}}</a> -->
          </li>
      </ul>

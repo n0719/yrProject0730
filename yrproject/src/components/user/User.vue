@@ -2,7 +2,8 @@
   <div class="user">
     <div class="userBody">
       <div class="userMain" :class="[winWidth>1920?'aaa':'bbb',winWidth<1600?'ccc':'aaa']" >
-        <el-container>
+        <transition name="fade">
+           <el-container>
           <el-aside width="280px">
             <user-left></user-left>
           </el-aside>
@@ -12,11 +13,12 @@
             </el-header>
             <el-main>
               <user-content>
-                <router-view></router-view>
+                    <router-view></router-view>
               </user-content>
             </el-main>
           </el-container>
         </el-container>
+        </transition>
       </div>
     </div>
   </div>
@@ -50,6 +52,14 @@ export default {
 };
 </script>
 <style scoped>
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
 .el-main{padding:0;}
 .user {
   position: fixed;
@@ -57,7 +67,8 @@ export default {
   top: 0;
   bottom: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.5);
+  z-index:10;
 }
 .el-container{width:100%;}
 .userBody {

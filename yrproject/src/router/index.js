@@ -32,16 +32,11 @@ import SelfUser from '@/components/user/userAdmin/userMenu/selfUser/SelfUser'
 import SubordMems from '@/components/user/userAdmin/userMenu/subordMembs/SubordMems'
 export default new Router({
   routes: [
-    {
-      path:'/',
-      name:"index",
-      component:Index,
-      redirect:'/main',
-    },
+   
    {
      path:'/main',
      name:"main",
-   
+     
      components:{
       indexView:Main
      }
@@ -168,7 +163,7 @@ export default new Router({
           }
         },
       ],
-       redirect:'/myPay'
+      
     },
     {
       path:"/userLeft",

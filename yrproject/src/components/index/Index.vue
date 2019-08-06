@@ -29,11 +29,11 @@
           <el-menu-item index="6">会员中心</el-menu-item>
         </el-menu>-->
         <div class="indexNav">
-          <router-link to="/main">首页</router-link>
-          <router-link to="/discount">优惠</router-link>
-          <router-link to>充值</router-link>
-          <router-link to>客服</router-link>
-          <router-link to>管理</router-link>
+          <a v-for="(item,index) in navA" :key="index" :class="active==index?'navABg':''" @click="viewToggle(index)">{{item}}</a>
+          <!-- <a>优惠</a>
+          <a>充值</a>
+          <a>客服</a>
+          <a>管理</a> -->
         </div>
         <ul class="indexLogin">
           <li>
@@ -46,24 +46,33 @@
       </div>
     </div>
     <div class="indexMain">
+        <transition name="fade">
+      <yr-main v-if="active==0?true:false"></yr-main>
+        </transition>
+          <transition name="fade">
+      <yr-discount  v-if="active==1?true:false"></yr-discount>
+          </transition>
       <!-- <img src="../../assets/index/indexBg.png" alt=""> -->
-      <router-view name="indexView"></router-view>
-    </div>
-    <div class="indexBottom">
-
-    </div>
-    <transition name="fade">
+      <!-- <router-view name="indexView"></router-view> -->
+          <transition name="fade">
       <yr-login v-if="loginSHow"></yr-login>
     </transition>
     <transition name="fade">
       <yr-user v-if="userShow"></yr-user>
     </transition>
+    </div>
+    <div class="indexBottom">
+
+    </div>
+
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
 import Login from "@/components/user/login/Login";
 import User from "@/components/user/User";
+import Main from "@/components/index/index/Main";
+import Discount from "@/components/index/index/Discount";
 export default {
   computed: {
     ...mapState(["umodelShow", "lmodelShow"])
@@ -72,19 +81,34 @@ export default {
 
   data() {
     return {
+      active:-1,
       loginSHow: "",
       userShow: "",
       indexBg: require("../../assets/index/indexBg.png"),
       activeIndex: "1",
-      activeIndex2: "1"
+      activeIndex2: "1",
+      mainShow:true,
+      discountShow:false,
+      navA:[
+        "首页",
+        "优惠",
+        "充值",
+        "客服",
+        "管理"
+      ]
     };
   },
-
+ mounted(){
+   this.active=0;
+ },
   methods: {
     loginModel() {
       this.$store.commit("lmodelShow", true);
       this.userShow = false;
       this.loginSHow = !this.loginShow;
+      this.$router.push({
+        path:'/myPAy'
+      })
     },
     userModel() {
       //  this.loginSHow=this.lmodelShow;
@@ -95,6 +119,9 @@ export default {
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
+    },
+    viewToggle(index){
+      this.active=index;
     }
   },
 
@@ -112,7 +139,9 @@ export default {
   },
   components: {
     yrLogin: Login,
-    yrUser: User
+    yrUser: User,
+    yrMain:Main,
+    yrDiscount:Discount
   }
 };
 </script>
@@ -161,8 +190,10 @@ export default {
   padding-left: 40px;
 }
 .indexLogin li a{
+  cursor: pointer;
   color: #e6cf68;
 }
+.indexNav a.navABg{background:#6C6C57;color:#E6CF68;}
 /*  */
 .indexNav {
   display: flex;
@@ -174,6 +205,7 @@ export default {
   color: #e6cf68;
   text-align: center;
   line-height: 42px;
+   cursor: pointer;
 }
 .indexBottom{
   background: #364150;
