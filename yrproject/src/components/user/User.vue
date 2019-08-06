@@ -1,5 +1,5 @@
 <template>
-  <div class="user">
+  <div class="user" @mousewheel.prevent>
     <div class="userBody">
       <div class="userMain" :class="[winWidth>1920?'aaa':'bbb',winWidth<1600?'ccc':'aaa']" >
         <transition name="fade">
