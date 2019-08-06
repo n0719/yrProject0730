@@ -1,7 +1,8 @@
 <template>
   <!-- 额度转换 -->
   <div class="contentMain edTransform">
-    <div class="contentMainContent">
+    <div class="contentMainDIv">
+
       <el-row class="container" >
         <el-row class="payNav">
           <span></span>团队余额

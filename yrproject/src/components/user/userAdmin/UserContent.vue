@@ -31,6 +31,7 @@ export default {
 .userContent {
   background: #e9f1f9;
   height:100%;
+ 
   /* box-sizing: border-box;  
  */
 }

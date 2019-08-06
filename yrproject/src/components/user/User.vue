@@ -1,22 +1,22 @@
 <template>
   <div class="user">
     <div class="userBody">
-      <div class="userMain" :class="[winWidth>1920?'aaa':'bbb',winWidth<1600?'ccc':'aaa']">
-        <el-row class="container">
-          <el-col :span="5">
+      <div class="userMain" :class="[winWidth>1920?'aaa':'bbb',winWidth<1600?'ccc':'aaa']" >
+        <el-container>
+          <el-aside width="280px">
             <user-left></user-left>
-          </el-col>
-          <el-col :span="19" class="row19">
-            <el-row class="rowTop">
+          </el-aside>
+          <el-container>
+            <el-header>
               <user-header></user-header>
-            </el-row>
-            <el-row class="rowBottom">
+            </el-header>
+            <el-main>
               <user-content>
                 <router-view></router-view>
               </user-content>
-            </el-row>
-          </el-col>
-        </el-row>
+            </el-main>
+          </el-container>
+        </el-container>
       </div>
     </div>
   </div>
@@ -50,6 +50,7 @@ export default {
 };
 </script>
 <style scoped>
+.el-main{padding:0;}
 .user {
   position: fixed;
   width: 100%;
@@ -58,6 +59,7 @@ export default {
   left: 0;
   background: rgba(0, 0, 0, 0.1);
 }
+.el-container{width:100%;}
 .userBody {
   display: flex;
   justify-content: center;
@@ -68,11 +70,13 @@ export default {
   box-sizing: border-box;
 }
 .userMain {
-  width: 75%;
+
   min-height: 896px;
-  display:flex;
+ 
 }
-.userMain .container{width:100%;}
+.userMain .container {
+  width: 100%;
+}
 .user .aaa {
   width: 1465px;
 }
@@ -85,24 +89,14 @@ export default {
 }
 /* .user .ab{min-height:100%;width:100%;display: flex;flex-direction: row; } */
 
-.user .el-col-5 {
-  flex-direction: column;
- height:100%;
-}
-.user .el-col-19 {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  height:100%;
-
-}
 /* .userMain .container{flex:1;display:flex;width:100%;} */
 .user .userMain .rowTop {
   height: 50px;
 }
 .user .userMain .rowBottom {
-  flex: 1;
-
+  display:flex;
+  flex-direction: column;
+  flex:1;
 }
 </style>
 
