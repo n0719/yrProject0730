@@ -171,18 +171,19 @@ export default {
 </script>
 <style>
 @import "../../../../assets/search.css";
-.container{height:100%;}
+.mypay .container{height:100%;}
 .myPay .el-date-editor.el-input,
 .el-date-editor.el-input__inner {
   width: 140px;
 }
 .contentMain {
   padding: 20px;
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
   height: 100%;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 }
+.contentMain .container{width:100%;}
 .myPay .contentMainTop {
   margin-bottom: 20px;
   height: 186px;

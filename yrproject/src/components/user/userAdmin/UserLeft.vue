@@ -180,6 +180,7 @@ export default {
   color:#fff;
   background:#364150;
   height:100%;
+  width:100%;
 }
 .userLeft .userImg{height:180px;display:flex;flex-direction: column;align-items: center;justify-content: space-around;padding:42px 0 20px 0;}
 .userLeft .userImg img{border-radius:50%;}

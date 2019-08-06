@@ -7,7 +7,7 @@
 }
 .contentMainContent {
     background: #fff;
-    flex: 1;
+  height:100%;
   }
   .contentMainTable {
     padding: 20px 40px;

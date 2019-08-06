@@ -23,7 +23,7 @@
         <el-row class="payNav">
           <span></span>额度转换
         </el-row>
-        <el-row v-if="step==1">
+        <el-row v-if="step==1" style="height:100%;">
           <el-row class="flex-box-center" >
             <el-form ref="form" :model="form" label-width="80px">
               <el-form-item label="转出：">

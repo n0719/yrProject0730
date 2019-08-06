@@ -1,8 +1,8 @@
 <template>
   <div class="user">
-    <div class="userBody"> 
+    <div class="userBody">
       <div class="userMain" :class="[winWidth>1920?'aaa':'bbb',winWidth<1600?'ccc':'aaa']">
-          <el-row class="container ab">
+        <el-row class="container">
           <el-col :span="5">
             <user-left></user-left>
           </el-col>
@@ -11,35 +11,36 @@
               <user-header></user-header>
             </el-row>
             <el-row class="rowBottom">
-                 <user-content>
-                   <router-view></router-view>
-                 </user-content>
+              <user-content>
+                <router-view></router-view>
+              </user-content>
             </el-row>
           </el-col>
         </el-row>
-       </div>
+      </div>
     </div>
   </div>
 </template>
 <script>
-import {mapState} from 'vuex'
+import { mapState } from "vuex";
 import UserHeader from "@/components/user/userAdmin/UserHeader";
 import UserLeft from "@/components/user/userAdmin/UserLeft";
 import UserContent from "@/components/user/userAdmin/UserContent";
 export default {
-        computed: {
-        ...mapState(['modelShow'])},
+  computed: {
+    ...mapState(["modelShow"])
+  },
   name: "yrUser",
   data() {
     return {
-        winWidth:document.documentElement.clientWidth,
-        aaa:"1465px",
-        bbb:"75%",
-        ccc:"90%"
+      winWidth: document.documentElement.clientWidth,
+      aaa: "1465px",
+      bbb: "75%",
+      ccc: "90%"
     };
   },
-  mounted(){
-  console.log(this.winWidth)
+  mounted() {
+    console.log(this.winWidth);
   },
   components: {
     UserHeader,
@@ -49,8 +50,6 @@ export default {
 };
 </script>
 <style scoped>
-
-
 .user {
   position: fixed;
   width: 100%;
@@ -58,24 +57,53 @@ export default {
   bottom: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.1);
-      overflow-y: auto;
-      overflow-x:hidden;
 }
-.userBody{displaY:flex;justify-content:center;align-items:center;width:100%;height:100%;padding:50px 0;box-sizing: border-box;}
+.userBody {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 50px 0;
+  box-sizing: border-box;
+}
 .userMain {
-  width:75%;
-  /* min-height:896px; */
+  width: 75%;
+  min-height: 896px;
+  display:flex;
 }
- .user .aaa{width:1465px;}
-.user .bbb{width:75%;}
-.user .ccc{width:80%;margin:30px 0;}
-.user .ab{min-height:950px;width:100%;display: flex;flex-direction: row;}
+.userMain .container{width:100%;}
+.user .aaa {
+  width: 1465px;
+}
+.user .bbb {
+  width: 75%;
+}
+.user .ccc {
+  width: 80%;
+  margin: 30px 0;
+}
+/* .user .ab{min-height:100%;width:100%;display: flex;flex-direction: row; } */
 
- .user .el-col-5{flex-direction: column;}
- .user .el-col-19{box-sizing: border-box;display:flex;flex-direction: column;display:flex;flex-direction: column;}
-.user .userMain .rowTop{height:50px;}
-.user .userMain .rowBottom{flex:1;overflow-y:auto;}
+.user .el-col-5 {
+  flex-direction: column;
+ height:100%;
+}
+.user .el-col-19 {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height:100%;
 
+}
+/* .userMain .container{flex:1;display:flex;width:100%;} */
+.user .userMain .rowTop {
+  height: 50px;
+}
+.user .userMain .rowBottom {
+  flex: 1;
+
+}
 </style>
 
 
