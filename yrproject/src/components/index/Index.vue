@@ -1,5 +1,11 @@
 <template>
-  <div class="index" :style="{backgroundImage: 'url(' +indexBg+')'}">
+  <div
+    class="index"
+    :style="{backgroundImage: 'url(' +indexBg+')'}"
+    style="background-image: url(/static/img/indexBg.745c671.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;"
+  >
     <div class="indexTop">
       <div class="topNav">
         <div class="logo">
@@ -21,13 +27,13 @@
           <el-menu-item index="5">管理</el-menu-item>
           <el-menu-item index="6">登录</el-menu-item>
           <el-menu-item index="6">会员中心</el-menu-item>
-        </el-menu> -->
+        </el-menu>-->
         <div class="indexNav">
-            <router-link to="/main">首页</router-link>
-            <router-link to="/discount">优惠</router-link>
-            <router-link to="">充值</router-link>
-            <router-link to="">客服</router-link>
-            <router-link to="">管理</router-link>
+          <router-link to="/main">首页</router-link>
+          <router-link to="/discount">优惠</router-link>
+          <router-link to>充值</router-link>
+          <router-link to>客服</router-link>
+          <router-link to>管理</router-link>
         </div>
         <ul class="indexLogin">
           <li>
@@ -41,14 +47,17 @@
     </div>
     <div class="indexMain">
       <!-- <img src="../../assets/index/indexBg.png" alt=""> -->
-        <router-view name="indexView"></router-view>
+      <router-view name="indexView"></router-view>
     </div>
-       <transition name="fade">
-        <yr-login v-if="loginSHow"></yr-login>
-      </transition>
-      <transition name="fade">
-        <yr-user v-if="userShow"></yr-user>
-      </transition>
+    <div class="indexBottom">
+
+    </div>
+    <transition name="fade">
+      <yr-login v-if="loginSHow"></yr-login>
+    </transition>
+    <transition name="fade">
+      <yr-user v-if="userShow"></yr-user>
+    </transition>
   </div>
 </template>
 <script>
@@ -121,26 +130,55 @@ export default {
   height: 100%;
 }
 .indexMain {
+  min-height: 1100px;
 }
 .indexTop {
   background: #364150;
-  height:90px;
- display:flex;align-items: center;
+  height: 90px;
+  display: flex;
+  align-items: center;
 }
 .indexTop .topNav {
   width: 1200px;
   margin: 0 auto;
   display: flex;
   align-items: center;
-
+  font-size: 18px;
 }
-.logo{margin-right:64px;}
-.index .el-menu.el-menu--horizontal{border:none;}
-.indexLogin{flex:1;display: flex;justify-content: flex-end;}
-.indexLogin li{float:left;padding-left:40px;}
+.logo {
+  margin-right: 64px;
+}
+.index .el-menu.el-menu--horizontal {
+  border: none;
+}
+.indexLogin {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+.indexLogin li {
+  float: left;
+  padding-left: 40px;
+}
+.indexLogin li a{
+  color: #e6cf68;
+}
 /*  */
-.indexNav{display:flex;align-items: center;}
-.indexNav a{width:120px;height:42px;color:#E6CF68;text-align: center;line-height:42px;}
+.indexNav {
+  display: flex;
+  align-items: center;
+}
+.indexNav a {
+  width: 120px;
+  height: 42px;
+  color: #e6cf68;
+  text-align: center;
+  line-height: 42px;
+}
+.indexBottom{
+  background: #364150;
+  height: 140px;
+}
 </style>
 
 

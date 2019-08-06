@@ -58,9 +58,10 @@ export default {
   top: 0;
   bottom: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.5);
       overflow-y: auto;
       overflow-x:hidden;
+      z-index: 10;
 }
 .userBody{displaY:flex;justify-content:center;align-items:center;min-height:100%;width:100%;overflow-y:auto;}
 .userMain {
