@@ -1,7 +1,6 @@
-import state from "./state";
-
+import state from "./state"; 
 export default {
-    changeUname(stata, urlName) {
+    changeUname(state, urlName) {
         state.urlName = urlName;
     },
     lmodelShow(state, lmodelShow) {
@@ -12,5 +11,9 @@ export default {
     },
     regRule(state, regRule) {
         state.regRule = regRule;
+        try {
+            localStorage.regRule=regRule;
+        } catch (e) {}
     }
+  
 }

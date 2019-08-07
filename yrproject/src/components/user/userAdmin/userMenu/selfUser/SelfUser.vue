@@ -160,7 +160,13 @@
 </template>
 <script>
 export default {
-
+  mounted(){
+    var str=this.getReg.getReg("regex:/^[a-zA-Z0-9_-]{3,16}/$");
+ 
+    var uNameReg=new RegExp(str);
+   
+    this.rules.uName[0].pattern=uNameReg
+  },
   data() {
     return {
       activeName: "first",
@@ -182,7 +188,7 @@ export default {
         uName: [
           {
             required: true,
-            pattern: /^[(a-zA-Z0-9\u4e00-\u9fa5){1}_#]{2,6}$/,
+            pattern:"",
             message: "用户名需为2-6位"
           }
         ],
