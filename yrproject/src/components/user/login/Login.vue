@@ -1,5 +1,5 @@
 <template>
-  <div class="login common-color"  @mousewheel.prevent>
+  <div class="login common-color" @mousewheel.prevent>
     <div class="bounced userLogin">
       <!-- 登录 -->
       <div v-show="maskShow==0" class="loginBox">
@@ -176,7 +176,8 @@
   </div>
 </template>
 <script>
-import { apiLogin } from '@/axios/api';// 导入我们的api接口
+import { get, post } from '@/axios/http';
+import { apiLogin,apiUrl } from "@/axios/api"; // 导入我们的api接口
 export default {
   data() {
     return {
@@ -204,7 +205,15 @@ export default {
     };
   },
   mounted() {
-    this.getRule()
+    this.initReg(apiUrl.apiLogin,'username');
+    // post(apiUrl.apiLogin, {
+    //     username: "demo001",
+    //     password: "a123456",
+    //     verify: "35"
+    //   }).then(res => {
+    //     // 获取数据成功后的其他操作
+    //     console.log(res);
+    //   });
   },
   watch: {
     maskShow(val) {
@@ -214,15 +223,23 @@ export default {
     }
   },
   methods: {
+    initReg(url,params,callback){
+      const urls = url.split('/');
+      const regRule = this.$store.state.regRule;
+      
+      // console.log(controller);
+       console.log(regRule[urls[0]][urls[1]]);
+    },
     getRule() {
-        apiLogin({                    
-                username: "demo001",
-                // password: "a123456",
-                // verify: "35"    
-            }).then(res => {
-                // 获取数据成功后的其他操作
-                console.log(res)
-            })
+      apiLogin({
+        username: "demo001",
+        password: "a123456",
+        verify: "35"
+      }).then(res => {
+        // 获取数据成功后的其他操作
+        console.log(res);
+      });
+      // console.log(this.$store.state.regRule);
     },
     getCode() {
       this.isVerify = true;
