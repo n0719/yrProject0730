@@ -1,9 +1,3 @@
-const api={
-    abc:"getJok",
+import { get, post } from './http'
 
-}
-
-
-export default {
-  api
-}
+export const apiLogin = p => post('Public/login', p);

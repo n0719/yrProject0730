@@ -170,7 +170,7 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
+import { apiLogin } from '@/axios/api';// 导入我们的api接口
 export default {
   data() {
     return {
@@ -207,16 +207,24 @@ export default {
   },
   methods: {
     getRule() {
-      axios.post("http://a1.w20.vip/Api/ApiDoc/requestRule", {
-          versionName: "MemberAppV001"
-        })
-        .then(response => {
-          localStorage.setItem('rule',JSON.stringify(response.data.data))
-          console.log(response.data.data.Public.login.username)
-        })
-        .catch(error => {
-          console.log(response);
-        });
+        apiLogin({                    
+                username: "demo001",
+                password: "a123456",
+                verify: "35"    
+            }).then(res => {
+                // 获取数据成功后的其他操作
+                console.log(res)
+            })
+      // axios.post("http://a1.w20.vip/Api/ApiDoc/requestRule", {
+      //     versionName: "MemberAppV001"
+      //   })
+      //   .then(response => {
+      //     localStorage.setItem('rule',JSON.stringify(response.data.data))
+      //     console.log(response.data.data.Public.login.username)
+      //   })
+      //   .catch(error => {
+      //     console.log(response);
+      //   });
     },
     getCode() {
       this.isVerify = true;
