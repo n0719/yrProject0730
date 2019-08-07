@@ -75,6 +75,7 @@ import Login from "@/components/user/login/Login";
 import User from "@/components/user/User";
 import Main from "@/components/index/index/Main";
 import Discount from "@/components/index/index/Discount";
+import axios from 'axios'; // 引入axios
 export default {
   computed: {
     ...mapState(["umodelShow", "lmodelShow"])
@@ -96,8 +97,22 @@ export default {
   },
   mounted() {
     this.active = 0;
+    this.getRule();
   },
   methods: {
+   
+    getRule(){
+       var that = this;
+      axios.post('http://a1.w20.vip/Api/ApiDoc/requestRule', {
+        versionName: 'AgentV001',
+      })
+      .then(function (response) {
+        that.$store.commit("regRule", response.data.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    },
     loginModel() {
       this.$store.commit("lmodelShow", true);
       this.userShow = false;

@@ -1,5 +1,5 @@
 <template>
-  <div class="login common-color"  @mousewheel.prevent>
+  <div class="login common-color" @mousewheel.prevent>
     <div class="bounced userLogin">
       <!-- 登录 -->
       <div v-show="maskShow==0" class="loginBox">
@@ -170,7 +170,8 @@
   </div>
 </template>
 <script>
-import { apiLogin } from '@/axios/api';// 导入我们的api接口
+import { get, post } from '@/axios/http';
+import { apiLogin,apiUrl } from "@/axios/api"; // 导入我们的api接口
 export default {
   data() {
     return {
@@ -196,7 +197,15 @@ export default {
     };
   },
   mounted() {
-    this.getRule()
+    this.initReg(apiUrl.apiLogin,'username');
+    // post(apiUrl.apiLogin, {
+    //     username: "demo001",
+    //     password: "a123456",
+    //     verify: "35"
+    //   }).then(res => {
+    //     // 获取数据成功后的其他操作
+    //     console.log(res);
+    //   });
   },
   watch: {
     maskShow(val) {
@@ -206,25 +215,27 @@ export default {
     }
   },
   methods: {
+    initReg(url,params,callback){
+      const urls = url.split('/');
+      const controller = urls[0];
+      const interfaceName = urls[1];
+      const regRule = this.$store.state.regRule;
+      // console.log(controller);
+       console.log(regRule['Public']);
+       console.log(regRule[urls[0]][urls[1]]);
+       console.log(regRule[controller]);
+      
+    },
     getRule() {
-        apiLogin({                    
-                username: "demo001",
-                // password: "a123456",
-                // verify: "35"    
-            }).then(res => {
-                // 获取数据成功后的其他操作
-                console.log(res)
-            })
-      // axios.post("http://a1.w20.vip/Api/ApiDoc/requestRule", {
-      //     versionName: "MemberAppV001"
-      //   })
-      //   .then(response => {
-      //     localStorage.setItem('rule',JSON.stringify(response.data.data))
-      //     console.log(response.data.data.Public.login.username)
-      //   })
-      //   .catch(error => {
-      //     console.log(response);
-      //   });
+      apiLogin({
+        username: "demo001",
+        password: "a123456",
+        verify: "35"
+      }).then(res => {
+        // 获取数据成功后的其他操作
+        console.log(res);
+      });
+      // console.log(this.$store.state.regRule);
     },
     getCode() {
       this.isVerify = true;

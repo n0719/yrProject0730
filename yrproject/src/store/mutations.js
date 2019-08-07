@@ -1,13 +1,16 @@
 import state from "./state";
 
 export default {
-    changeUname(stata,urlName){
-        state.urlName=urlName ;
+    changeUname(stata, urlName) {
+        state.urlName = urlName;
     },
-    lmodelShow(state,lmodelShow){
-    state.lmodelShow=lmodelShow;
+    lmodelShow(state, lmodelShow) {
+        state.lmodelShow = lmodelShow;
     },
-    umodelShow(state,umodelShow){
-        state.umodelShow=umodelShow;
-        }
+    umodelShow(state, umodelShow) {
+        state.umodelShow = umodelShow;
+    },
+    regRule(state, regRule) {
+        state.regRule = regRule;
+    }
 }
