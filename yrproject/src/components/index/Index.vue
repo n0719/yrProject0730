@@ -112,6 +112,8 @@ export default {
       this.$store.commit("umodelShow", true);
       this.userShow = !this.userShow;
       this.loginSHow = false;
+   
+
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
@@ -130,6 +132,8 @@ export default {
     lmodelShow(newName, oldName) {
       if (oldName == true) {
         this.loginSHow = false;
+      }else{
+         this.loginSHow = true;
       }
     }
   },

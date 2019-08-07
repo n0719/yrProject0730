@@ -215,16 +215,6 @@ export default {
                 // 获取数据成功后的其他操作
                 console.log(res)
             })
-      // axios.post("http://a1.w20.vip/Api/ApiDoc/requestRule", {
-      //     versionName: "MemberAppV001"
-      //   })
-      //   .then(response => {
-      //     localStorage.setItem('rule',JSON.stringify(response.data.data))
-      //     console.log(response.data.data.Public.login.username)
-      //   })
-      //   .catch(error => {
-      //     console.log(response);
-      //   });
     },
     getCode() {
       this.isVerify = true;

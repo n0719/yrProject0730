@@ -6,6 +6,8 @@ import QS from 'qs'; // 引入qs模块，用来序列化post类型的数据，�
 // vant的toast提示框组件，大家可根据自己的ui组件更改。
 import { Message } from 'element-ui';
 
+import store from '../store/index'
+
 // 环境的切换
 // if (process.env.NODE_ENV == 'development') {    
 //     axios.defaults.baseURL = '/api';
@@ -38,13 +40,15 @@ axios.interceptors.request.use(
 
 // 响应拦截器
 axios.interceptors.response.use(data => {
-  console.log(data);
-  
-  const code = data.data.code;
-  if(code == 1001) { //未登录
-    // this.$store.commit("lmodelShow", true);
+ 
+ 
 
-    Message.error('未登录')
+  const code = data.data.code;
+  if(code == 1003) { //未登录
+    //  store.commit("umodelShow",false)
+    //  store.commit("lmodelShow",true);
+    
+     Message.error('未登录')
   }
   return Promise.resolve(data);
 }, error => {
@@ -53,6 +57,7 @@ axios.interceptors.response.use(data => {
    })
   return Promise.reject(error)
 })
+
 /** 
  * get方法，对应get请求 
  * @param {String} url [请求的url地址] 
