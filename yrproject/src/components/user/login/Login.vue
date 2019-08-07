@@ -19,6 +19,12 @@
             <label>密码</label>
             <el-input placeholder="请输入密码" v-model="loginPwd" type="password"></el-input>
           </div>
+           <div class="input-row flex-box common-color mg-b-10">
+            <img src="../../../assets/user/loginCode.png" style="width:28px;position:relative;left:-3px;" alt />
+            <label style="margin-left:9px;">验证码</label>
+            <el-input placeholder="请输入验证码" v-model="loginCode"></el-input>
+            <img class="codeImg" :src="loginImgCode" alt="">
+          </div>
           <div v-show="!pwdError" class="prompt fs12">密码错误</div>
           <el-button class="btn" @click="login">登录</el-button>
           <div class="flex-box-between fs12">
@@ -177,6 +183,8 @@ export default {
       maskShow: 0, //0登录 1注册 2注册成功 3忘记密码 4设置密码 5设置成功
       loginCount: "",
       loginPwd: "",
+      loginCode:'',
+      loginImgCode:"",
       regCount: "",
       regPwd: "",
       regRepeatPwd: "",
@@ -352,7 +360,9 @@ export default {
   border-bottom: 1px solid #836426;
   font-size: 14px;
   /* margin-bottom: 10px; */
+  position:relative;
 }
+.login .input-row img.codeImg{width:100px;height:30px;border:1px solid #ddd;position:absolute;right:0;}
 .login .input-row label {
   margin-left: 15px;
 }
@@ -411,7 +421,7 @@ export default {
   text-justify: distribute-all-lines;
 }
 .userLogin .loginBox label {
-  width: 50px;
+  width: 80px;
 }
 .userLogin .hoverCursor:hover {
   cursor: pointer;
