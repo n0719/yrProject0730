@@ -209,8 +209,8 @@ export default {
     getRule() {
         apiLogin({                    
                 username: "demo001",
-                password: "a123456",
-                verify: "35"    
+                // password: "a123456",
+                // verify: "35"    
             }).then(res => {
                 // 获取数据成功后的其他操作
                 console.log(res)
