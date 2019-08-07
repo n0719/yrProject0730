@@ -44,7 +44,7 @@ axios.interceptors.response.use(data => {
  
 
   const code = data.data.code;
-  if(code == 1003) { //未登录
+  if(code == 1001) { //未登录
     //  store.commit("umodelShow",false)
     //  store.commit("lmodelShow",true);
     

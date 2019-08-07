@@ -12,10 +12,10 @@ import "element-ui/lib/theme-chalk/index.css"
 //
 
 
-import {post,get} from './axios/http'
-//定义全局变量
-Vue.prototype.$post=post
-Vue.prototype.$get=get
+// import {post,get} from './axios/http'
+// //定义全局变量
+// Vue.prototype.$post=post
+// Vue.prototype.$get=get
 // Vue.prototype.$patch=patch
 // Vue.prototype.$put=put
 //
