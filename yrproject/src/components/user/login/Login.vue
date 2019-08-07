@@ -217,14 +217,10 @@ export default {
   methods: {
     initReg(url,params,callback){
       const urls = url.split('/');
-      const controller = urls[0];
-      const interfaceName = urls[1];
       const regRule = this.$store.state.regRule;
-      // console.log(controller);
-       console.log(regRule['Public']);
-       console.log(regRule[urls[0]][urls[1]]);
-       console.log(regRule[controller]);
       
+      // console.log(controller);
+       console.log(regRule[urls[0]][urls[1]]);
     },
     getRule() {
       apiLogin({

@@ -28,6 +28,7 @@ import { mapState } from "vuex";
 import UserHeader from "@/components/user/userAdmin/UserHeader";
 import UserLeft from "@/components/user/userAdmin/UserLeft";
 import UserContent from "@/components/user/userAdmin/UserContent";
+
 export default {
   computed: {
     ...mapState(["modelShow"])
@@ -43,6 +44,10 @@ export default {
   },
   mounted() {
     console.log(this.winWidth);
+  
+  },
+  methods:{
+   
   },
   components: {
     UserHeader,
