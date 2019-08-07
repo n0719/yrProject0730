@@ -95,3 +95,17 @@ export function post(url, params) {
       })
   });
 }
+
+/**/
+export function initReg(url,params,val){
+  const urls = url.split('/');
+  const regRule = store.state.regRule;
+  console.log(params);
+  //regRule[urls[0]][urls[1]]
+  // if(!this.phoneReg.test(val)){
+  //   console.log('验证未通过');       
+  //   return false;
+  // }else{
+  //   return true;
+  // }
+}

@@ -170,7 +170,7 @@
   </div>
 </template>
 <script>
-import { get, post } from '@/axios/http';
+import { get, post ,initReg} from '@/axios/http';
 import { apiLogin,apiUrl } from "@/axios/api"; // 导入我们的api接口
 export default {
   data() {
@@ -197,7 +197,9 @@ export default {
     };
   },
   mounted() {
-    this.initReg(apiUrl.apiLogin,'username');
+    if(initReg(apiUrl.apiLogin,'username',this.loginCount)){
+      console.log('验证通过');
+    }
     // post(apiUrl.apiLogin, {
     //     username: "demo001",
     //     password: "a123456",
@@ -215,13 +217,21 @@ export default {
     }
   },
   methods: {
-    initReg(url,params,callback){
-      const urls = url.split('/');
-      const regRule = this.$store.state.regRule;
+    // initReg(url,params,val){
+    //   const urls = url.split('/');
+    //   const regRule = this.$store.state.regRule;
+    //   console.log(this.phoneReg.test(val));
       
-      // console.log(controller);
-       console.log(regRule[urls[0]][urls[1]]);
-    },
+    //   if(!this.phoneReg.test(val)){
+    //     console.log('验证未通过');       
+    //     return false;
+    //   }else{
+    //     return true;
+    //   }
+      
+    //   // console.log(controller);
+    //    console.log(regRule[urls[0]][urls[1]]);
+    // },
     getRule() {
       apiLogin({
         username: "demo001",
@@ -252,7 +262,6 @@ export default {
     },
     closeModel() {
       this.$store.commit("lmodelShow", false);
-      console.log(1);
     },
     goLogin(isGo) {
       const TIME_COUNT = 5;
