@@ -9,6 +9,16 @@ import ElementUI from 'element-ui'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import "element-ui/lib/theme-chalk/index.css"
+//
+
+
+import {post,get,patch,put} from './axios/http'
+//定义全局变量
+Vue.prototype.$post=post
+Vue.prototype.$get=get
+Vue.prototype.$patch=patch
+Vue.prototype.$put=put
+//
 
 Vue.use(ElementUI,VueAxios,axios)
 Vue.config.productionTip = false
