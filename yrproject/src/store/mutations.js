@@ -1,6 +1,4 @@
-import state from './state'
-
- export default {
+export default {
     changeUname(state, urlName) {
         state.urlName = urlName;
     },

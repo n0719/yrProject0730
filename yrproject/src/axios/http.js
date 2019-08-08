@@ -54,6 +54,8 @@ axios.interceptors.response.use(data => {
     Message.error('未登录')
   }else if(code == 1003){
     Message.error(Object.values(data.data.message)[0]); 
+  }else if(code == 1){
+    Message.error(data.data.message); 
   }
   return Promise.resolve(data);
 }, error => {
