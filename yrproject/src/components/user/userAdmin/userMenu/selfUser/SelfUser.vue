@@ -1,5 +1,5 @@
 <template>
-  <div class="contentMain ">
+  <div class="contentMain">
     <div class="contentMainDIv selfUser">
       <el-tabs v-model="activeName" class="selfTab">
         <el-tab-pane label="个人资料" name="first">
@@ -13,7 +13,7 @@
                 :before-upload="beforeAvatarUpload"
                 accept="image/jpeg, image/gif, image/png, image/bmp"
               >
-                <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+                <img v-if="imageUrlState" :src="imageUrl" class="avatar" />
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
               <el-form-item label="用户名：" prop="uName">
@@ -81,7 +81,12 @@
         </el-tab-pane>
         <el-tab-pane label="修改登录密码" name="second">
           <div class="second flex-box-center">
-            <el-form ref="logPasswordFrom" :model="logPasswordFrom" label-width="100px" :rules="logRules">
+            <el-form
+              ref="logPasswordFrom"
+              :model="logPasswordFrom"
+              label-width="100px"
+              :rules="logRules"
+            >
               <el-form-item label="原始密码：" prop="logOldPassword">
                 <el-input
                   v-model="logPasswordFrom.logOldPassword"
@@ -118,7 +123,12 @@
         </el-tab-pane>
         <el-tab-pane label="修改资金密码" name="third">
           <div class="third flex-box-center">
-            <el-form ref="moneyPasswordFrom" :model="moneyPasswordFrom" label-width="100px" :rules="moneyRules">
+            <el-form
+              ref="moneyPasswordFrom"
+              :model="moneyPasswordFrom"
+              label-width="100px"
+              :rules="moneyRules"
+            >
               <el-form-item label="原始密码：" prop="moneyOldPassword">
                 <el-input
                   v-model="moneyPasswordFrom.moneyOldPassword"
@@ -150,7 +160,6 @@
                 <el-button type="default">取消</el-button>
                 <el-button type="default" @click="submitForm(ruleForm)">提交</el-button>
               </el-form-item>
-            
             </el-form>
           </div>
         </el-tab-pane>
@@ -159,13 +168,17 @@
   </div>
 </template>
 <script>
+
 export default {
-  mounted(){
-    console.log(this.$store.state.moneyData)
-   this.rules.uName[0].pattern=this.getReg.getReg(this.$store.state.publicData.login.username.validation)
+  mounted() {
+ 
+    this.rules.uName[0].pattern = this.getReg.getReg(this.$store.state.publicData.login.username.validation);
+      this.rules.uAddress[0].pattern = this.getReg.getReg(this.$store.state.currUserData.updateInfo.email.validation);
+      // this.imageUrl=this.$store.state.userImg;
   },
   data() {
     return {
+      imageUrlState:true,
       activeName: "first",
       yzTelState: false,
       yzEmailState: false,
@@ -179,19 +192,19 @@ export default {
         uaddress: "",
         ubirth: ""
       },
-      imageUrl: "../../../../../assets/user/userImg.png",
+      imageUrl: "",
       rules: {
         //个人资料验证
         uName: [
           {
             required: true,
-            pattern:"",
-            message: "用户名需为2-6位"
+            pattern: "",
+            message: "用户名需为3-16位"
           }
         ],
         nickName: [
           {
-            // required: true,
+            required: false,
             message: ""
           }
         ],
@@ -242,15 +255,15 @@ export default {
         logNewPassword: [
           {
             required: true,
-               message: "新密码不能为空",
-               trigger: "blur"
+            message: "新密码不能为空",
+            trigger: "blur"
           }
         ],
         logConPassword: [
           {
             required: true,
-               message: "确认密码不能为空",
-               trigger: "blur"
+            message: "确认密码不能为空",
+            trigger: "blur"
           }
         ]
       },
@@ -272,15 +285,15 @@ export default {
         moneyNewPassword: [
           {
             required: true,
-               message: "新密码不能为空",
-               trigger: "blur"
+            message: "新密码不能为空",
+            trigger: "blur"
           }
         ],
         moneyConPassword: [
           {
             required: true,
-               message: "确认密码不能为空",
-               trigger: "blur"
+            message: "确认密码不能为空",
+            trigger: "blur"
           }
         ]
       }
@@ -324,7 +337,7 @@ export default {
     },
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw);
-      // console.log(this.imageUrl)
+       console.log(this.imageUrl)
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
@@ -347,27 +360,28 @@ export default {
         console.log(valid);
         if (valid == false) {
         } else {
-          console.log("提交成功");
-          console.log(this.ruleForm);
+          this.post(this.apiUrl.apiSelfUser, {
+            avatar: t.imageUrl,
+            uname:t.uName,
+            nickname: t.nickname,
+            real_name:t.fullName,
+            email: t.uaddress,
+            birthday:t.ubirth
+          }).then(res => {
+            console.log(res);
+          });
         }
       });
-    }
+    },
 
-    // submitForm(e) {
-    //   this.$refs[e].validate(valid => {
-    //     if (valid) {
-    //       // alert("submit!");
-    //     } else {
-    //       // console.log("error submit!!");
-    //       return false;
-    //     }
-    //   });
-    // }
   }
 };
 </script>
 <style >
-.selfUser{padding:25px 35px 0 35px;box-sizing: border-box;}
+.selfUser {
+  padding: 25px 35px 0 35px;
+  box-sizing: border-box;
+}
 .selfUser .el-input__inner {
   border: 1px solid #836426;
 }
@@ -467,7 +481,10 @@ export default {
   font-size: 12px;
 }
 /*  */
-.selfUser .second .el-form,.selfUser .third .el-form{margin-top:100px;}
+.selfUser .second .el-form,
+.selfUser .third .el-form {
+  margin-top: 100px;
+}
 </style>
 
 

@@ -1,6 +1,9 @@
 
 
 let getRules1 = {};
+let toten1="";
+let username="游客";
+let userImg="";
 // let defaultScreenWidth=""
 try {
     if (localStorage.getRules) {
@@ -9,12 +12,36 @@ try {
 } catch (e) {
 
 }
+try {
+    if (localStorage.toten) {
+        toten1 = localStorage.toten
+    }
+} catch (e) {
+
+}
+try {
+    if (localStorage.username) {
+        username = localStorage.username
+    }
+} catch (e) {
+
+}
+try {
+    if (localStorage.userImg) {
+        userImg = localStorage.userImg
+    }
+} catch (e) {
+
+}
 export default {
+    username:username,
+    userImg:userImg,
+    isLogin:false,
     urlName: "我的账户",
     lmodelShow: false,
     umodelShow: false,
     userImg: "",
-    token: "",
+    token: toten1,
     regRule:{},
     dict: {},
     getRules:getRules1,
@@ -25,5 +52,6 @@ export default {
     moneyInData:"",
     teamData:"",
     gameData:"",
-    testData:""
+    testData:"",
+    isLogin:false
 }

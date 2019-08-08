@@ -42,7 +42,7 @@
         </div>
         <ul class="indexLogin">
           <li>
-            <a @click="loginModel">登录</a>
+            <a @click="loginModel">登录-{{this.$store.state.username}}</a>
           </li>
           <li>
             <a @click="userModel">会员中心</a>
@@ -66,7 +66,9 @@
         <yr-user v-if="userShow"></yr-user>
       </transition>
     </div>
-    <div class="indexBottom"></div>
+    <div class="indexBottom">
+      <img :src="this.$store.state.userImg" alt="">
+    </div>
   </div>
 </template>
 <script>
@@ -75,15 +77,20 @@ import Login from "@/components/user/login/Login";
 import User from "@/components/user/User";
 import Main from "@/components/index/index/Main";
 import Discount from "@/components/index/index/Discount";
-import axios from 'axios'; // 引入axios
+import axios from "axios"; // 引入axios
 export default {
   computed: {
     ...mapState(["umodelShow", "lmodelShow"])
   },
   name: "login",
-
+  beforeRouteEnter(to, from, next) {
+    // 在渲染该组件的对应路由被 confirm 前调用
+    // 不！能！获取组件实例 `this`
+    // 因为当守卫执行前，组件实例还没被创建
+  },
   data() {
     return {
+      username:"",
       active: -1,
       loginSHow: "",
       userShow: "",
@@ -98,23 +105,35 @@ export default {
   mounted() {
     this.active = 0;
     this.getRule();
+    this.getInfo();
+    this.username=localStorage.getItem("username")
   },
   methods: {
-   
-    getRule(){
-       var that = this;
-      axios.post('http://a1.w20.vip/Api/ApiDoc/requestRule', {
-        versionName: 'MemberAppV001',
-      })
-      .then(function (response) {
-        that.$store.commit("regRule", response.data.data);
-        var data1=response.data.data
-        let getRulesData=JSON.stringify(data1);
-         that.$store.commit("getRules", getRulesData);
-      })
-      .catch(function (error) {
-        console.log(error);
+    getInfo() {
+      this.post(this.apiUrl.apiGetInfo,{}).then(res => {
+        var data=res.data;
+        this.$store.commit("userImg",data.avatar)
+        console.log(data);
+        // console.log(data.group_id);
+        // console.log(data.hierarchy);
+         console.log(data.username);
       });
+    },
+    getRule() {
+      var that = this;
+      axios
+        .post("http://a1.w20.vip/Api/ApiDoc/requestRule", {
+          versionName: "MemberAppV001"
+        })
+        .then(function(response) {
+          that.$store.commit("regRule", response.data.data);
+          var data1 = response.data.data;
+          let getRulesData = JSON.stringify(data1);
+          that.$store.commit("getRules", getRulesData);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     },
     loginModel() {
       this.$store.commit("lmodelShow", true);
@@ -123,17 +142,33 @@ export default {
       this.$router.push({
         path: "/myPAy"
       });
-       this.noScroll()
+      this.noScroll();
     },
     userModel() {
       //  this.loginSHow=this.lmodelShow;
       //  this.userShow=!this.userShow;
-      this.$store.commit("umodelShow", true);
-      this.userShow = !this.userShow;
-      this.loginSHow = false;
-       this.noScroll()
-   
-
+      var that = this;
+      if (localStorage.getItem("token") != "") {
+        this.$store.commit("umodelShow", true);
+        this.userShow = !this.userShow;
+        this.loginSHow = false;
+        this.noScroll();
+      } else {
+        this.$confirm("用户登录需登录后才可以访问", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            that.$store.commit("lmodelShow", true);
+            that.userShow = false;
+            that.loginSHow = !this.loginShow;
+            that.$router.push({
+              path: "/myPAy"
+            });
+          })
+          .catch(() => {});
+      }
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
@@ -147,13 +182,15 @@ export default {
     umodelShow(newName, oldName) {
       if (oldName == true) {
         this.userShow = false;
+        this.canScroll();
       }
     },
     lmodelShow(newName, oldName) {
       if (oldName == true) {
         this.loginSHow = false;
-      }else{
-         this.loginSHow = true;
+        this.canScroll();
+      } else {
+        this.loginSHow = true;
       }
     }
   },

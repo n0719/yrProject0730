@@ -204,12 +204,12 @@
   </div>
 </template>
 <script>
-import { get, post } from "@/axios/http";
-import { apiLogin, apiUrl } from "@/axios/api"; // 导入我们的api接口
+
 import { initReg } from "@/axios/regRule"; // 验证方法
 import { Message } from "element-ui";
 import axios from "axios"; // 引入axios
-
+import { get, post } from "@/axios/http";
+import { apiUrl } from "@/axios/api";
 export default {
   data() {
     return {
@@ -315,22 +315,23 @@ export default {
         Message.error("请输入验证码");
         return false;
       } else {
-        this.loading = true;
-        post(apiUrl.apiLogin, {
+        this.post(this.apiUrl.apiLogin, {
           username: this.loginCount,
           password: this.loginPwd,
           verify: this.loginCode
-        }).then(response => {
-          this.loading = false;
-          if (response.code == 0) {
-            Message.success("登陆成功");
-            this.$store.commit("token", response.data.access_token);
-            this.closeModel();
-          } else {
-            this.loginCode = "";
-            this.getCodeImg();
-          }
-        });
+        })
+          .then(response=> {
+             if(response.code==0){
+               Message.success('登陆成功');
+               this.$store.commit("token", response.data.access_token);
+               this.closeModel();
+               this.$store.commit("username",this.loginCount);
+               
+             }else{
+               this.loginCode = '';
+               this.getCodeImg();
+             }
+          })
       }
     },
     //注册

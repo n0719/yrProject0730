@@ -3,13 +3,13 @@ import Router from 'vue-router'
 // 
 Vue.use(Router)
 
- import UserContent from '@/components/user/userAdmin/UserContent'
- import UserLeft from '@/components/user/userAdmin/UserLeft'
- //
- import Index from '@/components/index/Index'
- 
- import Main from '@/components/index/index/Main'
- import Discount from '@/components/index/index/Discount'
+import UserContent from '@/components/user/userAdmin/UserContent'
+import UserLeft from '@/components/user/userAdmin/UserLeft'
+//
+import Index from '@/components/index/Index'
+
+import Main from '@/components/index/index/Main'
+import Discount from '@/components/index/index/Discount'
 //
 import MyPay from '@/components/user/userAdmin/userMenu/MyPay'
 import BankCard from '@/components/user/userAdmin/userMenu/BankCard'
@@ -32,143 +32,141 @@ import SelfUser from '@/components/user/userAdmin/userMenu/selfUser/SelfUser'
 import SubordMems from '@/components/user/userAdmin/userMenu/subordMembs/SubordMems'
 export default new Router({
   routes: [
-   
-   {
-     path:'/main',
-     name:"main",
-     
-     components:{
-      indexView:Main
-     }
+    {
+      path: '/main',
+      name: "main",
+      components: {
+        indexView: Main
+      }
     },
     {
-      path:'/discount',
-     name:"discount",
-     components:{
-      indexView:Discount
-     }
+      path: '/discount',
+      name: "discount",
+      components: {
+        indexView: Discount
+      }
     },
     {
       path: '/userContent',
       name: 'userContent',
-      components:{
-        abc:UserContent
+      components: {
+        abc: UserContent
       },
 
       // redirect:"/myPay",
-      children:[
+      children: [
         {
-          path:"/myPay",
-          name:"myPay",
-          components:{
-            abc:MyPay
+          path: "/myPay",
+          name: "myPay",
+          components: {
+            abc: MyPay
           }
         },
         {
-          path:"/bankCard",
-          name:"bankCard",
-          components:{
-            abc:BankCard
+          path: "/bankCard",
+          name: "bankCard",
+          components: {
+            abc: BankCard
           }
         },
         {
-          path:"/edTransform",
-          name:"edTransform",
-          components:{
-            abc:EdTransform
+          path: "/edTransform",
+          name: "edTransform",
+          components: {
+            abc: EdTransform
           }
         },
         {
-          path:"/gameRecords",
-          name:"gameRecords",
-          components:{
-            abc:GameRecords
+          path: "/gameRecords",
+          name: "gameRecords",
+          components: {
+            abc: GameRecords
           }
         },
         {
-          path:"/moneyDealings",
-          name:"moneyDealings",
-          components:{
-            abc:MoneyDealings
+          path: "/moneyDealings",
+          name: "moneyDealings",
+          components: {
+            abc: MoneyDealings
           }
         },
         {
-          path:"/returnHome",
-          name:"returnHome",
-          components:{
-            abc:ReturnHome
+          path: "/returnHome",
+          name: "returnHome",
+          components: {
+            abc: ReturnHome
           }
         },
         {
-          path:"/subordAdmin",
-          name:"subordAdmin",
-          components:{
-            abc:SubordAdmin
+          path: "/subordAdmin",
+          name: "subordAdmin",
+          components: {
+            abc: SubordAdmin
           }
         },
         {
-          path:"/teamOverview",
-          name:"teamOverview",
-          components:{
-            abc:TeamOverview
+          path: "/teamOverview",
+          name: "teamOverview",
+          components: {
+            abc: TeamOverview
           }
         },
         {
-          path:"/webNotice",
-          name:"webNotice",
-          components:{
-            abc:WebNotice
+          path: "/webNotice",
+          name: "webNotice",
+          components: {
+            abc: WebNotice
           }
         },
         {
-          path:"/mydiscount",
-          name:"mydiscount",
-          components:{
-            abc:Mydiscount
+          path: "/mydiscount",
+          name: "mydiscount",
+          components: {
+            abc: Mydiscount
           }
         },
         {
-          path:"/recharge",
-          name:"recharge",
-          components:{
-            abc:Recharge
+          path: "/recharge",
+          name: "recharge",
+          components: {
+            abc: Recharge
           }
         },
         {
-          path:"/cashwithdrawal",
-          name:"cashwithdrawal",
-          components:{
-            abc:Cashwithdrawal
+          path: "/cashwithdrawal",
+          name: "cashwithdrawal",
+          components: {
+            abc: Cashwithdrawal
           }
         },
         {
-          path:"/cashsweep",
-          name:"cashsweep",
-          components:{
-            abc:Cashsweep
+          path: "/cashsweep",
+          name: "cashsweep",
+          components: {
+            abc: Cashsweep
           }
         },
         {
-          path:"/selfUser",
-          name:"selfUser",
-          components:{
-            abc:SelfUser
+          path: "/selfUser",
+          name: "selfUser",
+          components: {
+            abc: SelfUser
           }
         },
         {
-          path:"/subordMems",
-          name:"subordMems",
-          components:{
-            abc:SubordMems
+          path: "/subordMems",
+          name: "subordMems",
+          components: {
+            abc: SubordMems
           }
         },
       ],
-      
+
     },
     {
-      path:"/userLeft",
-      name:"userLeft",
-      component:UserLeft
+      path: "/userLeft",
+      name: "userLeft",
+      component: UserLeft
     }
   ],
 

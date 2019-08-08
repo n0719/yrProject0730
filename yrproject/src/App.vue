@@ -34,9 +34,11 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 } */
+body{padding-right:0!important;}
 html,
 body {
   height: 100%;
+  /* padding-right:0!important; */
 }
 body {
   font-family: PingFang SC;

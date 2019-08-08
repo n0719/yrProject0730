@@ -9,9 +9,12 @@ import ElementUI from 'element-ui'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import "element-ui/lib/theme-chalk/index.css"
-
+import { get, post } from "@/axios/http";
+import { apiUrl } from "@/axios/api";
 //
-
+Vue.prototype.get = get
+Vue.prototype.post = post
+Vue.prototype.apiUrl = apiUrl
 import getReg from "./axios/rulesData"
 Vue.prototype.getReg = getReg
 
