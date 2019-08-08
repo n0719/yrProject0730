@@ -181,8 +181,7 @@
   </div>
 </template>
 <script>
-import { get, post } from "@/axios/http";
-import { apiLogin, apiUrl } from "@/axios/api"; // 导入我们的api接口
+
 import { initReg } from "@/axios/regRule"; // 验证方法
 import { Message } from "element-ui";
 import axios from "axios"; // 引入axios
@@ -288,7 +287,7 @@ export default {
         Message.error("请输入验证码");
         return false;
       } else {
-        post(apiUrl.apiLogin, {
+        this.post(this.apiUrl.apiLogin, {
           username: this.loginCount,
           password: this.loginPwd,
           verify: this.loginCode

@@ -7,7 +7,7 @@
             <el-form ref="ruleForm" :model="ruleForm" label-width="100px" :rules="rules">
               <el-upload
                 class="avatar-uploader flex-box-center"
-                action
+                action="https://jsonplaceholder.typicode.com/posts/"
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
                 :before-upload="beforeAvatarUpload"
@@ -168,16 +168,12 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 
 export default {
   mounted() {
-    this.getRule();
-    console.log(this.$store.state.token);
-    // console.log(this.$store.state.moneyData)
-    this.rules.uName[0].pattern = this.getReg.getReg(
-      this.$store.state.publicData.login.username.validation
-    );
+ 
+    this.rules.uName[0].pattern = this.getReg.getReg(this.$store.state.publicData.login.username.validation);
+      this.rules.uAddress[0].pattern = this.getReg.getReg(this.$store.state.currUserData.updateInfo.email.validation);
   },
   data() {
     return {
@@ -194,7 +190,7 @@ export default {
         uaddress: "",
         ubirth: ""
       },
-      imageUrl: "../../../../../assets/user/userImg.png",
+      imageUrl: "",
       rules: {
         //个人资料验证
         uName: [
@@ -339,7 +335,7 @@ export default {
     },
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw);
-      // console.log(this.imageUrl)
+       console.log(this.imageUrl)
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
@@ -362,34 +358,20 @@ export default {
         console.log(valid);
         if (valid == false) {
         } else {
-          console.log("提交成功");
-          console.log(this.ruleForm);
+          this.post(this.apiUrl.apiSelfUser, {
+            avatar: t.imageUrl,
+            uname:t.uName,
+            nickname: t.nickname,
+            real_name:t.fullName,
+            email: t.uaddress,
+            birthday:t.ubirth
+          }).then(res => {
+            console.log(res);
+          });
         }
       });
     },
-      getRule(){
-      //  var that = this;
-      // axios.post('http://a1.w20.vip/Api/CurrUser/info', {
-      //   // versionName: 'MemberAppV001',
-      // })
-      // .then(function (response) {
-      //   console.log(response)
-      // })
-       axios.post("http://a1.w20.vip/Api/CurrUser/info",{}).then(res=>{
-         console.log(res)
-       })
-    },
 
-    // submitForm(e) {
-    //   this.$refs[e].validate(valid => {
-    //     if (valid) {
-    //       // alert("submit!");
-    //     } else {
-    //       // console.log("error submit!!");
-    //       return false;
-    //     }
-    //   });
-    // }
   }
 };
 </script>

@@ -102,8 +102,14 @@ export default {
   mounted() {
     this.active = 0;
     this.getRule();
+    this.getInfo();
   },
   methods: {
+    getInfo() {
+      this.post(this.apiUrl.apiGetInfo,{}).then(res => {
+        console.log(res);
+      });
+    },
     getRule() {
       var that = this;
       axios
@@ -133,7 +139,7 @@ export default {
       //  this.loginSHow=this.lmodelShow;
       //  this.userShow=!this.userShow;
       var that = this;
-      if (localStorage.getItem("token")!= "") {
+      if (localStorage.getItem("token") != "") {
         this.$store.commit("umodelShow", true);
         this.userShow = !this.userShow;
         this.loginSHow = false;
@@ -145,16 +151,14 @@ export default {
           type: "warning"
         })
           .then(() => {
-             that.$store.commit("lmodelShow", true);
-        that.userShow = false;
-        that.loginSHow = !this.loginShow;
-        that.$router.push({
-          path: "/myPAy"
-        });
+            that.$store.commit("lmodelShow", true);
+            that.userShow = false;
+            that.loginSHow = !this.loginShow;
+            that.$router.push({
+              path: "/myPAy"
+            });
           })
-          .catch(() => {
-           
-          });
+          .catch(() => {});
       }
     },
     handleSelect(key, keyPath) {
@@ -169,13 +173,13 @@ export default {
     umodelShow(newName, oldName) {
       if (oldName == true) {
         this.userShow = false;
-          this.canScroll();
+        this.canScroll();
       }
     },
     lmodelShow(newName, oldName) {
       if (oldName == true) {
         this.loginSHow = false;
-         this.canScroll();
+        this.canScroll();
       } else {
         this.loginSHow = true;
       }

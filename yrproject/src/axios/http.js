@@ -28,10 +28,8 @@ axios.defaults.withCredentials = true;
 
 // 请求拦截器
 axios.interceptors.request.use(
-
-
   config => {
-    if (config.data&&!config.data.versionName) {
+    if (!config.data.versionName) {
       config.headers.Accept = 'application/x.LegendAgent.MemberAppV001+json';
     }
     // 每次发送请求之前判断是否存在token，如果存在，则统一在http请求的header都加上token，不用每次请求都手动添加了
