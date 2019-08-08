@@ -298,6 +298,7 @@ export default {
                Message.success('登陆成功');
                this.$store.commit("token", response.data.access_token);
                this.closeModel();
+             this.$store.commit("isLogin",true)
              }else{
                this.loginCode = '';
                this.getCodeImg();

@@ -1,5 +1,5 @@
 <template>
-  <div class="contentMain ">
+  <div class="contentMain">
     <div class="contentMainDIv selfUser">
       <el-tabs v-model="activeName" class="selfTab">
         <el-tab-pane label="个人资料" name="first">
@@ -7,7 +7,7 @@
             <el-form ref="ruleForm" :model="ruleForm" label-width="100px" :rules="rules">
               <el-upload
                 class="avatar-uploader flex-box-center"
-                action="https://jsonplaceholder.typicode.com/posts/"
+                action
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
                 :before-upload="beforeAvatarUpload"
@@ -81,7 +81,12 @@
         </el-tab-pane>
         <el-tab-pane label="修改登录密码" name="second">
           <div class="second flex-box-center">
-            <el-form ref="logPasswordFrom" :model="logPasswordFrom" label-width="100px" :rules="logRules">
+            <el-form
+              ref="logPasswordFrom"
+              :model="logPasswordFrom"
+              label-width="100px"
+              :rules="logRules"
+            >
               <el-form-item label="原始密码：" prop="logOldPassword">
                 <el-input
                   v-model="logPasswordFrom.logOldPassword"
@@ -118,7 +123,12 @@
         </el-tab-pane>
         <el-tab-pane label="修改资金密码" name="third">
           <div class="third flex-box-center">
-            <el-form ref="moneyPasswordFrom" :model="moneyPasswordFrom" label-width="100px" :rules="moneyRules">
+            <el-form
+              ref="moneyPasswordFrom"
+              :model="moneyPasswordFrom"
+              label-width="100px"
+              :rules="moneyRules"
+            >
               <el-form-item label="原始密码：" prop="moneyOldPassword">
                 <el-input
                   v-model="moneyPasswordFrom.moneyOldPassword"
@@ -150,7 +160,6 @@
                 <el-button type="default">取消</el-button>
                 <el-button type="default" @click="submitForm(ruleForm)">提交</el-button>
               </el-form-item>
-            
             </el-form>
           </div>
         </el-tab-pane>
@@ -159,10 +168,16 @@
   </div>
 </template>
 <script>
+import axios from "axios";
+
 export default {
-  mounted(){
-    console.log(this.$store.state.moneyData)
-   this.rules.uName[0].pattern=this.getReg.getReg(this.$store.state.publicData.login.username.validation)
+  mounted() {
+    this.getRule();
+    console.log(this.$store.state.token);
+    // console.log(this.$store.state.moneyData)
+    this.rules.uName[0].pattern = this.getReg.getReg(
+      this.$store.state.publicData.login.username.validation
+    );
   },
   data() {
     return {
@@ -185,13 +200,13 @@ export default {
         uName: [
           {
             required: true,
-            pattern:"",
+            pattern: "",
             message: "用户名需为2-6位"
           }
         ],
         nickName: [
           {
-            // required: true,
+            required: false,
             message: ""
           }
         ],
@@ -242,15 +257,15 @@ export default {
         logNewPassword: [
           {
             required: true,
-               message: "新密码不能为空",
-               trigger: "blur"
+            message: "新密码不能为空",
+            trigger: "blur"
           }
         ],
         logConPassword: [
           {
             required: true,
-               message: "确认密码不能为空",
-               trigger: "blur"
+            message: "确认密码不能为空",
+            trigger: "blur"
           }
         ]
       },
@@ -272,15 +287,15 @@ export default {
         moneyNewPassword: [
           {
             required: true,
-               message: "新密码不能为空",
-               trigger: "blur"
+            message: "新密码不能为空",
+            trigger: "blur"
           }
         ],
         moneyConPassword: [
           {
             required: true,
-               message: "确认密码不能为空",
-               trigger: "blur"
+            message: "确认密码不能为空",
+            trigger: "blur"
           }
         ]
       }
@@ -351,7 +366,19 @@ export default {
           console.log(this.ruleForm);
         }
       });
-    }
+    },
+      getRule(){
+      //  var that = this;
+      // axios.post('http://a1.w20.vip/Api/CurrUser/info', {
+      //   // versionName: 'MemberAppV001',
+      // })
+      // .then(function (response) {
+      //   console.log(response)
+      // })
+       axios.post("http://a1.w20.vip/Api/CurrUser/info",{}).then(res=>{
+         console.log(res)
+       })
+    },
 
     // submitForm(e) {
     //   this.$refs[e].validate(valid => {
@@ -367,7 +394,10 @@ export default {
 };
 </script>
 <style >
-.selfUser{padding:25px 35px 0 35px;box-sizing: border-box;}
+.selfUser {
+  padding: 25px 35px 0 35px;
+  box-sizing: border-box;
+}
 .selfUser .el-input__inner {
   border: 1px solid #836426;
 }
@@ -467,7 +497,10 @@ export default {
   font-size: 12px;
 }
 /*  */
-.selfUser .second .el-form,.selfUser .third .el-form{margin-top:100px;}
+.selfUser .second .el-form,
+.selfUser .third .el-form {
+  margin-top: 100px;
+}
 </style>
 
 
