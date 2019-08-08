@@ -32,7 +32,8 @@
           <span></span>查询
         </el-row>
         <el-row class="contentMainTable">
-          <span>时间：</span>
+          <el-col :md="24">
+              <span>时间：</span>
           <el-date-picker
             v-model="dataStarrt"
             type="date"
@@ -47,7 +48,9 @@
             value-format="yyyy-MM-dd"
           ></el-date-picker>
           <el-button type="primary" class="btnColor">查询</el-button>
-          <el-tabs v-model="activeName" @tab-click="handleClick">
+          </el-col>
+         <el-col :md="24">
+             <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="昨天" name="first">
               <el-table :data="tableData" stripe  style="width: 100%" class="recoredTable">
                 <el-table-column prop="type" label="游戏种类"></el-table-column>
@@ -99,6 +102,7 @@
               </el-table>
             </el-tab-pane>
           </el-tabs>
+         </el-col>
         </el-row>
          <el-row class="ewmShare">
              <ewm-share></ewm-share>
@@ -237,6 +241,15 @@ export default {
 /* .myPay .ewmShare{height:100%;}
 .myPay .ewmShare>div{height:100%;display:flex;justify-content: flex-end;align-items: flex-end;} */
 .myPay .el-table__header , .myPay .el-table__body{width:100%!important;}
+
+@media screen and (max-width: 1530px) {
+   .contentMainTable .el-tabs__header{
+     position:relative;
+     right:0;top:0;
+     margin-top:10px;
+     margin-left:25px;
+   }
+}
 </style>
 
 
