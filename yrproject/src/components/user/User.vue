@@ -1,5 +1,6 @@
 <template>
-  <div class="user" @mousewheel.prevent>
+  <div class="user" >
+     <!-- @mousewheel.prevent -->
     <div class="userBody">
       <div class="userMain" :class="[winWidth>1920?'aaa':'bbb',winWidth<1600?'ccc':'aaa']" >
         <transition name="fade">
@@ -24,6 +25,7 @@
   </div>
 </template>
 <script>
+
 import { mapState } from "vuex";
 import UserHeader from "@/components/user/userAdmin/UserHeader";
 import UserLeft from "@/components/user/userAdmin/UserLeft";
@@ -74,6 +76,7 @@ export default {
   left: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index:10;
+  overflow-y:auto;overflow-x:hidden;
 }
 .el-container{width:100%;}
 .userBody {
@@ -81,7 +84,7 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   padding: 50px 0;
   box-sizing: border-box;
 }

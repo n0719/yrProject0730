@@ -108,6 +108,9 @@ export default {
       })
       .then(function (response) {
         that.$store.commit("regRule", response.data.data);
+        var data1=response.data.data
+        let getRulesData=JSON.stringify(data1);
+         that.$store.commit("getRules", getRulesData);
       })
       .catch(function (error) {
         console.log(error);
@@ -120,6 +123,7 @@ export default {
       this.$router.push({
         path: "/myPAy"
       });
+       this.noScroll()
     },
     userModel() {
       //  this.loginSHow=this.lmodelShow;
@@ -127,6 +131,7 @@ export default {
       this.$store.commit("umodelShow", true);
       this.userShow = !this.userShow;
       this.loginSHow = false;
+       this.noScroll()
    
 
     },

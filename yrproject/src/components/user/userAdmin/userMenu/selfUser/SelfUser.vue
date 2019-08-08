@@ -160,7 +160,10 @@
 </template>
 <script>
 export default {
-
+  mounted(){
+    console.log(this.$store.state.moneyData)
+   this.rules.uName[0].pattern=this.getReg.getReg(this.$store.state.publicData.login.username.validation)
+  },
   data() {
     return {
       activeName: "first",
@@ -182,7 +185,7 @@ export default {
         uName: [
           {
             required: true,
-            pattern: /^[(a-zA-Z0-9\u4e00-\u9fa5){1}_#]{2,6}$/,
+            pattern:"",
             message: "用户名需为2-6位"
           }
         ],
@@ -364,7 +367,7 @@ export default {
 };
 </script>
 <style >
-.selfUser{padding:25px 35px 0 35px;}
+.selfUser{padding:25px 35px 0 35px;box-sizing: border-box;}
 .selfUser .el-input__inner {
   border: 1px solid #836426;
 }
