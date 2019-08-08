@@ -1,5 +1,6 @@
-import state from "./state"; 
-export default {
+import state from './state'
+
+ export default {
     changeUname(state, urlName) {
         state.urlName = urlName;
     },
@@ -13,8 +14,7 @@ export default {
         state.regRule = regRule;
     },
     token(state,token){
-        state.token = token;
-    },
+        state.token = token;},
     getRules(state, getRules) {
         state.getRules = getRules;
         try {
@@ -43,6 +43,6 @@ export default {
         state.gameData = gameData
     },
     testData(state,testData){
-        state.testData = testData
+        state.testData =testData
     }
-}
+ }
