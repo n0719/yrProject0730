@@ -161,11 +161,8 @@
 <script>
 export default {
   mounted(){
-    var str=this.getReg.getReg("regex:/^[a-zA-Z0-9_-]{3,16}/$");
- 
-    var uNameReg=new RegExp(str);
-   
-    this.rules.uName[0].pattern=uNameReg
+    console.log(this.$store.state.moneyData)
+   this.rules.uName[0].pattern=this.getReg.getReg(this.$store.state.publicData.login.username.validation)
   },
   data() {
     return {
@@ -370,7 +367,7 @@ export default {
 };
 </script>
 <style >
-.selfUser{padding:25px 35px 0 35px;}
+.selfUser{padding:25px 35px 0 35px;box-sizing: border-box;}
 .selfUser .el-input__inner {
   border: 1px solid #836426;
 }

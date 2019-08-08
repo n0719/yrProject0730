@@ -1,10 +1,10 @@
 
 
-let regRule1 = {};
+let getRules1 = {};
 // let defaultScreenWidth=""
 try {
-    if (localStorage.regRule) {
-        regRule1 = localStorage.regRule
+    if (localStorage.getRules) {
+        getRules1 = localStorage.getRules
     }
 } catch (e) {
 
@@ -15,6 +15,16 @@ export default {
     umodelShow: false,
     userImg: "",
     token: "",
-    regRule: regRule1,
-    dict: {}
+    regRule:{},
+    dict: {},
+    getRules:getRules1,
+
+    publicData:"",//验证数据
+    currUserData:"",
+    moneyData:"",
+    moneyOutData:"",
+    moneyInData:"",
+    teamData:"",
+    gameData:"",
+    testData:"",
 }

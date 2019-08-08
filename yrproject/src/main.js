@@ -10,17 +10,8 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import "element-ui/lib/theme-chalk/index.css"
 
-import getReg from "./axios/test"
-//
-
+import getReg from "./axios/rulesData"
 Vue.prototype.getReg=getReg
-// import {post,get} from './axios/http'
-// //定义全局变量
-// Vue.prototype.$post=post
-// Vue.prototype.$get=get
-// Vue.prototype.$patch=patch
-// Vue.prototype.$put=put
-//
 
 Vue.use(ElementUI,VueAxios,axios)
 Vue.config.productionTip = false

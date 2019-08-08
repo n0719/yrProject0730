@@ -104,10 +104,13 @@ export default {
     getRule(){
        var that = this;
       axios.post('http://a1.w20.vip/Api/ApiDoc/requestRule', {
-        versionName: 'AgentV001',
+        versionName: 'MemberAppV001',
       })
       .then(function (response) {
         that.$store.commit("regRule", response.data.data);
+        var data1=response.data.data
+        let getRulesData=JSON.stringify(data1);
+         that.$store.commit("getRules", getRulesData);
       })
       .catch(function (error) {
         console.log(error);
