@@ -105,7 +105,10 @@ export default {
   mounted() {
     this.active = 0;
     this.getRule();
-    this.getInfo();
+   
+    if(this.$store.state.username!="游客"){
+        this.getInfo();
+    }
     this.username=localStorage.getItem("username")
   },
   methods: {

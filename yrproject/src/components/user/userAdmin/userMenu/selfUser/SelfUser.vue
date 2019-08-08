@@ -173,8 +173,10 @@ export default {
   mounted() {
  
     this.rules.uName[0].pattern = this.getReg.getReg(this.$store.state.publicData.login.username.validation);
-      this.rules.uAddress[0].pattern = this.getReg.getReg(this.$store.state.currUserData.updateInfo.email.validation);
-      // this.imageUrl=this.$store.state.userImg;
+       this.rules.uAddress[0].pattern = this.getReg.getReg(this.$store.state.currUserData.updateInfo.email.validation);
+          this.rules.uBirth[0].pattern = this.getReg.getReg(this.$store.state.currUserData.updateInfo.birthday.validation);
+      this.imageUrl=this.$store.state.userImg;
+      console.log(this.$store.state.currUserData.updateInfo)
   },
   data() {
     return {
@@ -189,8 +191,8 @@ export default {
         nickName: "",
         fullName: "",
         utel: "",
-        uaddress: "",
-        ubirth: ""
+        uAddress: "",
+        uBirth: ""
       },
       imageUrl: "",
       rules: {
@@ -225,7 +227,7 @@ export default {
         uAddress: [
           {
             required: true, //是否必填
-
+            pattern:"",
             message: "请输入邮箱地址", //错误提示信息
             trigger: "blur" //检验方式（blur为鼠标点击其他地方，）
           },
@@ -235,7 +237,14 @@ export default {
             trigger: ["blur", "change"] //（change为检验的字符变化的时候）
           }
         ],
-        uBirth: [{}]
+        uBirth: [{
+         
+            required: true,
+            pattern: "",
+            message: "",
+            trigger: "blur"
+        
+        }]
       },
       //登录密码字段
       logPasswordFrom: {
@@ -336,8 +345,9 @@ export default {
       }
     },
     handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
-       console.log(this.imageUrl)
+     
+     this.imageUrl = URL.createObjectURL(file.raw);
+     console.log(res)
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
@@ -356,17 +366,24 @@ export default {
     },
     submitForm() {
       const t = this;
+    
       t.$refs["ruleForm"].validate(valid => {
         console.log(valid);
         if (valid == false) {
         } else {
+           let avatar=t.imageUrl;
+      let uname=t.ruleForm.uName;
+      let nickname=t.ruleForm.nickname;
+      let real_name=t.ruleForm.fullName;
+      let email=t.ruleForm.uAddress;
+      let birthday=t.ruleForm.uBirth;
           this.post(this.apiUrl.apiSelfUser, {
-            avatar: t.imageUrl,
-            uname:t.uName,
-            nickname: t.nickname,
-            real_name:t.fullName,
-            email: t.uaddress,
-            birthday:t.ubirth
+            avatar:avatar,
+            uname:uname,
+            nickname: nickname,
+            real_name:real_name,
+            email: email,
+            birthday:birthday
           }).then(res => {
             console.log(res);
           });
