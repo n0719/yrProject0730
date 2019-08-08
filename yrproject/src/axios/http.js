@@ -7,6 +7,7 @@ import QS from 'qs'; // 引入qs模块，用来序列化post类型的数据，�
 import { Message } from 'element-ui';
 
 import store from '../store/index'
+import { log } from 'util';
 
 // 环境的切换
 // if (process.env.NODE_ENV == 'development') {    
@@ -22,8 +23,8 @@ axios.defaults.baseURL = 'http://a1.w20.vip/Api/';
 axios.defaults.timeout = 10000;
 
 // post请求头
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+axios.defaults.withCredentials = true; 
 
 // 请求拦截器
 axios.interceptors.request.use(
@@ -35,7 +36,7 @@ axios.interceptors.request.use(
     }
     // 每次发送请求之前判断是否存在token，如果存在，则统一在http请求的header都加上token，不用每次请求都手动添加了
     // 即使本地存在token，也有可能token是过期的，所以在响应拦截器中要对返回状态进行判断
-    const token = localStorage.getItem('token');
+    const token = store.state.token;
     token && (config.headers.Authorization = 'Bearer ' + token);
     return config;
   },
@@ -45,13 +46,14 @@ axios.interceptors.request.use(
 
 // 响应拦截器
 axios.interceptors.response.use(data => {
-  console.log(data);
-
   const code = data.data.code;
+  // console.log(data);
+  
   if (code == 1001) { //未登录
     // this.$store.commit("lmodelShow", true);
-
     Message.error('未登录')
+  }else if(code == 1003){
+    Message.error(Object.values(data.data.message)[0]); 
   }
   return Promise.resolve(data);
 }, error => {
@@ -96,16 +98,3 @@ export function post(url, params) {
   });
 }
 
-/**/
-export function initReg(url,params,val){
-  const urls = url.split('/');
-  const regRule = store.state.regRule;
-  console.log(params);
-  //regRule[urls[0]][urls[1]]
-  // if(!this.phoneReg.test(val)){
-  //   console.log('验证未通过');       
-  //   return false;
-  // }else{
-  //   return true;
-  // }
-}

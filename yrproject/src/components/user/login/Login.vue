@@ -19,11 +19,11 @@
             <label>密码</label>
             <el-input placeholder="请输入密码" v-model="loginPwd" type="password"></el-input>
           </div>
-           <div class="input-row flex-box common-color mg-b-10">
-            <img src="../../../assets/user/loginCode.png" style="width:28px;position:relative;left:-3px;" alt />
-            <label style="margin-left:9px;">验证码</label>
-            <el-input placeholder="请输入验证码" v-model="loginCode"></el-input>
-            <img class="codeImg" :src="loginImgCode" alt="">
+          <div class="input-row flex-box common-color mg-b-10">
+            <img src="../../../assets/user/iconLocker.png" alt />
+            <label>验证码</label>
+            <el-input placeholder="请输入验证码" v-model="loginCode" type="number"></el-input>
+            <img class="codeImg" :src="loginImgCode" @click="getCodeImg()" alt />
           </div>
           <div v-show="!pwdError" class="prompt fs12">密码错误</div>
           <el-button class="btn" @click="login">登录</el-button>
@@ -71,6 +71,11 @@
               v-model="inviteUser"
               type="text"
             ></el-input>
+          </div>
+          <div class="flex-box common-color mg-b-10" style="position:relative;">
+            <label>验证码：</label>
+            <el-input class="input-row flex-con" placeholder="请输入验证码" v-model="regCode"></el-input>
+            <img class="codeImg" :src="regImgCode" alt />
           </div>
           <div class="text-left">
             <el-checkbox v-model="checkedDeal">
@@ -176,19 +181,25 @@
   </div>
 </template>
 <script>
-import { get, post ,initReg} from '@/axios/http';
-import { apiLogin,apiUrl } from "@/axios/api"; // 导入我们的api接口
+import { get, post } from "@/axios/http";
+import { apiLogin, apiUrl } from "@/axios/api"; // 导入我们的api接口
+import { initReg } from "@/axios/regRule"; // 验证方法
+import { Message } from "element-ui";
+import axios from "axios"; // 引入axios
+
 export default {
   data() {
     return {
       maskShow: 0, //0登录 1注册 2注册成功 3忘记密码 4设置密码 5设置成功
       loginCount: "",
       loginPwd: "",
-      loginCode:'',
-      loginImgCode:"",
+      loginCode: "",
+      loginImgCode: "",
       regCount: "",
       regPwd: "",
       regRepeatPwd: "",
+      regCode: "",
+      regImgCode: "",
       inviteUser: "",
       forgetPhone: "",
       forgetCode: "",
@@ -205,9 +216,10 @@ export default {
     };
   },
   mounted() {
-    if(initReg(apiUrl.apiLogin,'username',this.loginCount)){
-      console.log('验证通过');
-    }
+    // if(initReg(apiUrl.apiLogin,'username',this.loginCount)){
+    //   console.log('验证通过');
+    // }
+    this.getCodeImg();
     // post(apiUrl.apiLogin, {
     //     username: "demo001",
     //     password: "a123456",
@@ -225,31 +237,8 @@ export default {
     }
   },
   methods: {
-    // initReg(url,params,val){
-    //   const urls = url.split('/');
-    //   const regRule = this.$store.state.regRule;
-    //   console.log(this.phoneReg.test(val));
-      
-    //   if(!this.phoneReg.test(val)){
-    //     console.log('验证未通过');       
-    //     return false;
-    //   }else{
-    //     return true;
-    //   }
-      
-    //   // console.log(controller);
-    //    console.log(regRule[urls[0]][urls[1]]);
-    // },
-    getRule() {
-      apiLogin({
-        username: "demo001",
-        password: "a123456",
-        verify: "35"
-      }).then(res => {
-        // 获取数据成功后的其他操作
-        console.log(res);
-      });
-      // console.log(this.$store.state.regRule);
+    getCodeImg() {
+      this.loginImgCode = "http://a1.w20.vip/verifyImg?" + Math.random();
     },
     getCode() {
       this.isVerify = true;
@@ -289,16 +278,48 @@ export default {
       }
     },
     login() {
-      if (this.loginCount == "") {
-        this.$message.error("请输入账户");
-      } else if (!this.phoneReg.test(this.loginCount)) {
-        this.$message.error("账户输入有误");
-      } else if (this.loginPwd == "") {
-        this.$message.error("请输入密码");
-        this.pwdError = false;
+      //登录
+      if (
+        !initReg(apiUrl.apiLogin, "username", this.loginCount) ||
+        !initReg(apiUrl.apiLogin, "password", this.loginPwd)
+      ) {
+        return false;
+      } else if (this.loginCode == "") {
+        Message.error("请输入验证码");
+        return false;
       } else {
-        this.closeModel();
+        post(apiUrl.apiLogin, {
+          username: this.loginCount,
+          password: this.loginPwd,
+          verify: this.loginCode
+        })
+          .then(response=> {
+             if(response.code==0){
+               Message.success('登陆成功');
+               this.$store.commit("token", response.data.access_token);
+               this.closeModel();
+             }else{
+               this.loginCode = '';
+               this.getCodeImg();
+             }
+          })
       }
+      // else if(this.loginCode==''){
+      //   Message.error('请输入验证码');
+      //   return false
+      // }else{
+      //   console.log('验证通过');
+      // }
+      // if (this.loginCount == "") {
+      //   this.$message.error("请输入账户");
+      // } else if (!this.phoneReg.test(this.loginCount)) {
+      //   this.$message.error("账户输入有误");
+      // } else if (this.loginPwd == "") {
+      //   this.$message.error("请输入密码");
+      //   this.pwdError = false;
+      // } else {
+      //   this.closeModel();
+      // }
     },
     register() {
       if (this.regCount == "") {
@@ -386,9 +407,15 @@ export default {
   border-bottom: 1px solid #836426;
   font-size: 14px;
   /* margin-bottom: 10px; */
-  position:relative;
+  position: relative;
 }
-.login .input-row img.codeImg{width:100px;height:30px;border:1px solid #ddd;position:absolute;right:0;}
+.login img.codeImg {
+  width: 100px;
+  height: 30px;
+  border: 1px solid #ddd;
+  position: absolute;
+  right: 0;
+}
 .login .input-row label {
   margin-left: 15px;
 }

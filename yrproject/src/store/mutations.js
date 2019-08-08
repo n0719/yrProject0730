@@ -12,5 +12,8 @@ export default {
     },
     regRule(state, regRule) {
         state.regRule = regRule;
+    },
+    token(state,token){
+        state.token = token;
     }
 }
