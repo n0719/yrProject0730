@@ -42,7 +42,7 @@
         </div>
         <ul class="indexLogin">
           <li>
-            <a @click="loginModel">登录</a>
+            <a @click="loginModel">登录-{{this.$store.state.username}}</a>
           </li>
           <li>
             <a @click="userModel">会员中心</a>
@@ -66,7 +66,9 @@
         <yr-user v-if="userShow"></yr-user>
       </transition>
     </div>
-    <div class="indexBottom"></div>
+    <div class="indexBottom">
+      <img :src="this.$store.state.userImg" alt="">
+    </div>
   </div>
 </template>
 <script>
@@ -88,6 +90,7 @@ export default {
   },
   data() {
     return {
+      username:"",
       active: -1,
       loginSHow: "",
       userShow: "",
@@ -103,11 +106,17 @@ export default {
     this.active = 0;
     this.getRule();
     this.getInfo();
+    this.username=localStorage.getItem("username")
   },
   methods: {
     getInfo() {
       this.post(this.apiUrl.apiGetInfo,{}).then(res => {
-        console.log(res);
+        var data=res.data;
+        this.$store.commit("userImg",data.avatar)
+        console.log(data);
+        // console.log(data.group_id);
+        // console.log(data.hierarchy);
+         console.log(data.username);
       });
     },
     getRule() {

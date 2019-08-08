@@ -2,6 +2,8 @@
 
 let getRules1 = {};
 let toten1="";
+let username="游客";
+let userImg="";
 // let defaultScreenWidth=""
 try {
     if (localStorage.getRules) {
@@ -17,7 +19,23 @@ try {
 } catch (e) {
 
 }
+try {
+    if (localStorage.username) {
+        username = localStorage.username
+    }
+} catch (e) {
+
+}
+try {
+    if (localStorage.userImg) {
+        userImg = localStorage.userImg
+    }
+} catch (e) {
+
+}
 export default {
+    username:username,
+    userImg:userImg,
     isLogin:false,
     urlName: "我的账户",
     lmodelShow: false,

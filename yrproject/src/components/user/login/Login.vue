@@ -185,7 +185,8 @@
 import { initReg } from "@/axios/regRule"; // 验证方法
 import { Message } from "element-ui";
 import axios from "axios"; // 引入axios
-
+import { get, post } from "@/axios/http";
+import { apiUrl } from "@/axios/api";
 export default {
   data() {
     return {
@@ -297,7 +298,8 @@ export default {
                Message.success('登陆成功');
                this.$store.commit("token", response.data.access_token);
                this.closeModel();
-             this.$store.commit("isLogin",true)
+               this.$store.commit("username",this.loginCount);
+               
              }else{
                this.loginCode = '';
                this.getCodeImg();

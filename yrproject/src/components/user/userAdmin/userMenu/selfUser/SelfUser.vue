@@ -13,7 +13,7 @@
                 :before-upload="beforeAvatarUpload"
                 accept="image/jpeg, image/gif, image/png, image/bmp"
               >
-                <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+                <img v-if="imageUrlState" :src="imageUrl" class="avatar" />
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
               <el-form-item label="用户名：" prop="uName">
@@ -174,9 +174,11 @@ export default {
  
     this.rules.uName[0].pattern = this.getReg.getReg(this.$store.state.publicData.login.username.validation);
       this.rules.uAddress[0].pattern = this.getReg.getReg(this.$store.state.currUserData.updateInfo.email.validation);
+      // this.imageUrl=this.$store.state.userImg;
   },
   data() {
     return {
+      imageUrlState:true,
       activeName: "first",
       yzTelState: false,
       yzEmailState: false,
@@ -197,7 +199,7 @@ export default {
           {
             required: true,
             pattern: "",
-            message: "用户名需为2-6位"
+            message: "用户名需为3-16位"
           }
         ],
         nickName: [

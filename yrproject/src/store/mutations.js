@@ -1,9 +1,18 @@
 
 
  export default {
-     isLogin(state,isLogin){
-         state.isLogin=isLogin
-     },
+    username(state,username){
+        state.username = username;
+        try {
+            localStorage.username=username;
+        } catch (e) {}
+    },
+    userImg(state,userImg){
+        state.userImg = userImg;
+        try {
+            localStorage.username=username;
+        } catch (e) {}
+    },
     changeUname(state, urlName) {
         state.urlName = urlName;
     },
@@ -64,5 +73,7 @@
     testData(state,testData){
         state.testData =testData
     }
+
+    // 
     
  }
