@@ -1,5 +1,6 @@
-import state from "./state"; 
-export default {
+
+
+ export default {
     changeUname(state, urlName) {
         state.urlName = urlName;
     },
@@ -12,10 +13,8 @@ export default {
     regRule(state, regRule) {
         state.regRule = regRule;
     },
-<<<<<<< HEAD
     token(state,token){
-        state.token = token;
-=======
+        state.token = token;},
     getRules(state, getRules) {
         state.getRules = getRules;
         try {
@@ -44,9 +43,6 @@ export default {
         state.gameData = gameData
     },
     testData(state,testData){
-        state.testData = testData
->>>>>>> ade30c4fa9f0ba8cfeaee75b4017eb9d010ce5bb
+        state.testData =testData
     }
-  
-  
-}
+ }
