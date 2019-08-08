@@ -25,6 +25,7 @@
   </div>
 </template>
 <script>
+
 import { mapState } from "vuex";
 import UserHeader from "@/components/user/userAdmin/UserHeader";
 import UserLeft from "@/components/user/userAdmin/UserLeft";

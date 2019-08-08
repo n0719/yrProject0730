@@ -123,6 +123,7 @@ export default {
       this.$router.push({
         path: "/myPAy"
       });
+       this.noScroll()
     },
     userModel() {
       //  this.loginSHow=this.lmodelShow;
@@ -130,6 +131,7 @@ export default {
       this.$store.commit("umodelShow", true);
       this.userShow = !this.userShow;
       this.loginSHow = false;
+       this.noScroll()
    
 
     },
