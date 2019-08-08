@@ -1,15 +1,15 @@
 
-import store from "../store/index"
+import store from "../store/index";
 const getRulesData = store.state.getRules;
 const getRulesDatas = JSON.parse(getRulesData);
 const getPublic = getRulesDatas.Public;//验证  public
-const getCurrUser = getRulesDatas.CurrUser//验证 currUser
+const getCurrUser = getRulesDatas.CurrUser;//验证 currUser
 const getMoney = getRulesDatas.Money;//验证  money
-const getMoneyOut = getRulesDatas.MoneyOut//验证 moneyOut
+const getMoneyOut = getRulesDatas.MoneyOut;//验证 moneyOut
 const getMoneyIn = getRulesDatas.MoneyIn;//验证  moneyIn
-const getTeam = getRulesDatas.Team//验证 team
-const getGame = getRulesDatas.Game//验证 game
-const getTest = getRulesDatas.Test//验证 test
+const getTeam = getRulesDatas.Team;//验证 team
+const getGame = getRulesDatas.Game;//验证 game
+const getTest = getRulesDatas.Test;//验证 test
 
 store.commit("publicData",getPublic);
 store.commit("currUserData",getCurrUser);

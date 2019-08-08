@@ -12,10 +12,9 @@ export default {
     regRule(state, regRule) {
         state.regRule = regRule;
     },
-<<<<<<< HEAD
     token(state,token){
         state.token = token;
-=======
+    },
     getRules(state, getRules) {
         state.getRules = getRules;
         try {
@@ -45,8 +44,5 @@ export default {
     },
     testData(state,testData){
         state.testData = testData
->>>>>>> ade30c4fa9f0ba8cfeaee75b4017eb9d010ce5bb
     }
-  
-  
 }

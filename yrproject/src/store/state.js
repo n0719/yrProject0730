@@ -18,7 +18,6 @@ export default {
     regRule:{},
     dict: {},
     getRules:getRules1,
-
     publicData:"",//验证数据
     currUserData:"",
     moneyData:"",
@@ -26,5 +25,5 @@ export default {
     moneyInData:"",
     teamData:"",
     gameData:"",
-    testData:"",
+    testData:""
 }
