@@ -107,8 +107,12 @@ export default {
     this.active = 0;
     this.getRule();
     console.log(this.$store.state.uname);
-    // if (this.$store.state.uname != "游客") {
-    // }
+    if (this.$store.state.uname != "游客") {
+        this.getInfo();
+    this.getDataDictionaries();
+    this.getTeamData();
+    this.getLowerLevelData();
+    }
     this.uname = localStorage.getItem("uname");
   },
   methods: {
@@ -158,7 +162,7 @@ export default {
             that.userShow = false;
             that.loginSHow = !this.loginShow;
             that.$router.push({
-              path: "/myPAy"
+              path: "/myPay"
             });
           })
           .catch(() => {});
@@ -178,6 +182,42 @@ export default {
           this.getInfo();
         })
         .catch(() => {});
+    },
+      getInfo() {
+      //获取个人数据信息
+      var that = this;
+      this.post(this.apiUrl.apiGetInfo, {}).then(res => {
+        var data = res.data;
+        // console.log(data)
+        that.$store.commit("infoData", data);
+      });
+    },
+    getDataDictionaries() {
+      //获取数据字典
+      this.post(this.apiUrl.apiDataDataDictionaries).then(res => {
+        var data = res.data;
+        this.$store.commit("dictionariesData", data);
+      });
+    },
+    getTeamData() {
+      //获取团队总览
+      this.post(this.apiUrl.apiTeamData).then(res => {
+        var data = res.data;
+          this.$store.commit("teamDatas", data);
+      });
+    },
+     getLowerLevelData() {
+      //下级管理
+      this.post(this.apiUrl.apiLowerLevel,{
+        limit:1,
+        page:1
+      }).then(res => {
+        var data = res.data;
+        console.log(res)
+          this.$store.commit("lowerLevel", data);
+      }).catch(err=>{
+        console.log(err)
+      });
     }
   },
 

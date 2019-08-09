@@ -10,6 +10,8 @@ export const apiUrl = {
   apiTeamData:"Team/teamData",//团队总览
   apiLowerLevel:"Team/lowerLevel",//下级管理
   apiBindPhone:"CurrUser/bindPhone",//绑定手机号
+  apiBankAccountAdd:"MoneyOut/bankAccountAdd",//新增银行卡
+  apiBankAccountList:"MoneyOut/bankAccountList",//获取银行卡列表
 }
 // export const apiLogin = p => post('Public/login', p);
 

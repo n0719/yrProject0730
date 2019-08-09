@@ -119,55 +119,17 @@ export default {
     ...mapState(["infoData","dictionariesData"])
   },
   mounted(){
-     console.log(this.dictionariesData);
-     this.tableData=this.dictionariesData.table_map.game_record.game_type;
+
+  //      this.tableData=this.$store.state.dictionariesData.table_map.game_record.game_type;
+  // console.log(this.$store.state.dictionariesData.table_map.game_record.game_type);
+  
+    
   },
   data() {
     return {
       dataStarrt: "",
       dataEnd: "",
-      tableData: [
-        // {
-        //   type: "彩票游戏",
-        //   num: "1",
-        //   effectiveNum: "0",
-        //   return: "0",
-        //   defeat: "0",
-        //   bonus: "0"
-        // },
-        // {
-        //   type: "真人视讯",
-        //   num: "0",
-        //   effectiveNum: "0",
-        //   return: "0",
-        //   defeat: "0",
-        //   bonus: "0"
-        // },
-        // {
-        //   type: "老虎机",
-        //   num: "0",
-        //   effectiveNum: "0",
-        //   return: "0",
-        //   defeat: "0",
-        //   bonus: "0"
-        // },
-        // {
-        //   type: "棋牌",
-        //   num: "0",
-        //   effectiveNum: "0",
-        //   return: "0",
-        //   defeat: "0",
-        //   bonus: "0"
-        // },
-        // {
-        //   type: "体育",
-        //   num: "0",
-        //   effectiveNum: "0",
-        //   return: "0",
-        //   defeat: "0",
-        //   bonus: "0"
-        // }
-      ],
+      tableData: [],
       activeName: "first"
     };
   },
