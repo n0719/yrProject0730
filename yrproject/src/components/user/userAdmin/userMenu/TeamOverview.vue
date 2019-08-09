@@ -26,15 +26,15 @@
           </el-row>
           
           <el-table :data="teamData" stripe style="width: 100%" class="teamTable">
-                <el-table-column prop="teamBalance" label="当前团队余额(元）" width></el-table-column>
-                <el-table-column prop="teamCharge" label="团队充值(元）" width></el-table-column>
-                <el-table-column prop="teamWithdrawal" label="团队提现(元）"></el-table-column>
-                <el-table-column prop="teamPeople" label="总团队人数"></el-table-column>
-                <el-table-column prop="firstPeople" label="首充人数"></el-table-column>
-                <el-table-column prop="activePeople" label="活跃人数"></el-table-column>
-                <el-table-column prop="onlinePeople" label="在线人数"></el-table-column>
-                <el-table-column prop="threePeople" label="3天未登录人数"></el-table-column>
-                <el-table-column prop="sevenPeople" label="7天未登录人数"></el-table-column>
+                <el-table-column prop="teamMoney" label="当前团队余额(元）" width></el-table-column>
+                <el-table-column prop="teamRecharge" label="团队充值(元）" width></el-table-column>
+                <el-table-column prop="teamWithdraw" label="团队提现(元）"></el-table-column>
+                <el-table-column prop="teamMemberNum" label="总团队人数"></el-table-column>
+                <el-table-column prop="teamFirstRecharge" label="首充人数"></el-table-column>
+                <el-table-column prop="teamActiveMember" label="活跃人数"></el-table-column>
+                <el-table-column prop="teamOnlineMember" label="在线人数"></el-table-column>
+                <!-- <el-table-column prop="threePeople" label="3天未登录人数"></el-table-column> -->
+                <el-table-column prop="sevenDayLogin" label="7天未登录人数"></el-table-column>
               </el-table>
           <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="昨天" name="first">
@@ -96,25 +96,20 @@
   </div>
 </template>
 <script>
-
+import { mapState} from "vuex";
 export default {
+    computed: {
+    ...mapState(["teamDatas"])
+  },
+  mounted(){
+       this.teamData=[this.teamDatas]
+       
+  },
   data() {
     return {
       dataStarrt: "",
       dataEnd: "",
-      teamData:[
-          {
-            teamBalance: "1000",
-            teamCharge: "0.00",
-            teamWithdrawal: "0.00",
-            teamPeople: "3(代理2/会员1)",
-            firstPeople: "34",
-            activePeople: "2342",
-            onlinePeople: "986",
-            threePeople: "34",
-            sevenPeople: "21"
-          }
-      ],
+      teamData:[],
       tableData: [
         {
           type: "彩票游戏",

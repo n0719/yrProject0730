@@ -73,21 +73,33 @@
     testData(state,testData){
         state.testData =testData
     },
-    nickname(state,nickname){
-        state.nickname =nickname
+    infoData(state,infoData){
+        state.infoData =infoData
     },
-    realname(state,realname){
-        state.realname =realname
-    }, 
-    utel(state,utel){
-    state.utel =utel
-   },
-   temail(state,temail){
-    state.temail =temail
-   },
-   ubir(state,ubir){
-    state.ubir =ubir
-   }
+    dictionariesData(state,dictionariesData){
+        state.dictionariesData =dictionariesData
+    },
+    teamDatas(state,teamDatas){
+        state.teamDatas =teamDatas
+    },
+    lowerLevel(state,lowerLevel){
+        state.lowerLevel =lowerLevel
+    },
+//     nickname(state,nickname){
+//         state.nickname =nickname
+//     },
+//     realname(state,realname){
+//         state.realname =realname
+//     }, 
+//     utel(state,utel){
+//     state.utel =utel
+//    },
+//    temail(state,temail){
+//     state.temail =temail
+//    },
+//    ubir(state,ubir){
+//     state.ubir =ubir
+//    }
 
 
 

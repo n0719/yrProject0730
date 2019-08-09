@@ -1,31 +1,30 @@
 <template>
-  <div class="user" >
-     <!-- @mousewheel.prevent -->
+  <div class="user">
+    <!-- @mousewheel.prevent -->
     <div class="userBody">
-      <div class="userMain" :class="[winWidth>1920?'aaa':'bbb',winWidth<1600?'ccc':'aaa']" >
+      <div class="userMain" :class="[winWidth>1920?'aaa':'bbb',winWidth<1600?'ccc':'aaa']">
         <transition name="fade">
-           <el-container>
-          <el-aside width="280px">
-            <user-left></user-left>
-          </el-aside>
           <el-container>
-            <el-header>
-              <user-header></user-header>
-            </el-header>
-            <el-main>
-              <user-content>
-                    <router-view></router-view>
-              </user-content>
-            </el-main>
+            <el-aside width="280px">
+              <user-left></user-left>
+            </el-aside>
+            <el-container>
+              <el-header>
+                <user-header></user-header>
+              </el-header>
+              <el-main>
+                <user-content>
+                  <router-view></router-view>
+                </user-content>
+              </el-main>
+            </el-container>
           </el-container>
-        </el-container>
         </transition>
       </div>
     </div>
   </div>
 </template>
 <script>
-
 import { mapState } from "vuex";
 import UserHeader from "@/components/user/userAdmin/UserHeader";
 import UserLeft from "@/components/user/userAdmin/UserLeft";
@@ -45,11 +44,49 @@ export default {
     };
   },
   mounted() {
-    // console.log(this.winWidth);
-  
+    console.log(this.winWidth);
+    this.getInfo();
+    this.getDataDictionaries();
+    this.getTeamData();
+    this.getLowerLevelData();
   },
-  methods:{
-   
+  methods: {
+    getInfo() {
+      //获取个人数据信息
+      var that = this;
+      this.post(this.apiUrl.apiGetInfo, {}).then(res => {
+        var data = res.data;
+        // console.log(data)
+        that.$store.commit("infoData", data);
+      });
+    },
+    getDataDictionaries() {
+      //获取数据字典
+      this.post(this.apiUrl.apiDataDataDictionaries).then(res => {
+        var data = res.data;
+        this.$store.commit("dictionariesData", data);
+      });
+    },
+    getTeamData() {
+      //获取团队总览
+      this.post(this.apiUrl.apiTeamData).then(res => {
+        var data = res.data;
+          this.$store.commit("teamDatas", data);
+      });
+    },
+     getLowerLevelData() {
+      //下级管理
+      this.post(this.apiUrl.apiLowerLevel,{
+        limit:1,
+        page:1
+      }).then(res => {
+        var data = res.data;
+        console.log(res)
+          this.$store.commit("lowerLevel", data);
+      }).catch(err=>{
+        console.log(err)
+      });
+    }
   },
   components: {
     UserHeader,
@@ -67,7 +104,9 @@ export default {
 .fade-leave-active {
   transition: opacity 0.5s;
 }
-.el-main{padding:0;}
+.el-main {
+  padding: 0;
+}
 .user {
   position: fixed;
   width: 100%;
@@ -75,10 +114,13 @@ export default {
   bottom: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index:10;
-  overflow-y:auto;overflow-x:hidden;
+  z-index: 10;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
-.el-container{width:100%;}
+.el-container {
+  width: 100%;
+}
 .userBody {
   display: flex;
   justify-content: center;
@@ -89,9 +131,7 @@ export default {
   box-sizing: border-box;
 }
 .userMain {
-
   min-height: 896px;
- 
 }
 .userMain .container {
   width: 100%;
@@ -113,9 +153,9 @@ export default {
   height: 50px;
 }
 .user .userMain .rowBottom {
-  display:flex;
+  display: flex;
   flex-direction: column;
-  flex:1;
+  flex: 1;
 }
 </style>
 

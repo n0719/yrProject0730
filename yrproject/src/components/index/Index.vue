@@ -70,13 +70,11 @@
         <yr-user v-if="userShow"></yr-user>
       </transition>
     </div>
-    <div class="indexBottom">
-     
-    </div>
+    <div class="indexBottom"></div>
   </div>
 </template>
 <script>
-import { mapState, uname } from "vuex";
+import { mapState } from "vuex";
 import Login from "@/components/user/login/Login";
 import User from "@/components/user/User";
 import Main from "@/components/index/index/Main";
@@ -108,23 +106,13 @@ export default {
   mounted() {
     this.active = 0;
     this.getRule();
-    if (this.$store.state.uname != "游客") {
-      this.getInfo(); 
-    }
+    console.log(this.$store.state.uname);
+    // if (this.$store.state.uname != "游客") {
+    // }
     this.uname = localStorage.getItem("uname");
   },
   methods: {
-    getInfo() {
-      this.post(this.apiUrl.apiGetInfo, {}).then(res => {
-        var data = res.data;
-        this.$store.commit("userImg", data.avatar);
-        this.$store.commit("nickname", data.nickname);
-        this.$store.commit("realname", data.real_name);
-        this.$store.commit("utel", data.avatar);
-        this.$store.commit("temail", data.email);
-        this.$store.commit("ubir", data.birthday);
-      });
-    },
+   
     getRule() {
       var that = this;
       axios
@@ -183,13 +171,11 @@ export default {
       this.active = index;
     },
     closeUser() {
-      this.$confirm("确认退出当前登录用户吗？", "提示", {
-        
-      })
+      this.$confirm("确认退出当前登录用户吗？", "提示", {})
         .then(() => {
-          this.$store.commit("username","游客");
-          localStorage.removeItem('token')
-           this.getInfo();
+          this.$store.commit("uname", "游客");
+          localStorage.removeItem("token");
+          this.getInfo();
         })
         .catch(() => {});
     }
@@ -210,6 +196,7 @@ export default {
         this.loginSHow = true;
       }
     },
+  
   },
   components: {
     yrLogin: Login,

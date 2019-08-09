@@ -56,10 +56,9 @@ export default {
     testData:"",
     isLogin:false,
     //个人信息
-    nickname:"",
-    realname:"",
-    utel:"",
-    temail:"",
-    ubir:""
+    infoData:"",//个人基本信息
+    dictionariesData:{},//数据字典
+    teamDatas:{},//团队总览
+    lowerLevel:{}//下级管理
 
 }
