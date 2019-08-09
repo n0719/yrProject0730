@@ -42,7 +42,11 @@
         </div>
         <ul class="indexLogin">
           <li>
-            <a @click="loginModel">登录-{{this.$store.state.username}}</a>
+            <a @click="loginModel" v-if="this.$store.state.uname=='游客'?true:false">登录</a>
+            <a v-else>
+              {{this.$store.state.uname}}
+              <span @click="closeUser">[退出]</span>
+            </a>
           </li>
           <li>
             <a @click="userModel">会员中心</a>
@@ -67,12 +71,12 @@
       </transition>
     </div>
     <div class="indexBottom">
-      <img :src="this.$store.state.userImg" alt="">
+     
     </div>
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState, uname } from "vuex";
 import Login from "@/components/user/login/Login";
 import User from "@/components/user/User";
 import Main from "@/components/index/index/Main";
@@ -90,7 +94,6 @@ export default {
   },
   data() {
     return {
-      username:"",
       active: -1,
       loginSHow: "",
       userShow: "",
@@ -105,21 +108,21 @@ export default {
   mounted() {
     this.active = 0;
     this.getRule();
-   
-    if(this.$store.state.username!="游客"){
-        this.getInfo();
+    if (this.$store.state.uname != "游客") {
+      this.getInfo(); 
     }
-    this.username=localStorage.getItem("username")
+    this.uname = localStorage.getItem("uname");
   },
   methods: {
     getInfo() {
-      this.post(this.apiUrl.apiGetInfo,{}).then(res => {
-        var data=res.data;
-        this.$store.commit("userImg",data.avatar)
-        console.log(data);
-        // console.log(data.group_id);
-        // console.log(data.hierarchy);
-         console.log(data.username);
+      this.post(this.apiUrl.apiGetInfo, {}).then(res => {
+        var data = res.data;
+        this.$store.commit("userImg", data.avatar);
+        this.$store.commit("nickname", data.nickname);
+        this.$store.commit("realname", data.real_name);
+        this.$store.commit("utel", data.avatar);
+        this.$store.commit("temail", data.email);
+        this.$store.commit("ubir", data.birthday);
       });
     },
     getRule() {
@@ -151,7 +154,7 @@ export default {
       //  this.loginSHow=this.lmodelShow;
       //  this.userShow=!this.userShow;
       var that = this;
-      if (localStorage.getItem("token") != "") {
+      if (localStorage.getItem("token") != null) {
         this.$store.commit("umodelShow", true);
         this.userShow = !this.userShow;
         this.loginSHow = false;
@@ -178,6 +181,17 @@ export default {
     },
     viewToggle(index) {
       this.active = index;
+    },
+    closeUser() {
+      this.$confirm("确认退出当前登录用户吗？", "提示", {
+        
+      })
+        .then(() => {
+          this.$store.commit("username","游客");
+          localStorage.removeItem('token')
+           this.getInfo();
+        })
+        .catch(() => {});
     }
   },
 
@@ -195,7 +209,7 @@ export default {
       } else {
         this.loginSHow = true;
       }
-    }
+    },
   },
   components: {
     yrLogin: Login,
@@ -245,13 +259,16 @@ export default {
   display: flex;
   justify-content: flex-end;
 }
+
 .indexLogin li {
   float: left;
-  padding-left: 40px;
+  padding-left: 35px;
 }
 .indexLogin li a {
   cursor: pointer;
   color: #e6cf68;
+  display: flex;
+  align-items: center;
 }
 .indexNav a.navABg {
   background: #6c6c57;
@@ -273,6 +290,18 @@ export default {
 .indexBottom {
   background: #364150;
   height: 140px;
+}
+.indexLogin li a span {
+  font-size: 12px;
+  color: #999;
+}
+@media screen and (max-width: 1450px) {
+  .indexTop .topNav {
+    font-size: 16px;
+  }
+  .indexNav a {
+    width: 100px;
+  }
 }
 </style>
 

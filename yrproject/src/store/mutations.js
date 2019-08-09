@@ -1,16 +1,16 @@
 
 
  export default {
-    username(state,username){
-        state.username = username;
+    uname(state,uname){
+        state.uname = uname;
         try {
-            localStorage.username=username;
+            localStorage.uname=uname;
         } catch (e) {}
     },
     userImg(state,userImg){
         state.userImg = userImg;
         try {
-            localStorage.username=username;
+            localStorage.userImg=userImg;
         } catch (e) {}
     },
     changeUname(state, urlName) {
@@ -72,7 +72,24 @@
 
     testData(state,testData){
         state.testData =testData
-    }
+    },
+    nickname(state,nickname){
+        state.nickname =nickname
+    },
+    realname(state,realname){
+        state.realname =realname
+    }, 
+    utel(state,utel){
+    state.utel =utel
+   },
+   temail(state,temail){
+    state.temail =temail
+   },
+   ubir(state,ubir){
+    state.ubir =ubir
+   }
+
+
 
     // 
     

@@ -45,7 +45,7 @@ export default {
     };
   },
   mounted() {
-    console.log(this.winWidth);
+    // console.log(this.winWidth);
   
   },
   methods:{

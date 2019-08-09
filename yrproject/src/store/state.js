@@ -2,7 +2,7 @@
 
 let getRules1 = {};
 let toten1="";
-let username="游客";
+let uname1="游客";
 let userImg="";
 // let defaultScreenWidth=""
 try {
@@ -20,8 +20,8 @@ try {
 
 }
 try {
-    if (localStorage.username) {
-        username = localStorage.username
+    if (localStorage.uname) {
+        uname1 = localStorage.uname
     }
 } catch (e) {
 
@@ -34,7 +34,7 @@ try {
 
 }
 export default {
-    username:username,
+    uname:uname1,
     userImg:userImg,
     isLogin:false,
     urlName: "我的账户",
@@ -54,5 +54,12 @@ export default {
     teamData:"",
     gameData:"",
     testData:"",
-    isLogin:false
+    isLogin:false,
+    //个人信息
+    nickname:"",
+    realname:"",
+    utel:"",
+    temail:"",
+    ubir:""
+
 }

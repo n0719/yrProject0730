@@ -17,7 +17,7 @@
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
               <el-form-item label="用户名：" prop="uName">
-                <el-input v-model="ruleForm.uName" name="uName" aria-required placeholder="2-6个字符"></el-input>
+                <el-input v-model="ruleForm.uName" name="uName" aria-required placeholder="3-16个字符"></el-input>
               </el-form-item>
               <el-form-item label="昵称：" prop="nickName">
                 <el-input v-model="ruleForm.nickName" placeholder="必须真实有效"></el-input>
@@ -73,7 +73,7 @@
                 ></el-date-picker>
               </el-form-item>
               <el-form-item class="subBtn">
-                <el-button type="default">取消</el-button>
+                <el-button type="default" @click="resert">取消</el-button>
                 <el-button type="default" @click="submitForm(ruleForm)">提交</el-button>
               </el-form-item>
             </el-form>
@@ -168,19 +168,30 @@
   </div>
 </template>
 <script>
-
+import { Message } from "element-ui";
 export default {
   mounted() {
- 
-    this.rules.uName[0].pattern = this.getReg.getReg(this.$store.state.publicData.login.username.validation);
-       this.rules.uAddress[0].pattern = this.getReg.getReg(this.$store.state.currUserData.updateInfo.email.validation);
-          this.rules.uBirth[0].pattern = this.getReg.getReg(this.$store.state.currUserData.updateInfo.birthday.validation);
-      this.imageUrl=this.$store.state.userImg;
-      console.log(this.$store.state.currUserData.updateInfo)
+    this.rules.uName[0].pattern = this.getReg.getReg(
+      this.$store.state.publicData.login.username.validation
+    );
+    this.rules.uAddress[0].pattern = this.getReg.getReg(
+      this.$store.state.currUserData.updateInfo.email.validation
+    );
+    this.rules.uBirth[0].pattern = this.getReg.getReg(
+      this.$store.state.currUserData.updateInfo.birthday.validation
+    );
+    this.imageUrl = this.$store.state.userImg;
+
+    this.ruleForm.uName = this.$store.state.uname;
+    this.ruleForm.nickName = this.$store.state.nickname;
+    this.ruleForm.uAddress = this.$store.state.temail;
+    this.ruleForm.fullName = this.$store.state.realname;
+    this.ruleForm.uBirth = this.$store.state.ubir;
+    // this.ruleForm.uAddress=this.$store.state.temail;
   },
   data() {
     return {
-      imageUrlState:true,
+      imageUrlState: true,
       activeName: "first",
       yzTelState: false,
       yzEmailState: false,
@@ -227,7 +238,7 @@ export default {
         uAddress: [
           {
             required: true, //是否必填
-            pattern:"",
+            pattern: "",
             message: "请输入邮箱地址", //错误提示信息
             trigger: "blur" //检验方式（blur为鼠标点击其他地方，）
           },
@@ -237,14 +248,14 @@ export default {
             trigger: ["blur", "change"] //（change为检验的字符变化的时候）
           }
         ],
-        uBirth: [{
-         
+        uBirth: [
+          {
             required: true,
             pattern: "",
             message: "",
             trigger: "blur"
-        
-        }]
+          }
+        ]
       },
       //登录密码字段
       logPasswordFrom: {
@@ -345,9 +356,8 @@ export default {
       }
     },
     handleAvatarSuccess(res, file) {
-     
-     this.imageUrl = URL.createObjectURL(file.raw);
-     console.log(res)
+      this.imageUrl = URL.createObjectURL(file.raw);
+      console.log(res);
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
@@ -366,31 +376,38 @@ export default {
     },
     submitForm() {
       const t = this;
-    
+
       t.$refs["ruleForm"].validate(valid => {
         console.log(valid);
         if (valid == false) {
         } else {
-           let avatar=t.imageUrl;
-      let uname=t.ruleForm.uName;
-      let nickname=t.ruleForm.nickname;
-      let real_name=t.ruleForm.fullName;
-      let email=t.ruleForm.uAddress;
-      let birthday=t.ruleForm.uBirth;
+          let avatar = t.imageUrl;
+          let uname = t.ruleForm.uName;
+          let nickname = t.ruleForm.nickname;
+          let real_name = t.ruleForm.fullName;
+          let email = t.ruleForm.uAddress;
+          let birthday = t.ruleForm.uBirth;
           this.post(this.apiUrl.apiSelfUser, {
-            avatar:avatar,
-            uname:uname,
+            avatar: avatar,
+            uname: uname,
             nickname: nickname,
-            real_name:real_name,
+            real_name: real_name,
             email: email,
-            birthday:birthday
+            birthday: birthday
           }).then(res => {
-            console.log(res);
+            this.$message("更新信息成功！");
+            try {
+              this.$refs["ruleForm"].resetFields();
+            } catch (e) {}
           });
         }
       });
     },
-
+    resert(){
+       try {
+              this.$refs["ruleForm"].resetFields();
+            } catch (e) {}
+    }
   }
 };
 </script>

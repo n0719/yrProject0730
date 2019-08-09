@@ -4,6 +4,7 @@ import { Message } from 'element-ui';
 
 /*获取正则*/
 export function initReg(url,params,val){
+    
     const urls = url.split('/');//获取接口名
     const rule = store.state.regRule;//获取规则
     const validation = rule[urls[0]][urls[1]][params].validation;//获取正则
