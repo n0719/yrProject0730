@@ -17,14 +17,10 @@ export default {
       //  isRouterAlive:true
     }
   },
-  //  methods:{
-  //   reload(){
-  //     this.isRouterAlive=false
-  //     this.$nextTick(function(){
-  //       this.isRouterAlive=true
-  //     })
-  //   }
-  // }
+  mounted(){
+
+  },
+  
 };
 </script>
 <style >

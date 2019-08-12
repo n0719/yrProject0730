@@ -11,7 +11,11 @@
               <div class="first">
                 <el-row v-if="nextModel">
                   <el-row class="payNav">选择银行卡</el-row>
-                  <el-radio-group v-model="radio" @change="changeRadioBank">
+                  <el-radio-group
+                    v-model="radio"
+                    @change="changeRadioBank"
+                    v-if="bankLabel.length!=0?true:false"
+                  >
                     <el-radio
                       v-for="(item,index) in bankLabel"
                       :key="index"
@@ -21,6 +25,7 @@
                       <img :src="item.img" alt />
                     </el-radio>
                   </el-radio-group>
+                  <div v-else style="text-align:Center;font-size:30px;">暂无发现银行卡充值入口，请先前往绑定银行卡</div>
                 </el-row>
                 <el-row v-else class="flex-box-center">
                   <el-form label-width="100px">
@@ -95,22 +100,31 @@
                 </el-row>
                 <el-row v-else class="flex-box-center">
                   <el-row v-if="confirmModel">
-                    <el-form label-width="100px">
-                      <el-form-item label="支付金额：" prop>
-                        <el-input name="uName" aria-required placeholder="2-6个字符"></el-input>
+                    <el-form
+                      ref="ruleFormWZ"
+                      :model="ruleFormWZ"
+                      label-width="100px"
+                      :rules="wzRules"
+                    >
+                      <el-form-item label="账号:" prop="account">
+                        <el-input v-model="ruleFormWZ.account" aria-required placeholder="2-6个字符"></el-input>
                       </el-form-item>
-                      <el-form-item label="转账人：" prop>
-                        <el-input name="uName" aria-required placeholder="2-6个字符"></el-input>
+                      <el-form-item label="金额:" prop="money">
+                        <el-input v-model="ruleFormWZ.money" aria-required placeholder="2-6个字符"></el-input>
                       </el-form-item>
-                      <el-form-item label="存入时间：" prop>
-                        <el-input name="uName" aria-required placeholder="2-6个字符"></el-input>
+                      <el-form-item label="收款账号ID:" prop="payAccountID">
+                        <el-input
+                          v-model="ruleFormWZ.payAccountID"
+                          aria-required
+                          placeholder="2-6个字符"
+                        ></el-input>
                       </el-form-item>
-                      <el-form-item label="存款金额：" prop>
+                      <!-- <el-form-item label="存款金额：" prop="account">
                         <el-input name="uName" aria-required placeholder="2-6个字符"></el-input>
                       </el-form-item>
                       <el-form-item label="附加码：" prop>
                         <el-input name="uName" aria-required placeholder="2-6个字符"></el-input>
-                      </el-form-item>
+                      </el-form-item>-->
                     </el-form>
                   </el-row>
                   <el-row v-else class="payEwm">
@@ -147,7 +161,6 @@
                       @click="onlineConfirm"
                     >确认</el-button>
                   </el-row>
-
                 </el-row>
 
                 <!-- -->
@@ -169,18 +182,27 @@
                   </el-radio-group>
                 </el-row>
                 <el-row class="thirdInput">
-                   <el-col :span="24" class="flex-box-start"><span>会员账号：</span>:ww234</el-col>
-                   <el-col :span="24" class="flex-box-start"><span>转账人：</span><el-input v-model="moneyCount" placeholder="请输入内容" style="width:initial;margin-right:5px;"></el-input><span class="tips">请输入充值金额</span></el-col>
-                 <el-col :span="20"  style="font-size:14px;color:#333;margin-top:10px;">
+                  <el-col :span="24" class="flex-box-start">
+                    <span>会员账号：</span>:ww234
+                  </el-col>
+                  <el-col :span="24" class="flex-box-start">
+                    <span>转账人：</span>
+                    <el-input
+                      v-model="moneyCount"
+                      placeholder="请输入内容"
+                      style="width:initial;margin-right:5px;"
+                    ></el-input>
+                    <span class="tips">请输入充值金额</span>
+                  </el-col>
+                  <el-col :span="20" style="font-size:14px;color:#333;margin-top:10px;">
                     <span style="color:#ff0000;">温馨提示：</span>入款之前请核对公司入款账号，避免存入公司过期账号导致金额无法追回。
                   </el-col>
 
                   <el-col :span="24" class="thirdBtn">
-                      <el-button type="default">提交</el-button>
-                        <el-button type="default">复制</el-button>
+                    <el-button type="default">提交</el-button>
+                    <el-button type="default">复制</el-button>
                   </el-col>
                 </el-row>
-                
               </div>
             </el-tab-pane>
           </el-tabs>
@@ -223,36 +245,6 @@ export default {
       confirmModel: true,
       bankLabel: [
         //银行卡支付
-        {
-          id: 1,
-          label: "中国工商银行",
-          img: require("../../../../assets/user/yinhang1.png")
-        },
-        {
-          id: 2,
-          label: "中国建设银行",
-          img: require("../../../../assets/user/yinhang2.png")
-        },
-        {
-          id: 3,
-          label: "中国农业银行",
-          img: require("../../../../assets/user/yinhang3.png")
-        },
-        {
-          id: 4,
-          label: "厦门市商业银行",
-          img: require("../../../../assets/user/yinhang4.png")
-        },
-        {
-          id: 5,
-          label: "深圳发展银行",
-          img: require("../../../../assets/user/yinghang5.png")
-        },
-        {
-          id: 6,
-          label: "中国民生银行",
-          img: require("../../../../assets/user/yinghang6.png")
-        }
       ],
       onlineLabel: [
         //在线支付
@@ -278,10 +270,48 @@ export default {
           img: require("../../../../assets/user/yinlian.png")
         }
       ],
-      moneyCount:""
+      moneyCount: "",
+      ruleFormWZ: {
+        //微信支付宝表单字段
+        account: "",
+        money: "",
+        payAccountID: ""
+      },
+      wzRules: {
+        //个人资料验证
+        account: [
+          {
+            required: true,
+            pattern: "",
+            message: "账号不能为空"
+          }
+        ],
+        money: [
+          {
+            required: true,
+            pattern: "",
+            message: "金额不能为空"
+          }
+        ],
+        payAccountID: [
+          {
+            required: true,
+            pattern: "",
+            message: "收款账号id不能为空"
+          }
+        ]
+      }
     };
   },
+  mounted() {
+    this.getBankList();
+  },
   methods: {
+    getBankList() {
+      this.post(this.apiUrl.apiBankAccountList, {}).then(res => {
+        this.bankLabel = res.data;
+      });
+    },
     changeRadioBank(value) {
       //银行卡支付选择
       this.activce = value;
@@ -301,7 +331,28 @@ export default {
     },
     onlineConfirm() {
       //在线支付确认
-      this.confirmModel = false;
+      const t = this;
+
+      t.$refs["ruleFormWZ"].validate(valid => {
+        console.log(valid);
+        if (valid == false) {
+          console.log(1);
+        } else {
+          let account = this.ruleFormWZ.account;
+          let money = this.ruleFormWZ.money;
+          let payAccountID = this.ruleFormWZ.payAccountID;
+          this.post(this.apiUrl.apiQrcodePaySubmit, {
+            account: account,
+            money: money,
+            payAccountID: payAccountID
+          }).then(res => {
+            console.log(res);
+            if (res.code == 1) {
+              this.confirmModel = false;
+            }
+          });
+        }
+      });
     }
     // refresh(){
     //    this.reload();
@@ -422,7 +473,7 @@ export default {
   margin-top: 30px;
 }
 .rechargeDiv .recharge .el-form-item {
-  margin-bottom: 10px;
+  margin-bottom: 18px;
 }
 .rechargeDiv .recharge .selfTab .first .el-tabs__item {
   width: 277px;
@@ -444,11 +495,25 @@ export default {
   width: 170px;
   height: 170px;
 }
-.rechargeDiv .thirdInput{padding-left:70px;}
-.rechargeDiv .thirdInput .el-col-24{margin-top:15px;}
-.rechargeDiv .third .tips{font-size:14px;color:#836426;}
-.rechargeDiv .thirdInput .thirdBtn{text-align: center;margin-top:30px;padding-right:70px;}
-.rechargeDiv .thirdBtn button{background:#E6CF68;color:#836426;}
+.rechargeDiv .thirdInput {
+  padding-left: 70px;
+}
+.rechargeDiv .thirdInput .el-col-24 {
+  margin-top: 15px;
+}
+.rechargeDiv .third .tips {
+  font-size: 14px;
+  color: #836426;
+}
+.rechargeDiv .thirdInput .thirdBtn {
+  text-align: center;
+  margin-top: 30px;
+  padding-right: 70px;
+}
+.rechargeDiv .thirdBtn button {
+  background: #e6cf68;
+  color: #836426;
+}
 </style>
 
 

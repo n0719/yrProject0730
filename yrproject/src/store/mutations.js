@@ -1,5 +1,4 @@
 
-
  export default {
     uname(state,uname){
         state.uname = uname;
@@ -76,8 +75,12 @@
     infoData(state,infoData){
         state.infoData =infoData
     },
+
     dictionariesData(state,dictionariesData){
         state.dictionariesData =dictionariesData
+        try {
+            localStorage.dictionariesData=dictionariesData;
+        } catch (e) {}
     },
     teamDatas(state,teamDatas){
         state.teamDatas =teamDatas
@@ -100,8 +103,7 @@
 //    ubir(state,ubir){
 //     state.ubir =ubir
 //    }
-
-
+ 
 
     // 
     

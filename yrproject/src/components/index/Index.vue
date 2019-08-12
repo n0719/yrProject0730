@@ -106,13 +106,13 @@ export default {
   mounted() {
     this.active = 0;
     this.getRule();
-       if (localStorage.getItem("token") != null) {
-     
-    }
+    this.getDataDictionaries();
+
+    if (localStorage.getItem("token") != null) {
     
+    }
   },
   methods: {
-   
     getRule() {
       var that = this;
       axios
@@ -121,9 +121,9 @@ export default {
         })
         .then(function(response) {
           that.$store.commit("regRule", response.data.data);
-          var data1 = response.data.data;
-          let getRulesData = JSON.stringify(data1);
-          that.$store.commit("getRules", getRulesData);
+          // var data1 = response.data.data;
+          // let getRulesData = JSON.stringify(data1);
+          // that.$store.commit("getRules", getRulesData);
         })
         .catch(function(error) {
           console.log(error);
@@ -142,16 +142,16 @@ export default {
       //  this.loginSHow=this.lmodelShow;
       //  this.userShow=!this.userShow;
       var that = this;
-          this.getInfo();
-    this.getDataDictionaries();
-    this.getTeamData();
-    this.getLowerLevelData();
+
       if (localStorage.getItem("token") != null) {
-       
         this.$store.commit("umodelShow", true);
         this.userShow = !this.userShow;
         this.loginSHow = false;
         this.noScroll();
+        // this.getInfo();
+        // this.getDataDictionaries();
+        // this.getTeamData();
+        // this.getLowerLevelData();
       } else {
         this.$confirm("用户登录需登录后才可以访问", "提示", {
           confirmButtonText: "确定",
@@ -184,42 +184,14 @@ export default {
         })
         .catch(() => {});
     },
-      getInfo() {
-      //获取个人数据信息
-      var that = this;
-      this.post(this.apiUrl.apiGetInfo, {}).then(res => {
-        var data = res.data;
-        // console.log(data)
-        that.$store.commit("infoData", data);
-      });
-    },
-    getDataDictionaries() {
+      getDataDictionaries() {
       //获取数据字典
       this.post(this.apiUrl.apiDataDataDictionaries).then(res => {
         var data = res.data;
         this.$store.commit("dictionariesData", data);
       });
     },
-    getTeamData() {
-      //获取团队总览
-      this.post(this.apiUrl.apiTeamData).then(res => {
-        var data = res.data;
-          this.$store.commit("teamDatas", data);
-      });
-    },
-     getLowerLevelData() {
-      //下级管理
-      this.post(this.apiUrl.apiLowerLevel,{
-        limit:1,
-        page:1
-      }).then(res => {
-        var data = res.data;
-        console.log(res)
-          this.$store.commit("lowerLevel", data);
-      }).catch(err=>{
-        console.log(err)
-      });
-    }
+    
   },
 
   watch: {
@@ -236,8 +208,7 @@ export default {
       } else {
         this.loginSHow = true;
       }
-    },
-  
+    }
   },
   components: {
     yrLogin: Login,

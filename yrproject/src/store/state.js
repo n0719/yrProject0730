@@ -4,6 +4,7 @@ let getRules1 = {};
 let toten1="";
 let uname1="游客";
 let userImg="";
+
 // let defaultScreenWidth=""
 try {
     if (localStorage.getRules) {
@@ -30,9 +31,11 @@ try {
     if (localStorage.userImg) {
         userImg = localStorage.userImg
     }
+ 
 } catch (e) {
 
 }
+
 export default {
     uname:uname1,
     userImg:userImg,

@@ -44,8 +44,8 @@
                         <td>开户信息</td>
                       </tr>
                     </thead>
-                    <tbody  v-if="tableData.length!=0?true:false">
-                      <tr  v-for="(item,index) in tableData" :key="index">
+                    <tbody v-if="tableData.length!=0?true:false">
+                      <tr v-for="(item,index) in tableData" :key="index">
                         <td>
                           <el-checkbox v-show="checkShow1" @change="checkSel(index)"></el-checkbox>
                           {{item.bank.desc}}
@@ -53,11 +53,8 @@
                         <td>{{item.bank_card}}</td>
                         <td>{{item.bank_address}}</td>
                       </tr>
-                    
                     </tbody>
-                   <div v-else style="padding:20px;color:#ff0000">
-                      暂无绑定的银行卡!
-                   </div>
+                    <div v-else style="padding:20px;color:#ff0000">暂无绑定的银行卡!</div>
                   </table>
                   <el-row class="xz">
                     <el-col :span="24" class="flex-box-column" v-if="!checkShow1">
@@ -137,7 +134,14 @@
 import cityData from "../../../../assets/country-level2-data.js";
 export default {
   mounted() {
+    var aa = this.$store.state.moneyOutData;
+    var bb = this.$store.state.dictionariesData;
+    this.ruleForm.selBank = bb.table_map.member_withdraw_account.bank;
     this.getBankList();
+
+    this.rules.moneyPassword[0].pattern = this.getReg.getReg(
+      this.$store.state.regRule.MoneyOut.bankAccountAdd.fund_password.validation
+    );
   },
   data() {
     return {
@@ -148,11 +152,10 @@ export default {
       checkBank: false,
       checkShow1: false,
       checkList: ["选中且禁用", "复选框 A"],
-      tableData:[],
+      tableData: [],
       ruleForm: {
         real_name: "",
-        selBank: this.$store.state.dictionariesData.table_map
-          .member_withdraw_account.bank,
+        selBank: "",
         bankNum: "",
         provinces: cityData,
         city: "",
@@ -200,10 +203,7 @@ export default {
         moneyPassword: [
           {
             required: true,
-            pattern: this.getReg.getReg(
-              this.$store.state.moneyOutData.bankAccountAdd.fund_password
-                .validation
-            ),
+            pattern: "",
             message: "资金密码不能为空"
           }
         ]
@@ -234,12 +234,12 @@ export default {
         console.log(valid);
         if (valid == false) {
         } else {
-           let address=this.selectedOptions.join("");
+          let address = this.selectedOptions.join("");
           this.post(this.apiUrl.apiBankAccountAdd, {
             bank: "1",
             bank_real_name: this.ruleForm.real_name,
             bank_card: this.ruleForm.bankNum,
-            bank_address:address,
+            bank_address: address,
             fund_password: this.ruleForm.moneyPassword
           }).then(res => {
             console.log(res);
@@ -247,12 +247,10 @@ export default {
         }
       });
     },
-    getBankList(){
-      this.post(this.apiUrl.apiBankAccountList,{
-
-      }).then(res=>{
-       this.tableData=res.data;
-      })
+    getBankList() {
+      this.post(this.apiUrl.apiBankAccountList, {}).then(res => {
+        this.tableData = res.data;
+      });
     },
     handleChange(value) {
       console.log(value);
