@@ -1,5 +1,5 @@
 
-import store from "../store/index"
+import store from "../store/index";
 const getRulesData = store.state.getRules;
 if (getRulesData.length > 20) {
      const getRulesDatas = JSON.parse(getRulesData);

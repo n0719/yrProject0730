@@ -11,8 +11,10 @@ export function initReg(url,params,val){
     const name = rule[urls[0]][urls[1]][params].name;//获取提示名称
     const description = rule[urls[0]][urls[1]][params].description;//获取提示描述
     const regRule = eval(validation.replace('regex:',''));
+    // console.log(regRule);
+    
     if(!regRule.test(val)){
-        Message.error(name+description);
+        Message.error(name+':'+description);
     }
     return regRule.test(val);
   }

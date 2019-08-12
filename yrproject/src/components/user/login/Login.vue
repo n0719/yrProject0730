@@ -1,6 +1,6 @@
 <template>
   <div class="login common-color" @mousewheel.prevent>
-    <div class="bounced userLogin">
+    <div class="bounced userLogin" v-loading="loading">
       <!-- 登录 -->
       <div v-show="maskShow==0" class="loginBox">
         <div class="bounced-header flex-box-between">
@@ -112,31 +112,18 @@
         <div class="bounced-body">
           <img src="../../../assets/user/loginIcon.png" alt class="login-icon" />
           <div class="flex-box common-color mg-b-10">
-            <label>手机号码：</label>
+            <label>用户名：</label>
             <div class="input-row flex-box flex-con">
-              <el-input placeholder="请输入手机号码" v-model="forgetPhone"></el-input>
-              <el-button
-                @click="getCode"
-                class="codeBtn"
-                :class="isVerify?'btn_default':'btn'"
-              >{{isVerify?'重新验证':'手机验证'}}</el-button>
+              <el-input placeholder="请输入用户名" v-model="forgetName"></el-input>
             </div>
           </div>
-          <div class="flex-box common-color mg-b-10">
-            <label>验证码：</label>
-            <div class="input-row flex-box flex-con">
-              <el-input placeholder="请输入验证码" v-model="forgetCode" type="number"></el-input>
-              <img src="../../../assets/user/codeSuccess.png" alt v-show="codeStatus==2" />
-            </div>
-          </div>
-          <div v-show="codeStatus==1" class="prompt fs12">验证码错误，请重新输入</div>
-          <el-button @click="forgetPwd" class="btn" :disabled="isDisabled">提交</el-button>
+          <el-button @click="forgetAccount" class="btn" :disabled="forgetName==''">提交</el-button>
           <div class="flex-box-between fs12">
             <div @click="maskStatus(0)" class="hoverCursor">返回登录</div>
           </div>
         </div>
       </div>
-      <!-- 忘记密码2 设置密码-->
+      <!-- 忘记密码2 -->
       <div v-show="maskShow==4">
         <div class="bounced-header flex-box-between">
           <div>找回密码</div>
@@ -145,28 +132,50 @@
         <div class="bounced-body">
           <img src="../../../assets/user/loginIcon.png" alt class="login-icon" />
           <div class="flex-box common-color mg-b-10">
-            <label>新密码：</label>
-            <el-input
-              class="input-row flex-con"
-              placeholder="请输入新密码"
-              v-model="newPwd"
-              type="password"
-            ></el-input>
+            <label>手机号码：</label>
+            <div class="input-row flex-box flex-con">
+              <el-input placeholder="请输入手机号码" v-model="forgetPhone" disabled></el-input>
+            </div>
+          </div>
+          <div class="flex-box common-color mg-b-10" style="position:relative;">
+            <label>验证码：</label>
+            <el-input class="input-row flex-con" placeholder="请输入验证码" v-model="forgetVerCode"></el-input>
+            <img class="codeImg" :src="forgetImgCode" alt />
           </div>
           <div class="flex-box common-color mg-b-10">
-            <label>确认密码：</label>
-            <el-input
-              class="input-row flex-con"
-              placeholder="再次输入新密码"
-              v-model="newRepeatPwd"
-              type="password"
-            ></el-input>
+            <label>验证码：</label>
+            <div class="input-row flex-box flex-con">
+              <el-input placeholder="请输入手机验证码" v-model="forgetCode" type="number"></el-input>
+              <el-button
+                @click="getCode"
+                class="codeBtn"
+                :disabled="isVerify"
+                :class="isVerify?'btn_default':'btn'"
+              >{{isVerify?forgetDown+'s后重新获取':'获取验证码'}}</el-button>
+            </div>           
           </div>
-          <div v-show="!setStatus" class="prompt fs12">两次密码输入不相同请重新输入</div>
-          <el-button @click="setPwd" class="btn">提交</el-button>
+           <div class="flex-box common-color mg-b-10">
+              <label>新密码：</label>
+              <el-input
+                class="input-row flex-con"
+                placeholder="请输入新密码"
+                v-model="newPwd"
+                type="password"
+              ></el-input>
+            </div>
+            <div class="flex-box common-color mg-b-10">
+              <label>确认密码：</label>
+              <el-input
+                class="input-row flex-con"
+                placeholder="再次输入新密码"
+                v-model="newRepeatPwd"
+                type="password"
+              ></el-input>
+            </div>
+          <el-button @click="forgetPwd" class="btn">设置新密码</el-button>
         </div>
       </div>
-      <!-- 忘记密码3 设置成功-->
+      <!-- 忘记密码4 设置成功-->
       <div v-show="maskShow==5">
         <div class="bounced-header text-right">
           <img src="../../../assets/user/guanbi.png" @click="closeModel" alt />
@@ -189,7 +198,8 @@ import { Message } from "element-ui";
 export default {
   data() {
     return {
-      maskShow: 0, //0登录 1注册 2注册成功 3忘记密码 4设置密码 5设置成功
+      loading: false,
+      maskShow: 0, //0登录 1注册 2注册成功 3验证用户名 4忘记密码 5设置成功
       loginCount: "",
       loginPwd: "",
       loginCode: "",
@@ -200,50 +210,51 @@ export default {
       regCode: "",
       regImgCode: "",
       inviteUser: "",
+      forgetName: "",
       forgetPhone: "",
+      forgetSecret: "",
+      forgetVerCode: "",
+      forgetImgCode: "",
       forgetCode: "",
+      forgetDown: "",
       newPwd: "",
       newRepeatPwd: "",
       checkedDeal: false,
       isVerify: false,
       pwdError: true,
-      codeStatus: 0,
-      setStatus: true,
       countDown: "",
-      isDisabled: false,
-      phoneReg: /^((\d{3,4})|\d{3,4}-)?\d{7,8}(-\d+)*$/i
+      isDisabled: false
     };
   },
   mounted() {
-    // if(initReg(apiUrl.apiLogin,'username',this.loginCount)){
-    //   console.log('验证通过');
-    // }
     this.getCodeImg();
-    // post(apiUrl.apiLogin, {
-    //     username: "demo001",
-    //     password: "a123456",
-    //     verify: "35"
-    //   }).then(res => {
-    //     // 获取数据成功后的其他操作
-    //     console.log(res);
-    //   });
   },
   watch: {
     maskShow(val) {
+      //监听注册成功 倒计时返回登录
       if (val == 2) {
         this.goLogin(true);
       }
     }
   },
   methods: {
+    //获取验证码图片
     getCodeImg() {
-      this.loginImgCode = "http://a1.w20.vip/verifyImg?" + Math.random();
+      if (this.maskShow == 0) {
+        this.loginImgCode = "http://a1.w20.vip/verifyImg?" + Math.random();
+      } else if (this.maskShow == 1) {
+        this.regImgCode = "http://a1.w20.vip/verifyImg?" + Math.random();
+      } else {
+        this.forgetImgCode = "http://a1.w20.vip/verifyImg?" + Math.random();
+      }
     },
-    getCode() {
-      this.isVerify = true;
-    },
+
+    //切换显示框
     maskStatus(code) {
       this.maskShow = code;
+      if (code == 0 || code == 1|| code == 4) {
+        this.getCodeImg();
+      }
       this.loginCount = "";
       this.loginPwd = "";
       this.regCount = "";
@@ -252,13 +263,14 @@ export default {
       this.checkedDeal = false;
       this.forgetPhone = "";
       this.forgetCode = "";
-      this.codeStatus = 0;
       this.newPwd = "";
       this.newRepeatPwd = "";
     },
+    //关闭弹框
     closeModel() {
       this.$store.commit("lmodelShow", false);
     },
+    //注册后倒计时跳转登录
     goLogin(isGo) {
       const TIME_COUNT = 5;
       if (isGo) {
@@ -276,6 +288,7 @@ export default {
         this.maskStatus(0);
       }
     },
+    //登录
     login() {
       
       
@@ -306,62 +319,117 @@ export default {
           }
         });
       }
-      // else if(this.loginCode==''){
-      //   Message.error('请输入验证码');
-      //   return false
-      // }else{
-      //   console.log('验证通过');
-      // }
-      // if (this.loginCount == "") {
-      //   this.$message.error("请输入账户");
-      // } else if (!this.phoneReg.test(this.loginCount)) {
-      //   this.$message.error("账户输入有误");
-      // } else if (this.loginPwd == "") {
-      //   this.$message.error("请输入密码");
-      //   this.pwdError = false;
-      // } else {
-      //   this.closeModel();
-      // }
     },
+    //注册
     register() {
-      if (this.regCount == "") {
-        this.$message.error("请输入账号");
-      } else if (this.regPwd == "") {
-        this.$message.error("请输入密码");
-      } else if (this.regRepeatPwd == "") {
-        this.$message.error("请输入确认密码");
-      } else if (this.regPwd !== this.regRepeatPwd) {
-        this.$message.error("两次输入密码不一致");
-        this.setStatus = false;
+      if (
+        !initReg(apiUrl.apiRegister, "username", this.regCount) ||
+        !initReg(apiUrl.apiRegister, "password", this.regPwd)
+      ) {
+        return false;
+      } else if (this.regPwd != this.regRepeatPwd) {
+        Message.error("两次输入密码不一致");
+        return false;
+      } else if (this.regCode == "") {
+        Message.error("请输入验证码");
+        return false;
       } else if (!this.checkedDeal) {
-        this.$message.error("请勾选同意用户协议");
+        Message.error("请选择并同意用户协议");
+        return false;
       } else {
-        this.maskStatus(2);
+        this.loading = true;
+        post(apiUrl.apiRegister, {
+          username: this.regCount,
+          password: this.regPwd,
+          icode: this.inviteUser,
+          verify: this.regCode
+        }).then(response => {
+          this.loading = false;
+          if (response.code == 0) {
+            Message.success("注册成功");
+            this.maskStatus(2);
+          } else {
+            this.regCode = "";
+            this.getCodeImg();
+          }
+        });
       }
     },
+    //忘记密码 验证账号
+    forgetAccount() {
+      if (initReg(apiUrl.apiVerAccount, "username", this.forgetName)) {
+        this.loading = true;
+        post(apiUrl.apiVerAccount, {
+          username: this.forgetName
+        }).then(response => {
+          this.loading = false;
+          if (response.code == 0) {
+            this.maskStatus(4);
+            this.forgetPhone = response.data.phone;
+            this.forgetSecret = response.data.secret;
+          } else {
+            this.forgetName = "";
+          }
+        });
+      }
+    },
+    //手机验证
+    getCode() {
+      if (this.forgetVerCode == "") {
+        Message.error("请输入图片验证码");
+        return false;
+      } else {
+        post(apiUrl.apiSendVerifyCode, {
+          secret: this.forgetSecret,
+          verify: this.forgetVerCode
+        }).then(response => {
+          if (response.code == 0) {
+            Message.success("验证码已发送");
+            const TIME_COUNT = 60;
+            this.forgetDown = TIME_COUNT;
+            this.timer = setInterval(() => {
+              if (this.forgetDown > 0 && this.forgetDown <= TIME_COUNT) {
+                this.forgetDown--;
+                  this.isVerify = true;
+              } else {
+                this.isVerify = false;
+                clearInterval(this.timer);
+              }
+            }, 1000);
+          
+          } else {
+            this.forgetImgCode = "";
+            this.getCodeImg();
+          }
+        });
+      }
+    },
+    //忘记密码
     forgetPwd() {
-      if (this.forgetPhone == "") {
-        this.$message.error("请输入手机号");
-      } else if (!this.phoneReg.test(this.forgetPhone)) {
-        this.$message.error("手机号输入有误");
-      } else if (this.forgetCode == "") {
-        this.$message.error("请输入验证码");
-        this.codeStatus = 1;
+      if (
+        !initReg(apiUrl.apiRetrievePassword, "username", this.forgetName) ||
+        !initReg(apiUrl.apiRetrievePassword, "code", this.forgetCode) ||
+        !initReg(apiUrl.apiRetrievePassword, "password", this.newPwd) ||
+        !initReg(apiUrl.apiRetrievePassword, "confirm_password", this.newRepeatPwd)
+      ) {
+        return false;
       } else {
-        this.maskStatus(4);
+        post(apiUrl.apiRetrievePassword, {
+          username: this.forgetName,
+          code: this.forgetCode,
+          password: this.newPwd,
+          confirm_password: this.newRepeatPwd
+        }).then(response => {
+          if (response.code == 0) {
+            this.isVerify = false;
+            this.maskStatus(5);
+          } else {
+            this.forgetImgCode = "";
+            this.getCodeImg();
+          }
+        });
       }
     },
-    setPwd() {
-      if (this.newPwd == "") {
-        this.$message.error("请输入密码");
-      } else if (this.newRepeatPwd == "") {
-        this.$message.error("请输入确认密码");
-      } else if (this.newPwd !== this.newRepeatPwd) {
-        this.$message.error("两次输入密码不一致");
-      } else {
-        this.maskStatus(5);
-      }
-    }
   }
 };
 </script>
@@ -494,6 +562,7 @@ export default {
 .userLogin .codeBtn {
   width: auto;
   margin: 5px 0;
+  padding: 12px 8px;
 }
 </style>
 
