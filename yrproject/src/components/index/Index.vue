@@ -106,14 +106,10 @@ export default {
   mounted() {
     this.active = 0;
     this.getRule();
-    console.log(this.$store.state.uname);
-    if (this.$store.state.uname != "游客") {
-        this.getInfo();
-    this.getDataDictionaries();
-    this.getTeamData();
-    this.getLowerLevelData();
+       if (localStorage.getItem("token") != null) {
+     
     }
-    this.uname = localStorage.getItem("uname");
+    
   },
   methods: {
    
@@ -146,7 +142,12 @@ export default {
       //  this.loginSHow=this.lmodelShow;
       //  this.userShow=!this.userShow;
       var that = this;
+          this.getInfo();
+    this.getDataDictionaries();
+    this.getTeamData();
+    this.getLowerLevelData();
       if (localStorage.getItem("token") != null) {
+       
         this.$store.commit("umodelShow", true);
         this.userShow = !this.userShow;
         this.loginSHow = false;
