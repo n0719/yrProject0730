@@ -11,7 +11,7 @@
             <el-tab-pane label="我的银行卡" name="first">
               <div class="first">
                 <el-row class="bankTit">
-                  <span>*银行卡最多绑定5张，如需修改或删除请咨询客服。</span>
+                  <span>*银行卡最多绑定10张，如需修改或删除请咨询客服。</span>
                   <span>
                     <img src="../../../../assets/user/shanchu.png" @click="deleteTrr" />
                   </span>
@@ -39,21 +39,25 @@
                   <table border="0" cellspacing="0" cellpadding="0">
                     <thead>
                       <tr>
-                        <td>银行名称</td>
-                        <td>卡号</td>
+                        <td width="33%">银行名称</td>
+                        <td width="33%">卡号</td>
                         <td>开户信息</td>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr v-for="(item,index) in tableData" :key="index">
+                    <tbody  v-if="tableData.length!=0?true:false">
+                      <tr  v-for="(item,index) in tableData" :key="index">
                         <td>
                           <el-checkbox v-show="checkShow1" @change="checkSel(index)"></el-checkbox>
-                          {{item.bankName}}
+                          {{item.bank.desc}}
                         </td>
-                        <td>{{item.cardNum}}</td>
-                        <td>{{item.openInfor}}</td>
+                        <td>{{item.bank_card}}</td>
+                        <td>{{item.bank_address}}</td>
                       </tr>
+                    
                     </tbody>
+                   <div v-else style="padding:20px;color:#ff0000">
+                      暂无绑定的银行卡!
+                   </div>
                   </table>
                   <el-row class="xz">
                     <el-col :span="24" class="flex-box-column" v-if="!checkShow1">
@@ -78,30 +82,47 @@
             <el-tab-pane label="添加银行卡" name="second">
               <el-row class="bankTit">*银行卡最多绑定5张，如需修改或删除请咨询客服。</el-row>
               <el-row style="padding: 0 80px;margin-top:39px;" class="flex-box-center">
-                <el-form label-width="100px">
-                  <el-form-item label="真实姓名：" prop>
-                    <el-input type="password" name="uName" aria-required placeholder="请输入原始密码"></el-input>
+                <el-form ref="ruleForm" :model="ruleForm" label-width="100px" :rules="rules">
+                  <el-form-item label="真实姓名：" prop="real_name">
+                    <el-input
+                      name="uName"
+                      v-model="ruleForm.real_name"
+                      aria-required
+                      placeholder="请输入真实姓名"
+                    ></el-input>
                   </el-form-item>
-                  <el-form-item label="选择银行：" prop>
-                    <el-input type="password" name="uName" aria-required placeholder="请输入新密码"></el-input>
+                  <el-form-item label="选择银行：" prop="selBank">
+                    <el-select v-model="selectBank" placeholder="请选择">
+                      <el-option
+                        v-for="item in ruleForm.selBank"
+                        :key="item.id"
+                        :label="item.desc"
+                        :value="item.id"
+                      ></el-option>
+                    </el-select>
                   </el-form-item>
-                  <el-form-item label="银行卡号：" prop>
-                    <el-input type="password" name="uName" aria-required placeholder="请输入原始密码"></el-input>
+                  <el-form-item label="银行卡号：" prop="bankNum">
+                    <el-input v-model="ruleForm.bankNum" aria-required placeholder="请输入银行卡号"></el-input>
                   </el-form-item>
-                  <el-form-item label="开户省份：" prop>
-                    <el-input type="password" name="uName" aria-required placeholder="请输入新密码"></el-input>
+                  <el-form-item label="开户省份：" prop="provinces">
+                    <el-cascader
+                      :options="ruleForm.provinces"
+                      v-model="selectedOptions"
+                      @change="handleChange"
+                      :separator="' '"
+                    ></el-cascader>
                   </el-form-item>
-                  <el-form-item label="开户城市：" prop>
-                    <el-input type="password" name="uName" aria-required placeholder="请输入原始密码"></el-input>
+                  <!-- <el-form-item label="开户城市：" prop="city">
+                    <el-input v-model="ruleForm.city" aria-required placeholder="请选择开户城市"></el-input>
+                  </el-form-item>-->
+                  <el-form-item label="开户支行：" prop="bankBranch">
+                    <el-input v-model="ruleForm.bankBranch" aria-required placeholder="请输入开户支行"></el-input>
                   </el-form-item>
-                  <el-form-item label="开户支行：" prop>
-                    <el-input type="password" name="uName" aria-required placeholder="请输入新密码"></el-input>
-                  </el-form-item>
-                  <el-form-item label="资金密码：" prop>
-                    <el-input type="password" name="uName" aria-required placeholder="请输入原始密码"></el-input>
+                  <el-form-item label="资金密码：" prop="moneyPassword">
+                    <el-input v-model="ruleForm.moneyPassword" aria-required placeholder="请输入资金密码"></el-input>
                   </el-form-item>
                   <el-form-item class="subBtn">
-                    <el-button type="default" @click="submitForm(ruleForm)">提交</el-button>
+                    <el-button type="default" @click="addBank(ruleForm)">提交</el-button>
                   </el-form-item>
                 </el-form>
               </el-row>
@@ -113,27 +134,80 @@
   </div>
 </template>
 <script>
+import cityData from "../../../../assets/country-level2-data.js";
 export default {
+  mounted() {
+    this.getBankList();
+  },
   data() {
     return {
+      tableDataState: true,
+      selectedOptions: [],
+      selectBank: [],
       activeName: "first",
       checkBank: false,
       checkShow1: false,
       checkList: ["选中且禁用", "复选框 A"],
-      tableData: [
-        {
-          uid: 1,
-          bankName: "香港银行",
-          cardNum: "65489856",
-          openInfor: "香港九龙湾支行"
-        },
-        {
-          uid: 2,
-          bankName: "瑞士银行",
-          cardNum: "65489856",
-          openInfor: "香港九龙湾支行"
-        }
-      ]
+      tableData:[],
+      ruleForm: {
+        real_name: "",
+        selBank: this.$store.state.dictionariesData.table_map
+          .member_withdraw_account.bank,
+        bankNum: "",
+        provinces: cityData,
+        city: "",
+        bankBranch: "",
+        moneyPassword: ""
+      },
+      // options:[],
+      rules: {
+        real_name: [
+          {
+            required: true,
+            pattern: /^[a-zA-Z0-9_-]{2,16}$/,
+            message: "真实姓名不能少于2位"
+          }
+        ],
+        selBank: [
+          // {
+          //   required: true,
+          //   pattern: "",
+          //   message: ""
+          // }
+        ],
+        bankNum: [
+          {
+            required: true,
+            pattern: "",
+            message: "请输入16-19位银行卡号！"
+          }
+        ],
+        provinces: [],
+        city: [
+          {
+            required: true,
+            pattern: "",
+            message: "用户名需为3-16位"
+          }
+        ],
+        bankBranch: [
+          // {
+          //   required: true,
+          //   pattern: "",
+          //   message: ""
+          // }
+        ],
+        moneyPassword: [
+          {
+            required: true,
+            pattern: this.getReg.getReg(
+              this.$store.state.moneyOutData.bankAccountAdd.fund_password
+                .validation
+            ),
+            message: "资金密码不能为空"
+          }
+        ]
+      }
     };
   },
   methods: {
@@ -153,11 +227,44 @@ export default {
     conDelete() {},
     checkSel(e) {
       console.log(e);
+    },
+    addBank() {
+      const t = this;
+      t.$refs["ruleForm"].validate(valid => {
+        console.log(valid);
+        if (valid == false) {
+        } else {
+           let address=this.selectedOptions.join("");
+          this.post(this.apiUrl.apiBankAccountAdd, {
+            bank: "1",
+            bank_real_name: this.ruleForm.real_name,
+            bank_card: this.ruleForm.bankNum,
+            bank_address:address,
+            fund_password: this.ruleForm.moneyPassword
+          }).then(res => {
+            console.log(res);
+          });
+        }
+      });
+    },
+    getBankList(){
+      this.post(this.apiUrl.apiBankAccountList,{
+
+      }).then(res=>{
+       this.tableData=res.data;
+      })
+    },
+    handleChange(value) {
+      console.log(value);
     }
   }
 };
 </script>
 <style >
+.bankTab .el-cascader,
+.bankTab .el-select {
+  width: 100%;
+}
 .bankTab .bankTit {
   color: #ff0000;
   font-size: 12px;

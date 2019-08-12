@@ -9,19 +9,19 @@
         <el-row>
           <el-col :span="6">
             <span>余额(元)</span>
-            <span>1000.00</span>
+            <span>{{infoData.money}}</span>
           </el-col>
           <el-col :span="6">
             <span>返水\佣金(元)</span>
-            <span>1000.00</span>
+            <span>{{infoData.water}}</span>
           </el-col>
           <el-col :span="6">
             <span>充值(元)</span>
-            <span>1000.00</span>
+            <span>{{infoData.recharge}}</span>
           </el-col>
           <el-col :span="6">
             <span>提现(元)</span>
-            <span>1000.00</span>
+            <span>{{infoData.withdraw}}</span>
           </el-col>
         </el-row>
       </el-row>
@@ -53,7 +53,7 @@
              <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="昨天" name="first">
               <el-table :data="tableData" stripe  style="width: 100%" class="recoredTable">
-                <el-table-column prop="type" label="游戏种类"></el-table-column>
+                <el-table-column prop="desc" label="游戏种类"></el-table-column>
                 <el-table-column prop="num" label="投注笔数"></el-table-column>
                 <el-table-column prop="effectiveNum" label="有效投注"></el-table-column>
                 <el-table-column prop="return" label="返回佣金"></el-table-column>
@@ -63,7 +63,7 @@
             </el-tab-pane>
             <el-tab-pane label="今天" name="second">
               <el-table :data="tableData" stripe style="width: 100%" class="recoredTable">
-                <el-table-column prop="type" label="游戏种类" width></el-table-column>
+                <el-table-column prop="desc" label="游戏种类" width></el-table-column>
                 <el-table-column prop="num" label="投注笔数" width></el-table-column>
                 <el-table-column prop="effectiveNum" label="有效投注"></el-table-column>
                 <el-table-column prop="return" label="返回佣金"></el-table-column>
@@ -73,7 +73,7 @@
             </el-tab-pane>
             <el-tab-pane label="上周" name="third">
               <el-table :data="tableData" stripe style="width: 100%" class="recoredTable">
-                <el-table-column prop="type" label="游戏种类" width></el-table-column>
+                <el-table-column prop="desc" label="游戏种类" width></el-table-column>
                 <el-table-column prop="num" label="投注笔数" width></el-table-column>
                 <el-table-column prop="effectiveNum" label="有效投注"></el-table-column>
                 <el-table-column prop="return" label="返回佣金"></el-table-column>
@@ -83,7 +83,7 @@
             </el-tab-pane>
             <el-tab-pane label="上月" name="fourth">
               <el-table :data="tableData" stripe style="width: 100%" class="recoredTable">
-                <el-table-column prop="type" label="游戏种类" width></el-table-column>
+                <el-table-column prop="desc" label="游戏种类" width></el-table-column>
                 <el-table-column prop="num" label="投注笔数" width></el-table-column>
                 <el-table-column prop="effectiveNum" label="有效投注"></el-table-column>
                 <el-table-column prop="return" label="返回佣金"></el-table-column>
@@ -93,7 +93,7 @@
             </el-tab-pane>
             <el-tab-pane label="本月" name="five">
               <el-table :data="tableData" stripe style="width: 100%" class="recoredTable">
-                <el-table-column prop="type" label="游戏种类" width></el-table-column>
+                <el-table-column prop="desc" label="游戏种类" width></el-table-column>
                 <el-table-column prop="num" label="投注笔数" width></el-table-column>
                 <el-table-column prop="effectiveNum" label="有效投注"></el-table-column>
                 <el-table-column prop="return" label="返回佣金"></el-table-column>
@@ -113,53 +113,23 @@
 </template>
 <script>
 import EwmShare from "@/components/user/userAdmin/userMenu/EwmShare";
+import { mapState} from "vuex";
 export default {
+   computed: {
+    ...mapState(["infoData","dictionariesData"])
+  },
+  mounted(){
+
+  //      this.tableData=this.$store.state.dictionariesData.table_map.game_record.game_type;
+  // console.log(this.$store.state.dictionariesData.table_map.game_record.game_type);
+  
+    
+  },
   data() {
     return {
       dataStarrt: "",
       dataEnd: "",
-      tableData: [
-        {
-          type: "彩票游戏",
-          num: "1",
-          effectiveNum: "0",
-          return: "0",
-          defeat: "0",
-          bonus: "0"
-        },
-        {
-          type: "真人视讯",
-          num: "0",
-          effectiveNum: "0",
-          return: "0",
-          defeat: "0",
-          bonus: "0"
-        },
-        {
-          type: "老虎机",
-          num: "0",
-          effectiveNum: "0",
-          return: "0",
-          defeat: "0",
-          bonus: "0"
-        },
-        {
-          type: "棋牌",
-          num: "0",
-          effectiveNum: "0",
-          return: "0",
-          defeat: "0",
-          bonus: "0"
-        },
-        {
-          type: "体育",
-          num: "0",
-          effectiveNum: "0",
-          return: "0",
-          defeat: "0",
-          bonus: "0"
-        }
-      ],
+      tableData: [],
       activeName: "first"
     };
   },

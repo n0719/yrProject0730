@@ -1,31 +1,30 @@
 <template>
-  <div class="user" >
-     <!-- @mousewheel.prevent -->
+  <div class="user">
+    <!-- @mousewheel.prevent -->
     <div class="userBody">
-      <div class="userMain" :class="[winWidth>1920?'aaa':'bbb',winWidth<1600?'ccc':'aaa']" >
+      <div class="userMain" :class="[winWidth>1920?'aaa':'bbb',winWidth<1600?'ccc':'aaa']">
         <transition name="fade">
-           <el-container>
-          <el-aside width="280px">
-            <user-left></user-left>
-          </el-aside>
           <el-container>
-            <el-header>
-              <user-header></user-header>
-            </el-header>
-            <el-main>
-              <user-content>
-                    <router-view></router-view>
-              </user-content>
-            </el-main>
+            <el-aside width="280px">
+              <user-left></user-left>
+            </el-aside>
+            <el-container>
+              <el-header>
+                <user-header></user-header>
+              </el-header>
+              <el-main>
+                <user-content>
+                  <router-view></router-view>
+                </user-content>
+              </el-main>
+            </el-container>
           </el-container>
-        </el-container>
         </transition>
       </div>
     </div>
   </div>
 </template>
 <script>
-
 import { mapState } from "vuex";
 import UserHeader from "@/components/user/userAdmin/UserHeader";
 import UserLeft from "@/components/user/userAdmin/UserLeft";
@@ -44,12 +43,13 @@ export default {
       ccc: "90%"
     };
   },
+
   mounted() {
     console.log(this.winWidth);
   
   },
-  methods:{
-   
+  methods: {
+  
   },
   components: {
     UserHeader,
@@ -67,7 +67,9 @@ export default {
 .fade-leave-active {
   transition: opacity 0.5s;
 }
-.el-main{padding:0;}
+.el-main {
+  padding: 0;
+}
 .user {
   position: fixed;
   width: 100%;
@@ -75,10 +77,13 @@ export default {
   bottom: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index:10;
-  overflow-y:auto;overflow-x:hidden;
+  z-index: 10;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
-.el-container{width:100%;}
+.el-container {
+  width: 100%;
+}
 .userBody {
   display: flex;
   justify-content: center;
@@ -89,9 +94,7 @@ export default {
   box-sizing: border-box;
 }
 .userMain {
-
   min-height: 896px;
- 
 }
 .userMain .container {
   width: 100%;
@@ -113,9 +116,9 @@ export default {
   height: 50px;
 }
 .user .userMain .rowBottom {
-  display:flex;
+  display: flex;
   flex-direction: column;
-  flex:1;
+  flex: 1;
 }
 </style>
 

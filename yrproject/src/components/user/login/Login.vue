@@ -26,7 +26,7 @@
             <img class="codeImg" :src="loginImgCode" @click="getCodeImg()" alt />
           </div>
           <div v-show="!pwdError" class="prompt fs12">密码错误</div>
-          <el-button class="btn" @click="login">登录</el-button>
+          <el-button class="btn" @click="login()">登录</el-button>
           <div class="flex-box-between fs12">
             <div @click="maskStatus(1)" class="hoverCursor">立即注册</div>
             <div @click="maskStatus(3)" class="forget hoverCursor">忘记密码</div>
@@ -192,9 +192,9 @@
 <script>
 import { initReg } from "@/axios/regRule"; // 验证方法
 import { Message } from "element-ui";
-import axios from "axios"; // 引入axios
-import { get, post } from "@/axios/http";
-import { apiUrl } from "@/axios/api";
+// import axios from "axios"; // 引入axios
+// import { get, post } from "@/axios/http";
+// import { apiUrl } from "@/axios/api";
 export default {
   data() {
     return {
@@ -290,16 +290,20 @@ export default {
     },
     //登录
     login() {
+      
+      
+      //登录
       if (
-        !initReg(apiUrl.apiLogin, "username", this.loginCount) ||
-        !initReg(apiUrl.apiLogin, "password", this.loginPwd)
+        !initReg(this.apiUrl.apiLogin, "username", this.loginCount) ||
+        !initReg(this.apiUrl.apiLogin, "password", this.loginPwd)
       ) {
+    
         return false;
       } else if (this.loginCode == "") {
         Message.error("请输入验证码");
         return false;
       } else {
-        this.post(this.apiUrl.apiLogin, {
+       this.post(this.apiUrl.apiLogin, {
           username: this.loginCount,
           password: this.loginPwd,
           verify: this.loginCode
@@ -308,7 +312,7 @@ export default {
             Message.success("登陆成功");
             this.$store.commit("token", response.data.access_token);
             this.closeModel();
-            this.$store.commit("username", this.loginCount);
+            this.$store.commit("uname", this.loginCount);
           } else {
             this.loginCode = "";
             this.getCodeImg();

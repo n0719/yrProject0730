@@ -45,8 +45,6 @@ axios.interceptors.request.use(
 // 响应拦截器
 axios.interceptors.response.use(data => {
   const code = data.data.code;
-  // console.log(data);
-  
   if (code == 1001) { //未登录
     // this.$store.commit("lmodelShow", true);
     Message.error('未登录')

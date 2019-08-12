@@ -42,7 +42,11 @@
         </div>
         <ul class="indexLogin">
           <li>
-            <a @click="loginModel">登录-{{this.$store.state.username}}</a>
+            <a @click="loginModel" v-if="this.$store.state.uname=='游客'?true:false">登录</a>
+            <a v-else>
+              {{this.$store.state.uname}}
+              <span @click="closeUser">[退出]</span>
+            </a>
           </li>
           <li>
             <a @click="userModel">会员中心</a>
@@ -66,9 +70,7 @@
         <yr-user v-if="userShow"></yr-user>
       </transition>
     </div>
-    <div class="indexBottom">
-      <img :src="this.$store.state.userImg" alt="">
-    </div>
+    <div class="indexBottom"></div>
   </div>
 </template>
 <script>
@@ -90,7 +92,6 @@ export default {
   },
   data() {
     return {
-      username:"",
       active: -1,
       loginSHow: "",
       userShow: "",
@@ -105,20 +106,13 @@ export default {
   mounted() {
     this.active = 0;
     this.getRule();
-    // this.getInfo();
-    this.username=localStorage.getItem("username")
+       if (localStorage.getItem("token") != null) {
+     
+    }
+    
   },
   methods: {
-    getInfo() {
-      this.post(this.apiUrl.apiGetInfo,{}).then(res => {
-        var data=res.data;
-        this.$store.commit("userImg",data.avatar)
-        console.log(data);
-        // console.log(data.group_id);
-        // console.log(data.hierarchy);
-         console.log(data.username);
-      });
-    },
+   
     getRule() {
       var that = this;
       axios
@@ -148,7 +142,12 @@ export default {
       //  this.loginSHow=this.lmodelShow;
       //  this.userShow=!this.userShow;
       var that = this;
-      if (localStorage.getItem("token") != "") {
+          this.getInfo();
+    this.getDataDictionaries();
+    this.getTeamData();
+    this.getLowerLevelData();
+      if (localStorage.getItem("token") != null) {
+       
         this.$store.commit("umodelShow", true);
         this.userShow = !this.userShow;
         this.loginSHow = false;
@@ -164,7 +163,7 @@ export default {
             that.userShow = false;
             that.loginSHow = !this.loginShow;
             that.$router.push({
-              path: "/myPAy"
+              path: "/myPay"
             });
           })
           .catch(() => {});
@@ -175,6 +174,51 @@ export default {
     },
     viewToggle(index) {
       this.active = index;
+    },
+    closeUser() {
+      this.$confirm("确认退出当前登录用户吗？", "提示", {})
+        .then(() => {
+          this.$store.commit("uname", "游客");
+          localStorage.removeItem("token");
+          this.getInfo();
+        })
+        .catch(() => {});
+    },
+      getInfo() {
+      //获取个人数据信息
+      var that = this;
+      this.post(this.apiUrl.apiGetInfo, {}).then(res => {
+        var data = res.data;
+        // console.log(data)
+        that.$store.commit("infoData", data);
+      });
+    },
+    getDataDictionaries() {
+      //获取数据字典
+      this.post(this.apiUrl.apiDataDataDictionaries).then(res => {
+        var data = res.data;
+        this.$store.commit("dictionariesData", data);
+      });
+    },
+    getTeamData() {
+      //获取团队总览
+      this.post(this.apiUrl.apiTeamData).then(res => {
+        var data = res.data;
+          this.$store.commit("teamDatas", data);
+      });
+    },
+     getLowerLevelData() {
+      //下级管理
+      this.post(this.apiUrl.apiLowerLevel,{
+        limit:1,
+        page:1
+      }).then(res => {
+        var data = res.data;
+        console.log(res)
+          this.$store.commit("lowerLevel", data);
+      }).catch(err=>{
+        console.log(err)
+      });
     }
   },
 
@@ -192,7 +236,8 @@ export default {
       } else {
         this.loginSHow = true;
       }
-    }
+    },
+  
   },
   components: {
     yrLogin: Login,
@@ -242,13 +287,16 @@ export default {
   display: flex;
   justify-content: flex-end;
 }
+
 .indexLogin li {
   float: left;
-  padding-left: 40px;
+  padding-left: 35px;
 }
 .indexLogin li a {
   cursor: pointer;
   color: #e6cf68;
+  display: flex;
+  align-items: center;
 }
 .indexNav a.navABg {
   background: #6c6c57;
@@ -270,6 +318,18 @@ export default {
 .indexBottom {
   background: #364150;
   height: 140px;
+}
+.indexLogin li a span {
+  font-size: 12px;
+  color: #999;
+}
+@media screen and (max-width: 1450px) {
+  .indexTop .topNav {
+    font-size: 16px;
+  }
+  .indexNav a {
+    width: 100px;
+  }
 }
 </style>
 
