@@ -134,8 +134,7 @@
           <div class="flex-box common-color mg-b-10">
             <label>手机号码：</label>
             <div class="input-row flex-box flex-con">
-              <el-input placeholder="请输入手机号码" v-model="forgetPhone"></el-input>
-              
+              <el-input placeholder="请输入手机号码" v-model="forgetPhone" disabled></el-input>
             </div>
           </div>
           <div class="flex-box common-color mg-b-10" style="position:relative;">
@@ -146,51 +145,38 @@
           <div class="flex-box common-color mg-b-10">
             <label>验证码：</label>
             <div class="input-row flex-box flex-con">
-              <el-input placeholder="请输入验证码" v-model="forgetCode" type="number"></el-input>
-              <!-- <img src="../../../assets/user/codeSuccess.png" alt v-show="codeStatus==2" /> -->
+              <el-input placeholder="请输入手机验证码" v-model="forgetCode" type="number"></el-input>
               <el-button
                 @click="getCode"
                 class="codeBtn"
+                :disabled="isVerify"
                 :class="isVerify?'btn_default':'btn'"
-              >{{isVerify?'重新验证':'手机验证'}}</el-button>
+              >{{isVerify?forgetDown+'s后重新获取':'获取验证码'}}</el-button>
+            </div>           
+          </div>
+           <div class="flex-box common-color mg-b-10">
+              <label>新密码：</label>
+              <el-input
+                class="input-row flex-con"
+                placeholder="请输入新密码"
+                v-model="newPwd"
+                type="password"
+              ></el-input>
             </div>
-          </div>
-          <div v-show="codeStatus==1" class="prompt fs12">验证码错误，请重新输入</div>
-          <el-button @click="forgetPwd" class="btn" :disabled="isDisabled">提交</el-button>
-        </div>
-      </div>
-      <!-- 忘记密码3 设置密码-->
-      <div v-show="maskShow==5">
-        <div class="bounced-header flex-box-between">
-          <div>找回密码</div>
-          <img src="../../../assets/user/guanbi.png" @click="closeModel" alt />
-        </div>
-        <div class="bounced-body">
-          <img src="../../../assets/user/loginIcon.png" alt class="login-icon" />
-          <div class="flex-box common-color mg-b-10">
-            <label>新密码：</label>
-            <el-input
-              class="input-row flex-con"
-              placeholder="请输入新密码"
-              v-model="newPwd"
-              type="password"
-            ></el-input>
-          </div>
-          <div class="flex-box common-color mg-b-10">
-            <label>确认密码：</label>
-            <el-input
-              class="input-row flex-con"
-              placeholder="再次输入新密码"
-              v-model="newRepeatPwd"
-              type="password"
-            ></el-input>
-          </div>
-          <div v-show="!setStatus" class="prompt fs12">两次密码输入不相同请重新输入</div>
-          <el-button @click="setPwd" class="btn">提交</el-button>
+            <div class="flex-box common-color mg-b-10">
+              <label>确认密码：</label>
+              <el-input
+                class="input-row flex-con"
+                placeholder="再次输入新密码"
+                v-model="newRepeatPwd"
+                type="password"
+              ></el-input>
+            </div>
+          <el-button @click="forgetPwd" class="btn">设置新密码</el-button>
         </div>
       </div>
       <!-- 忘记密码4 设置成功-->
-      <div v-show="maskShow==6">
+      <div v-show="maskShow==5">
         <div class="bounced-header text-right">
           <img src="../../../assets/user/guanbi.png" @click="closeModel" alt />
         </div>
@@ -204,7 +190,6 @@
   </div>
 </template>
 <script>
-
 import { initReg } from "@/axios/regRule"; // 验证方法
 import { Message } from "element-ui";
 import axios from "axios"; // 引入axios
@@ -214,7 +199,7 @@ export default {
   data() {
     return {
       loading: false,
-      maskShow: 4, //0登录 1注册 2注册成功 3验证用户名 4忘记密码 5设置密码 6设置成功
+      maskShow: 0, //0登录 1注册 2注册成功 3验证用户名 4忘记密码 5设置成功
       loginCount: "",
       loginPwd: "",
       loginCode: "",
@@ -227,17 +212,16 @@ export default {
       inviteUser: "",
       forgetName: "",
       forgetPhone: "",
-      forgetSecret:"",
-      forgetVerCode:"",
-      forgetImgCode:"",
+      forgetSecret: "",
+      forgetVerCode: "",
+      forgetImgCode: "",
       forgetCode: "",
+      forgetDown: "",
       newPwd: "",
       newRepeatPwd: "",
       checkedDeal: false,
       isVerify: false,
       pwdError: true,
-      codeStatus: 0,
-      setStatus: true,
       countDown: "",
       isDisabled: false
     };
@@ -258,17 +242,17 @@ export default {
     getCodeImg() {
       if (this.maskShow == 0) {
         this.loginImgCode = "http://a1.w20.vip/verifyImg?" + Math.random();
-      } else if(this.maskShow == 1) {
+      } else if (this.maskShow == 1) {
         this.regImgCode = "http://a1.w20.vip/verifyImg?" + Math.random();
-      }else{
+      } else {
         this.forgetImgCode = "http://a1.w20.vip/verifyImg?" + Math.random();
       }
     },
- 
+
     //切换显示框
     maskStatus(code) {
       this.maskShow = code;
-      if (code == 0 || code == 1) {
+      if (code == 0 || code == 1|| code == 4) {
         this.getCodeImg();
       }
       this.loginCount = "";
@@ -279,7 +263,6 @@ export default {
       this.checkedDeal = false;
       this.forgetPhone = "";
       this.forgetCode = "";
-      this.codeStatus = 0;
       this.newPwd = "";
       this.newRepeatPwd = "";
     },
@@ -287,6 +270,7 @@ export default {
     closeModel() {
       this.$store.commit("lmodelShow", false);
     },
+    //注册后倒计时跳转登录
     goLogin(isGo) {
       const TIME_COUNT = 5;
       if (isGo) {
@@ -304,8 +288,8 @@ export default {
         this.maskStatus(0);
       }
     },
+    //登录
     login() {
-      //登录
       if (
         !initReg(apiUrl.apiLogin, "username", this.loginCount) ||
         !initReg(apiUrl.apiLogin, "password", this.loginPwd)
@@ -319,19 +303,17 @@ export default {
           username: this.loginCount,
           password: this.loginPwd,
           verify: this.loginCode
-        })
-          .then(response=> {
-             if(response.code==0){
-               Message.success('登陆成功');
-               this.$store.commit("token", response.data.access_token);
-               this.closeModel();
-               this.$store.commit("username",this.loginCount);
-               
-             }else{
-               this.loginCode = '';
-               this.getCodeImg();
-             }
-          })
+        }).then(response => {
+          if (response.code == 0) {
+            Message.success("登陆成功");
+            this.$store.commit("token", response.data.access_token);
+            this.closeModel();
+            this.$store.commit("username", this.loginCount);
+          } else {
+            this.loginCode = "";
+            this.getCodeImg();
+          }
+        });
       }
     },
     //注册
@@ -371,16 +353,15 @@ export default {
     },
     //忘记密码 验证账号
     forgetAccount() {
-      if (initReg(apiUrl.apiVerAccount, "username", this.forgetName)){
+      if (initReg(apiUrl.apiVerAccount, "username", this.forgetName)) {
         this.loading = true;
         post(apiUrl.apiVerAccount, {
           username: this.forgetName
         }).then(response => {
           this.loading = false;
-          if (response.code == 0) {       
+          if (response.code == 0) {
             this.maskStatus(4);
-            this.getCodeImg();
-             this.forgetPhone = response.data.phone;           
+            this.forgetPhone = response.data.phone;
             this.forgetSecret = response.data.secret;
           } else {
             this.forgetName = "";
@@ -390,61 +371,61 @@ export default {
     },
     //手机验证
     getCode() {
-      const h = this.$createElement;
-        this.$msgbox({
-          title: '消息',
-          message: h('p', null, [
-            h('span', null, '内容可以是 '),
-            h('i', { style: 'color: teal' }, 'VNode')
-          ]),
-          showCancelButton: true,
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          beforeClose: (action, instance, done) => {
-            if (action === 'confirm') {
-              instance.confirmButtonLoading = true;
-              instance.confirmButtonText = '执行中...';
-              setTimeout(() => {
-                done();
-                setTimeout(() => {
-                  instance.confirmButtonLoading = false;
-                }, 300);
-              }, 3000);
-            } else {
-              done();
-            }
+      if (this.forgetVerCode == "") {
+        Message.error("请输入图片验证码");
+        return false;
+      } else {
+        post(apiUrl.apiSendVerifyCode, {
+          secret: this.forgetSecret,
+          verify: this.forgetVerCode
+        }).then(response => {
+          if (response.code == 0) {
+            Message.success("验证码已发送");
+            const TIME_COUNT = 60;
+            this.forgetDown = TIME_COUNT;
+            this.timer = setInterval(() => {
+              if (this.forgetDown > 0 && this.forgetDown <= TIME_COUNT) {
+                this.forgetDown--;
+                  this.isVerify = true;
+              } else {
+                this.isVerify = false;
+                clearInterval(this.timer);
+              }
+            }, 1000);
+          
+          } else {
+            this.forgetImgCode = "";
+            this.getCodeImg();
           }
-        }).then(action => {
-          this.$message({
-            type: 'info',
-            message: 'action: ' + action
-          });
         });
-      // this.isVerify = true;
+      }
     },
+    //忘记密码
     forgetPwd() {
-      if (this.forgetPhone == "") {
-        this.$message.error("请输入手机号");
-      } else if (!this.phoneReg.test(this.forgetPhone)) {
-        this.$message.error("手机号输入有误");
-      } else if (this.forgetCode == "") {
-        this.$message.error("请输入验证码");
-        this.codeStatus = 1;
+      if (
+        !initReg(apiUrl.apiRetrievePassword, "username", this.forgetName) ||
+        !initReg(apiUrl.apiRetrievePassword, "code", this.forgetCode) ||
+        !initReg(apiUrl.apiRetrievePassword, "password", this.newPwd) ||
+        !initReg(apiUrl.apiRetrievePassword, "confirm_password", this.newRepeatPwd)
+      ) {
+        return false;
       } else {
-        this.maskStatus(4);
+        post(apiUrl.apiRetrievePassword, {
+          username: this.forgetName,
+          code: this.forgetCode,
+          password: this.newPwd,
+          confirm_password: this.newRepeatPwd
+        }).then(response => {
+          if (response.code == 0) {
+            this.isVerify = false;
+            this.maskStatus(5);
+          } else {
+            this.forgetImgCode = "";
+            this.getCodeImg();
+          }
+        });
       }
     },
-    setPwd() {
-      if (this.newPwd == "") {
-        this.$message.error("请输入密码");
-      } else if (this.newRepeatPwd == "") {
-        this.$message.error("请输入确认密码");
-      } else if (this.newPwd !== this.newRepeatPwd) {
-        this.$message.error("两次输入密码不一致");
-      } else {
-        this.maskStatus(5);
-      }
-    }
   }
 };
 </script>
@@ -577,6 +558,7 @@ export default {
 .userLogin .codeBtn {
   width: auto;
   margin: 5px 0;
+  padding: 12px 8px;
 }
 </style>
 

@@ -105,7 +105,7 @@ export default {
   mounted() {
     this.active = 0;
     this.getRule();
-    this.getInfo();
+    // this.getInfo();
     this.username=localStorage.getItem("username")
   },
   methods: {
