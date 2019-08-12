@@ -42,36 +42,36 @@
         } catch (e) {}
     },
 
-    publicData(state,publicData){
-        state.publicData = publicData
-    },
+    // publicData(state,publicData){
+    //     state.publicData = publicData
+    // },
 
-    currUserData(state,currUserData){
-        state.currUserData = currUserData
-    },
-    moneyData(state,moneyData){
-        state.moneyData = moneyData
-    },
+    // currUserData(state,currUserData){
+    //     state.currUserData = currUserData
+    // },
+    // moneyData(state,moneyData){
+    //     state.moneyData = moneyData
+    // },
 
-    moneyOutData(state,moneyOutData){
-        state.moneyOutData = moneyOutData
-    },
+    // moneyOutData(state,moneyOutData){
+    //     state.moneyOutData = moneyOutData
+    // },
 
-    moneyInData(state,moneyInData){
-        state.moneyInData = moneyInData
-    },
+    // moneyInData(state,moneyInData){
+    //     state.moneyInData = moneyInData
+    // },
 
-    teamData(state,teamData){
-        state.teamData = teamData
-    },
+    // teamData(state,teamData){
+    //     state.teamData = teamData
+    // },
 
-    gameData(state,gameData){
-        state.gameData = gameData
-    },
+    // gameData(state,gameData){
+    //     state.gameData = gameData
+    // },
 
-    testData(state,testData){
-        state.testData =testData
-    },
+    // testData(state,testData){
+    //     state.testData =testData
+    // },
     infoData(state,infoData){
         state.infoData =infoData
     },
@@ -85,9 +85,9 @@
     teamDatas(state,teamDatas){
         state.teamDatas =teamDatas
     },
-    lowerLevel(state,lowerLevel){
-        state.lowerLevel =lowerLevel
-    },
+    // lowerLevel(state,lowerLevel){
+    //     state.lowerLevel =lowerLevel
+    // },
 //     nickname(state,nickname){
 //         state.nickname =nickname
 //     },

@@ -7,7 +7,7 @@
           <span></span>查询
         </el-row>
         <el-row class="contentMainTable">
-          <el-row class="pd-l-20">
+          <!-- <el-row class="pd-l-20">
             <span class="common-color">时间：</span>
             <el-date-picker
               v-model="dataStarrt"
@@ -23,8 +23,7 @@
               value-format="yyyy-MM-dd"
             ></el-date-picker>
             <el-button type="primary" class="btnColor">查询</el-button>
-          </el-row>
-
+          </el-row>-->
           <el-table :data="teamData" stripe style="width: 100%" class="teamTable">
             <el-table-column prop="teamMoney" label="当前团队余额(元）" width></el-table-column>
             <el-table-column prop="teamRecharge" label="团队充值(元）" width></el-table-column>
@@ -36,56 +35,24 @@
             <!-- <el-table-column prop="threePeople" label="3天未登录人数"></el-table-column> -->
             <el-table-column prop="sevenDayLogin" label="7天未登录人数"></el-table-column>
           </el-table>
-          <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane label="昨天" name="first">
-              <el-table :data="teamData" stripe style="width: 100%" class="recoredTable">
-                <el-table-column prop="game_type.dexc" label="游戏种类" width></el-table-column>
-                <el-table-column prop="count" label="投注笔数" width></el-table-column>
-                <el-table-column prop="real_bet_amount" label="有效投注"></el-table-column>
-                <el-table-column prop="win_amount" label="实际亏盈"></el-table-column>
-                <el-table-column prop="bobet_amountnus" label="投注金额"></el-table-column>
-              </el-table>
-            </el-tab-pane>
-            <el-tab-pane label="今天" name="second">
-              <el-table :data="teamData" stripe style="width: 100%" class="recoredTable">
-                <el-table-column prop="game_type.dexc" label="游戏种类" width></el-table-column>
-                <el-table-column prop="count" label="投注笔数" width></el-table-column>
-                <el-table-column prop="real_bet_amount" label="有效投注"></el-table-column>
-                <el-table-column prop="win_amount" label="实际亏盈"></el-table-column>
-                <el-table-column prop="bobet_amountnus" label="投注金额"></el-table-column>
-              </el-table>
-            </el-tab-pane>
-            <el-tab-pane label="上周" name="third">
-              <el-table :data="teamData" stripe style="width: 100%" class="recoredTable">
-                <el-table-column prop="game_type.dexc" label="游戏种类" width></el-table-column>
-                <el-table-column prop="count" label="投注笔数" width></el-table-column>
-                <el-table-column prop="real_bet_amount" label="有效投注"></el-table-column>
-                <el-table-column prop="win_amount" label="实际亏盈"></el-table-column>
-                <el-table-column prop="bobet_amountnus" label="投注金额"></el-table-column>
-              </el-table>
-            </el-tab-pane>
-            <el-tab-pane label="上月" name="fourth">
-              <el-table :data="teamData" stripe style="width: 100%" class="recoredTable">
-                <el-table-column prop="game_type.dexc" label="游戏种类" width></el-table-column>
-                <el-table-column prop="count" label="投注笔数" width></el-table-column>
-                <el-table-column prop="real_bet_amount" label="有效投注"></el-table-column>
-                <el-table-column prop="win_amount" label="实际亏盈"></el-table-column>
-                <el-table-column prop="bobet_amountnus" label="投注金额"></el-table-column>
-              </el-table>
-            </el-tab-pane>
-            <el-tab-pane label="本月" name="five">
-              <el-table :data="teamData" stripe style="width: 100%" class="recoredTable">
-                <el-table-column prop="game_type.dexc" label="游戏种类" width></el-table-column>
-                <el-table-column prop="count" label="投注笔数" width></el-table-column>
-                <el-table-column prop="real_bet_amount" label="有效投注"></el-table-column>
-                <el-table-column prop="win_amount" label="实际亏盈"></el-table-column>
-                <el-table-column prop="bobet_amountnus" label="投注金额"></el-table-column>
-              </el-table>
-            </el-tab-pane>
-            <div v-show="teamDataState">
+
+          <el-table
+            :data="teamData.teamGameRecord"
+            stripe
+            style="width: 100%"
+            class="recoredTable"
+            empty-text="数据为空"
+          >
+            <el-table-column prop="game_type.dexc" label="游戏种类" width></el-table-column>
+            <el-table-column prop="count" label="投注笔数" width></el-table-column>
+            <el-table-column prop="real_bet_amount" label="有效投注"></el-table-column>
+            <el-table-column prop="win_amount" label="实际亏盈"></el-table-column>
+            <el-table-column prop="bobet_amountnus" label="投注金额"></el-table-column>
+          </el-table>
+
+          <!-- <div v-show="teamDataState">
               暂无相关记录
-            </div>
-          </el-tabs>
+          </div>-->
         </el-row>
       </el-row>
     </div>
@@ -99,12 +66,7 @@ export default {
   },
   mounted() {
     this.teamData = [this.teamDatas];
-    if (this.teamDatas.teamGameRecord == "") {
-      this.teamDataState = true;
-    } else {
-      this.teamData = [this.teamDatas];
-      this.teamDataState=false;
-    }
+    console.log(this.teamData);
   },
   data() {
     return {

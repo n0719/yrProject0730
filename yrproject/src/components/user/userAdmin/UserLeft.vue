@@ -111,7 +111,7 @@ export default {
           this.getInfo();
       this.getInfo();
       this.getTeamData();
-      this.getLowerLevelData();
+      // this.getLowerLevelData();
       this.active = id
       switch (id) {
         case id =1:

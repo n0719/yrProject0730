@@ -18,7 +18,8 @@ export const apiUrl = {
   apiBankAccountList:"MoneyOut/bankAccountList",//获取银行卡列表
   apiSmsVerifyCode:"Public/smsVerifyCode",//验证手机验证码
   apiOrderList:"Money/orderList",//充值列表
-  apiQrcodePaySubmit:"MoneyIn/qrcodePaySubmit"//微信支付宝充值
+  apiQrcodePaySubmit:"MoneyIn/qrcodePaySubmit",//微信支付宝充值
+  apiActivitiesList:"CurrUser/activitiesList"//优惠活动列表
   
 }
 // export const apiLogin = p => post('Public/login', p);

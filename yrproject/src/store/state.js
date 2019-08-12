@@ -49,18 +49,18 @@ export default {
     dict: {},
     getRules:getRules1,
     publicData:"",//验证数据
-    currUserData:"",
-    moneyData:"",
-    moneyOutData:"",
-    moneyInData:"",
-    teamData:"",
-    gameData:"",
-    testData:"",
+    // currUserData:"",
+    // moneyData:"",
+    // moneyOutData:"",
+    // moneyInData:"",
+    // teamData:"",
+    // gameData:"",
+    // testData:"",
     isLogin:false,
     //个人信息
     infoData:"",//个人基本信息
     dictionariesData:{},//数据字典
     teamDatas:{},//团队总览
-    lowerLevel:{}//下级管理
+    // lowerLevel:{}//下级管理
 
 }
