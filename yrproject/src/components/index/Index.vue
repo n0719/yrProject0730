@@ -6,6 +6,7 @@
     background-size: 100% 100%;
     background-repeat: no-repeat;"
   >
+ 
     <div class="indexTop">
       <div class="topNav">
         <div class="logo">
@@ -199,6 +200,8 @@ export default {
       if (oldName == true) {
         this.userShow = false;
         this.canScroll();
+      }else{
+        this.userShow = true;
       }
     },
     lmodelShow(newName, oldName) {

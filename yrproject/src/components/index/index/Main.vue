@@ -3,10 +3,12 @@
   <div class="mainBox">
     <img :src="topImg" alt class="topImg" />
     <div class="container">
+        <a @click="test">ssssssssssssss</a>
       <el-row class="flex-box mg-b-20">
         <div class="noticeTitle">
           <img src="../../../assets/index/notice.png" alt /> 传奇咨询
         </div>
+       
         <el-carousel height="16px" direction="vertical" :autoplay="true">
           <el-carousel-item v-for="item in noticeList" :key="item">
             <h3 class="medium">{{ item }}</h3>
@@ -180,6 +182,25 @@ export default {
         }
       ]
     };
+  },
+  methods:{
+    test(){
+     
+     this.$store.commit("umodelShow", true);
+      this.$router.push({
+              path: "/webNotice"
+            });
+     
+        // this.userShow = !this.userShow;
+        // this.loginSHow = false;
+        // this.getInfo();
+        // this.getDataDictionaries();
+        // this.getTeamData();
+        // this.getLowerLevelData();
+     console.log(111233);
+     
+    }
+ 
   }
 };
 </script>

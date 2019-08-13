@@ -7,15 +7,19 @@
           <span></span>我的优惠
         </el-row>
         <el-row class="itemList">
-          <el-tabs v-model="activeName" type="card" class="selfTab" v-for="(item,index) in discountTitData" :key="index">
-            <el-tab-pane :label="item.desc" >
-              <div class="discountList" v-for="(item1,index1) in discountData" :key="index1">
-                <div class="discountListItem" >
-                  <div class="discountTit">
-                    {{item1.title}}
-                  </div>
+          <el-tabs
+            v-model="activeName"
+            type="card"
+            class="selfTab"
+            v-for="(item,index) in discountData"
+            :key="index"
+          >
+            <el-tab-pane v-for="(item1,index1) in item" :key="index1" >
+              <div class="discountList">
+                <div class="discountListItem">
+                  <div class="discountTit">{{item1.title}}</div>
                   <div class="discountImg">
-                    <img :src="item1.app_banner" alt />
+                    <img alt />
                   </div>
                   <div class="discountBtn">
                     <el-button class="yrBtn">立即领取</el-button>
@@ -23,15 +27,6 @@
                 </div>
               </div>
             </el-tab-pane>
-            <!-- <el-tab-pane label="传奇亚洲" name="second">传奇亚洲</el-tab-pane>
-            <el-tab-pane label="体育" name="third">体育</el-tab-pane>
-            <el-tab-pane label="娱乐场" name="fourth">娱乐场</el-tab-pane>
-            <el-tab-pane label="老虎机" name="five">老虎机</el-tab-pane>
-            <el-tab-pane label="棋牌" name="six">棋牌</el-tab-pane>
-            <el-tab-pane label="捕鱼" name="seven">捕鱼</el-tab-pane>
-            <el-tab-pane label="彩票" name="eight">彩票</el-tab-pane>
-            <el-tab-pane label="电子竞技" name="nine">电子竞技</el-tab-pane>
-            <el-tab-pane label="额度转换" name="ten">额度转换</el-tab-pane> -->
           </el-tabs>
         </el-row>
         <el-row class="pagination">
@@ -42,31 +37,42 @@
   </div>
 </template>
 <script>
-import LoginVue from '../../login/Login.vue';
+import LoginVue from "../../login/Login.vue";
 export default {
   data() {
     return {
       activeName: "0",
       discountData: [],
-      discountTitData:this.$store.state.dictionariesData.table_map.member_activities.type
+
     };
   },
   mounted() {
     this.getActivitiesList();
     // table_map.member_activities.type
-    console.log(this.discountData);
-    
+    // console.log(this.discountData);
+    // console.log(this.$store.state.dictionariesData.table_map.member_activities);
   },
   methods: {
-      getActivitiesList() {
+    getActivitiesList() {
+      var n;
+      // this.getaaa(1);
+      // this.getaaa(2);
+      // this.getaaa(3);
+      // this.getaaa(4);
+      // this.getaaa(5);
+      // this.getaaa(6);
+      // this.getaaa(7);
+      console.log(this.discountData);
+      
+    },
+    getaaa(n) {
       this.post(this.apiUrl.apiActivitiesList, {
         limit: "10",
         page: "1",
-        type: "1"
+        type: n
       }).then(res => {
-        console.log(res.data.items);
-        if(res.data!=""){
-          this.discountData=res.data.items;
+        if (res.data != "") {
+          this.discountData .push(res.data.items);
         }
       });
     }

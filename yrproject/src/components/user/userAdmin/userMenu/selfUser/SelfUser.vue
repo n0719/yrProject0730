@@ -230,6 +230,12 @@ export default {
     this.ruleForm.uAddress = this.infoData.email;
     this.ruleForm.uBirth = this.infoData.birthday; //
 
+ 
+    console.log(this.infoData.fund_password);
+    
+   if(this.infoData.fund_password=1){
+ 
+   }
     this.getCodeImg();
   },
   data() {
@@ -329,7 +335,7 @@ export default {
           {
             required: true,
             pattern: "",
-            message: "原始密码不符合格式",
+            message: "新密码不符合格式",
             trigger: "blur"
           }
         ],
@@ -351,7 +357,7 @@ export default {
       moneyRules: {
         moneyOldPassword: [
           {
-            required: true,
+          
             message: "原始密码不符合格式",
             trigger: "blur"
           }
@@ -526,9 +532,9 @@ export default {
           let newPassword = this.moneyPasswordFrom.moneyNewPassword;
           let conPassword = this.moneyPasswordFrom.moneyConPassword;
           console.log(oldPassword, newPassword, conPassword);
-          if (newPassword == conPassword) {
+
+          if (newPassword == conPassword&&this.infoData.fund_password==1||this.infoData.fund_password==0) {
             this.post(this.apiUrl.apiChangeFoundPassword, {
-              oldPassword: oldPassword,
               password: newPassword
             }).then(res => {
               console.log(res);

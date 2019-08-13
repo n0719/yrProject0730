@@ -105,12 +105,12 @@ export default {
       this.getInfo();
       this.getTeamData();
       this.getLowerLevelData();
+
  },
   methods: {
     goPage(id) {
-          this.getInfo();
-      this.getInfo();
-      this.getTeamData();
+       
+  
       // this.getLowerLevelData();
       this.active = id
       switch (id) {
