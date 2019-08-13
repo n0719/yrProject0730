@@ -7,24 +7,40 @@
           <span></span>我的优惠
         </el-row>
         <el-row class="itemList">
-          <el-tabs
-            v-model="activeName"
-            type="card"
-            class="selfTab"
-            v-for="(item,index) in discountData"
-            :key="index"
-          >
-            <el-tab-pane v-for="(item1,index1) in item" :key="index1" >
-              <div class="discountList">
-                <div class="discountListItem">
-                  <div class="discountTit">{{item1.title}}</div>
-                  <div class="discountImg">
-                    <img alt />
-                  </div>
-                  <div class="discountBtn">
-                    <el-button class="yrBtn">立即领取</el-button>
-                  </div>
-                </div>
+          <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+            <el-tab-pane :label="dictionariesData[0]"  name="first">
+              <div v-for="(item,index) in discountData" :key="index">
+                {{item.title}}
+              </div>
+            </el-tab-pane>
+            <el-tab-pane :label="dictionariesData[1]" name="second">
+                <div v-for="(item,index) in discountData" :key="index">
+                {{item.title}}
+              </div>
+            </el-tab-pane>
+            <el-tab-pane :label="dictionariesData[2]" name="third">
+                <div v-for="(item,index) in discountData" :key="index">
+                {{item.title}}
+              </div>
+            </el-tab-pane>
+            <el-tab-pane :label="dictionariesData[3]" name="fourth">
+                <div v-for="(item,index) in discountData" :key="index">
+                {{item.title}}
+              </div>
+            </el-tab-pane>
+              <el-tab-pane :label="dictionariesData[4]" name="five">
+                <div v-for="(item,index) in discountData" :key="index">
+                {{item.title}}
+              </div>
+            </el-tab-pane>
+              <el-tab-pane :label="dictionariesData[5]" name="six">
+                <div v-for="(item,index) in discountData" :key="index">
+                {{item.title}}
+              </div>
+            </el-tab-pane>
+              <el-tab-pane :label="dictionariesData[6]" name="seven">
+                <div v-for="(item,index) in discountData" :key="index">
+                {{item.title}}
               </div>
             </el-tab-pane>
           </el-tabs>
@@ -41,41 +57,42 @@ import LoginVue from "../../login/Login.vue";
 export default {
   data() {
     return {
-      activeName: "0",
+      activeName: "first",
       discountData: [],
-
+      m:"",
+      dictionariesData:this.$store.state.dictionariesData.table_map.member_activities.type
     };
   },
   mounted() {
-    this.getActivitiesList();
+
     // table_map.member_activities.type
     // console.log(this.discountData);
-    // console.log(this.$store.state.dictionariesData.table_map.member_activities);
+    console.log(this.$store.state.dictionariesData.table_map.member_activities.type);
+    this.m=this.$store.state.dictionariesData.table_map.member_activities.type.length;
+    console.log(this.m);
+    
   },
   methods: {
-    getActivitiesList() {
-      var n;
-      // this.getaaa(1);
-      // this.getaaa(2);
-      // this.getaaa(3);
-      // this.getaaa(4);
-      // this.getaaa(5);
-      // this.getaaa(6);
-      // this.getaaa(7);
-      console.log(this.discountData);
-      
-    },
-    getaaa(n) {
+    getActivitiesList(n) {
       this.post(this.apiUrl.apiActivitiesList, {
         limit: "10",
         page: "1",
         type: n
       }).then(res => {
         if (res.data != "") {
-          this.discountData .push(res.data.items);
+          this.discountData=res.data.items;
+          console.log(this.discountData);
+          
         }
       });
-    }
+    },
+      handleClick(tab, event) {
+        var n=parseInt(tab.index)+1;
+        console.log(n);
+        
+        this.getActivitiesList(n);
+         
+      }
   }
 };
 </script>
