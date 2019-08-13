@@ -188,21 +188,15 @@ export default {
       this.noScroll();
     },
     userModel() {
-      //  this.loginSHow=this.lmodelShow;
-      //  this.userShow=!this.userShow;
+  
       var that = this;
-      this.getInfo();
-      this.getDataDictionaries();
-      this.getTeamData();
+
       if (localStorage.getItem("token") != null) {
         this.$store.commit("umodelShow", true);
         this.userShow = !this.userShow;
         this.loginSHow = false;
         this.noScroll();
-        // this.getInfo();
-        // this.getDataDictionaries();
-        // this.getTeamData();
-        // this.getLowerLevelData();
+    
       } else {
         this.$confirm("用户登录需登录后才可以访问", "提示", {
           confirmButtonText: "确定",
@@ -231,7 +225,7 @@ export default {
         .then(() => {
           this.$store.commit("uname", "游客");
           localStorage.removeItem("token");
-          this.getInfo();
+         
         })
         .catch(() => {});
     },

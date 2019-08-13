@@ -7,7 +7,7 @@
       </el-carousel-item>
     </el-carousel>
     <div class="container">
-        <a @click="test">ssssssssssssss</a>
+        <!-- <a @click="test">ssssssssssssss</a> -->
       <el-row class="flex-box mg-b-20">
         <div class="noticeTitle">
           <img src="../../../assets/index/notice.png" alt /> 传奇咨询
