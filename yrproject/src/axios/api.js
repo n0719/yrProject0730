@@ -12,10 +12,16 @@ export const apiUrl = {
   apiChangeFoundPassword:"CurrUser/changeFoundPassword",//更改资金密码
   apiDataDataDictionaries:"Public/dict",//数据字典
   apiTeamData:"Team/teamData",//团队总览
-  apiLowerLevel:"Team/lowerLevel",//下级管理
   apiBindPhone:"CurrUser/bindPhone",//绑定手机号
   apiBankAccountAdd:"MoneyOut/bankAccountAdd",//新增银行卡
   apiBankAccountList:"MoneyOut/bankAccountList",//获取银行卡列表
+  apiNotice:"Public/notice",//8.公告列表(优惠公告)
+  apiGameRecordList:"Game/playRecordList",//55. 游戏-投注记录
+  apiTeamLowerLevel:"Team/lowerLevel",//45. 下级管理
+  apiMoneyList:"Money/moneyList",//29. 余额日志
+  apiMultiple:"Public/multiple",//14. 多接口合并访问 
+  apiElectronic:"Public/electronicGamesList",//12. 单线路-电子游戏-列表
+  apiDialogs:"Public/dialog",//9. 弹窗公告 
 }
 // export const apiLogin = p => post('Public/login', p);
 

@@ -85,6 +85,18 @@
     lowerLevel(state,lowerLevel){
         state.lowerLevel =lowerLevel
     },
+    noticeList(state,noticeList){
+        state.noticeList =noticeList
+    },
+    bannerList(state,bannerList){
+        state.bannerList =bannerList
+    },
+    gameList(state,gameList){
+        state.gameList =gameList
+    },
+    lineList(state,lineList){
+        state.lineList =lineList
+    },
 //     nickname(state,nickname){
 //         state.nickname =nickname
 //     },

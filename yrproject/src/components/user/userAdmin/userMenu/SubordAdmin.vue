@@ -9,21 +9,24 @@
         <el-row class="contentMainTable">
           <span class="common-color">下级管理：</span>
           <el-input v-model="playerAccount" placeholder="输入玩家账号" class="mg-r-20"></el-input>
-          <el-button type="primary" class="btnColor" @click="search">查询</el-button>
+          <el-button type="primary" class="btnColor" @click="searchSubord">查询</el-button>
           <el-table
             :data="tableData"
             stripe
             style="width: 100%"
-            class="recoredTable mg-t-30"
+            class="recoredTable mg-t-30 mg-b-20"
             empty-text="暂无记录"
           >
-            <el-table-column prop="uid" label="ID" width></el-table-column>
-            <el-table-column prop="account" label="账号" width></el-table-column>
-            <el-table-column prop="name" label="姓名"></el-table-column>
-            <el-table-column prop="num" label="余额"></el-table-column>
-            <el-table-column prop="level" label="下级总数"></el-table-column>
-            <el-table-column prop="time" label="创建时间"></el-table-column>
+            <el-table-column prop="member_id" label="ID" width></el-table-column>
+            <el-table-column prop="username" label="账号" width></el-table-column>
+            <el-table-column prop="username" label="姓名"></el-table-column>
+            <el-table-column prop="money" label="余额"></el-table-column>
+            <el-table-column prop="child_info_count" label="下级总数"></el-table-column>
+            <el-table-column prop="login_time" label="创建时间"></el-table-column>
           </el-table>
+          <el-row class="text-center">
+          <el-pagination background layout="prev, pager, next" :current-page.sync="recordsPage" :total="recordsTotal" :page-size="pageSize" @current-change="handleCurrentChange"></el-pagination>
+        </el-row>
         </el-row>
         <el-row class="ewmShare">
           <ewm-share></ewm-share>
@@ -38,54 +41,40 @@ export default {
   data() {
     return {
       playerAccount: "",
-      tableData: [
-        {
-          uid: "65432345",
-          account: "617682681938097",
-          name: "王二小",
-          num: "1000.00",
-          level: "12",
-          time: "2019/04/29 02:00:00"
-        },
-        {
-          uid: "65432345",
-          account: "617682681938097",
-          name: "王二小",
-          num: "1000.00",
-          level: "43",
-          time: "2019/04/29 02:00:00"
-        },
-        {
-          uid: "65432345",
-          account: "617682681938097",
-          name: "王二小",
-          num: "4000.50",
-          level: "10",
-          time: "2019/04/29 02:00:00"
-        },
-        {
-          uid: "65432345",
-          account: "617682681938097",
-          name: "尼古拉斯·赵四",
-          num: "1000.00",
-          level: "3",
-          time: "2019/04/29 02:00:00"
-        },
-        {
-          uid: "65432345",
-          account: "617682681938097",
-          name: "殷六侠",
-          num: "231.67",
-          level: "28",
-          time: "2019/04/29 02:00:000"
-        }
-      ],
-      activeName: "first"
+      tableData: [],
+      recordsPage:1,
+      pageSize:10,
+      recordsTotal:0,
     };
   },
+  mounted() {
+    this.getRecords();
+  },
   methods: {
-    search() {
-      this.tableData = [];
+    searchSubord(){
+      this.recordsPage = 1;
+      this.getRecords();
+    },
+    getRecords(){
+      var params = {
+          limit: this.pageSize,
+          page:this.recordsPage,
+      }
+      if(this.playerAccount!=''){
+        params.username = this.playerAccount;
+      }
+      this.post(this.apiUrl.apiTeamLowerLevel, params).then(response => {
+          if (response.code == 0) {
+            this.tableData = response.data.items;
+            this.recordsTotal = response.data.total;
+          } else {
+            this.tableData = [];
+          }
+        });
+    },
+    handleCurrentChange(curPage){
+      this.recordsPage = curPage;
+      this.getRecords()
     }
   },
   components: {

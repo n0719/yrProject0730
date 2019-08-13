@@ -8,20 +8,20 @@
         </el-row>
         <el-row class="contentMainTable">
           <el-row class="pd-l-20">
-            <span class="common-color">下级管理：</span>
-            <el-select v-model="value" placeholder="请选择">
+            <span class="common-color">类型：</span>
+            <el-select v-model="dealignTypes" placeholder="请选择" @change="chooseType">
               <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                v-for="item in dealingsType"
+                :key="item.id"
+                :label="item.desc"
+                :value="item.id"
               ></el-option>
             </el-select>
             <span class="common-color timeLabel">时间段：</span>
-            <el-date-picker v-model="dataStarrt" type="datetime" placeholder="年/月/日  时/分/秒" class="datePicker"></el-date-picker>
+            <el-date-picker v-model="dataStart" type="datetime" value-format="yyyy-MM-dd HH:mm:ss" placeholder="年/月/日  时/分/秒" class="datePicker" @change="getStartData"></el-date-picker>
             <span class="common-color">——</span>
-            <el-date-picker v-model="dataEnd" type="datetime" placeholder="年/月/日  时/分/秒" class="datePicker"></el-date-picker>
-            <el-button type="primary" class="btnColor">查询</el-button>
+            <el-date-picker v-model="dataEnd" type="datetime" value-format="yyyy-MM-dd HH:mm:ss" placeholder="年/月/日  时/分/秒" class="datePicker" @change="getEndData"></el-date-picker>
+            <el-button type="primary" class="btnColor" @click="searchRecords">查询</el-button>
           </el-row>
           <el-table
             :data="tableData"
@@ -30,17 +30,16 @@
             class="recoredTable mg-t-30"
             empty-text="暂无记录"
           >
-            <el-table-column prop="oid" label="单号" width></el-table-column>
-            <el-table-column prop="time" label="日期" width></el-table-column>
-            <el-table-column prop="types" label="交易类别"></el-table-column>
-            <el-table-column prop="total" label="交易金额"></el-table-column>
-            <el-table-column prop="cashPay" label="现金交易"></el-table-column>
-            <el-table-column prop="notice" label="备注"></el-table-column>
+            <el-table-column prop="created_at" label="日期" width></el-table-column>
+            <el-table-column prop="type.desc" label="交易类别"></el-table-column>
+            <el-table-column prop="money" label="交易金额"></el-table-column>
+            <el-table-column prop="after_money" label="余额"></el-table-column>
+            <el-table-column prop="note" label="备注"></el-table-column>
           </el-table>
         </el-row>
         <!-- 分页 -->
         <el-row class="text-center">
-          <el-pagination background layout="prev, pager, next" :total="50"></el-pagination>
+          <el-pagination background layout="prev, pager, next" :current-page.sync="recordsPage" :total="recordsTotal" :page-size="pageSize" @current-change="handleCurrentChange"></el-pagination>
         </el-row>
       </el-row>
     </div>
@@ -50,90 +49,59 @@
 export default {
   data() {
     return {
-      dataStarrt: "",
+      dataStart: "",
       dataEnd: "",
-      tableData: [
-        {
-          oid: "65432345",
-          time: "2019/04/29 02:00:00",
-          types: "提现",
-          total: "1000.00",
-          cashPay: "0",
-          notice: "——"
-        },
-        {
-          oid: "65432345",
-          time: "2019/04/29 02:00:00",
-          types: "额度转换",
-          total: "1000.00",
-          cashPay: "0",
-          notice: "——"
-        },
-        {
-          oid: "65432345",
-          time: "2019/04/29 02:00:00",
-          types: "充值",
-          total: "1000.00",
-          cashPay: "0",
-          notice: "——"
-        },
-        {
-          oid: "65432345",
-          time: "2019/04/29 02:00:00",
-          types: "百家乐",
-          total: "1000.00",
-          cashPay: "0",
-          notice: "——"
-        },
-        {
-          oid: "65432345",
-          time: "2019/04/29 02:00:00",
-          types: "老虎机",
-          total: "1000.00",
-          cashPay: "0",
-          notice: "一定捞回来"
-        },
-        {
-          oid: "65432345",
-          time: "2019/04/29 02:00:00",
-          types: "电子竞技",
-          total: "1000.00",
-          cashPay: "0",
-          notice: "——"
-        }
-      ],
-      options: [
-        {
-          value: "选项1",
-          label: "提现"
-        },
-        {
-          value: "选项2",
-          label: "额度转换"
-        },
-        {
-          value: "选项3",
-          label: "充值"
-        },
-        {
-          value: "选项4",
-          label: "百家乐"
-        },
-        {
-          value: "选项5",
-          label: "老虎机"
-        },
-        {
-          value: "选项6",
-          label: "电子竞技"
-        }
-      ],
-      value: ""
+      tableData: [],
+      dealingsType:[],
+      dealignTypes: "",
+      recordsPage:1,
+      pageSize:10,
+      recordsTotal:0,
     };
   },
+  mounted() {
+    this.dealingsType = this.$store.state.dictionariesData.table_map.member_money_logs.type;
+    this.getRecords();
+  },
   methods: {
-    handleClick(tab, event) {
-      console.log(tab, event);
+    searchRecords(){
+      this.recordsPage = 1;
+      this.getRecords();
+    },
+    getStartData(val){
+      this.dataStart = val;      
+    },
+    getEndData(val){
+      this.dataEnd = val;
+    },
+    getRecords(){
+      var params = {
+          size: this.pageSize,
+          type:this.dealignTypes,
+          page: this.recordsPage,
+      }
+      if(this.dataStart!=''){
+        params.start = this.dataStart;
+      }
+      if(this.dataEnd!=''){
+        params.end = this.dataEnd;
+      }
+      this.post(this.apiUrl.apiMoneyList, params).then(response => {
+          if (response.code == 0) {
+            this.tableData = response.data.items;
+            this.recordsTotal = response.data.total;
+          } else {
+            this.tableData = [];
+          }
+        });
+    },
+    handleCurrentChange(curPage){
+      this.recordsPage = curPage;
+      this.getRecords()
+    },
+    chooseType(){
+      this.recordsPage = 1;
+      this.getRecords();
     }
   }
 };

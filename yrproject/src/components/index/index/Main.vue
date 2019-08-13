@@ -1,185 +1,72 @@
 <template>
   <!-- 首页 -->
   <div class="mainBox">
-    <img :src="topImg" alt class="topImg" />
+    <el-carousel trigger="click" height="520px" class="banner topImg" :autoplay="true">
+      <el-carousel-item v-for="item in bannerList" :key="item">
+        <img :src="item" alt />
+      </el-carousel-item>
+    </el-carousel>
     <div class="container">
       <el-row class="flex-box mg-b-20">
         <div class="noticeTitle">
           <img src="../../../assets/index/notice.png" alt /> 传奇咨询
         </div>
-        <el-carousel height="16px" direction="vertical" :autoplay="true">
-          <el-carousel-item v-for="item in noticeList" :key="item">
-            <h3 class="medium">{{ item }}</h3>
+        <el-carousel
+          height="16px"
+          direction="vertical"
+          :autoplay="true"
+          @click.native="noticeDetail"
+        >
+          <el-carousel-item v-for="(item,index) in noticeList" :key="index">
+            <h3 class="medium">{{item.title}}</h3>
           </el-carousel-item>
         </el-carousel>
-      </el-row>
-      <el-row class="middleBox">
-        <div v-for="(item,index) in gameList" :key="index" class="itemBox">
-          <img :src="item.ad" alt class="topAd" />
-          <div class="title font-bold">
-            <img src="../../../assets/index/titleIcon.png" alt />
-            {{item.title}}
-          </div>
-          <div class="gameMenu">
-            <div v-for="(itemGame,itemIndex) in item.smallGame" :key="itemIndex" class="itemGame">
-              <img :src="itemGame.imgs" alt class="itemImg" />
-              <div class="font-bold">{{itemGame.name}}</div>
-            </div>
-          </div>
-        </div>
       </el-row>
     </div>
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
 export default {
+  computed: {
+    ...mapState(["noticeList","bannerList"])
+  },
   data() {
     return {
-      topImg: require("../../../assets/index/shufflingImg.png"),
-      noticeList: [
-        "真人游戏线下体验馆开业啦1！！！",
-        "真人游戏线下体验馆开业啦2！！！",
-        "真人游戏线下体验馆开业啦3！！！"
-      ],
-      gameList: [
-        {
-          ad: require("../../../assets/index/ad1.png"),
-          title: "VG棋牌",
-          smallGame: [
-            {
-              imgs: require("../../../assets/index/game1.png"),
-              name: "血战麻将"
-            },
-            {
-              imgs: require("../../../assets/index/game2.png"),
-              name: "强装牛牛"
-            },
-            {
-              imgs: require("../../../assets/index/game3.png"),
-              name: "加倍斗地主"
-            },
-            {
-              imgs: require("../../../assets/index/game4.png"),
-              name: "竞咪楚汉德州"
-            },
-            {
-              imgs: require("../../../assets/index/game5.png"),
-              name: "推筒子"
-            },
-            {
-              imgs: require("../../../assets/index/game6.png"),
-              name: "炸金花"
-            }
-          ]
-        },
-        {
-          ad: require("../../../assets/index/ad2.png"),
-          title: "KY棋牌",
-          smallGame: [
-            {
-              imgs: require("../../../assets/index/game7.png"),
-              name: "百人牛牛"
-            },
-            {
-              imgs: require("../../../assets/index/game8.png"),
-              name: "斗地主"
-            },
-            {
-              imgs: require("../../../assets/index/game9.png"),
-              name: "保险楚河德州"
-            }
-          ]
-        },
-        {
-          ad: require("../../../assets/index/ad3.png"),
-          title: "彩票",
-          smallGame: [
-            {
-              imgs: require("../../../assets/index/game1.png"),
-              name: "血战麻将"
-            },
-            {
-              imgs: require("../../../assets/index/game2.png"),
-              name: "强装牛牛"
-            },
-            {
-              imgs: require("../../../assets/index/game3.png"),
-              name: "加倍斗地主"
-            },
-            {
-              imgs: require("../../../assets/index/game4.png"),
-              name: "竞咪楚汉德州"
-            }
-          ]
-        },
-        {
-          ad: require("../../../assets/index/ad4.png"),
-          title: "真人",
-          smallGame: [
-            {
-              imgs: require("../../../assets/index/game1.png"),
-              name: "血战麻将"
-            },
-            {
-              imgs: require("../../../assets/index/game2.png"),
-              name: "强装牛牛"
-            },
-            {
-              imgs: require("../../../assets/index/game3.png"),
-              name: "加倍斗地主"
-            },
-            {
-              imgs: require("../../../assets/index/game4.png"),
-              name: "竞咪楚汉德州"
-            }
-          ]
-        },
-        {
-          ad: require("../../../assets/index/ad5.png"),
-          title: "电子",
-          smallGame: [
-            {
-              imgs: require("../../../assets/index/game1.png"),
-              name: "血战麻将"
-            },
-            {
-              imgs: require("../../../assets/index/game2.png"),
-              name: "强装牛牛"
-            },
-            {
-              imgs: require("../../../assets/index/game3.png"),
-              name: "加倍斗地主"
-            },
-            {
-              imgs: require("../../../assets/index/game4.png"),
-              name: "竞咪楚汉德州"
-            }
-          ]
-        },
-        {
-          ad: require("../../../assets/index/ad6.png"),
-          title: "体育",
-          smallGame: [
-            {
-              imgs: require("../../../assets/index/game1.png"),
-              name: "血战麻将"
-            },
-            {
-              imgs: require("../../../assets/index/game2.png"),
-              name: "强装牛牛"
-            },
-            {
-              imgs: require("../../../assets/index/game3.png"),
-              name: "加倍斗地主"
-            },
-            {
-              imgs: require("../../../assets/index/game4.png"),
-              name: "竞咪楚汉德州"
-            }
-          ]
-        }
-      ]
+      
     };
+  },
+  mounted(){
+
+  },
+  methods: {
+    noticeDetail(){
+      if (localStorage.getItem("token") != null) {      
+        this.$store.commit("umodelShow", true);
+        this.userShow = !this.userShow;
+        this.loginSHow = false;
+        this.noScroll();
+      } else {
+        this.$confirm("用户登录需登录后才可以访问", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            that.$store.commit("lmodelShow", true);
+            that.userShow = false;
+            that.loginSHow = !this.loginShow;
+            that.$router.push({
+              path: "/myPay"
+            });
+          })
+          .catch(() => {});
+      }
+    },
+    handleCurrentChange(curPage){
+      this.noticePage = curPage;
+      this.getNotice()
+    }
   }
 };
 </script>
@@ -194,9 +81,10 @@ export default {
 }
 .mainBox .el-carousel--vertical {
   display: inline-block;
-  font-size: 12px;
+  font-size: 14px;
   margin-left: 14px;
   width: 100%;
+  cursor: pointer;
 }
 .noticeTitle {
   color: #ff9797;
@@ -247,6 +135,10 @@ export default {
 }
 .mainBox .middleBox .itemBox:nth-child(odd){
     margin-right: 30px;
+}
+.mainBox .banner img {
+  height: 100%;
+  width: 100%;
 }
 </style>
 

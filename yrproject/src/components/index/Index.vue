@@ -59,7 +59,19 @@
         <yr-main v-if="active==0?true:false"></yr-main>
       </transition>
       <transition name="fade">
-        <yr-discount v-if="active==1?true:false"></yr-discount>
+        <yr-live v-if="active==1?true:false"></yr-live>
+      </transition>
+      <transition name="fade">
+        <yr-lottory v-if="active==2?true:false"></yr-lottory>
+      </transition>
+      <transition name="fade">
+        <yr-egames v-if="active==3?true:false"></yr-egames>
+      </transition>
+      <transition name="fade">
+        <yr-exports v-if="active==4?true:false"></yr-exports>
+      </transition>
+      <transition name="fade">
+        <yr-poker v-if="active==5?true:false"></yr-poker>
       </transition>
       <!-- <img src="../../assets/index/indexBg.png" alt=""> -->
       <!-- <router-view name="indexView"></router-view> -->
@@ -71,6 +83,14 @@
       </transition>
     </div>
     <div class="indexBottom"></div>
+    <el-dialog title="" :visible.sync="dialogVisible" width="30%" @click="dialogVisible = false" class="indexDialog">
+      <img :src="dialogContent.image" alt="">
+      <div class="dialogBottom">
+        <div class="logContent mg-b-10">{{dialogContent.content}}</div>
+      <div class="text-right mg-b-10">{{dialogContent.author}}</div>
+      <div class="text-right">{{dialogContent.created_at}}</div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -79,6 +99,11 @@ import Login from "@/components/user/login/Login";
 import User from "@/components/user/User";
 import Main from "@/components/index/index/Main";
 import Discount from "@/components/index/index/Discount";
+import Live from "@/components/index/index/Live";
+import Lottory from "@/components/index/index/Lottory";
+import Egames from "@/components/index/index/Egames";
+import Exports from "@/components/index/index/Exports";
+import Poker from "@/components/index/index/Poker";
 import axios from "axios"; // 引入axios
 export default {
   computed: {
@@ -100,19 +125,31 @@ export default {
       activeIndex2: "1",
       mainShow: true,
       discountShow: false,
-      navA: ["首页", "优惠", "充值", "客服", "管理"]
+      dialogVisible: false,
+      dialogContent:{},
+      navA: [
+        "首页",
+        "真人视讯",
+        "彩票游戏",
+        "电子游艺",
+        "体育游戏",
+        "棋牌游戏",
+        "优惠",
+        "客服"
+      ]
     };
   },
   mounted() {
     this.active = 0;
     this.getRule();
-       if (localStorage.getItem("token") != null) {
-     
+    this.getDataDictionaries();
+    this.getCommon();
+    this.getGeme();
+    this.getDialog();
+    if (localStorage.getItem("token") != null) {
     }
-    
   },
   methods: {
-   
     getRule() {
       var that = this;
       axios
@@ -129,6 +166,17 @@ export default {
           console.log(error);
         });
     },
+    getDialog() {
+      //获取弹框内容
+      var that = this;
+      this.post(this.apiUrl.apiDialogs, {}).then(res => {
+        if (res.code == 0) {
+          console.log(res);
+          that.dialogVisible = true;
+          that.dialogContent = res.data;
+        }
+      });
+    },
     loginModel() {
       this.$store.commit("lmodelShow", true);
       this.userShow = false;
@@ -142,12 +190,10 @@ export default {
       //  this.loginSHow=this.lmodelShow;
       //  this.userShow=!this.userShow;
       var that = this;
-          this.getInfo();
-    this.getDataDictionaries();
-    this.getTeamData();
-    this.getLowerLevelData();
+      this.getInfo();
+      this.getDataDictionaries();
+      this.getTeamData();
       if (localStorage.getItem("token") != null) {
-       
         this.$store.commit("umodelShow", true);
         this.userShow = !this.userShow;
         this.loginSHow = false;
@@ -184,7 +230,7 @@ export default {
         })
         .catch(() => {});
     },
-      getInfo() {
+    getInfo() {
       //获取个人数据信息
       var that = this;
       this.post(this.apiUrl.apiGetInfo, {}).then(res => {
@@ -204,20 +250,30 @@ export default {
       //获取团队总览
       this.post(this.apiUrl.apiTeamData).then(res => {
         var data = res.data;
-          this.$store.commit("teamDatas", data);
+        this.$store.commit("teamDatas", data);
       });
     },
-     getLowerLevelData() {
-      //下级管理
-      this.post(this.apiUrl.apiLowerLevel,{
-        limit:1,
-        page:1
+    getCommon() {
+      //获取游戏列表
+      this.post(this.apiUrl.apiMultiple, {
+        apiArr: "banners|homeGame|notice"
       }).then(res => {
-        var data = res.data;
-        console.log(res)
-          this.$store.commit("lowerLevel", data);
-      }).catch(err=>{
-        console.log(err)
+        if (res.code == 0) {
+          var data = res.data;
+          this.$store.commit("noticeList", res.data.notice.items);
+          this.$store.commit("bannerList", res.data.banners.site_banners);
+          this.$store.commit("gameList", res.data.homeGame.lines);
+        }
+      });
+    },
+    getGeme() {
+      //获取单线游戏列表
+      this.post(this.apiUrl.apiElectronic, {
+        game_line_id: 2
+      }).then(res => {
+        if (res.code == 0) {
+          this.$store.commit("lineList", res.data);
+        }
       });
     }
   },
@@ -226,6 +282,9 @@ export default {
     umodelShow(newName, oldName) {
       if (oldName == true) {
         this.userShow = false;
+        this.canScroll();
+      } else {
+        this.userShow = true;
         this.canScroll();
       }
     },
@@ -236,14 +295,18 @@ export default {
       } else {
         this.loginSHow = true;
       }
-    },
-  
+    }
   },
   components: {
     yrLogin: Login,
     yrUser: User,
     yrMain: Main,
-    yrDiscount: Discount
+    yrDiscount: Discount,
+    yrLive: Live,
+    yrLottory: Lottory,
+    yrEgames: Egames,
+    yrExports: Exports,
+    yrPoker: Poker
   }
 };
 </script>
@@ -274,7 +337,7 @@ export default {
   margin: 0 auto;
   display: flex;
   align-items: center;
-  font-size: 18px;
+  font-size: 15px;
 }
 .logo {
   margin-right: 64px;
@@ -308,7 +371,7 @@ export default {
   align-items: center;
 }
 .indexNav a {
-  width: 120px;
+  width: 100px;
   height: 42px;
   color: #e6cf68;
   text-align: center;
@@ -322,6 +385,21 @@ export default {
 .indexLogin li a span {
   font-size: 12px;
   color: #999;
+}
+.indexDialog .el-dialog__body{
+  color: #836426;
+  padding: 0;
+}
+.indexDialog .dialogBottom{
+  padding: 20px;
+}
+.indexDialog img{
+  width: 100%;
+}
+.indexDialog .el-dialog__headerbtn{
+  top: 1px;
+    right: 7px;
+    font-size: 25px;
 }
 @media screen and (max-width: 1450px) {
   .indexTop .topNav {

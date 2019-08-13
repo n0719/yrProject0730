@@ -7,9 +7,26 @@
           <span></span>游戏记录
         </el-row>
         <el-row class="contentMainTable">
+          <span class="common-color">类型：</span>
+          <el-select v-model="chooseType" placeholder="请选择">
+            <el-option v-for="item in gameType" :key="item.id" :label="item.desc" :value="item.id"></el-option>
+          </el-select>
+          <span class="common-color">平台：</span>
+          <el-select v-model="choosePlatform" placeholder="请选择">
+            <el-option
+              v-for="item in gamePlatform"
+              :key="item.id"
+              :label="item.desc"
+              :value="item.id"
+            ></el-option>
+          </el-select>
+          <span class="common-color">状态：</span>
+          <el-select v-model="chooseStatus" placeholder="请选择">
+            <el-option v-for="item in gameStatus" :key="item.id" :label="item.desc" :value="item.id"></el-option>
+          </el-select>
           <span class="common-color">时间：</span>
           <el-date-picker
-            v-model="dataStarrt"
+            v-model="dataStart"
             type="date"
             placeholder="选择日期"
             value-format="yyyy-MM-dd"
@@ -21,182 +38,96 @@
             placeholder="选择日期"
             value-format="yyyy-MM-dd"
           ></el-date-picker>
-          <el-button type="primary" class="btnColor">查询</el-button>
-          <el-tabs v-model="activeName" @tab-click="handleClick" class="gamesList">
-            <el-tab-pane label="昨天" name="first">
-              <el-table :data="tableData" stripe style="width: 100%" class="recoredTable">
-                <el-table-column prop="num" label="序号" width></el-table-column>
-                <el-table-column prop="type" label="游戏名称" width></el-table-column>
-                <el-table-column prop="effectiveNum" label="投注金额"></el-table-column>
-                <el-table-column prop="return" label="盈亏金额"></el-table-column>
-                <el-table-column prop="defeat" label="有效投注"></el-table-column>
-                <el-table-column prop="bonus" label="游戏时间"></el-table-column>
-              </el-table>
-            </el-tab-pane>
-            <el-tab-pane label="今天" name="second">
-              <el-table :data="tableData" stripe style="width: 100%" class="recoredTable">
-                <el-table-column prop="num" label="序号" width></el-table-column>
-                <el-table-column prop="type" label="游戏名称" width></el-table-column>
-                <el-table-column prop="effectiveNum" label="投注金额"></el-table-column>
-                <el-table-column prop="return" label="盈亏金额"></el-table-column>
-                <el-table-column prop="defeat" label="有效投注"></el-table-column>
-                <el-table-column prop="bonus" label="游戏时间"></el-table-column>
-              </el-table>
-            </el-tab-pane>
-            <el-tab-pane label="上周" name="third">
-              <el-table :data="tableData" stripe style="width: 100%" class="recoredTable">
-                <el-table-column prop="num" label="序号" width></el-table-column>
-                <el-table-column prop="type" label="游戏名称" width></el-table-column>
-                <el-table-column prop="effectiveNum" label="投注金额"></el-table-column>
-                <el-table-column prop="return" label="盈亏金额"></el-table-column>
-                <el-table-column prop="defeat" label="有效投注"></el-table-column>
-                <el-table-column prop="bonus" label="游戏时间"></el-table-column>
-              </el-table>
-            </el-tab-pane>
-            <el-tab-pane label="上月" name="fourth">
-              <el-table :data="tableData" stripe style="width: 100%" class="recoredTable">
-                <el-table-column prop="num" label="序号" width></el-table-column>
-                <el-table-column prop="type" label="游戏名称" width></el-table-column>
-                <el-table-column prop="effectiveNum" label="投注金额"></el-table-column>
-                <el-table-column prop="return" label="盈亏金额"></el-table-column>
-                <el-table-column prop="defeat" label="有效投注"></el-table-column>
-                <el-table-column prop="bonus" label="游戏时间"></el-table-column>
-              </el-table>
-            </el-tab-pane>
-            <el-tab-pane label="本月" name="five">
-              <el-table :data="tableData" stripe style="width: 100%" class="recoredTable">
-                <el-table-column prop="num" label="序号" width></el-table-column>
-                <el-table-column prop="type" label="游戏名称" width></el-table-column>
-                <el-table-column prop="effectiveNum" label="投注金额"></el-table-column>
-                <el-table-column prop="return" label="盈亏金额"></el-table-column>
-                <el-table-column prop="defeat" label="有效投注"></el-table-column>
-                <el-table-column prop="bonus" label="游戏时间"></el-table-column>
-              </el-table>
-            </el-tab-pane>
-          </el-tabs>
-        </el-row>
-        <el-row class="text-center">
-            <el-pagination
-                background
-                layout="prev, pager, next"
-                :total="50">
-                </el-pagination>
+          <el-button type="primary" class="btnColor" @click="searchRecords">查询</el-button>
+
+          <el-row>
+            <el-table :data="tableData" stripe style="width: 100%" class="recoredTable" empty-text="暂无记录">
+              <el-table-column prop="record_id" label="序号" width></el-table-column>
+              <el-table-column prop="game_type.desc" label="游戏名称" width></el-table-column>
+              <el-table-column prop="bet_amount" label="投注金额"></el-table-column>
+              <el-table-column prop="win_amount" label="盈亏金额"></el-table-column>
+              <el-table-column prop="real_bet_amount" label="有效投注"></el-table-column>
+              <el-table-column prop="bet_time" label="游戏时间"></el-table-column>
+            </el-table>
+          </el-row>
         </el-row>
 
+        <el-row class="text-center">
+          <el-pagination background layout="prev, pager, next" :current-page.sync="recordsPage" :total="recordsTotal" :page-size="pageSize" @current-change="handleCurrentChange"></el-pagination>
+        </el-row>
       </el-row>
     </div>
-  
   </div>
-
 </template>
 <script>
-
 export default {
   data() {
     return {
-      dataStarrt: "",
+      dataStart: "",
       dataEnd: "",
-      tableData: [
-        {
-          type: "彩票游戏",
-          num: "1",
-          effectiveNum: "0",
-          return: "0",
-          defeat: "0",
-          bonus: "0"
-        },
-        {
-          type: "真人视讯",
-          num: "2",
-          effectiveNum: "0",
-          return: "0",
-          defeat: "0",
-          bonus: "0"
-        },
-        {
-          type: "老虎机",
-          num: "3",
-          effectiveNum: "0",
-          return: "0",
-          defeat: "0",
-          bonus: "0"
-        },
-        {
-          type: "棋牌",
-          num: "4",
-          effectiveNum: "0",
-          return: "0",
-          defeat: "0",
-          bonus: "0"
-        },
-        {
-          type: "体育",
-          num: "5",
-          effectiveNum: "0",
-          return: "0",
-          defeat: "0",
-          bonus: "0"
-        },
-        {
-          type: "老虎机",
-          num: "6",
-          effectiveNum: "0",
-          return: "0",
-          defeat: "0",
-          bonus: "0"
-        },
-        {
-          type: "棋牌",
-          num: "7",
-          effectiveNum: "0",
-          return: "0",
-          defeat: "0",
-          bonus: "0"
-        },
-        {
-          type: "体育",
-          num: "8",
-          effectiveNum: "0",
-          return: "0",
-          defeat: "0",
-          bonus: "0"
-        },
-        {
-          type: "棋牌",
-          num: "9",
-          effectiveNum: "0",
-          return: "0",
-          defeat: "0",
-          bonus: "0"
-        },
-        {
-          type: "体育",
-          num: "10",
-          effectiveNum: "0",
-          return: "0",
-          defeat: "0",
-          bonus: "0"
-        }
-      ],
-      activeName: "first"
+      tableData: [],
+      gameType: [],
+      gamePlatform: [],
+      gameStatus: [],
+      chooseType:'',
+      choosePlatform:'',
+      chooseStatus:'',
+      recordsPage:1,
+      pageSize:10,
+      recordsTotal:0,
     };
   },
-  methods: {
-    handleClick(tab, event) {
-      console.log(tab, event);
-    }
-   
+  mounted() {
+    this.gameType = this.$store.state.dictionariesData.table_map.game_record.game_type;
+    this.gamePlatform = this.$store.state.dictionariesData.table_map.game_record.platform;
+    this.gameStatus = this.$store.state.dictionariesData.table_map.game_record.game_status;
+    this.getRecords();
   },
-
+  methods: {
+    searchRecords(){
+      this.recordsPage = 1;
+      this.getRecords();
+    },
+    getRecords(){
+      var params = {
+          platform: this.choosePlatform,
+          game_type:this.chooseType,
+          game_status:this.chooseStatus,
+          page: this.recordsPage,
+      }
+      if(this.dataStart!=''){
+        params.start = this.dataStart;
+      }
+      if(this.dataEnd!=''){
+        params.end = this.dataEnd;
+      }
+      this.post(this.apiUrl.apiGameRecordList, params).then(response => {
+          if (response.code == 0) {
+            this.tableData = response.data.items;
+            this.recordsTotal = response.data.total;
+          } else {
+            this.tableData = [];
+          }
+        });
+    },
+    handleCurrentChange(curPage){
+      this.recordsPage = curPage;
+      this.getRecords()
+    }
+  }
 };
 </script>
  <style>
-
 @import "../../../../assets/search.css";
 .gameRecords .el-date-editor.el-input,
-.gameRecords .el-date-editor.el-input__inner {
+.gameRecords .el-select {
   width: 140px;
-  margin: 0 10px;
+  margin-right: 10px;
+}
+
+.gameRecords .el-date-editor .el-input__inner,
+.gameRecords .el-select .el-input__inner {
+  width: 100%;
 }
 .gameRecords .contentMain {
   padding: 20px;
@@ -205,17 +136,16 @@ export default {
   height: 100%;
   box-sizing: border-box;
 }
-.gameRecords .el-tabs__content{
-    margin-top: 30px;
-    margin-bottom: 20px;
-}
-.gameRecords .gamesList{
+.gameRecords .recoredTable {
   margin-top: 30px;
 }
-.gameRecords  .el-input__inner{
-    border-color: #836426;
+.gameRecords .el-input__inner {
+  border-color: #836426;
 }
-.gameRecords .el-table__header , .gameRecords .el-table__body{width:100%!important;}
+.gameRecords .el-table__header,
+.gameRecords .el-table__body {
+  width: 100% !important;
+}
 </style>
 
 
