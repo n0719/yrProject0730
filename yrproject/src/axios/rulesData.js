@@ -12,14 +12,14 @@ if (getRulesData.length > 20) {
      const getGame = getRulesDatas.Game//验证 game
      const getTest = getRulesDatas.Test//验证 test
 
-     store.commit("publicData", getPublic);
-     store.commit("currUserData", getCurrUser);
-     store.commit("moneyData", getMoney);
-     store.commit("moneyOutData", getMoneyOut);
-     store.commit("moneyInData", getMoneyIn);
-     store.commit("teamData", getTeam);
-     store.commit("gameData", getGame);
-     store.commit("testData", getTest);
+     // store.commit("publicData", getPublic);
+     // store.commit("currUserData", getCurrUser);
+     // store.commit("moneyData", getMoney);
+     // store.commit("moneyOutData", getMoneyOut);
+     // store.commit("moneyInData", getMoneyIn);
+     // store.commit("teamData", getTeam);
+     // store.commit("gameData", getGame);
+     // store.commit("testData", getTest);
 }
 
 
