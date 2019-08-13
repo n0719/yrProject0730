@@ -31,7 +31,7 @@
                   class="yzBtn"
                   :style="yzTelState==false?'color:#836426':'color:#FF0000'"
                   @click="yzTelClick"
-                >{{yzTelState==false?'验证手机号码':''+num+'s后重新获取'}}</el-button>
+                >{{yzTelState==false?'绑定手机号码':''+num+'s后重新获取'}}</el-button>
                 <el-alert
                   v-show="yzTelState==false?false:true"
                   title="验证码已发送，可能会有延误，请耐心等待"
@@ -40,12 +40,23 @@
                   show-icon
                 ></el-alert>
               </el-form-item>
-
-              <el-form-item prop="uYz">
-                <el-input placeholder="请输入验证码" v-model="ruleForm.uYz"></el-input>
-                <el-button class="yzBtn">验证</el-button>
+              <el-form-item v-if="togYz">
+                <el-input placeholder="请输入验证码" v-model="loginImgCode" type="number"></el-input>
+                <img
+                  class
+                  style="position:absolute;right:125px;top:2px;border-left:1px solid #836426"
+                  :src="imgYZ"
+                  @click="getCodeImg()"
+                  alt
+                />
+                <el-button class="yzBtn" @click="tzTel">发送验证码</el-button>
+                <!-- <el-button class="yzBtn">验证</el-button> -->
               </el-form-item>
-              <el-form-item label="邮箱：" required prop="uAddress">
+              <el-form-item prop="uYz" v-else>
+                <el-input placeholder="请输入验证码" v-model="ruleForm.uYz"></el-input>
+                <el-button class="yzBtn">输入验证码</el-button>
+              </el-form-item>
+              <!-- <el-form-item label="邮箱：" required prop="uAddress">
                 <el-input v-model="ruleForm.uAddress" placeholder="输入合法的邮箱地址"></el-input>
                 <el-button
                   class="yzBtn"
@@ -54,7 +65,7 @@
                 >{{yzEmailState==false?'验证邮箱地址':''+num+'s后重新获取'}}</el-button>
                 <el-alert
                   v-show="yzEmailState==false?false:true"
-                  title="验证码已发送，可能会有延误，请耐心等待"
+                  title="验证成功，手机验证码已发送，可能会有延误，请耐心等待"
                   type="success"
                   center
                   show-icon
@@ -62,7 +73,7 @@
               </el-form-item>
               <el-form-item>
                 <el-input placeholder="请输入验证码"></el-input>
-                <el-button class="yzBtn">验证</el-button>
+                <el-button class="yzBtn">输入验证码</el-button>
               </el-form-item>
               <el-form-item label="出生日期：" class="birth" prop="uBirth">
                 <el-date-picker
@@ -71,7 +82,7 @@
                   placeholder="选择日期"
                   value-format="yyyy-MM-dd"
                 ></el-date-picker>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item class="subBtn">
                 <el-button type="default" @click="resert">取消</el-button>
                 <el-button type="default" @click="submitForm1(ruleForm)">提交</el-button>
@@ -168,25 +179,29 @@
   </div>
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 import { Message } from "element-ui";
 export default {
   computed: {
-    ...mapState(["infoData"])
+    ...mapState(["infoData","regRule"])
   },
-
   mounted() {
+    
     this.rules.uName[0].pattern = this.getReg.getReg(
-      this.$store.state.publicData.login.username.validation
+     this.regRule.Public.login.username.validation
     );
     this.rules.uAddress[0].pattern = this.getReg.getReg(
-      this.$store.state.currUserData.updateInfo.email.validation
+    this.regRule.CurrUser.updateInfo.email.validation
     );
     this.rules.uBirth[0].pattern = this.getReg.getReg(
-      this.$store.state.currUserData.updateInfo.birthday.validation
+      this.regRule.CurrUser.updateInfo.birthday.validation
     );
-    this.rules.uTel[0].pattern=this.getReg.getReg(this.$store.state.currUserData.bindPhone.phone.validation)
-    this.rules.uYz[0].pattern=this.getReg.getReg(this.$store.state.currUserData.bindPhone.verify_code.validation)
+    this.rules.uTel[0].pattern = this.getReg.getReg(
+       this.regRule.CurrUser.bindPhone.phone.validation
+    );
+    this.rules.uYz[0].pattern = this.getReg.getReg(
+       this.regRule.CurrUser.bindPhone.verify_code.validation
+    );
     this.imageUrl = this.$store.state.userImg;
 
     this.ruleForm.uName = this.$store.state.uname;
@@ -197,28 +212,37 @@ export default {
     // this.ruleForm.uAddress=this.$store.state.temail;
     //
     this.logRules.logOldPassword[0].pattern = this.getReg.getReg(
-      this.$store.state.currUserData.changePassword.oldPassword.validation
+      this.regRule.CurrUser.changePassword.oldPassword.validation
     );
     this.logRules.logNewPassword[0].pattern = this.getReg.getReg(
-      this.$store.state.currUserData.changePassword.password.validation
-    );  
-     //手机号
-     console.log(this.getReg.getReg(this.$store.state.currUserData.bindPhone.phone.validation));
-     
+     this.regRule.CurrUser.changePassword.password.validation
+    );
+    //手机号
+
     //  console.log(this.getReg.getReg(
     //   this.$store.state.currUserData.changePassword.
     // ));
-     
-
-     this.ruleForm.uName=this.infoData.username
-     this.ruleForm.nickName=this.infoData.nickName
-     this.ruleForm.fullName=this.infoData.real_name
+    this.imageUrl=this.infoData.avatar;
+    this.ruleForm.uName = this.$store.state.uname;
+    this.ruleForm.nickName = this.infoData.nickName;
+    this.ruleForm.fullName = this.infoData.real_name;
     //  this.ruleForm.utel=infoData.ueranme
-     this.ruleForm.uAddress=this.infoData.email
-     this.ruleForm.uBirth=this.infoData.birthday
+    this.ruleForm.uAddress = this.infoData.email;
+    this.ruleForm.uBirth = this.infoData.birthday; //
+
+ 
+    console.log(this.infoData.fund_password);
+    
+   if(this.infoData.fund_password=1){
+ 
+   }
+    this.getCodeImg();
   },
   data() {
     return {
+      togYz: false,
+      loginImgCode: "",
+      imgYZ: "",
       imageUrlState: true,
       activeName: "first",
       yzTelState: false,
@@ -232,7 +256,7 @@ export default {
         uTel: "",
         uAddress: "",
         uBirth: "",
-        uYz:""
+        uYz: ""
       },
       imageUrl: "",
       rules: {
@@ -241,46 +265,41 @@ export default {
           {
             required: true,
             pattern: "",
-            message: "用户名需为3-16位",
-       
+            message: "用户名需为3-16位"
           }
         ],
         nickName: [
           {
             required: false,
-            message: "",
-           
+            message: ""
           }
         ],
         fullName: [
           {
             required: true,
-            message: "请输入真实有效的姓名",
-           
+            message: "请输入真实有效的姓名"
           }
         ],
         uTel: [
           {
             required: true,
-            pattern:"",
-            message: "请输入有效的手机号码",
-           
+            pattern: "",
+            message: "请输入有效的手机号码"
           }
         ],
-         uYz: [
+        uYz: [
           {
             required: true,
-            pattern:"",
-            message: "请输入有效的验证码",
-           
+            pattern: "",
+            message: "请输入有效的验证码"
           }
         ],
         uAddress: [
           {
             required: true, //是否必填
             pattern: "",
-            message: "请输入邮箱地址", //错误提示信息
-           //检验方式（blur为鼠标点击其他地方，）
+            message: "请输入邮箱地址" //错误提示信息
+            //检验方式（blur为鼠标点击其他地方，）
           },
           {
             type: "email", //要检验的类型（number，email，date等）
@@ -292,8 +311,7 @@ export default {
           {
             required: true,
             pattern: "",
-            message: "",
-           
+            message: ""
           }
         ]
       },
@@ -317,7 +335,7 @@ export default {
           {
             required: true,
             pattern: "",
-            message: "原始密码不符合格式",
+            message: "新密码不符合格式",
             trigger: "blur"
           }
         ],
@@ -339,7 +357,7 @@ export default {
       moneyRules: {
         moneyOldPassword: [
           {
-            required: true,
+          
             message: "原始密码不符合格式",
             trigger: "blur"
           }
@@ -364,28 +382,51 @@ export default {
   methods: {
     yzTelClick() {
       var yz = this.ruleForm.uTel;
-      var bb = this.getReg.getReg(this.$store.state.currUserData.bindPhone.phone.validation);//验证手机号正则
-      var cc = this.getReg.getReg(this.$store.state.currUserData.bindPhone.verify_code.validation);//验证手机号正则
+      var bb = this.getReg.getReg(
+        this.regRule.CurrUser.bindPhone.phone.validation
+      ); //验证手机号正则
+      var cc = this.getReg.getReg(
+        this.regRule.CurrUser.bindPhone.verify_code.validation
+      ); //验证手机号正则
       if (bb.test(yz)) {
-        this.yzTelState = true;
-        var that = this;
-        setInterval(function() {
-          that.num--;
-          if (that.num == 0) {
-            that.num = 20;
-            that.yzTelState = false;
-          }
-        }, 1000);
-        this.post(this.apiUrl.apiBindPhone,{
-          
-        }).then(res=>{
-             console.log(res);
-             
-        })
+        console.log(1);
+        //
+        this.togYz = true;
 
+        // this.post(this.apiUrl.apiBindPhone, {
+        //   phone: yz,
+        //   verify_code: this.loginImgCode
+        // }).then(res => {
+        //   console.log(res);
+        // });
       } else {
-        //  this.yzTel="20s后重新获取";
+     
       }
+    },
+    tzTel() {
+      this.post(this.apiUrl.apiSmsVerifyCode, {
+        phone: this.ruleForm.uTel,
+        verify: this.loginImgCode
+      }).then(res => {
+        if (res.code == 1) {
+          this.yzTelState = true;
+          this.togYz = false;
+          var that = this;
+          setInterval(function() {
+            that.num--;
+            if (that.num == 0) {
+              that.num = 20;
+              that.yzTelState = false;
+            }
+          }, 1000);
+        }else{
+           this.getCodeImg();
+           this.loginImgCode=""
+        }
+      });
+    },
+    getCodeImg() {
+      this.imgYZ = "http://a1.w20.vip/verifyImg?" + Math.random();
     },
     yzEmailClick() {
       var yz = this.ruleForm.uAddress;
@@ -393,6 +434,7 @@ export default {
       var bb = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
       if (bb.test(yz)) {
         this.yzEmailState = true;
+
         var that = this;
         setInterval(function() {
           that.num--;
@@ -407,7 +449,7 @@ export default {
     },
     handleAvatarSuccess(res, file) {
       // this.imageUrl = URL.createObjectURL(file.raw);
-      this.imageUrl="user_icon/06654/"+file.name
+      this.imageUrl = "user_icon/06654/" + file.name;
       console.log(file.name);
     },
     beforeAvatarUpload(file) {
@@ -463,24 +505,24 @@ export default {
           let oldPassword = this.logPasswordFrom.logOldPassword;
           let newPassword = this.logPasswordFrom.logNewPassword;
           let conPassword = this.logPasswordFrom.logConPassword;
-          console.log(oldPassword,newPassword,conPassword)
+          console.log(oldPassword, newPassword, conPassword);
           if (newPassword == conPassword) {
-            this.post(this.apiUrl.apiChangePassword,{
+            this.post(this.apiUrl.apiChangePassword, {
               oldPassword: oldPassword,
               password: newPassword
             }).then(res => {
-               this.$message("登录密码修改成功！");
-                  this.$store.commit("umodelShow", false);
-                  this.$store.commit("lmodelShow", true);
-                  this.$store.commit("uname", "游客");
+              this.$message("登录密码修改成功！");
+              this.$store.commit("umodelShow", false);
+              this.$store.commit("lmodelShow", true);
+              this.$store.commit("uname", "游客");
             });
-          }else{
-            this.$message("两次输入密码不一致，请重新输入")
+          } else {
+            this.$message("两次输入密码不一致，请重新输入");
           }
         }
       });
     },
-        submitForm3() {
+    submitForm3() {
       const t = this;
 
       t.$refs["moneyPasswordFrom"].validate(valid => {
@@ -489,16 +531,16 @@ export default {
           let oldPassword = this.moneyPasswordFrom.moneyOldPassword;
           let newPassword = this.moneyPasswordFrom.moneyNewPassword;
           let conPassword = this.moneyPasswordFrom.moneyConPassword;
-          console.log(oldPassword,newPassword,conPassword)
-          if (newPassword == conPassword) {
-            this.post(this.apiUrl.apiChangeFoundPassword,{
-              oldPassword: oldPassword,
+          console.log(oldPassword, newPassword, conPassword);
+
+          if (newPassword == conPassword&&this.infoData.fund_password==1||this.infoData.fund_password==0) {
+            this.post(this.apiUrl.apiChangeFoundPassword, {
               password: newPassword
             }).then(res => {
               console.log(res);
             });
-          }else{
-            this.$message("两次输入密码不一致，请重新输入")
+          } else {
+            this.$message("两次输入密码不一致，请重新输入");
           }
         }
       });

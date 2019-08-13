@@ -7,13 +7,19 @@
           <span></span>我的优惠
         </el-row>
         <el-row class="itemList">
-          <el-tabs v-model="activeName" type="card" class="selfTab">
-            <el-tab-pane label="全部优惠卷" name="first">
+          <el-tabs
+            v-model="activeName"
+            type="card"
+            class="selfTab"
+            v-for="(item,index) in discountData"
+            :key="index"
+          >
+            <el-tab-pane v-for="(item1,index1) in item" :key="index1" >
               <div class="discountList">
-                <div class="discountListItem" v-for="(item,index) in discountData" :key="index">
-                  <div class="discountTit">{{item.title}}</div>
+                <div class="discountListItem">
+                  <div class="discountTit">{{item1.title}}</div>
                   <div class="discountImg">
-                    <img :src="item.img" alt />
+                    <img alt />
                   </div>
                   <div class="discountBtn">
                     <el-button class="yrBtn">立即领取</el-button>
@@ -21,15 +27,6 @@
                 </div>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="传奇亚洲" name="second">传奇亚洲</el-tab-pane>
-            <el-tab-pane label="体育" name="third">体育</el-tab-pane>
-            <el-tab-pane label="娱乐场" name="fourth">娱乐场</el-tab-pane>
-            <el-tab-pane label="老虎机" name="five">老虎机</el-tab-pane>
-            <el-tab-pane label="棋牌" name="six">棋牌</el-tab-pane>
-            <el-tab-pane label="捕鱼" name="seven">捕鱼</el-tab-pane>
-            <el-tab-pane label="彩票" name="eight">彩票</el-tab-pane>
-            <el-tab-pane label="电子竞技" name="nine">电子竞技</el-tab-pane>
-            <el-tab-pane label="额度转换" name="ten">额度转换</el-tab-pane>
           </el-tabs>
         </el-row>
         <el-row class="pagination">
@@ -40,43 +37,45 @@
   </div>
 </template>
 <script>
+import LoginVue from "../../login/Login.vue";
 export default {
   data() {
     return {
-      activeName: "first",
-      discountData: [
-        {
-          id: 1,
-          title: "欧冠四强快出炉",
-          img: require("../../../../assets/user/discountImg1.png")
-        },
-        {
-          id: 1,
-          title: "欧冠四强快出炉",
-          img: require("../../../../assets/user/discountImg1.png")
-        },
-        {
-          id: 1,
-          title: "欧冠四强快出炉",
-          img: require("../../../../assets/user/discountImg1.png")
-        },
-        {
-          id: 1,
-          title: "欧冠四强快出炉",
-          img: require("../../../../assets/user/discountImg1.png")
-        },
-        {
-          id: 1,
-          title: "欧冠四强快出炉",
-          img: require("../../../../assets/user/discountImg1.png")
-        },
-        {
-          id: 1,
-          title: "欧冠四强快出炉",
-          img: require("../../../../assets/user/discountImg1.png")
-        }
-      ]
+      activeName: "0",
+      discountData: [],
+
     };
+  },
+  mounted() {
+    this.getActivitiesList();
+    // table_map.member_activities.type
+    // console.log(this.discountData);
+    // console.log(this.$store.state.dictionariesData.table_map.member_activities);
+  },
+  methods: {
+    getActivitiesList() {
+      var n;
+      // this.getaaa(1);
+      // this.getaaa(2);
+      // this.getaaa(3);
+      // this.getaaa(4);
+      // this.getaaa(5);
+      // this.getaaa(6);
+      // this.getaaa(7);
+      console.log(this.discountData);
+      
+    },
+    getaaa(n) {
+      this.post(this.apiUrl.apiActivitiesList, {
+        limit: "10",
+        page: "1",
+        type: n
+      }).then(res => {
+        if (res.data != "") {
+          this.discountData .push(res.data.items);
+        }
+      });
+    }
   }
 };
 </script>
@@ -89,10 +88,10 @@ export default {
 .myDiscount .discountListItem {
   width: 19%;
   height: 266px;
-  margin-right:1.25%;
+  margin-right: 1.25%;
 }
- .myDiscount .discountListItem:nth-of-type(5n){
-    margin-right:0;
+.myDiscount .discountListItem:nth-of-type(5n) {
+  margin-right: 0;
 }
 
 .myDiscount .discountListItem img {
@@ -121,34 +120,46 @@ export default {
   border: 1px solid #eeece6;
   height: 51px;
 }
-.myDiscount .pagination{text-align: center;margin-top:25px;}
-.myDiscount .selfTab .el-tabs__item::before{
-    content:"|";
-    position: absolute;
-   left:98%;top:0;z-index:5;
-   color:rgba(131,100,38,0.2);
-
-  
+.myDiscount .pagination {
+  text-align: center;
+  margin-top: 25px;
 }
-.myDiscount .el-tabs--card>.el-tabs__header .el-tabs__item.is-active::before{
-   content:"";
+.myDiscount .selfTab .el-tabs__item::before {
+  content: "|";
+  position: absolute;
+  left: 98%;
+  top: 0;
+  z-index: 5;
+  color: rgba(131, 100, 38, 0.2);
 }
-.myDiscount .el-tabs--card>.el-tabs__header .el-tabs__item.is-active::after{
-     content:"|";
-     position: absolute;
-     left:-3%;top:0;z-index:6;
-   /* color:rgba(131,100,38,0.2); */
-   color:#EEEEEE;
+.myDiscount .el-tabs--card > .el-tabs__header .el-tabs__item.is-active::before {
+  content: "";
 }
-.myDiscount .selfTab .el-tabs__item:last-of-type::before{
-  content:"";
+.myDiscount .el-tabs--card > .el-tabs__header .el-tabs__item.is-active::after {
+  content: "|";
+  position: absolute;
+  left: -3%;
+  top: 0;
+  z-index: 6;
+  /* color:rgba(131,100,38,0.2); */
+  color: #eeeeee;
 }
-.myDiscount .selfTab .el-tabs__item:nth-of-type(10){
-    padding-right:0!important;
+.myDiscount .selfTab .el-tabs__item:last-of-type::before {
+  content: "";
 }
-.myDiscount .selfTab .el-tabs__item:nth-of-type(2){padding-left:0;}
-.myDiscount .selfTab .el-tabs__item{width:10%;  margin-right: 0;position:relative;padding:0;text-align: center;}
-
+.myDiscount .selfTab .el-tabs__item:nth-of-type(10) {
+  padding-right: 0 !important;
+}
+.myDiscount .selfTab .el-tabs__item:nth-of-type(2) {
+  padding-left: 0;
+}
+.myDiscount .selfTab .el-tabs__item {
+  width: 10%;
+  margin-right: 0;
+  position: relative;
+  padding: 0;
+  text-align: center;
+}
 </style>
 
 

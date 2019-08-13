@@ -7,49 +7,72 @@
         </el-row>
         <el-row class="recharge">
           <el-tabs v-model="activeName" class="selfTab">
-            <el-tab-pane label="银行卡充值" name="first">
+            <el-tab-pane :label="bankTit" name="first">
               <div class="first">
                 <el-row v-if="nextModel">
                   <el-row class="payNav">选择银行卡</el-row>
-                  <el-radio-group v-model="radio" @change="changeRadioBank">
+                  <el-radio-group v-model="radio" @change="changeRadioBank" class="bankRadio">
                     <el-radio
                       v-for="(item,index) in bankLabel"
                       :key="index"
                       :label="index+1"
                       :class="activce == index+1 ? 'radioBorder' : ''"
-                    >
-                      <img :src="item.img" alt />
-                    </el-radio>
+                    >{{item}}</el-radio>
                   </el-radio-group>
+                  <!-- <div v-else style="text-align:Center;font-size:30px;">暂无发现银行卡充值入口，请先前往绑定银行卡</div> -->
                 </el-row>
                 <el-row v-else class="flex-box-center">
-                  <el-form label-width="100px">
-                    <el-form-item label="收款银行：" prop>
-                      <el-input name="uName" aria-required placeholder="2-6个字符"></el-input>
+                  <el-form ref="bankForm" :model="bankForm" label-width="100px">
+                    <el-form-item label="收款银行：" prop="bankDesc">
+                      <el-input v-model="bankForm.bankDesc" readonly aria-required placeholder="银行"></el-input>
                     </el-form-item>
-                    <el-form-item label="收款账号：" prop>
-                      <el-input name="uName" aria-required placeholder="2-6个字符"></el-input>
+                    <el-form-item label="收款账号：" prop="bank_address">
+                      <el-input
+                        v-model="bankForm.bank_card"
+                        readonly
+                        aria-required
+                        placeholder="卡号"
+                      ></el-input>
                     </el-form-item>
-                    <el-form-item label="收款人姓名：" prop>
-                      <el-input name="uName" aria-required placeholder="2-6个字符"></el-input>
+                    <el-form-item label="收款人姓名：" prop="bank_card">
+                      <el-input
+                        v-model="bankForm.bank_real_name"
+                        readonly
+                        aria-required
+                        placeholder="收款人姓名"
+                      ></el-input>
                     </el-form-item>
-                    <el-form-item label="开户网点：" prop>
-                      <el-input name="uName" aria-required placeholder="2-6个字符"></el-input>
+                    <el-form-item label="开户网点：" prop="bank_real_name">
+                      <el-input
+                        v-model="bankForm.bank_address"
+                        readonly
+                        aria-required
+                        placeholder="开户网点"
+                      ></el-input>
                     </el-form-item>
                     <el-form-item label="存款姓名：" prop>
-                      <el-input name="uName" aria-required placeholder="2-6个字符"></el-input>
+                      <el-input
+                    
+                        v-model="bankForm.bank_saveName"
+                        aria-required
+                        placeholder="存款人姓名"
+                      ></el-input>
                     </el-form-item>
-                    <el-form-item label="存款时间：" prop>
-                      <el-input name="uName" aria-required placeholder="2-6个字符"></el-input>
-                    </el-form-item>
+
                     <el-form-item label="存款金额：" prop>
-                      <el-input name="uName" aria-required placeholder="2-6个字符"></el-input>
-                    </el-form-item>
-                    <el-form-item label="支付银行：" prop>
-                      <el-input name="uName" aria-required placeholder="2-6个字符"></el-input>
+                      <el-input
+                    
+                        v-model="bankForm.money"
+                        aria-required
+                        placeholder="存款金额"
+                      ></el-input>
                     </el-form-item>
                     <el-form-item label="支付方式：" prop>
-                      <el-input name="uName" aria-required placeholder="2-6个字符"></el-input>
+                      <el-radio-group v-model="radioa" @change="changeRadioBankType">
+                        <el-radio :label="3">ATM</el-radio>
+                        <el-radio :label="6">手机银行</el-radio>
+                        <el-radio :label="9">银行转账</el-radio>
+                      </el-radio-group>
                     </el-form-item>
                   </el-form>
                 </el-row>
@@ -65,63 +88,47 @@
                     v-bind:disabled="activce==-1?true:false"
                     @click="nextBtn"
                     v-if="nextModel"
+                    
                   >下一步</el-button>
+                  <!--  -->
                   <el-row v-else>
                     <el-button
                       type="default"
                       v-bind:disabled="activce==-1?true:false"
                       @click="returnModel"
                     >上一步</el-button>
-                    <el-button type="default" v-bind:disabled="activce==-1?true:false">确认</el-button>
+                    <el-button
+                      type="default"
+                      v-bind:disabled="activce==-1?true:false"
+                      @click="bankSubmit"
+                    >确认</el-button>
                   </el-row>
                 </el-row>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="在线充值" name="second">
+            <el-tab-pane v-bind:label="third_pay.kind_name" name="second">
               <div class="second">
-                <el-row v-if="nextModel">
-                  <el-row class="payNav">请选择充值方式</el-row>
+               <el-row v-if="nextModel">
+                  <el-row class="payNav">选择充值方式</el-row>
+                <el-radio-group v-model="radio" @change="changeRadioOnline" class="bankRadio">
+                  <el-radio
+                    v-for="(item,index) in onlineLabel"
+                    :key="index"
+                    :label="index+1"
+                    :class="activce == index+1 ? 'radioBorder' : ''"
+                  >{{third_pay.list[0].payment_name}}</el-radio>
+                </el-radio-group>
+                <el-form  label-width="100px">
+                  <el-form-item label="收款银行：">
+                    <el-form-item label="充值金额">
+                      <el-input v-model="onlineLabelForm.money" aria-required placeholder="输入金额"></el-input>
+                    </el-form-item>
+                  </el-form-item>
+                </el-form>
+               </el-row>
 
-                  <el-radio-group v-model="radio1" @change="changeRadioOnline">
-                    <el-radio
-                      v-for="(item,index) in onlineLabel"
-                      :key="index"
-                      :label="index+1"
-                      :class="activce == index+1 ? 'radioBorder' : ''"
-                    >
-                      <img :src="item.img" alt />
-                    </el-radio>
-                  </el-radio-group>
-                </el-row>
-                <el-row v-else class="flex-box-center">
-                  <el-row v-if="confirmModel">
-                    <el-form label-width="100px">
-                      <el-form-item label="支付金额：" prop>
-                        <el-input name="uName" aria-required placeholder="2-6个字符"></el-input>
-                      </el-form-item>
-                      <el-form-item label="转账人：" prop>
-                        <el-input name="uName" aria-required placeholder="2-6个字符"></el-input>
-                      </el-form-item>
-                      <el-form-item label="存入时间：" prop>
-                        <el-input name="uName" aria-required placeholder="2-6个字符"></el-input>
-                      </el-form-item>
-                      <el-form-item label="存款金额：" prop>
-                        <el-input name="uName" aria-required placeholder="2-6个字符"></el-input>
-                      </el-form-item>
-                      <el-form-item label="附加码：" prop>
-                        <el-input name="uName" aria-required placeholder="2-6个字符"></el-input>
-                      </el-form-item>
-                    </el-form>
-                  </el-row>
-                  <el-row v-else class="payEwm">
-                    <img src="../../../../assets/user/wxPayEwm.png" alt />
-
-                    <!-- <el-row>
-                            <el-button type="default" @click="refresh">
-                                二维码已经超时，请刷新页面重新获取！
-                            </el-button>
-                    </el-row>-->
-                  </el-row>
+                <el-row v-else>
+                    请求成功！
                 </el-row>
                 <el-row>
                   <el-col :span="20" :offset="4" style="font-size:14px;color:#333;margin-top:10px;">
@@ -132,10 +139,10 @@
                   <el-button
                     type="default"
                     v-bind:disabled="activce==-1?true:false"
-                    @click="nextBtn"
+                   @click="onlineSubmit"
                     v-if="nextModel"
                   >下一步</el-button>
-                  <el-row v-else>
+                  <!-- <el-row v-else>
                     <el-button
                       type="default"
                       v-bind:disabled="activce==-1?true:false"
@@ -146,9 +153,9 @@
                       v-bind:disabled="activce==-1?true:false"
                       @click="onlineConfirm"
                     >确认</el-button>
-                  </el-row>
-
+                  </el-row> -->
                 </el-row>
+              
 
                 <!-- -->
               </div>
@@ -156,7 +163,7 @@
             <el-tab-pane label="扫码支付" name="third">
               <div class="third">
                 <el-row>
-                  <el-row class="payNav">选择银行卡</el-row>
+                  <el-row class="payNav">选择充值方式</el-row>
                   <el-radio-group v-model="radio" @change="changeRadioBank">
                     <el-radio
                       v-for="(item,index) in bankPay"
@@ -164,23 +171,35 @@
                       :label="index+1"
                       :class="activce == index+1 ? 'radioBorder' : ''"
                     >
-                      <img :src="item.img" alt />
+                      <img :src="qr_code.img" style="width:120px;" />
+                         {{qr_code.type.desc}}
+                       
+                    
                     </el-radio>
                   </el-radio-group>
                 </el-row>
                 <el-row class="thirdInput">
-                   <el-col :span="24" class="flex-box-start"><span>会员账号：</span>:ww234</el-col>
-                   <el-col :span="24" class="flex-box-start"><span>转账人：</span><el-input v-model="moneyCount" placeholder="请输入内容" style="width:initial;margin-right:5px;"></el-input><span class="tips">请输入充值金额</span></el-col>
-                 <el-col :span="20"  style="font-size:14px;color:#333;margin-top:10px;">
+                  <el-col :span="24" class="flex-box-start">
+                    <span>会员账号：</span>:ww234
+                  </el-col>
+                  <el-col :span="24" class="flex-box-start">
+                    <span>转账人：</span>
+                    <el-input
+                      v-model="moneyCount"
+                      placeholder="请输入内容"
+                      style="width:initial;margin-right:5px;"
+                    ></el-input>
+                    <span class="tips">请输入充值金额</span>
+                  </el-col>
+                  <el-col :span="20" style="font-size:14px;color:#333;margin-top:10px;">
                     <span style="color:#ff0000;">温馨提示：</span>入款之前请核对公司入款账号，避免存入公司过期账号导致金额无法追回。
                   </el-col>
 
                   <el-col :span="24" class="thirdBtn">
-                      <el-button type="default">提交</el-button>
-                        <el-button type="default">复制</el-button>
+                    <el-button type="default">提交</el-button>
+                    <el-button type="default">复制</el-button>
                   </el-col>
                 </el-row>
-                
               </div>
             </el-tab-pane>
           </el-tabs>
@@ -217,56 +236,40 @@ export default {
   //  inject:['reload'],
   data() {
     return {
+      radioa: {
+        ss:'ss'
+      },
       imgBorder: "",
       activeName: "first",
       nextModel: true,
       confirmModel: true,
+      smTit: "",
+      bankTit: "银行卡支付",
+      payList: "",
+      banks: [],
+      qr_code: [],
+      third_pay: [],
       bankLabel: [
         //银行卡支付
-        {
-          id: 1,
-          label: "中国工商银行",
-          img: require("../../../../assets/user/yinhang1.png")
-        },
-        {
-          id: 2,
-          label: "中国建设银行",
-          img: require("../../../../assets/user/yinhang2.png")
-        },
-        {
-          id: 3,
-          label: "中国农业银行",
-          img: require("../../../../assets/user/yinhang3.png")
-        },
-        {
-          id: 4,
-          label: "厦门市商业银行",
-          img: require("../../../../assets/user/yinhang4.png")
-        },
-        {
-          id: 5,
-          label: "深圳发展银行",
-          img: require("../../../../assets/user/yinghang5.png")
-        },
-        {
-          id: 6,
-          label: "中国民生银行",
-          img: require("../../../../assets/user/yinghang6.png")
-        }
       ],
-      onlineLabel: [
-        //在线支付
-        {
-          id: 1,
-          label: "微信支付",
-          img: require("../../../../assets/user/weixin.png")
-        },
-        {
-          id: 2,
-          label: "支付宝支付",
-          img: require("../../../../assets/user/zhifubao.png")
-        }
-      ],
+      bankForm: {
+        bankDesc: "", //收款银行
+        bank_address: "", //开户网点
+        bank_card: "", //账号
+        bank_real_name: "", //收款姓名
+        bank_saveName: "",
+        money: "",
+        payAccountID: "",
+        bank_deposit_type: ""
+      },
+
+      onlineLabel: [],
+      onlineLabelForm: {
+        id:"",
+        code:"",
+        money:""
+      },
+      onlineImg:"",
       radio: "",
       radio1: "",
       activce: -1,
@@ -278,18 +281,139 @@ export default {
           img: require("../../../../assets/user/yinlian.png")
         }
       ],
-      moneyCount:""
+      moneyCount: "",
+      ruleFormWZ: {
+        //微信支付宝表单字段
+        account: "",
+        money: "",
+        payAccountID: ""
+      },
+      wzRules: {
+        //个人资料验证
+        account: [
+          {
+            required: true,
+            pattern: "",
+            message: "账号不能为空"
+          }
+        ],
+        money: [
+          {
+            required: true,
+            pattern: "",
+            message: "金额不能为空"
+          }
+        ],
+        payAccountID: [
+          {
+            required: true,
+            pattern: "",
+            message: "收款账号id不能为空"
+          }
+        ]
+      }
     };
   },
+  mounted() {
+    this.getBankList();
+ 
+    
+  },
   methods: {
+    getBankList() {
+      // this.post(this.apiUrl.apiBankAccountList, {}).then(res => {
+      //   this.bankLabel = res.data;
+      // });
+      this.post(this.apiUrl.apiPayments, {}).then(res => {
+        this.banks = res.data.banks;
+
+        this.qr_code = res.data.qr_code[0];
+        if ((this.qr_code.type.desc = "支付宝" || "微信")) {
+          this.smTit = "扫码支付";
+        }
+        if (this.banks.length == 0) {
+          this.bankTit = "";
+        } else {
+          this.bankTit = "银行卡充值";
+        }
+
+        this.third_pay = res.data.third_pay[0];
+        this.bankLabel.push(this.banks[0].bank.desc);
+        this.onlineLabel.push(this.third_pay.list[0].payment_name);
+        console.log(this.third_pay.list[0]);
+      });
+    },
+    bankSubmit() {
+      let bank_real_name = this.bankForm.bank_real_name;
+      let payAccountID = this.bankForm.payAccountID;
+      let money = this.bankForm.money;
+      let bank_deposit_type = this.bankForm.bank_deposit_type;
+      console.log(bank_real_name, payAccountID, money, bank_deposit_type);
+
+      this.post(this.apiUrl.apiBankSubmit, {
+        bank_real_name: bank_real_name,
+        payAccountID: payAccountID,
+        money: money,
+        bank_deposit_type: bank_deposit_type
+      }).then(res => {
+        console.log(res);
+      });
+    },
+    onlineSubmit() {
+      let id=this.onlineLabelForm.id;
+       let code=this.onlineLabelForm.code;
+        let money=this.onlineLabelForm.money;
+         
+      this.post(this.apiUrl.apiThirdPaymentSubmit,{
+        id:id,
+        code:code,
+        money:money
+      }).then(res=>{
+             if(res.code==0){
+               this.nextModel = false;
+              //  this.onlineImg=res.data.url;
+              //  console.log( this.onlineImg);
+            window.open(res.data.url,"_blank");
+               
+             }
+          
+      })
+    },
+    changeRadioBankType(value) {
+      console.log(value);
+      if (value == 3) {
+        this.bankForm.bank_deposit_type = "ATM";
+        console.log(this.bankForm.bank_deposit_type);
+      }
+      if (value == 6) {
+        this.bankForm.bank_deposit_type = "手机银行";
+        console.log(this.bankForm.bank_deposit_type);
+      }
+      if (value == 9) {
+        this.bankForm.bank_deposit_type = "银行转账";
+        console.log(this.bankForm.bank_deposit_type);
+      }
+    },
     changeRadioBank(value) {
       //银行卡支付选择
       this.activce = value;
+
+      this.bankForm.bankDesc = this.banks[0].bank.desc;
+      this.bankForm.bank_address = this.banks[0].bank_address;
+      this.bankForm.bank_card = this.banks[0].bank_card;
+      this.bankForm.bank_real_name = this.banks[0].bank_real_name;
+      this.bankForm.payAccountID = this.banks[0].id;
+
+      console.log(value);
     },
     changeRadioOnline(value) {
       //在线支付选择
       this.activce = value;
-      console.log(this.activce);
+     if(value==1){
+       this.onlineLabelForm.id=this.third_pay.list[0].id
+       this.onlineLabelForm.code=this.third_pay.list[0].code
+      
+     }
     },
     nextBtn() {
       //下一步
@@ -301,7 +425,28 @@ export default {
     },
     onlineConfirm() {
       //在线支付确认
-      this.confirmModel = false;
+      const t = this;
+
+      t.$refs["ruleFormWZ"].validate(valid => {
+        console.log(valid);
+        if (valid == false) {
+          console.log(1);
+        } else {
+          let account = this.ruleFormWZ.account;
+          let money = this.ruleFormWZ.money;
+          let payAccountID = this.ruleFormWZ.payAccountID;
+          this.post(this.apiUrl.apiQrcodePaySubmit, {
+            account: account,
+            money: money,
+            payAccountID: payAccountID
+          }).then(res => {
+            console.log(res);
+            if (res.code == 1) {
+              this.confirmModel = false;
+            }
+          });
+        }
+      });
     }
     // refresh(){
     //    this.reload();
@@ -322,42 +467,43 @@ export default {
   margin: 0;
 }
 
-.rechargeDiv .recharge .el-radio__input {
+.rechargeDiv .recharge .bankRadio .el-radio__input {
   display: none;
 }
-.rechargeDiv .recharge .el-radio-group {
+.rechargeDiv .recharge .bankRadio {
   margin-top: 4px;
   margin-left: 70px;
   margin-top: 20px;
 }
-.rechargeDiv .recharge .first .el-radio {
-  width: 25%;
+.rechargeDiv .recharge .first .bankRadio .el-radio {
+  /* width: 25%; */
   text-align: center;
-  padding: 10px 0 6px 0;
+  padding-left: 0;
+  padding: 10px 20px 6px 10px;
   border: 1px dashed #ddd;
   margin-bottom: 5px;
 }
-.rechargeDiv .recharge .first .radioBorder {
+.rechargeDiv .recharge .first .bankRadio .radioBorder {
   border: 1px solid #ce0012;
   background: #f6eecb;
 }
-.rechargeDiv .recharge .second .el-radio {
+.rechargeDiv .recharge .second .bankRadio .el-radio {
   width: 226px;
   text-align: center;
   padding: 14px 0 8px 0;
   border: 1px dashed #ddd;
 }
-.rechargeDiv .recharge .second .radioBorder {
+.rechargeDiv .recharge .second .bankRadio .radioBorder {
   border: 1px solid #ce0012;
   background: #f6eecb;
 }
-.rechargeDiv .recharge .third .el-radio {
+.rechargeDiv .recharge .third .bankRadio .el-radio {
   width: 226px;
   text-align: center;
   padding: 14px 0 8px 0;
   border: 1px dashed #ddd;
 }
-.rechargeDiv .recharge .third .radioBorder {
+.rechargeDiv .recharge .third .bankRadio .radioBorder {
   border: 1px solid #ce0012;
   background: #f6eecb;
 }
@@ -422,7 +568,7 @@ export default {
   margin-top: 30px;
 }
 .rechargeDiv .recharge .el-form-item {
-  margin-bottom: 10px;
+  margin-bottom: 18px;
 }
 .rechargeDiv .recharge .selfTab .first .el-tabs__item {
   width: 277px;
@@ -444,11 +590,25 @@ export default {
   width: 170px;
   height: 170px;
 }
-.rechargeDiv .thirdInput{padding-left:70px;}
-.rechargeDiv .thirdInput .el-col-24{margin-top:15px;}
-.rechargeDiv .third .tips{font-size:14px;color:#836426;}
-.rechargeDiv .thirdInput .thirdBtn{text-align: center;margin-top:30px;padding-right:70px;}
-.rechargeDiv .thirdBtn button{background:#E6CF68;color:#836426;}
+.rechargeDiv .thirdInput {
+  padding-left: 70px;
+}
+.rechargeDiv .thirdInput .el-col-24 {
+  margin-top: 15px;
+}
+.rechargeDiv .third .tips {
+  font-size: 14px;
+  color: #836426;
+}
+.rechargeDiv .thirdInput .thirdBtn {
+  text-align: center;
+  margin-top: 30px;
+  padding-right: 70px;
+}
+.rechargeDiv .thirdBtn button {
+  background: #e6cf68;
+  color: #836426;
+}
 </style>
 
 

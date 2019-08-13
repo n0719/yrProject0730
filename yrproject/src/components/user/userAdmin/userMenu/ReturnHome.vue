@@ -11,11 +11,7 @@ export default {
         return {
         }
     },
-    mounted(){
-        this.$get(`/wd/${api.api.abc}`).then(res=>{
-           console.log(res)
-      })
-    }
+
 }
 </script>
 <style >

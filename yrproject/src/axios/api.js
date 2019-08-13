@@ -22,6 +22,14 @@ export const apiUrl = {
   apiMultiple:"Public/multiple",//14. 多接口合并访问 
   apiElectronic:"Public/electronicGamesList",//12. 单线路-电子游戏-列表
   apiDialogs:"Public/dialog",//9. 弹窗公告 
+  apiSmsVerifyCode:"Public/smsVerifyCode",//验证手机验证码
+  apiOrderList:"Money/orderList",//充值列表
+  apiQrcodePaySubmit:"MoneyIn/qrcodePaySubmit",//微信支付宝充值
+  apiActivitiesList:"CurrUser/activitiesList",//优惠活动列表
+  apiPayments:"MoneyIn/payments",//现有支付方式
+  apiBankSubmit:"MoneyIn/bankSubmit",//银行卡提交
+  apiThirdPaymentSubmit:"MoneyIn/thirdPaymentSubmit"//全网通支付提交
+  
 }
 // export const apiLogin = p => post('Public/login', p);
 

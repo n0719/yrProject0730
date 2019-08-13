@@ -4,6 +4,7 @@ let getRules1 = {};
 let toten1="";
 let uname1="游客";
 let userImg="";
+
 // let defaultScreenWidth=""
 try {
     if (localStorage.getRules) {
@@ -30,9 +31,11 @@ try {
     if (localStorage.userImg) {
         userImg = localStorage.userImg
     }
+ 
 } catch (e) {
 
 }
+
 export default {
     uname:uname1,
     userImg:userImg,
@@ -46,21 +49,22 @@ export default {
     dict: {},
     getRules:getRules1,
     publicData:"",//验证数据
-    currUserData:"",
-    moneyData:"",
-    moneyOutData:"",
-    moneyInData:"",
-    teamData:"",
-    gameData:"",
-    testData:"",
+    // currUserData:"",
+    // moneyData:"",
+    // moneyOutData:"",
+    // moneyInData:"",
+    // teamData:"",
+    // gameData:"",
+    // testData:"",
     isLogin:false,
     //个人信息
     infoData:"",//个人基本信息
     dictionariesData:{},//数据字典
     teamDatas:{},//团队总览
-    lowerLevel:{},//下级管理
     noticeList:{},//公告列表
     bannerList:{},//轮播图列表
     gameList:{},//游戏列表
     lineList:{},//单线路游戏列表
+    // lowerLevel:{}//下级管理
+
 }

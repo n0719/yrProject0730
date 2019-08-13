@@ -323,8 +323,8 @@ export default {
     //注册
     register() {
       if (
-        !initReg(apiUrl.apiRegister, "username", this.regCount) ||
-        !initReg(apiUrl.apiRegister, "password", this.regPwd)
+        !initReg(this.apiUrl.apiRegister, "username", this.regCount) ||
+        !initReg(this.apiUrl.apiRegister, "password", this.regPwd)
       ) {
         return false;
       } else if (this.regPwd != this.regRepeatPwd) {
@@ -338,7 +338,7 @@ export default {
         return false;
       } else {
         this.loading = true;
-        post(apiUrl.apiRegister, {
+        this.post(this.apiUrl.apiRegister, {
           username: this.regCount,
           password: this.regPwd,
           icode: this.inviteUser,

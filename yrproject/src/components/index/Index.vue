@@ -6,6 +6,7 @@
     background-size: 100% 100%;
     background-repeat: no-repeat;"
   >
+ 
     <div class="indexTop">
       <div class="topNav">
         <div class="logo">
@@ -158,9 +159,9 @@ export default {
         })
         .then(function(response) {
           that.$store.commit("regRule", response.data.data);
-          var data1 = response.data.data;
-          let getRulesData = JSON.stringify(data1);
-          that.$store.commit("getRules", getRulesData);
+          // var data1 = response.data.data;
+          // let getRulesData = JSON.stringify(data1);
+          // that.$store.commit("getRules", getRulesData);
         })
         .catch(function(error) {
           console.log(error);
@@ -198,6 +199,10 @@ export default {
         this.userShow = !this.userShow;
         this.loginSHow = false;
         this.noScroll();
+        // this.getInfo();
+        // this.getDataDictionaries();
+        // this.getTeamData();
+        // this.getLowerLevelData();
       } else {
         this.$confirm("用户登录需登录后才可以访问", "提示", {
           confirmButtonText: "确定",
@@ -230,27 +235,11 @@ export default {
         })
         .catch(() => {});
     },
-    getInfo() {
-      //获取个人数据信息
-      var that = this;
-      this.post(this.apiUrl.apiGetInfo, {}).then(res => {
-        var data = res.data;
-        // console.log(data)
-        that.$store.commit("infoData", data);
-      });
-    },
-    getDataDictionaries() {
+      getDataDictionaries() {
       //获取数据字典
       this.post(this.apiUrl.apiDataDataDictionaries).then(res => {
         var data = res.data;
         this.$store.commit("dictionariesData", data);
-      });
-    },
-    getTeamData() {
-      //获取团队总览
-      this.post(this.apiUrl.apiTeamData).then(res => {
-        var data = res.data;
-        this.$store.commit("teamDatas", data);
       });
     },
     getCommon() {

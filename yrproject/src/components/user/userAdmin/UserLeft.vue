@@ -100,9 +100,18 @@ export default {
       ]
     };
   },
+ mounted(){
 
+      this.getInfo();
+      this.getTeamData();
+      this.getLowerLevelData();
+
+ },
   methods: {
     goPage(id) {
+       
+  
+      // this.getLowerLevelData();
       this.active = id
       switch (id) {
         case id =1:
@@ -170,6 +179,38 @@ export default {
         this.$router.push({ path: "/selfUser" });
       this.$store.commit("changeUname", "个人资料");
       this.active=-1;
+    },
+    getInfo() {
+      //获取个人数据信息
+      var that = this;
+      this.post(this.apiUrl.apiGetInfo).then(res => {
+        var data = res.data;
+        // console.log(data)
+        this.$store.commit("infoData", data);
+      });
+    },
+ 
+    getTeamData() {
+      //获取团队总览
+      this.post(this.apiUrl.apiTeamData).then(res => {
+        var data = res.data;
+        this.$store.commit("teamDatas", data);
+      });
+    },
+    getLowerLevelData() {
+      //下级管理
+      // this.post(this.apiUrl.apiLowerLevel,{
+      //   limit: 1,
+      //   page: 1
+      // })
+      //   .then(res => {
+      //     var data = res.data;
+      
+      //     this.$store.commit("lowerLevel", data);
+      //   })
+      //   .catch(err => {
+        
+      //   });
     }
   }
 };
