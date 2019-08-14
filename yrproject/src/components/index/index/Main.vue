@@ -41,31 +41,10 @@ export default {
   },
   methods: {
     noticeDetail(){
-      if (localStorage.getItem("token") != null) {      
-        this.$store.commit("umodelShow", true);
-        this.userShow = !this.userShow;
-        this.loginSHow = false;
-        this.noScroll();
-      } else {
-        this.$confirm("用户登录需登录后才可以访问", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        })
-          .then(() => {
-            that.$store.commit("lmodelShow", true);
-            that.userShow = false;
-            that.loginSHow = !this.loginShow;
-            that.$router.push({
-              path: "/myPay"
-            });
-          })
-          .catch(() => {});
-      }
-    },
-    handleCurrentChange(curPage){
-      this.noticePage = curPage;
-      this.getNotice()
+      this.$store.commit("umodelShow", true);
+      this.$router.push({
+        path: "/webNotice"
+      });
     }
   }
 };

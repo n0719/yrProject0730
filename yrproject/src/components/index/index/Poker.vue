@@ -45,11 +45,20 @@ export default {
   },
   mounted() {
     if (this.gameList!= "") {
-         this.list = this.gameList[2];
+          for(var i = 0;i<this.gameList.length;i++){
+          if(this.gameList[i].id==5){
+            this.list = this.gameList[i];
+          }         
+        } 
     }
   },
   methods: {
-    
+    noticeDetail(){
+      this.$store.commit("umodelShow", true);
+      this.$router.push({
+        path: "/webNotice"
+      });
+    }
   }
 };
 </script>

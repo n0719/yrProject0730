@@ -185,9 +185,9 @@ input::-webkit-inner-spin-button {
     width: 360px;
     text-align: center;
   }
-  .el-form-item {
+  /* .el-form-item {
     margin-left: -99px;
-  }
+  } */
 
   /*  */
   .contentMain {

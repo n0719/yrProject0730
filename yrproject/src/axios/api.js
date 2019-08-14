@@ -28,8 +28,11 @@ export const apiUrl = {
   apiActivitiesList:"CurrUser/activitiesList",//优惠活动列表
   apiPayments:"MoneyIn/payments",//现有支付方式
   apiBankSubmit:"MoneyIn/bankSubmit",//银行卡提交
-  apiThirdPaymentSubmit:"MoneyIn/thirdPaymentSubmit"//全网通支付提交
-  
+  apiThirdPaymentSubmit:"MoneyIn/thirdPaymentSubmit",//全网通支付提交
+  apiNotice:"Public/notice",//8. 公告列表(优惠公告) 
+  apiGamePlay:"Game/play",//46. 进入游戏 
+  apiGameBalances:"Game/balances",//47. 游戏账号-余额 
+  apiGameTransferOut:"Game/transferOut",//50. 转出至-单个平台 
 }
 // export const apiLogin = p => post('Public/login', p);
 

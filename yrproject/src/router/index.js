@@ -9,7 +9,7 @@ import UserLeft from '@/components/user/userAdmin/UserLeft'
 import Index from '@/components/index/Index'
 
 import Main from '@/components/index/index/Main'
-import Discount from '@/components/index/index/Discount'
+import Service from '@/components/index/index/Service'
 //
 import MyPay from '@/components/user/userAdmin/userMenu/MyPay'
 import BankCard from '@/components/user/userAdmin/userMenu/BankCard'
@@ -40,10 +40,10 @@ export default new Router({
       }
     },
     {
-      path: '/discount',
-      name: "discount",
+      path: '/service',
+      name: "service",
       components: {
-        indexView: Discount
+        indexView: Service
       }
     },
     {

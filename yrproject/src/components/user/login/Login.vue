@@ -26,7 +26,7 @@
             <img class="codeImg" :src="loginImgCode" @click="getCodeImg()" alt />
           </div>
           <div v-show="!pwdError" class="prompt fs12">密码错误</div>
-          <el-button class="btn" @click="login()">登录</el-button>
+          <el-button class="btn" @click="login">登录</el-button>
           <div class="flex-box-between fs12">
             <div @click="maskStatus(1)" class="hoverCursor">立即注册</div>
             <div @click="maskStatus(3)" class="forget hoverCursor">忘记密码</div>
@@ -290,8 +290,6 @@ export default {
     },
     //登录
     login() {
-      
-      
       //登录
       if (
         !initReg(this.apiUrl.apiLogin, "username", this.loginCount) ||

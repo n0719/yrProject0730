@@ -34,7 +34,7 @@
             v-for="(item,index) in navA"
             :key="index"
             :class="active==index?'navABg':''"
-            @click="viewToggle(index)"
+            @click="viewToggle(index,item)"
           >{{item}}</a>
           <!-- <a>优惠</a>
           <a>充值</a>
@@ -42,46 +42,30 @@
           <a>管理</a>-->
         </div>
         <ul class="indexLogin">
-          <li>
-            <a @click="loginModel" v-if="this.$store.state.uname=='游客'?true:false">登录</a>
-            <a v-else>
+          <li v-if="this.$store.state.uname=='游客'?true:false">
+            <a @click="loginModel">登录</a>
+            <!-- <a >
               {{this.$store.state.uname}}
-              <span @click="closeUser">[退出]</span>
-            </a>
+            
+            </a> -->
           </li>
-          <li>
-            <a @click="userModel">会员中心</a>
+          <li v-else class="flex-box">
+            <a @click="userModel">会员中心 </a><span @click="closeUser">[退出]</span>
           </li>
         </ul>
       </div>
     </div>
     <div class="indexMain">
-      <transition name="fade">
         <yr-main v-if="active==0?true:false"></yr-main>
-      </transition>
-      <transition name="fade">
-        <yr-live v-if="active==1?true:false"></yr-live>
-      </transition>
-      <transition name="fade">
-        <yr-lottory v-if="active==2?true:false"></yr-lottory>
-      </transition>
-      <transition name="fade">
-        <yr-egames v-if="active==3?true:false"></yr-egames>
-      </transition>
-      <transition name="fade">
-        <yr-exports v-if="active==4?true:false"></yr-exports>
-      </transition>
-      <transition name="fade">
-        <yr-poker v-if="active==5?true:false"></yr-poker>
-      </transition>
-      <!-- <img src="../../assets/index/indexBg.png" alt=""> -->
-      <!-- <router-view name="indexView"></router-view> -->
-      <transition name="fade">
+        <yr-live v-if="activeName=='真人视讯'?true:false"></yr-live>
+        <yr-lottory v-if="activeName=='彩票游戏'?true:false"></yr-lottory>
+        <yr-egames v-if="activeName=='电子游艺'?true:false"></yr-egames>
+        <yr-exports v-if="activeName=='体育游戏'?true:false"></yr-exports>
+        <yr-poker v-if="activeName=='棋牌游戏'?true:false"></yr-poker>
+        <yr-activity v-if="activeName=='优惠活动'?true:false"></yr-activity>
+        <yr-service v-if="activeName=='在线客服'?true:false"></yr-service>
         <yr-login v-if="loginSHow"></yr-login>
-      </transition>
-      <transition name="fade">
         <yr-user v-if="userShow"></yr-user>
-      </transition>
     </div>
     <div class="indexBottom"></div>
     <el-dialog title="" :visible.sync="dialogVisible" width="30%" @click="dialogVisible = false" class="indexDialog">
@@ -99,12 +83,13 @@ import { mapState } from "vuex";
 import Login from "@/components/user/login/Login";
 import User from "@/components/user/User";
 import Main from "@/components/index/index/Main";
-import Discount from "@/components/index/index/Discount";
+import Service from "@/components/index/index/Service";
 import Live from "@/components/index/index/Live";
 import Lottory from "@/components/index/index/Lottory";
 import Egames from "@/components/index/index/Egames";
 import Exports from "@/components/index/index/Exports";
 import Poker from "@/components/index/index/Poker";
+import Activity from "@/components/index/index/Activity";
 import axios from "axios"; // 引入axios
 export default {
   computed: {
@@ -119,24 +104,24 @@ export default {
   data() {
     return {
       active: -1,
+      activeName:'首页',
       loginSHow: "",
       userShow: "",
       indexBg: require("../../assets/index/indexBg.png"),
       activeIndex: "1",
       activeIndex2: "1",
       mainShow: true,
-      discountShow: false,
       dialogVisible: false,
       dialogContent:{},
       navA: [
         "首页",
-        "真人视讯",
-        "彩票游戏",
-        "电子游艺",
-        "体育游戏",
-        "棋牌游戏",
-        "优惠",
-        "客服"
+        // "真人视讯",
+        // "彩票游戏",
+        // "电子游艺",
+        // "体育游戏",
+        // "棋牌游戏",
+        "优惠活动",
+        "在线客服"
       ]
     };
   },
@@ -146,7 +131,6 @@ export default {
     this.getDataDictionaries();
     this.getCommon();
     this.getGeme();
-    this.getDialog();
     if (localStorage.getItem("token") != null) {
     }
   },
@@ -166,17 +150,6 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
-    },
-    getDialog() {
-      //获取弹框内容
-      var that = this;
-      this.post(this.apiUrl.apiDialogs, {}).then(res => {
-        if (res.code == 0) {
-          console.log(res);
-          that.dialogVisible = true;
-          that.dialogContent = res.data;
-        }
-      });
     },
     loginModel() {
       this.$store.commit("lmodelShow", true);
@@ -217,8 +190,9 @@ export default {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
-    viewToggle(index) {
+    viewToggle(index,name) {
       this.active = index;
+      this.activeName = name;
     },
     closeUser() {
       this.$confirm("确认退出当前登录用户吗？", "提示", {})
@@ -237,15 +211,28 @@ export default {
       });
     },
     getCommon() {
+      var that = this;
       //获取游戏列表
       this.post(this.apiUrl.apiMultiple, {
-        apiArr: "banners|homeGame|notice"
+        apiArr: "banners|homeGame|notice|dialog"
       }).then(res => {
         if (res.code == 0) {
           var data = res.data;
-          this.$store.commit("noticeList", res.data.notice.items);
-          this.$store.commit("bannerList", res.data.banners.site_banners);
-          this.$store.commit("gameList", res.data.homeGame.lines);
+          this.$store.commit("noticeList", data.notice.items);
+          this.$store.commit("bannerList", data.banners.site_banners);
+          this.$store.commit("gameList", data.homeGame.lines);
+          var gameName = res.data.homeGame.lines;
+          var navInit = 1;
+         if(gameName.length>0){
+            for(var i = 0;i<gameName.length;i++){
+            //  console.log(gameName[i].name);            
+             that.navA.splice(navInit++,0,gameName[i].name)
+          }
+         }
+          if(res.data.dialog){
+            that.dialogVisible = true;
+            that.dialogContent = res.data.dialog;
+          }
         }
       });
     },
@@ -284,12 +271,13 @@ export default {
     yrLogin: Login,
     yrUser: User,
     yrMain: Main,
-    yrDiscount: Discount,
+    yrService: Service,
     yrLive: Live,
     yrLottory: Lottory,
     yrEgames: Egames,
     yrExports: Exports,
-    yrPoker: Poker
+    yrPoker: Poker,
+    yrActivity:Activity
   }
 };
 </script>
@@ -307,7 +295,7 @@ export default {
   height: 100%;
 }
 .indexMain {
-  min-height: 1100px;
+  min-height: 1070px;
 }
 .indexTop {
   background: #364150;
@@ -321,6 +309,7 @@ export default {
   display: flex;
   align-items: center;
   font-size: 15px;
+  justify-content: space-between;
 }
 .logo {
   margin-right: 64px;
@@ -329,14 +318,14 @@ export default {
   border: none;
 }
 .indexLogin {
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
+    cursor: pointer;
+    /* flex: 1;
+    display: flex;
+    justify-content: flex-end; */
 }
 
 .indexLogin li {
-  float: left;
-  padding-left: 35px;
+  padding-left: 15px;
 }
 .indexLogin li a {
   cursor: pointer;
@@ -354,7 +343,7 @@ export default {
   align-items: center;
 }
 .indexNav a {
-  width: 100px;
+  width: 90px;
   height: 42px;
   color: #e6cf68;
   text-align: center;
