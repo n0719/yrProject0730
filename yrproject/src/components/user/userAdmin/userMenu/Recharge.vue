@@ -15,14 +15,19 @@
                     <el-radio
                       v-for="(item,index) in bankLabel"
                       :key="index"
-                      :label="index+1"
-                      :class="activce == index+1 ? 'radioBorder' : ''"
-                    >{{item}}</el-radio>
+                      :label="index"
+                      :class="activce == index? 'radioBorder' : ''"
+                    >{{item.bank.desc}}</el-radio>
                   </el-radio-group>
                   <!-- <div v-else style="text-align:Center;font-size:30px;">暂无发现银行卡充值入口，请先前往绑定银行卡</div> -->
                 </el-row>
                 <el-row v-else class="flex-box-center">
-                  <el-form ref="bankForm" :model="bankForm" label-width="100px">
+                  <el-form
+                    ref="bankForm"
+                    :model="bankForm"
+                    label-width="100px"
+                    :rules="bankFormRules"
+                  >
                     <el-form-item label="收款银行：" prop="bankDesc">
                       <el-input v-model="bankForm.bankDesc" readonly aria-required placeholder="银行"></el-input>
                     </el-form-item>
@@ -51,23 +56,13 @@
                       ></el-input>
                     </el-form-item>
                     <el-form-item label="存款姓名：" prop>
-                      <el-input
-                    
-                        v-model="bankForm.bank_saveName"
-                        aria-required
-                        placeholder="存款人姓名"
-                      ></el-input>
+                      <el-input v-model="bankForm.bank_saveName" aria-required placeholder="存款人姓名"></el-input>
                     </el-form-item>
 
-                    <el-form-item label="存款金额：" prop>
-                      <el-input
-                    
-                        v-model="bankForm.money"
-                        aria-required
-                        placeholder="存款金额"
-                      ></el-input>
+                    <el-form-item label="存款金额：" prop="money">
+                      <el-input v-model="bankForm.money" aria-required placeholder="存款金额"></el-input>
                     </el-form-item>
-                    <el-form-item label="支付方式：" prop>
+                    <el-form-item label="存款方式：" prop>
                       <el-radio-group v-model="radioa" @change="changeRadioBankType">
                         <el-radio :label="3">ATM</el-radio>
                         <el-radio :label="6">手机银行</el-radio>
@@ -77,7 +72,7 @@
                   </el-form>
                 </el-row>
                 <el-row>
-                  <el-col :span="20" :offset="4" style="font-size:14px;color:#333;margin-top:10px;">
+                  <el-col :span="20" :offset="1" style="font-size:14px;color:#333;margin-top:10px;">
                     <span style="color:#ff0000;">温馨提示：</span>入款之前请核对公司入款账号，避免存入公司过期账号导致金额无法追回。
                   </el-col>
                 </el-row>
@@ -88,7 +83,6 @@
                     v-bind:disabled="activce==-1?true:false"
                     @click="nextBtn"
                     v-if="nextModel"
-                    
                   >下一步</el-button>
                   <!--  -->
                   <el-row v-else>
@@ -108,30 +102,40 @@
             </el-tab-pane>
             <el-tab-pane v-bind:label="third_pay.kind_name" name="second">
               <div class="second">
-               <el-row v-if="nextModel">
+                <el-row v-if="nextModel">
                   <el-row class="payNav">选择充值方式</el-row>
-                <el-radio-group v-model="radio" @change="changeRadioOnline" class="bankRadio">
-                  <el-radio
-                    v-for="(item,index) in onlineLabel"
-                    :key="index"
-                    :label="index+1"
-                    :class="activce == index+1 ? 'radioBorder' : ''"
-                  >{{third_pay.list[0].payment_name}}</el-radio>
-                </el-radio-group>
-                <el-form  label-width="100px">
-                  <el-form-item label="收款银行：">
-                    <el-form-item label="充值金额">
-                      <el-input v-model="onlineLabelForm.money" aria-required placeholder="输入金额"></el-input>
+                  <el-radio-group v-model="radio" @change="changeRadioOnline" class="bankRadio">
+                    <el-radio
+                      v-for="(item,index) in onlineLabel"
+                      :key="index"
+                      :label="index"
+                      :class="activce == index ? 'radioBorder' : ''"
+                    >{{item.payment_name}}</el-radio>
+                  </el-radio-group>
+                  <el-form
+                    ref="onlineLabelForm"
+                    :model="onlineLabelForm"
+                    label-width="100px"
+                    :rules="onlineLabelFormRules"
+                  >
+                    <el-form-item label="充值金额" prop="money">
+                      <el-input
+                        v-model="onlineLabelForm.money"
+                        aria-required
+                        placeholder="充值金额为100-100000"
+                      ></el-input>
                     </el-form-item>
-                  </el-form-item>
-                </el-form>
-               </el-row>
+                  </el-form>
+                </el-row>
 
-                <el-row v-else>
-                    请求成功！
+                <el-row v-else class="userSuccess">
+                  <img src="../../../../assets/user/userSuccess.png" alt />
+                  申请成功！
+                  <br />具体到账时间请以各大银行转账时间为准。
+                  <span>{{n}}s后返回支付页面</span>
                 </el-row>
                 <el-row>
-                  <el-col :span="20" :offset="4" style="font-size:14px;color:#333;margin-top:10px;">
+                  <el-col :span="20" :offset="1" style="font-size:14px;color:#333;margin-top:10px;">
                     <span style="color:#ff0000;">温馨提示：</span>入款之前请核对公司入款账号，避免存入公司过期账号导致金额无法追回。
                   </el-col>
                 </el-row>
@@ -139,7 +143,7 @@
                   <el-button
                     type="default"
                     v-bind:disabled="activce==-1?true:false"
-                   @click="onlineSubmit"
+                    @click="onlineSubmit"
                     v-if="nextModel"
                   >下一步</el-button>
                   <!-- <el-row v-else>
@@ -153,52 +157,56 @@
                       v-bind:disabled="activce==-1?true:false"
                       @click="onlineConfirm"
                     >确认</el-button>
-                  </el-row> -->
+                  </el-row>-->
                 </el-row>
-              
 
                 <!-- -->
               </div>
             </el-tab-pane>
-            <el-tab-pane label="扫码支付" name="third">
+            <el-tab-pane :label="smTit" name="third">
               <div class="third">
-                <el-row>
+                <el-row v-if="nextModel">
                   <el-row class="payNav">选择充值方式</el-row>
-                  <el-radio-group v-model="radio" @change="changeRadioBank">
-                    <el-radio
-                      v-for="(item,index) in bankPay"
-                      :key="index"
-                      :label="index+1"
-                      :class="activce == index+1 ? 'radioBorder' : ''"
+                  <el-row v-for="(item,index) in bankPayLabel" :key="index" class="wzForm">
+                    <el-row style="display:flex;align-items:flex-top;">
+                      <el-radio-group v-model="radio" @change="changeRadioWz" class="bankRadio">
+                        <el-radio
+                          :label="index"
+                          :class="activce == index? 'radioBorder' : ''"
+                        >{{item.type.desc}}</el-radio>
+                      </el-radio-group>
+                      <img :src="item.img" style="width:120px;height:120px;" />
+                    </el-row>
+                    <el-form
+                      ref="bankPayLabelForm"
+                      :model="bankPayLabelForm"
+                      label-width="100px"
+                      :rules="bankPayLabelFormRules"
                     >
-                      <img :src="qr_code.img" style="width:120px;" />
-                         {{qr_code.type.desc}}
-                       
-                    
-                    </el-radio>
-                  </el-radio-group>
+                      <el-form-item label="充值金额" prop="money">
+                        <el-input
+                          v-model="bankPayLabelForm.money"
+                          aria-required
+                          placeholder="请输入原始密码"
+                        ></el-input>
+                      </el-form-item>
+                    </el-form>
+                  </el-row>
+                  <el-row class="thirdInput">
+                    <el-col :span="20" style="font-size:14px;color:#333;margin-top:10px;">
+                      <span style="color:#ff0000;">温馨提示：</span>入款之前请核对公司入款账号，避免存入公司过期账号导致金额无法追回。
+                    </el-col>
+                    <el-col :span="24" class="thirdBtn">
+                      <el-button type="default" @click="wxSubmit">提交</el-button>
+                      <el-button type="default">复制</el-button>
+                    </el-col>
+                  </el-row>
                 </el-row>
-                <el-row class="thirdInput">
-                  <el-col :span="24" class="flex-box-start">
-                    <span>会员账号：</span>:ww234
-                  </el-col>
-                  <el-col :span="24" class="flex-box-start">
-                    <span>转账人：</span>
-                    <el-input
-                      v-model="moneyCount"
-                      placeholder="请输入内容"
-                      style="width:initial;margin-right:5px;"
-                    ></el-input>
-                    <span class="tips">请输入充值金额</span>
-                  </el-col>
-                  <el-col :span="20" style="font-size:14px;color:#333;margin-top:10px;">
-                    <span style="color:#ff0000;">温馨提示：</span>入款之前请核对公司入款账号，避免存入公司过期账号导致金额无法追回。
-                  </el-col>
-
-                  <el-col :span="24" class="thirdBtn">
-                    <el-button type="default">提交</el-button>
-                    <el-button type="default">复制</el-button>
-                  </el-col>
+                <el-row v-else class="userSuccess">
+                  <img src="../../../../assets/user/userSuccess.png" alt />
+                  申请成功！
+                  <br />具体到账时间请以各大银行转账时间为准。
+                  <span>{{n}}s后返回支付页面</span>
                 </el-row>
               </div>
             </el-tab-pane>
@@ -236,79 +244,70 @@ export default {
   //  inject:['reload'],
   data() {
     return {
-      radioa: {
-        ss:'ss'
-      },
+      radioa: {},
       imgBorder: "",
       activeName: "first",
       nextModel: true,
       confirmModel: true,
       smTit: "",
-      bankTit: "银行卡支付",
+      bankTit: "",
       payList: "",
-      banks: [],
-      qr_code: [],
-      third_pay: [],
-      bankLabel: [
-        //银行卡支付
-      ],
+      n: 5,
+      banks: {},
+      qr_code: {},
+      third_pay: {},
+      bankLabel: {},
       bankForm: {
         bankDesc: "", //收款银行
         bank_address: "", //开户网点
         bank_card: "", //账号
         bank_real_name: "", //收款姓名
         bank_saveName: "",
-        money: "",
+        money: "", //存款金额
         payAccountID: "",
         bank_deposit_type: ""
       },
-
-      onlineLabel: [],
-      onlineLabelForm: {
-        id:"",
-        code:"",
-        money:""
+      bankFormRules: {
+        money: [
+          {
+            required: true,
+            pattern: /^\d{3,}/,
+            message: "金额最少位100！"
+          }
+        ]
       },
-      onlineImg:"",
+      onlineLabel: {},
+      onlineLabelForm: {
+        id: "",
+        code: "",
+        money: ""
+      },
+      onlineLabelFormRules: {
+        money: [
+          {
+            required: true,
+            pattern: /^\d{3,}/,
+            message: "金额最少位100！"
+          }
+        ]
+      },
+      onlineImg: "",
       radio: "",
       radio1: "",
       activce: -1,
-      bankPay: [
-        //银联支付
-        {
-          id: 1,
-          label: "银联支付",
-          img: require("../../../../assets/user/yinlian.png")
-        }
-      ],
-      moneyCount: "",
-      ruleFormWZ: {
-        //微信支付宝表单字段
+      bankPayLabel: {},
+      bankPayLabelForm: {
         account: "",
         money: "",
         payAccountID: ""
       },
-      wzRules: {
+      bankPayLabelFormRules: {
         //个人资料验证
-        account: [
-          {
-            required: true,
-            pattern: "",
-            message: "账号不能为空"
-          }
-        ],
         money: [
           {
             required: true,
-            pattern: "",
-            message: "金额不能为空"
-          }
-        ],
-        payAccountID: [
-          {
-            required: true,
-            pattern: "",
-            message: "收款账号id不能为空"
+            pattern: /^\d{3,}/,
+            message: "金额最少位100！"
           }
         ]
       }
@@ -316,20 +315,21 @@ export default {
   },
   mounted() {
     this.getBankList();
- 
-    
+    console.log(this.$store.state.dictionariesData);
   },
   methods: {
     getBankList() {
-      // this.post(this.apiUrl.apiBankAccountList, {}).then(res => {
-      //   this.bankLabel = res.data;
-      // });
       this.post(this.apiUrl.apiPayments, {}).then(res => {
         this.banks = res.data.banks;
+        this.third_pay = res.data.third_pay;
 
-        this.qr_code = res.data.qr_code[0];
-        if ((this.qr_code.type.desc = "支付宝" || "微信")) {
+        this.qr_code = res.data.qr_code;
+        
+
+        if (this.qr_code.length != 0) {
           this.smTit = "扫码支付";
+        } else {
+          this.smTit = "";
         }
         if (this.banks.length == 0) {
           this.bankTit = "";
@@ -338,46 +338,123 @@ export default {
         }
 
         this.third_pay = res.data.third_pay[0];
-        this.bankLabel.push(this.banks[0].bank.desc);
-        this.onlineLabel.push(this.third_pay.list[0].payment_name);
-        console.log(this.third_pay.list[0]);
+        this.bankLabel = this.banks;
+        this.onlineLabel = this.third_pay.list;
+        this.bankPayLabel = this.qr_code;
       });
     },
     bankSubmit() {
-      let bank_real_name = this.bankForm.bank_real_name;
-      let payAccountID = this.bankForm.payAccountID;
-      let money = this.bankForm.money;
-      let bank_deposit_type = this.bankForm.bank_deposit_type;
-      console.log(bank_real_name, payAccountID, money, bank_deposit_type);
+      const t = this;
 
-      this.post(this.apiUrl.apiBankSubmit, {
-        bank_real_name: bank_real_name,
-        payAccountID: payAccountID,
-        money: money,
-        bank_deposit_type: bank_deposit_type
-      }).then(res => {
-        console.log(res);
+      t.$refs["bankForm"].validate(valid => {
+        console.log(valid);
+        if (valid == false) {
+          console.log(1);
+        } else {
+          let bank_real_name = this.bankForm.bank_real_name;
+          let payAccountID = this.bankForm.payAccountID;
+          let money = this.bankForm.money;
+          let bank_deposit_type = this.bankForm.bank_deposit_type;
+          console.log(bank_real_name, payAccountID, money, bank_deposit_type);
+
+          this.post(this.apiUrl.apiBankSubmit, {
+            bank_real_name: bank_real_name,
+            payAccountID: payAccountID,
+            money: money,
+            bank_deposit_type: bank_deposit_type
+          }).then(res => {
+            console.log(res);
+            if (res.code == 0) {
+              this.nextModel = false;
+              setInterval(() => {
+                this.n--;
+                if (this.n == 0) {
+                  this.n = 5;
+                  this.nextModel = true;
+                }
+              }, 1000);
+            } else {
+              this.nextModel = true;
+            }
+          });
+        }
       });
     },
     onlineSubmit() {
-      let id=this.onlineLabelForm.id;
-       let code=this.onlineLabelForm.code;
-        let money=this.onlineLabelForm.money;
-         
-      this.post(this.apiUrl.apiThirdPaymentSubmit,{
-        id:id,
-        code:code,
-        money:money
-      }).then(res=>{
-             if(res.code==0){
-               this.nextModel = false;
+      const t = this;
+
+      t.$refs["onlineLabelForm"].validate(valid => {
+        if (valid == false) {
+        } else {
+          let id = this.onlineLabelForm.id;
+          let code = this.onlineLabelForm.code;
+          let money = this.onlineLabelForm.money;
+
+          this.post(this.apiUrl.apiThirdPaymentSubmit, {
+            id: id,
+            code: code,
+            money: money
+          }).then(res => {
+            if (res.code == 0) {
+              this.nextModel = false;
+              this.onlineLabelForm.money = "";
               //  this.onlineImg=res.data.url;
               //  console.log( this.onlineImg);
-            window.open(res.data.url,"_blank");
-               
-             }
-          
-      })
+              window.open(res.data.url, "_blank");
+            }
+            if (res.code == 0) {
+              this.nextModel = false;
+              setInterval(() => {
+                this.n--;
+                if (this.n == 0) {
+                  this.n = 5;
+                  this.nextModel = true;
+                }
+              }, 1000);
+            } else {
+              this.nextModel = true;
+            }
+          });
+        }
+      });
+    },
+    wxSubmit() {
+      const t = this;
+
+      let account = this.bankPayLabelForm.account;
+      let money = this.bankPayLabelForm.money;
+      let payAccountID = this.bankPayLabelForm.payAccountID;
+      console.log(account, money, payAccountID);
+
+      this.post(this.apiUrl.apiQrcodePaySubmit, {
+        account: account,
+        money: money,
+        payAccountID: payAccountID
+      }).then(res => {
+        console.log(res.code);
+        if (res.code == 0) {
+          this.nextModel = false;
+          setInterval(() => {
+            this.n--;
+            if (this.n == 0) {
+              this.n = 5;
+              this.nextModel = true;
+            }
+          }, 1000);
+        } else {
+          this.nextModel = true;
+        }
+
+        //  if(res.code==0){
+        //    this.nextModel=true;
+        //    var that=this;
+        //    setInterval(function(){
+        //      that.n--;
+        //    },1000)
+        //  }else{
+        //    this.nextModel=false;
+        //  }
+      });
     },
     changeRadioBankType(value) {
       console.log(value);
@@ -398,22 +475,23 @@ export default {
       //银行卡支付选择
       this.activce = value;
 
-      this.bankForm.bankDesc = this.banks[0].bank.desc;
-      this.bankForm.bank_address = this.banks[0].bank_address;
-      this.bankForm.bank_card = this.banks[0].bank_card;
-      this.bankForm.bank_real_name = this.banks[0].bank_real_name;
-      this.bankForm.payAccountID = this.banks[0].id;
-
-      console.log(value);
+      this.bankForm.bankDesc = this.banks[value].bank.desc;
+      this.bankForm.bank_address = this.banks[value].bank_address;
+      this.bankForm.bank_card = this.banks[value].bank_card;
+      this.bankForm.bank_real_name = this.banks[value].bank_real_name;
+      this.bankForm.payAccountID = this.banks[value].id;
     },
     changeRadioOnline(value) {
       //在线支付选择
       this.activce = value;
-     if(value==1){
-       this.onlineLabelForm.id=this.third_pay.list[0].id
-       this.onlineLabelForm.code=this.third_pay.list[0].code
-      
-     }
+
+      this.onlineLabelForm.id = this.third_pay.list[value].id;
+      this.onlineLabelForm.code = this.third_pay.list[value].code;
+    },
+    changeRadioWz(value) {
+      this.activce = value;
+      this.bankPayLabelForm.payAccountID = this.qr_code[value].id;
+      this.bankPayLabelForm.account = this.qr_code[value].account;
     },
     nextBtn() {
       //下一步
@@ -422,32 +500,32 @@ export default {
     returnModel() {
       //返回
       this.nextModel = true;
-    },
-    onlineConfirm() {
-      //在线支付确认
-      const t = this;
-
-      t.$refs["ruleFormWZ"].validate(valid => {
-        console.log(valid);
-        if (valid == false) {
-          console.log(1);
-        } else {
-          let account = this.ruleFormWZ.account;
-          let money = this.ruleFormWZ.money;
-          let payAccountID = this.ruleFormWZ.payAccountID;
-          this.post(this.apiUrl.apiQrcodePaySubmit, {
-            account: account,
-            money: money,
-            payAccountID: payAccountID
-          }).then(res => {
-            console.log(res);
-            if (res.code == 1) {
-              this.confirmModel = false;
-            }
-          });
-        }
-      });
     }
+    // onlineConfirm() {
+    //   //在线支付确认
+    //   const t = this;
+
+    //   t.$refs["ruleFormWZ"].validate(valid => {
+    //     console.log(valid);
+    //     if (valid == false) {
+    //       console.log(1);
+    //     } else {
+    //       let account = this.ruleFormWZ.account;
+    //       let money = this.ruleFormWZ.money;
+    //       let payAccountID = this.ruleFormWZ.payAccountID;
+    //       this.post(this.apiUrl.apiQrcodePaySubmit, {
+    //         account: account,
+    //         money: money,
+    //         payAccountID: payAccountID
+    //       }).then(res => {
+    //         console.log(res);
+    //         if (res.code == 1) {
+    //           this.confirmModel = false;
+    //         }
+    //       });
+    //     }
+    //   });
+    // }
     // refresh(){
     //    this.reload();
     // }
@@ -470,10 +548,24 @@ export default {
 .rechargeDiv .recharge .bankRadio .el-radio__input {
   display: none;
 }
+.rechargeDiv .recharge .third .bankRadio .el-radio__input {
+  display: none;
+}
 .rechargeDiv .recharge .bankRadio {
   margin-top: 4px;
   margin-left: 70px;
   margin-top: 20px;
+}
+.rechargeDiv .recharge .third .bankRadio {
+  margin-top: 4px;
+  margin-left: 70px;
+  margin-top: 5px;
+}
+.rechargeDiv .second .el-form-item {
+  margin-left: 45px;
+}
+.rechargeDiv .third .el-form-item {
+  margin-left: 45px;
 }
 .rechargeDiv .recharge .first .bankRadio .el-radio {
   /* width: 25%; */
@@ -488,21 +580,23 @@ export default {
   background: #f6eecb;
 }
 .rechargeDiv .recharge .second .bankRadio .el-radio {
-  width: 226px;
+  width: 120px;
   text-align: center;
-  padding: 14px 0 8px 0;
+  padding: 14px 10px 8px 0;
   border: 1px dashed #ddd;
 }
+
 .rechargeDiv .recharge .second .bankRadio .radioBorder {
   border: 1px solid #ce0012;
   background: #f6eecb;
 }
 .rechargeDiv .recharge .third .bankRadio .el-radio {
-  width: 226px;
+  width: 120px;
   text-align: center;
   padding: 14px 0 8px 0;
   border: 1px dashed #ddd;
 }
+
 .rechargeDiv .recharge .third .bankRadio .radioBorder {
   border: 1px solid #ce0012;
   background: #f6eecb;
@@ -608,6 +702,23 @@ export default {
 .rechargeDiv .thirdBtn button {
   background: #e6cf68;
   color: #836426;
+}
+.recharge .wzForm {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+.recharge .el-button.is-disabled,
+.el-button.is-disabled:focus,
+.el-button.is-disabled:hover {
+  background: transparent;
+}
+.recharge .userSuccess {
+  display: flex;
+  height: 200px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 </style>
 

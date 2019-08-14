@@ -7,30 +7,27 @@
           <span></span>我的优惠
         </el-row>
         <el-row class="itemList">
-          <el-tabs
-            v-model="activeName"
-            type="card"
-            class="selfTab"
-            v-for="(item,index) in discountData"
-            :key="index"
-          >
-            <el-tab-pane v-for="(item1,index1) in item" :key="index1" >
-              <div class="discountList">
-                <div class="discountListItem">
-                  <div class="discountTit">{{item1.title}}</div>
-                  <div class="discountImg">
-                    <img alt />
-                  </div>
-                  <div class="discountBtn">
-                    <el-button class="yrBtn">立即领取</el-button>
-                  </div>
-                </div>
+          <ul class="tabTit">
+            <li
+              v-for="(item,index) in dictionariesData"
+              :key="index"
+              @click="clickTab(index)"
+              :class="active==index?'liActive':''"
+            >{{item.desc}}</li>
+          </ul>
+          <div class="tabContent">
+            <div v-for="(item,index) in discountData" :key="index">
+              <div class="tabContentDIv">
+                <a class="divTit" :title="item.title">{{item.title}}</a>
+                <img :src="item.banner" alt />
+                <a class="divSubTit" :title="item.sub_title">{{item.sub_title}}</a>
+                <el-button class="yrBtn">立即参与</el-button>
               </div>
-            </el-tab-pane>
-          </el-tabs>
+            </div>
+          </div>
         </el-row>
         <el-row class="pagination">
-          <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+          <el-pagination background layout="prev, pager, next" :total="total"></el-pagination>
         </el-row>
       </el-row>
     </div>
@@ -41,40 +38,39 @@ import LoginVue from "../../login/Login.vue";
 export default {
   data() {
     return {
-      activeName: "0",
+      activeName: "",
       discountData: [],
-
+      dictionariesData: this.$store.state.dictionariesData.table_map
+        .member_activities.type,
+      active: 0,
+      total:""
     };
   },
   mounted() {
-    this.getActivitiesList();
     // table_map.member_activities.type
     // console.log(this.discountData);
-    // console.log(this.$store.state.dictionariesData.table_map.member_activities);
+     this.getActivitiesList(1);
   },
   methods: {
-    getActivitiesList() {
-      var n;
-      // this.getaaa(1);
-      // this.getaaa(2);
-      // this.getaaa(3);
-      // this.getaaa(4);
-      // this.getaaa(5);
-      // this.getaaa(6);
-      // this.getaaa(7);
-      console.log(this.discountData);
-      
-    },
-    getaaa(n) {
+    getActivitiesList(n) {
       this.post(this.apiUrl.apiActivitiesList, {
         limit: "10",
         page: "1",
         type: n
       }).then(res => {
         if (res.data != "") {
-          this.discountData .push(res.data.items);
+          this.discountData = res.data.items;
+          console.log(this.discountData);
+          this.total=this.discountData.length
         }
       });
+    },
+    handleClick(tab, event) {
+      var n = parseInt(tab.index) + 1;
+    },
+    clickTab(e) {
+      this.getActivitiesList(e + 1);
+      this.active = e;
     }
   }
 };
@@ -160,6 +156,62 @@ export default {
   padding: 0;
   text-align: center;
 }
+.myDiscount .tabTit {
+  display: flex;
+  width: 100%;
+}
+.myDiscount .tabTit li {
+  text-align: center;
+  padding: 10px 30px 10px 30px;
+  width:12%;
+  background:#EEECE6;
+}
+.myDiscount .tabTit li.liActive {
+ background:#E6CF68;
+}
+.myDiscount .tabContent {
+  display: flex;
+  margin-top: 15px;
+  height:574px;
+    flex-wrap: wrap
+}
+.myDiscount .tabContent>div:nth-of-type(5n) .tabContentDIv {
+  margin-right:0;
+}
+.myDiscount .tabContentDIv {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 180px;
+  border: 1px solid #F9F8F6;
+  align-items: center;
+  margin-right:40px;
+  overflow:hidden;
+  margin-bottom:15px;
+ 
+}
+
+.myDiscount .tabContentDIv img {
+  width: 100%;
+  height: 130px;
+}
+.myDiscount .divTit{padding:0 10px;height:45px;overflow:hidden; background:#F6F5F2;width:100%;
+white-space:nowrap; 
+text-overflow:ellipsis; 
+box-sizing: border-box;
+-o-text-overflow:ellipsis; 
+overflow: hidden;
+text-align: center;
+line-height:45px;
+border:1px solid #C6B89D; color:#836426;}
+.myDiscount .divSubTit{padding:0 5px;height:30px;background:#E3006E;width:100%;overflow: hidden;white-space:nowrap; 
+text-overflow:ellipsis; 
+box-sizing: border-box;
+-o-text-overflow:ellipsis; 
+overflow: hidden;
+text-align: center;
+line-height:30px;color:#fff; }
+.myDiscount .yrBtn{margin:5px 0;}
 </style>
 
 
