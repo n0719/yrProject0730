@@ -103,7 +103,7 @@ export default {
  mounted(){
 
       this.getInfo();
-      this.getTeamData();
+
       this.getLowerLevelData();
 
  },
@@ -190,13 +190,7 @@ export default {
       });
     },
  
-    getTeamData() {
-      //获取团队总览
-      this.post(this.apiUrl.apiTeamData).then(res => {
-        var data = res.data;
-        this.$store.commit("teamDatas", data);
-      });
-    },
+  
     getLowerLevelData() {
       //下级管理
       // this.post(this.apiUrl.apiLowerLevel,{

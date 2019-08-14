@@ -7,7 +7,9 @@
         </el-row>
 
         <el-row class="cashsweepTable">
-          <el-row >
+          <el-row>
+            <el-col :span="20">账户总余额：{{this.$store.state.infoData.money}}</el-col>
+
             <el-col :span="16">
               <table border="0" cellspacing="0" cellpadding="0">
                 <thead>
@@ -19,18 +21,23 @@
                 </thead>
                 <tbody>
                   <tr v-for="(item,index) in cashsweepData" :key="index">
-                    <td>{{item.gameName}}</td>
+                    <td>{{item.line_name}}</td>
                     <td>{{item.balance}}</td>
+
                     <td>
-                      <el-button class="yrBtn" @click="cashsweepClick(index)" :class="item.classState==true?'yrBtnZjgj':''">资金归集</el-button>
+                      <el-button
+                        class="yrBtn"
+                        @click="cashsweepClick(item.line_id)"
+                        :class="item.classState==true?'yrBtnZjgj':''"
+                      >资金归集</el-button>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </el-col>
-            <el-col :span="8" class="yjgj">
+            <el-col :span="8" class="yjgj" v-if="cashsweepData.length==0?false:true">
               <img :src="zjgjImg" @click="yjZjgj" alt />
-            {{yjgjText}}
+              {{yjgjText}}
             </el-col>
           </el-row>
         </el-row>
@@ -42,94 +49,53 @@
 export default {
   data() {
     return {
-      cashsweepData: [
-        {
-          id: 1,
-          gameName: "CB",
-          balance: "110",
-          classState:false
-        },
-        {
-          id: 2,
-          gameName: "CB",
-          balance: "110",
-           classState:false
-        },
-        {
-          id: 3,
-          gameName: "CB",
-          balance: "110",
-           classState:false
-        },
-        {
-          id: 4,
-          gameName: "CB",
-          balance: "110",
-           classState:false
-        },
-        {
-          id: 5,
-          gameName: "CB",
-          balance: "110",
-            classState:false
-        },
-        {
-          id: 6,
-          gameName: "CB",
-          balance: "110",
-            classState:false
-        },
-        {
-          id: 7,
-          gameName: "CB",
-          balance: "110",
-            classState:false
-        },
-        {
-          id: 8,
-          gameName: "CB",
-          balance: "110"
-        },
-           {
-          id: 6,
-          gameName: "CB",
-          balance: "110"
-        },
-        {
-          id: 7,
-          gameName: "CB",
-          balance: "110"
-        },
-        {
-          id: 8,
-          gameName: "CB",
-          balance: "110"
-        }
-      ],
-      active:-1,
-      yrBtnZjgj:"",
-      yjgjText:"  一键归集所有资金",
-      zjgjImg:require('../../../../assets/user/guiji.png')
-          
-  
+      cashsweepData: [],
+      active: -1,
+      yrBtnZjgj: "",
+      yjgjText: "  一键归集所有资金",
+      zjgjImg: require("../../../../assets/user/guiji.png")
     };
+  },
+  mounted() {
+    this.getAllBack();
   },
   methods: {
     cashsweepClick(index) {
-      this.ind=index;
-     this.cashsweepData[index].balance="0"
-     this.cashsweepData[index].classState=true
- 
-    },
-    yjZjgj(){
-        for(var i=0;i<this.cashsweepData.length;i++){
-        this.cashsweepData[i].classState=true;
-         this.cashsweepData[i].balance=0;
-         this.yjgjText="已归集所有资金";
-         this.zjgjImg=require('../../../../assets/user/yiguji.png')
-        //    this.zjgjImg=require('../../../../assets/user/yiguji.png') //归集失败图片
+      this.post(this.apiUrl.apiAllBack, {
+        line_id: index
+      }).then(res => {
+        console.log(res);
+
+        if (res.code == 0) {
+          this.ind = index;
+          this.cashsweepData[index - 1].balance = "0";
+          this.cashsweepData[index - 1].classState = true;
         }
-    }
+      });
+    },
+    yjZjgj() {
+      this.post(this.apiUrl.apiAllBack, {}).then(res => {
+        if (res.code == 0) {
+          for (var i = 0; i < this.cashsweepData.length; i++) {
+            this.cashsweepData[i].classState = true;
+            this.cashsweepData[i].balance = 0;
+            this.yjgjText = "已归集所有资金";
+            this.zjgjImg = require("../../../../assets/user/yiguji.png");
+            //    this.zjgjImg=require('../../../../assets/user/yiguji.png') //归集失败图片
+          }
+        }
+      });
+    },
+    getAllBack() {
+      this.post(this.apiUrl.apiBalances, {}).then(res => {
+        if (res.data) {
+          res.data.shift();
+          this.cashsweepData = res.data;
+          console.log(this.cashsweepData);
+        }
+      });
+    },
+    getAll() {}
   }
 };
 </script>
@@ -142,13 +108,16 @@ export default {
 .cashsweep {
   display: flex;
   flex-direction: column;
-  height:100%;
+  height: 100%;
 }
-.cashsweepTable .yrBtnZjgj{
-    background:#CCCCCC;
+.cashsweepTable .yrBtnZjgj {
+  background: #cccccc;
 }
-.cashsweepTable{}
-.cashsweepTable .el-row{height:100%;}
+.cashsweepTable {
+}
+.cashsweepTable .el-row {
+  height: 100%;
+}
 .cashsweepTable .yrBtn {
   padding: 8px 11px;
 }
@@ -166,8 +135,18 @@ export default {
 .cashsweepTable table tbody tr:nth-of-type(even) {
   background: #f2efe9;
 }
-.cashsweep .yjgj{display:flex; flex-direction: column;justify-content: center;align-items: center;height:100%;padding-right:80px;padding-top:30px;}
-.cashsweep .yjgj img{margin-bottom:10px;}
+.cashsweep .yjgj {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding-right: 80px;
+  padding-top: 30px;
+}
+.cashsweep .yjgj img {
+  margin-bottom: 10px;
+}
 </style>
 
 

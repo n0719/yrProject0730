@@ -60,7 +60,7 @@ export default {
     //个人信息
     infoData:"",//个人基本信息
     dictionariesData:{},//数据字典
-    teamDatas:{},//团队总览
+
     noticeList:{},//公告列表
     bannerList:{},//轮播图列表
     gameList:{},//游戏列表

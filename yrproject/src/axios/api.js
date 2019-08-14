@@ -33,6 +33,11 @@ export const apiUrl = {
   apiGamePlay:"Game/play",//46. 进入游戏 
   apiGameBalances:"Game/balances",//47. 游戏账号-余额 
   apiGameTransferOut:"Game/transferOut",//50. 转出至-单个平台 
+  apiAllBack:"Game/allBack",//49 资金归集
+  apiBack:"Game/back",//48资金归集转入主账户
+  apiBalances:"Game/balances",//47游戏账号余额
+  apiWithdrawList:"MoneyOut/withdrawList",//38提现列表
+  apiWithdrawPre:"MoneyOut/withdrawPre",//36提现，预提交信息
 }
 // export const apiLogin = p => post('Public/login', p);
 

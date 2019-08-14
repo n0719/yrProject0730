@@ -82,9 +82,7 @@
             localStorage.dictionariesData=dictionariesData;
         } catch (e) {}
     },
-    teamDatas(state,teamDatas){
-        state.teamDatas =teamDatas
-    },
+
     noticeList(state,noticeList){
         state.noticeList =noticeList
     },
