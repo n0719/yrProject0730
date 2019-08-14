@@ -140,7 +140,7 @@
               label-width="100px"
               :rules="moneyRules"
             >
-              <el-form-item label="原始密码：" prop="moneyOldPassword">
+              <el-form-item label="原始密码：" prop="moneyOldPassword" v-if="this.infoData.fund_password==1?false:true">
                 <el-input
                   v-model="moneyPasswordFrom.moneyOldPassword"
                   type="password"
