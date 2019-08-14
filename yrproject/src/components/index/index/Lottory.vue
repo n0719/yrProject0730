@@ -29,7 +29,7 @@
         </el-col>
       </el-row>
     </div>
-    <el-dialog title="额度转换" :visible.sync="dialogFormVisible" width="25%" center>
+    <el-dialog title="额度转换" :visible.sync="dialogFormVisible" width="450px" center>
       <el-form>
         <el-form-item :label="gameName+'余额：'" :label-width="formLabelWidth">
           <el-input v-model="gameBalance" readonly></el-input>

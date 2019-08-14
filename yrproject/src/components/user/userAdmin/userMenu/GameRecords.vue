@@ -95,10 +95,10 @@ export default {
           game_status:this.chooseStatus,
           page: this.recordsPage,
       }
-      if(this.dataStart!=''){
+      if(this.dataStart&&this.dataStart!=''){
         params.start = this.dataStart;
       }
-      if(this.dataEnd!=''){
+      if(this.dataEnd&&this.dataEnd!=''){
         params.end = this.dataEnd;
       }
       this.post(this.apiUrl.apiGameRecordList, params).then(response => {

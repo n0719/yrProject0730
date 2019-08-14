@@ -22,7 +22,7 @@
             <el-table-column prop="username" label="姓名"></el-table-column>
             <el-table-column prop="money" label="余额"></el-table-column>
             <el-table-column prop="child_info_count" label="下级总数"></el-table-column>
-            <el-table-column prop="login_time" label="创建时间"></el-table-column>
+            <el-table-column prop="created_at" label="创建时间"></el-table-column>
           </el-table>
           <el-row class="text-center">
           <el-pagination background layout="prev, pager, next" :current-page.sync="recordsPage" :total="recordsTotal" :page-size="pageSize" @current-change="handleCurrentChange"></el-pagination>

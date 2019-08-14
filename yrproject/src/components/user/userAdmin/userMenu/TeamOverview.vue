@@ -35,7 +35,7 @@
             <!-- <el-table-column prop="threePeople" label="3天未登录人数"></el-table-column> -->
             <el-table-column prop="sevenDayLogin" label="7天未登录人数"></el-table-column>
           </el-table>
-
+          
           <el-table
             :data="teamData.teamGameRecord"
             stripe

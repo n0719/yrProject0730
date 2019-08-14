@@ -68,7 +68,7 @@
         <yr-user v-if="userShow"></yr-user>
     </div>
     <div class="indexBottom"></div>
-    <el-dialog title="" :visible.sync="dialogVisible" width="30%" @click="dialogVisible = false" class="indexDialog">
+    <el-dialog title="" :visible.sync="dialogVisible" width="500px" @click="dialogVisible = false" class="indexDialog">
       <img :src="dialogContent.image" alt="">
       <div class="dialogBottom">
         <div class="logContent mg-b-10">{{dialogContent.content}}</div>
@@ -255,7 +255,7 @@ export default {
         this.canScroll();
       } else {
         this.userShow = true;
-        this.canScroll();
+        this.noScroll();
       }
     },
     lmodelShow(newName, oldName) {
@@ -310,6 +310,7 @@ export default {
   align-items: center;
   font-size: 15px;
   justify-content: space-between;
+  padding: 0 10px;
 }
 .logo {
   margin-right: 64px;

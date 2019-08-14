@@ -38,7 +38,7 @@
         </el-row>
       </div>
     </div>
-    <el-dialog title="额度转换" :visible.sync="dialogFormVisible" width="25%" center>
+    <el-dialog title="额度转换" :visible.sync="dialogFormVisible" width="450px" center>
       <el-form>
         <el-form-item :label="gameName+'余额：'" :label-width="formLabelWidth">
           <el-input v-model="gameBalance" readonly></el-input>
@@ -256,6 +256,9 @@ export default {
 }
 .gamesBox .itemGame:hover:before {
   background: rgba(0, 0, 0, 0.5);
+}
+.gamesBox .itemGame:hover .itemTitle{
+  color: #E6CF68;
 }
 .gamesBox .tabTitle {
   font-size: 16px;

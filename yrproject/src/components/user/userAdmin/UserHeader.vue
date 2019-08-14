@@ -22,7 +22,6 @@ export default {
   methods: {
     closeModel() {
       this.$store.commit("umodelShow", false);
-      this.$store.commit("urlName", "我的账户");
     }
   },
 
