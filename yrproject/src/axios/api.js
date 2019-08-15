@@ -38,6 +38,8 @@ export const apiUrl = {
   apiBalances:"Game/balances",//47游戏账号余额
   apiWithdrawList:"MoneyOut/withdrawList",//38提现列表
   apiWithdrawPre:"MoneyOut/withdrawPre",//36提现，预提交信息
+ apiWithdrawAdd:"MoneyOut/withdrawAdd",//提现新增
+ apiTransferOther:"Game/transferOther",//51资金平台互转
 }
 // export const apiLogin = p => post('Public/login', p);
 

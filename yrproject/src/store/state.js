@@ -65,6 +65,8 @@ export default {
     bannerList:{},//轮播图列表
     gameList:{},//游戏列表
     lineList:{},//单线路游戏列表
+    bankList:[],
+    cashsweepData:[]
     // lowerLevel:{}//下级管理
 
 }

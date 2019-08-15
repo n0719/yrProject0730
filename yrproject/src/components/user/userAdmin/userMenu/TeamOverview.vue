@@ -66,8 +66,6 @@ export default {
   },
   mounted() {
     this.getTeamData();
-
-    console.log(this.teamData);
   },
   data() {
     return {

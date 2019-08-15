@@ -1,10 +1,10 @@
 <template>
   <div class="userLeft">
     <div class="userImg">
-      <img src="../../../assets/user/userImg.png" @click="selfUser" alt="">
-      <span>用户名:CK chen</span>
-      <span>余额:50000.00</span>
-      <span>等级:少尉</span>
+      <img :src="this.info.avatar" @click="selfUser" alt="">
+      <span>用户名:{{this.info.username}}</span>
+      <span>余额:{{this.info.money}}</span>
+      <span>等级:{{this.info.level}}</span>
     </div>
     <div class="userBtn">
      <el-row>
@@ -97,13 +97,14 @@ export default {
           msg: "返回首页"
         },
       
-      ]
+      ],
+      info:[]
     };
   },
  mounted(){
 
       this.getInfo();
-
+       
       this.getLowerLevelData();
 
  },
@@ -187,6 +188,7 @@ export default {
         var data = res.data;
         // console.log(data)
         this.$store.commit("infoData", data);
+        this.info=data;
       });
     },
  
@@ -219,7 +221,7 @@ export default {
   overflow:hidden;
 }
 .userLeft .userImg{height:180px;display:flex;flex-direction: column;align-items: center;justify-content: space-around;padding:42px 0 20px 0;}
-.userLeft .userImg img{border-radius:50%;}
+.userLeft .userImg img{border-radius:50%;width:100px;height:100px;}
 .userLeft .userImg span{color:#E6CF68;letter-spacing: 1.8px;}
 .userLeft .userBtn{text-align: center;}
 .userBtn .el-button{width:70%;margin-bottom:14px;background:#E6CF68;border:none;color:#836426;}

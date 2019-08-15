@@ -8,7 +8,7 @@
 
         <el-row class="cashsweepTable">
           <el-row>
-            <el-col :span="20">账户总余额：{{this.$store.state.infoData.money}}</el-col>
+            <el-col :span="20" style="margin-top:15px;padding-left:30px;">账户总余额：<span style="font-size:30px;">{{this.$store.state.infoData.money}}</span></el-col>
 
             <el-col :span="16">
               <table border="0" cellspacing="0" cellpadding="0">
@@ -91,7 +91,8 @@ export default {
         if (res.data) {
           res.data.shift();
           this.cashsweepData = res.data;
-          console.log(this.cashsweepData);
+          this.$store.commit("cashsweepData",this.cashsweepData);
+          // console.log(this.cashsweepData);
         }
       });
     },
