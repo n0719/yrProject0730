@@ -215,9 +215,6 @@ export default {
     color: #fff;
 }
 /*弹出框*/
-.pokerBox .el-dialog{
-  /* width: 25%; */
-}
 .pokerBox .el-dialog__title,.pokerBox .el-dialog__headerbtn .el-dialog__close{
   color: #836426;
 }

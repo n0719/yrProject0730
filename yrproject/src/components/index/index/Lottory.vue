@@ -55,6 +55,7 @@ export default {
   computed: {
     ...mapState(["gameList", "noticeList"])
   },
+  props:["gameId"],
   data() {
     return {
       list: [],
@@ -67,14 +68,14 @@ export default {
       gameData:'',
       gameName:'',
       gameLineId:'',
-      fullscreenLoading:false
+      fullscreenLoading:false,
     };
   },
   mounted() {
     if (this.gameList != "") {
       // console.log(this.gameList);
       for (var i = 0; i < this.gameList.length; i++) {
-        if (this.gameList[i].id == 1) {
+        if (this.gameList[i].id == this.gameId) {
           this.list = this.gameList[i];
         }
       }
@@ -222,9 +223,6 @@ export default {
 }
 
 /*弹出框*/
-.lottoryBox .el-dialog{
-  /* width: 25%; */
-}
 .lottoryBox .el-dialog__title,.lottoryBox .el-dialog__headerbtn .el-dialog__close{
   color: #836426;
 }

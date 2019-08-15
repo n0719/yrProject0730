@@ -220,9 +220,6 @@ export default {
     opacity: 1;
 }
 /*弹出框*/
-.exportsBox .el-dialog{
-  /* width: 25%; */
-}
 .exportsBox .el-dialog__title,.exportsBox .el-dialog__headerbtn .el-dialog__close{
   color: #836426;
 }

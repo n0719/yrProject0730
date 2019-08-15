@@ -34,8 +34,8 @@
             v-for="(item,index) in navA"
             :key="index"
             :class="active==index?'navABg':''"
-            @click="viewToggle(index,item)"
-          >{{item}}</a>
+            @click="viewToggle(index,item.id)"
+          >{{item.name}}</a>
           <!-- <a>优惠</a>
           <a>充值</a>
           <a>客服</a>
@@ -57,10 +57,10 @@
     </div>
     <div class="indexMain">
         <yr-main v-if="active==0?true:false"></yr-main>
-        <yr-live v-if="activeName=='真人视讯'?true:false"></yr-live>
-        <yr-lottory v-if="activeName=='彩票游戏'?true:false"></yr-lottory>
-        <yr-egames v-if="activeName=='电子游艺'?true:false"></yr-egames>
-        <yr-exports v-if="activeName=='体育游戏'?true:false"></yr-exports>
+        <yr-live v-if="activeName==2?true:false" :gameId="activeName"></yr-live>
+        <yr-lottory v-if="activeName==1?true:false" :gameId="activeName"></yr-lottory>
+        <yr-egames v-if="activeName==4?true:false" :gameId="activeName"></yr-egames>
+        <yr-exports v-if="activeName=='体育游戏'?true:false" :gameId="activeName"></yr-exports>
         <yr-poker v-if="activeName=='棋牌游戏'?true:false"></yr-poker>
         <yr-activity v-if="activeName=='优惠活动'?true:false"></yr-activity>
         <yr-service v-if="activeName=='在线客服'?true:false"></yr-service>
@@ -114,14 +114,18 @@ export default {
       dialogVisible: false,
       dialogContent:{},
       navA: [
-        "首页",
-        // "真人视讯",
-        // "彩票游戏",
-        // "电子游艺",
-        // "体育游戏",
-        // "棋牌游戏",
-        "优惠活动",
-        "在线客服"
+        {
+          id:"首页",
+          name:"首页"
+        },
+        {
+          id:"优惠活动",
+          name:"优惠活动"
+        },
+        {
+          id:"在线客服",
+          name:"在线客服"
+        },
       ]
     };
   },
@@ -225,8 +229,11 @@ export default {
           var navInit = 1;
          if(gameName.length>0){
             for(var i = 0;i<gameName.length;i++){
-            //  console.log(gameName[i].name);            
-             that.navA.splice(navInit++,0,gameName[i].name)
+             var item = {
+               id:gameName[i].id,
+               name:gameName[i].name
+             }            
+             that.navA.splice(navInit++,0,item)
           }
          }
           if(res.data.dialog){

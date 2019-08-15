@@ -55,6 +55,7 @@ export default {
   computed: {
     ...mapState(["gameList","noticeList"])
   },
+   props:["gameId"],
   data() {
     return {
         list:[],
@@ -73,7 +74,7 @@ export default {
   mounted() {
     if (this.gameList!= "") {
         for(var i = 0;i<this.gameList.length;i++){
-          if(this.gameList[i].id==2){
+          if(this.gameList[i].id==this.gameId){
             this.list = this.gameList[i];
           }         
         } 
@@ -220,9 +221,6 @@ export default {
     opacity: 1;
 }
 /*弹出框*/
-.liveBox .el-dialog{
-  /* width: 25%; */
-}
 .lottorliveBoxyBox .el-dialog__title,.liveBox .el-dialog__headerbtn .el-dialog__close{
   color: #836426;
 }

@@ -64,6 +64,7 @@ export default {
   computed: {
     ...mapState(["gameList", "noticeList"])
   },
+  props:["gameId"],
   data() {
     return {
       cur: 0,
@@ -81,14 +82,13 @@ export default {
       gameData:'',
       gameName:'',
       gameLineId:'',
-       gameId:'',
       fullscreenLoading:false
     };
   },
   mounted() {
     if (this.gameList != "") {
       for(var i = 0;i<this.gameList.length;i++){
-          if(this.gameList[i].id==4){
+          if(this.gameList[i].id==this.gameId){
             this.list = this.gameList[i];
             this.gameLineId  = this.gameList[i].child[0].game_line_id;     
             this.getGeme();     
@@ -285,9 +285,6 @@ export default {
   border-top: 1px solid #6c6c57;
 }
 /*弹出框*/
-.gamesBox .el-dialog{
-  /* width: 25%; */
-}
 .gamesBox .el-dialog__title,.gamesBox .el-dialog__headerbtn .el-dialog__close{
   color: #836426;
 }
