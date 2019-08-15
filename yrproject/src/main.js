@@ -46,7 +46,7 @@ router.beforeEach((to, from, next) => {
     next()
   } else {
     //如果用户token不存在则跳转到login页面
-    if (to.path === '/webNotice') {
+    if (to.path === '/webNotice'||to.path==="/") {
       next()
     } else {
       if (store.state.lmodelShow == true) {
