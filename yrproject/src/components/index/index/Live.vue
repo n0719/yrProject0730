@@ -50,7 +50,6 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import { Message } from "element-ui";
 export default {
   computed: {
     ...mapState(["gameList","noticeList"])
@@ -87,21 +86,25 @@ export default {
         path: "/webNotice"
       });
     },
-    intoGame(item) {
-      this.fullscreenLoading = true;
-      this.gameLineId = item.game_line_id
-      this.post(this.apiUrl.apiGamePlay, {
-        line_id: this.gameLineId,
-        device: 1,
-        game_id:'live'
-      }).then(res => {
-        if (res.code == 0) {
-          this.clientUrl = res.data.client_url;
-          this.getGameBalance()
-        }else{
-          this.fullscreenLoading = false;
-        }
-      });
+    intoGame(item) {    
+      this.gameLineId = item.game_line_id;
+      if (item.line_maintenance == 1) {
+        this.$message.error("线路维护中");
+      } else {
+        this.fullscreenLoading = true;
+        this.post(this.apiUrl.apiGamePlay, {
+          line_id: this.gameLineId,
+          device: 1,
+          game_id:'live'
+        }).then(res => {
+          if (res.code == 0) {
+            this.clientUrl = res.data.client_url;
+            this.getGameBalance();
+          } else {
+            this.fullscreenLoading = false;
+          }
+        });
+      }
     },
     getGameBalance(){
       this.post(this.apiUrl.apiGameBalances, {
@@ -118,7 +121,7 @@ export default {
     },
     transferIn(){
       if(this.transferNum == ""||this.transferNum==0){
-         Message.error("请输入转入数量");
+         this.$message.error("请输入转入数量");
       }else{
         this.post(this.apiUrl.apiGameTransferOut, {
           line_id: this.gameLineId,

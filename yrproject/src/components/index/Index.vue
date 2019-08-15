@@ -57,8 +57,8 @@
     </div>
     <div class="indexMain">
         <yr-main v-if="active==0?true:false"></yr-main>
+        <yr-lottory v-if="activeName==1?true:false" :gameId="activeName"></yr-lottory>        
         <yr-live v-if="activeName==2?true:false" :gameId="activeName"></yr-live>
-        <yr-lottory v-if="activeName==1?true:false" :gameId="activeName"></yr-lottory>
         <yr-egames v-if="activeName==4?true:false" :gameId="activeName"></yr-egames>
         <yr-exports v-if="activeName=='体育游戏'?true:false" :gameId="activeName"></yr-exports>
         <yr-poker v-if="activeName=='棋牌游戏'?true:false"></yr-poker>

@@ -51,7 +51,6 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import { Message } from "element-ui";
 export default {
   computed: {
     ...mapState(["gameList","noticeList"])
@@ -117,7 +116,7 @@ export default {
     },
     transferIn(){
       if(this.transferNum == ""||this.transferNum==0){
-         Message.error("请输入转入数量");
+         this.$message.error("请输入转入数量");
       }else{
         this.post(this.apiUrl.apiGameTransferOut, {
           line_id: this.gameLineId,

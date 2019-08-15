@@ -1,7 +1,11 @@
 <template>
   <!-- 彩票游戏 -->
-  <div class="lottoryBox" v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-text="加载中" element-loading-background="rgba(0, 0, 0, 0.8)">
+  <div
+    class="lottoryBox"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-text="加载中"
+    element-loading-background="rgba(0, 0, 0, 0.8)"
+  >
     <img :src="list.image" alt class="topImg" />
     <div class="container">
       <el-row class="flex-box mg-b-20">
@@ -34,7 +38,7 @@
         <el-form-item :label="gameName+'余额：'" :label-width="formLabelWidth">
           <el-input v-model="gameBalance" readonly></el-input>
         </el-form-item>
-         <el-form-item label="主账号余额：" :label-width="formLabelWidth">
+        <el-form-item label="主账号余额：" :label-width="formLabelWidth">
           <el-input v-model="accountBalance" readonly></el-input>
         </el-form-item>
         <el-form-item :label="'转入'+gameName+'：'" :label-width="formLabelWidth">
@@ -42,33 +46,32 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button  @click="transferIn">转换并进入</el-button>
-        <el-button  @click="goIn">直接进入</el-button>
+        <el-button @click="transferIn">转换并进入</el-button>
+        <el-button @click="goIn">直接进入</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
-import { Message } from "element-ui";
 export default {
   computed: {
     ...mapState(["gameList", "noticeList"])
   },
-  props:["gameId"],
+  props: ["gameId"],
   data() {
     return {
       list: [],
       clientUrl: "",
       dialogFormVisible: false,
-      formLabelWidth: '140px',
-      gameBalance:'',
-      accountBalance:'',
-      transferNum:'',
-      gameData:'',
-      gameName:'',
-      gameLineId:'',
-      fullscreenLoading:false,
+      formLabelWidth: "140px",
+      gameBalance: "",
+      accountBalance: "",
+      transferNum: "",
+      gameData: "",
+      gameName: "",
+      gameLineId: "",
+      fullscreenLoading: false
     };
   },
   mounted() {
@@ -89,21 +92,25 @@ export default {
       });
     },
     intoGame(item) {
-      this.fullscreenLoading = true;
-      this.gameLineId = item.game_line_id
-      this.post(this.apiUrl.apiGamePlay, {
-        line_id: this.gameLineId,
-        device: 1
-      }).then(res => {
-        if (res.code == 0) {
-          this.clientUrl = res.data.client_url;
-          this.getGameBalance()
-        }else{
-          this.fullscreenLoading = false;
-        }
-      });
+      this.gameLineId = item.game_line_id;
+      if (item.line_maintenance == 1) {
+        this.$message.error("线路维护中");
+      } else {
+         this.fullscreenLoading = true;
+        this.post(this.apiUrl.apiGamePlay, {
+          line_id: this.gameLineId,
+          device: 1
+        }).then(res => {
+          if (res.code == 0) {
+            this.clientUrl = res.data.client_url;
+            this.getGameBalance();
+          } else {
+            this.fullscreenLoading = false;
+          }
+        });
+      }
     },
-    getGameBalance(){
+    getGameBalance() {
       this.post(this.apiUrl.apiGameBalances, {
         line_id: this.gameLineId
       }).then(res => {
@@ -114,24 +121,24 @@ export default {
           this.accountBalance = res.data[0].balance;
         }
       });
-       this.fullscreenLoading = false;
+      this.fullscreenLoading = false;
     },
-    transferIn(){
-      if(this.transferNum == ""||this.transferNum==0){
-         Message.error("请输入转入数量");
-      }else{
+    transferIn() {
+      if (this.transferNum == "" || this.transferNum == 0) {
+        this.$message.error("请输入转入数量");
+      } else {
         this.post(this.apiUrl.apiGameTransferOut, {
           line_id: this.gameLineId,
-          value:this.transferNum 
+          value: this.transferNum
         }).then(res => {
           if (res.code == 0) {
             this.dialogFormVisible = false;
             location.href = this.clientUrl;
           }
-        }); 
+        });
       }
     },
-    goIn(){
+    goIn() {
       this.dialogFormVisible = false;
       location.href = this.clientUrl;
     }
@@ -223,21 +230,22 @@ export default {
 }
 
 /*弹出框*/
-.lottoryBox .el-dialog__title,.lottoryBox .el-dialog__headerbtn .el-dialog__close{
+.lottoryBox .el-dialog__title,
+.lottoryBox .el-dialog__headerbtn .el-dialog__close {
   color: #836426;
 }
-.lottoryBox .el-dialog .el-button{
-  background: #E6CF68;
+.lottoryBox .el-dialog .el-button {
+  background: #e6cf68;
   color: #836426;
   width: 30%;
 }
-.lottoryBox .el-form-item{
+.lottoryBox .el-form-item {
   border-bottom: 1px solid #eee;
 }
-.lottoryBox .el-input__inner{
+.lottoryBox .el-input__inner {
   border: 0;
 }
-.lottoryBox .el-form-item__label{
+.lottoryBox .el-form-item__label {
   text-align: left;
 }
 </style>

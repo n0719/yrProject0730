@@ -1,7 +1,11 @@
 <template>
   <!-- 电子游艺 -->
-  <div class="gamesBox" v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-text="加载中" element-loading-background="rgba(0, 0, 0, 0.8)">
+  <div
+    class="gamesBox"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-text="加载中"
+    element-loading-background="rgba(0, 0, 0, 0.8)"
+  >
     <img :src="list.image" alt class="topImg" />
     <div class="container">
       <el-row class="flex-box mg-b-20">
@@ -32,7 +36,7 @@
       <div class="gameComment">
         <el-row class="middleBox" type="flex" justify="space-between">
           <el-col :span="5" class="itemGame" v-for="game in itemList.child" :key="game.id">
-            <img :src="game.img_mobile" alt class="itemImg"  />
+            <img :src="game.img_mobile" alt class="itemImg" />
             <div class="itemTitle" @click="intoGame(game)">{{game.zh_name}}</div>
           </el-col>
         </el-row>
@@ -43,7 +47,7 @@
         <el-form-item :label="gameName+'余额：'" :label-width="formLabelWidth">
           <el-input v-model="gameBalance" readonly></el-input>
         </el-form-item>
-         <el-form-item label="主账号余额：" :label-width="formLabelWidth">
+        <el-form-item label="主账号余额：" :label-width="formLabelWidth">
           <el-input v-model="accountBalance" readonly></el-input>
         </el-form-item>
         <el-form-item :label="'转入'+gameName+'：'" :label-width="formLabelWidth">
@@ -51,20 +55,19 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button  @click="transferIn">转换并进入</el-button>
-        <el-button  @click="goIn">直接进入</el-button>
+        <el-button @click="transferIn">转换并进入</el-button>
+        <el-button @click="goIn">直接进入</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
-import { Message } from "element-ui";
 export default {
   computed: {
     ...mapState(["gameList", "noticeList"])
   },
-  props:["gameId"],
+  props: ["gameId"],
   data() {
     return {
       cur: 0,
@@ -75,32 +78,33 @@ export default {
       gameTypeId: "",
       clientUrl: "",
       dialogFormVisible: false,
-      formLabelWidth: '140px',
-      gameBalance:'',
-      accountBalance:'',
-      transferNum:'',
-      gameData:'',
-      gameName:'',
-      gameLineId:'',
-      fullscreenLoading:false
+      formLabelWidth: "140px",
+      gameBalance: "",
+      accountBalance: "",
+      transferNum: "",
+      gameData: "",
+      gameName: "",
+      gameLineId: "",
+      gameItemId:"",
+      fullscreenLoading: false
     };
   },
   mounted() {
     if (this.gameList != "") {
-      for(var i = 0;i<this.gameList.length;i++){
-          if(this.gameList[i].id==this.gameId){
-            this.list = this.gameList[i];
-            this.gameLineId  = this.gameList[i].child[0].game_line_id;     
-            this.getGeme();     
-          }         
-        }          
-    }  
+      for (var i = 0; i < this.gameList.length; i++) {
+        if (this.gameList[i].id == this.gameId) {
+          this.list = this.gameList[i];
+          this.gameLineId = this.gameList[i].child[0].game_line_id;
+          this.getGeme();
+        }
+      }
+    }
   },
   methods: {
     getGeme() {
       var that = this;
       var params = {
-        game_line_id:this.gameLineId
+        game_line_id: this.gameLineId
       };
       if (that.gameTypeId) {
         params.game_type_id = that.gameTypeId;
@@ -123,7 +127,7 @@ export default {
       this.gameTypeId = gid;
       this.getGeme();
     },
-    noticeDetail(){
+    noticeDetail() {
       this.$store.commit("umodelShow", true);
       this.$router.push({
         path: "/webNotice"
@@ -131,23 +135,27 @@ export default {
     },
     intoGame(item) {
       // console.log(item);
-      this.fullscreenLoading = true;
       this.gameLineId = item.game_line_id;
-      this.gameId = item.game_id;
-      this.post(this.apiUrl.apiGamePlay, {
-        line_id: this.gameLineId,
-        device: 1,
-        game_id:this.gameId
-      }).then(res => {
-        if (res.code == 0) {
-          this.clientUrl = res.data.client_url;
-          this.getGameBalance()
-        }else{
-          this.fullscreenLoading = false;
-        }
-      });
+      this.gameItemId = item.game_id;
+      if (item.line_maintenance == 1) {
+        this.$message.error("线路维护中");
+      } else {
+        this.fullscreenLoading = true;
+        this.post(this.apiUrl.apiGamePlay, {
+          line_id: this.gameLineId,
+          device: 1,
+          game_id: this.gameItemId
+        }).then(res => {
+          if (res.code == 0) {
+            this.clientUrl = res.data.client_url;
+            this.getGameBalance();
+          } else {
+            this.fullscreenLoading = false;
+          }
+        });
+      }
     },
-    getGameBalance(){
+    getGameBalance() {
       this.post(this.apiUrl.apiGameBalances, {
         line_id: this.gameLineId
       }).then(res => {
@@ -158,24 +166,24 @@ export default {
           this.accountBalance = res.data[0].balance;
         }
       });
-       this.fullscreenLoading = false;
+      this.fullscreenLoading = false;
     },
-    transferIn(){
-      if(this.transferNum == ""||this.transferNum==0){
-         Message.error("请输入转入数量");
-      }else{
+    transferIn() {
+      if (this.transferNum == "" || this.transferNum == 0) {
+        this.$message.error("请输入转入数量");
+      } else {
         this.post(this.apiUrl.apiGameTransferOut, {
           line_id: this.gameLineId,
-          value:this.transferNum 
+          value: this.transferNum
         }).then(res => {
           if (res.code == 0) {
             this.dialogFormVisible = false;
             location.href = this.clientUrl;
           }
-        }); 
+        });
       }
     },
-    goIn(){
+    goIn() {
       this.dialogFormVisible = false;
       location.href = this.clientUrl;
     }
@@ -241,24 +249,24 @@ export default {
 }
 .gamesBox .itemTitle {
   position: absolute;
-    left: 50%;
-    top: 50%;
-    text-align: center;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    font-size: 18px;
-    color: #fff;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
-    width: 100%;
-    height: 210px;
-    line-height: 210px;
+  left: 50%;
+  top: 50%;
+  text-align: center;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  color: #fff;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  width: 100%;
+  height: 210px;
+  line-height: 210px;
 }
 .gamesBox .itemGame:hover:before {
   background: rgba(0, 0, 0, 0.5);
 }
-.gamesBox .itemGame:hover .itemTitle{
-  color: #E6CF68;
+.gamesBox .itemGame:hover .itemTitle {
+  color: #e6cf68;
 }
 .gamesBox .tabTitle {
   font-size: 16px;
@@ -285,21 +293,22 @@ export default {
   border-top: 1px solid #6c6c57;
 }
 /*弹出框*/
-.gamesBox .el-dialog__title,.gamesBox .el-dialog__headerbtn .el-dialog__close{
+.gamesBox .el-dialog__title,
+.gamesBox .el-dialog__headerbtn .el-dialog__close {
   color: #836426;
 }
-.gamesBox .el-dialog .el-button{
-  background: #E6CF68;
+.gamesBox .el-dialog .el-button {
+  background: #e6cf68;
   color: #836426;
   width: 30%;
 }
-.gamesBox .el-form-item{
+.gamesBox .el-form-item {
   border-bottom: 1px solid #eee;
 }
-.gamesBox .el-input__inner{
+.gamesBox .el-input__inner {
   border: 0;
 }
-.gamesBox .el-form-item__label{
+.gamesBox .el-form-item__label {
   text-align: left;
 }
 </style>
