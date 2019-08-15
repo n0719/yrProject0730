@@ -43,7 +43,7 @@ export default {
       dictionariesData: this.$store.state.dictionariesData.table_map
         .member_activities.type,
       active: 0,
-      total:""
+      total:1
     };
   },
   mounted() {
@@ -60,7 +60,6 @@ export default {
       }).then(res => {
         if (res.data != "") {
           this.discountData = res.data.items;
-          console.log(this.discountData);
           this.total=this.discountData.length
         }
       });

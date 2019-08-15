@@ -10,11 +10,12 @@
             </el-aside>
             <el-container>
               <el-header>
-                <user-header></user-header>
+               <keep-alive> <user-header></user-header></keep-alive>
               </el-header>
               <el-main>
                 <user-content>
-                  <router-view></router-view>
+                 <kepp-alive ><router-view v-if="!$route.meta.keepAlive"></router-view></kepp-alive>
+                 <router-view v-if="$route.meta.keepAlive"></router-view>
                 </user-content>
               </el-main>
             </el-container>
@@ -45,8 +46,7 @@ export default {
   },
 
   mounted() {
-    console.log(this.winWidth);
-  
+
   },
   methods: {
   

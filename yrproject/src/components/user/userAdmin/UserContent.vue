@@ -1,6 +1,8 @@
 <template>
   <div class="userContent">
-    <router-view name="abc"></router-view>
+ <keep-alive>
+      <router-view name="abc"></router-view>
+ </keep-alive>
     <!-- <router-view v-if="isRouterAlive" name="Recharge"></router-view> -->
   </div>
 </template>

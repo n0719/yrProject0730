@@ -16,6 +16,8 @@ Vue.prototype.get = get
 Vue.prototype.post = post
 Vue.prototype.apiUrl = apiUrl
 import getReg from "./axios/rulesData"
+import { log } from 'util';
+import VueRouter from 'vue-router';
 Vue.prototype.getReg = getReg
 
 // 弹框底部页面滚动问题
@@ -33,6 +35,34 @@ Vue.prototype.canScroll = function () {
   document.body.style.overflow = ''// 出现滚动条
   document.removeEventListener('touchmove', mo, false)
 }
+Vue.use("comfirm")
+router.beforeEach((to, from, next) => {
+  //我在这里模仿了一个获取用户信息的方法
+  let isLogin = localStorage.getItem('token');
+
+
+  if (isLogin) {
+    //如果用户信息存在则往下执行。
+    next()
+  } else {
+    //如果用户token不存在则跳转到login页面
+    if (to.path === '/webNotice') {
+      next()
+    } else {
+      if (store.state.lmodelShow == true) {
+
+      } else {
+        Vue.prototype.$confirm("您还没有登录,请前往登录后,继续访问!", "提示", {})
+          .then(() => {
+            store.commit("umodelShow", false);
+            store.commit("lmodelShow", true);
+          })
+          .catch(() => { });
+      }
+    }
+  }
+})
+
 
 Vue.use(ElementUI, VueAxios, axios)
 Vue.config.productionTip = false

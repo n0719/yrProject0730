@@ -89,7 +89,7 @@
                     ></el-input>
                   </el-form-item>
                   <el-form-item label="选择银行：" prop="selBank">
-                    <el-select v-model="selectBank" placeholder="请选择">
+                    <el-select v-model="selectBank" placeholder="请选择" @change="selBank">
                       <el-option
                         v-for="item in ruleForm.selBank"
                         :key="item.id"
@@ -138,7 +138,6 @@ export default {
     var bb = this.$store.state.dictionariesData;
     this.ruleForm.selBank = bb.table_map.member_withdraw_account.bank;
     this.getBankList();
-
     this.rules.moneyPassword[0].pattern = this.getReg.getReg(
       this.$store.state.regRule.MoneyOut.bankAccountAdd.fund_password.validation
     );
@@ -154,6 +153,7 @@ export default {
       checkList: ["选中且禁用", "复选框 A"],
       tableData: [],
       ruleForm: {
+        bank:"",
         real_name: "",
         selBank: "",
         bankNum: "",
@@ -230,13 +230,14 @@ export default {
     },
     addBank() {
       const t = this;
+       
       t.$refs["ruleForm"].validate(valid => {
         console.log(valid);
         if (valid == false) {
         } else {
           let address = this.selectedOptions.join("");
           this.post(this.apiUrl.apiBankAccountAdd, {
-            bank: "1",
+            bank:this.ruleForm.bank,
             bank_real_name: this.ruleForm.real_name,
             bank_card: this.ruleForm.bankNum,
             bank_address: address,
@@ -249,11 +250,19 @@ export default {
     },
     getBankList() {
       this.post(this.apiUrl.apiBankAccountList, {}).then(res => {
-        this.tableData = res.data;
+        if (res.data != "") {
+          this.tableData = res.data;
+          this.$store.commit("bankList",res.data)
+        }
       });
     },
     handleChange(value) {
       console.log(value);
+    },
+    selBank(value){
+     this.ruleForm.bank=value;
+       console.log(value);
+       
     }
   }
 };

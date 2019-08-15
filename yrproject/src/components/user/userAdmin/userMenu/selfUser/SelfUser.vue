@@ -25,37 +25,43 @@
               <el-form-item label="姓名：" prop="fullName">
                 <el-input v-model="ruleForm.fullName" placeholder="姓名必须真实有效"></el-input>
               </el-form-item>
-              <el-form-item label="手机：" prop="uTel">
+              <el-row v-if="this.$store.state.infoData.phone!=''?false:true">
+                <el-form-item label="手机：" prop="uTel">
+                  <el-input v-model="ruleForm.uTel" placeholder="输入正确的手机号码"></el-input>
+                  <el-button
+                    class="yzBtn"
+                    :style="yzTelState==false?'color:#836426':'color:#FF0000'"
+                    @click="yzTelClick"
+                  >{{yzTelState==false?'绑定手机号码':''+num+'s后重新获取'}}</el-button>
+                  <el-alert
+                    v-show="yzTelState==false?false:true"
+                    title="验证码已发送，可能会有延误，请耐心等待"
+                    type="success"
+                    center
+                    show-icon
+                  ></el-alert>
+                </el-form-item>
+                <el-form-item v-if="togYz">
+                  <el-input placeholder="请输入验证码" v-model="loginImgCode" type="number"></el-input>
+                  <img
+                    class
+                    style="position:absolute;right:125px;top:2px;border-left:1px solid #836426"
+                    :src="imgYZ"
+                    @click="getCodeImg()"
+                    alt
+                  />
+                  <el-button class="yzBtn" @click="tzTel">发送验证码</el-button>
+                  <!-- <el-button class="yzBtn">验证</el-button> -->
+                </el-form-item>
+                <el-form-item prop="uYz" v-else>
+                  <el-input placeholder="请输入验证码" v-model="ruleForm.uYz"></el-input>
+                  <el-button class="yzBtn">输入验证码</el-button>
+                </el-form-item>
+              </el-row>
+              <el-form-item label="手机：" prop="uTel" v-else>
                 <el-input v-model="ruleForm.uTel" placeholder="输入正确的手机号码"></el-input>
-                <el-button
-                  class="yzBtn"
-                  :style="yzTelState==false?'color:#836426':'color:#FF0000'"
-                  @click="yzTelClick"
-                >{{yzTelState==false?'绑定手机号码':''+num+'s后重新获取'}}</el-button>
-                <el-alert
-                  v-show="yzTelState==false?false:true"
-                  title="验证码已发送，可能会有延误，请耐心等待"
-                  type="success"
-                  center
-                  show-icon
-                ></el-alert>
               </el-form-item>
-              <el-form-item v-if="togYz">
-                <el-input placeholder="请输入验证码" v-model="loginImgCode" type="number"></el-input>
-                <img
-                  class
-                  style="position:absolute;right:125px;top:2px;border-left:1px solid #836426"
-                  :src="imgYZ"
-                  @click="getCodeImg()"
-                  alt
-                />
-                <el-button class="yzBtn" @click="tzTel">发送验证码</el-button>
-                <!-- <el-button class="yzBtn">验证</el-button> -->
-              </el-form-item>
-              <el-form-item prop="uYz" v-else>
-                <el-input placeholder="请输入验证码" v-model="ruleForm.uYz"></el-input>
-                <el-button class="yzBtn">输入验证码</el-button>
-              </el-form-item>
+
               <!-- <el-form-item label="邮箱：" required prop="uAddress">
                 <el-input v-model="ruleForm.uAddress" placeholder="输入合法的邮箱地址"></el-input>
                 <el-button
@@ -82,7 +88,7 @@
                   placeholder="选择日期"
                   value-format="yyyy-MM-dd"
                 ></el-date-picker>
-              </el-form-item> -->
+              </el-form-item>-->
               <el-form-item class="subBtn">
                 <el-button type="default" @click="resert">取消</el-button>
                 <el-button type="default" @click="submitForm1(ruleForm)">提交</el-button>
@@ -140,7 +146,11 @@
               label-width="100px"
               :rules="moneyRules"
             >
-              <el-form-item label="原始密码：" prop="moneyOldPassword" v-if="this.infoData.fund_password==1?false:true">
+              <el-form-item
+                label="原始密码："
+                prop="moneyOldPassword"
+                v-if="this.infoData.fund_password==1?false:true"
+              >
                 <el-input
                   v-model="moneyPasswordFrom.moneyOldPassword"
                   type="password"
@@ -183,24 +193,23 @@ import { mapState } from "vuex";
 import { Message } from "element-ui";
 export default {
   computed: {
-    ...mapState(["infoData","regRule"])
+    ...mapState(["infoData", "regRule"])
   },
   mounted() {
-    
     this.rules.uName[0].pattern = this.getReg.getReg(
-     this.regRule.Public.login.username.validation
+      this.regRule.Public.login.username.validation
     );
     this.rules.uAddress[0].pattern = this.getReg.getReg(
-    this.regRule.CurrUser.updateInfo.email.validation
+      this.regRule.CurrUser.updateInfo.email.validation
     );
     this.rules.uBirth[0].pattern = this.getReg.getReg(
       this.regRule.CurrUser.updateInfo.birthday.validation
     );
     this.rules.uTel[0].pattern = this.getReg.getReg(
-       this.regRule.CurrUser.bindPhone.phone.validation
+      this.regRule.CurrUser.bindPhone.phone.validation
     );
     this.rules.uYz[0].pattern = this.getReg.getReg(
-       this.regRule.CurrUser.bindPhone.verify_code.validation
+      this.regRule.CurrUser.bindPhone.verify_code.validation
     );
     this.imageUrl = this.$store.state.userImg;
 
@@ -215,27 +224,16 @@ export default {
       this.regRule.CurrUser.changePassword.oldPassword.validation
     );
     this.logRules.logNewPassword[0].pattern = this.getReg.getReg(
-     this.regRule.CurrUser.changePassword.password.validation
+      this.regRule.CurrUser.changePassword.password.validation
     );
-    //手机号
-
-    //  console.log(this.getReg.getReg(
-    //   this.$store.state.currUserData.changePassword.
-    // ));
-    this.imageUrl=this.infoData.avatar;
-    this.ruleForm.uName = this.$store.state.uname;
-    this.ruleForm.nickName = this.infoData.nickName;
-    this.ruleForm.fullName = this.infoData.real_name;
-    //  this.ruleForm.utel=infoData.ueranme
-    this.ruleForm.uAddress = this.infoData.email;
-    this.ruleForm.uBirth = this.infoData.birthday; //
-
- 
-    console.log(this.infoData.fund_password);
+    console.log(this.$store.state.infoData);
     
-   if(this.infoData.fund_password=1){
- 
-   }
+    this.ruleForm.uName = this.$store.state.infoData.username;
+    this.ruleForm.nickName = this.$store.state.infoData.nickname;
+    this.ruleForm.fullName = this.$store.state.infoData.real_name;
+    this.ruleForm.uTel = this.$store.state.infoData.phone;
+    this.ruleForm.uBirth = this.$store.state.infoData.birthday;
+   this.imageUrl=this.$store.state.infoData.avatar;
     this.getCodeImg();
   },
   data() {
@@ -357,7 +355,6 @@ export default {
       moneyRules: {
         moneyOldPassword: [
           {
-          
             message: "原始密码不符合格式",
             trigger: "blur"
           }
@@ -400,7 +397,6 @@ export default {
         //   console.log(res);
         // });
       } else {
-     
       }
     },
     tzTel() {
@@ -408,7 +404,9 @@ export default {
         phone: this.ruleForm.uTel,
         verify: this.loginImgCode
       }).then(res => {
-        if (res.code == 1) {
+        console.log(res);
+
+        if (res.code == 0) {
           this.yzTelState = true;
           this.togYz = false;
           var that = this;
@@ -419,9 +417,9 @@ export default {
               that.yzTelState = false;
             }
           }, 1000);
-        }else{
-           this.getCodeImg();
-           this.loginImgCode=""
+        } else {
+          this.getCodeImg();
+          this.loginImgCode = "";
         }
       });
     },
@@ -448,8 +446,8 @@ export default {
       }
     },
     handleAvatarSuccess(res, file) {
-      // this.imageUrl = URL.createObjectURL(file.raw);
-      this.imageUrl = "user_icon/06654/" + file.name;
+      this.imageUrl = URL.createObjectURL(file.raw);
+      // this.imageUrl = "user_icon/06654/" + file.name;
       console.log(file.name);
     },
     beforeAvatarUpload(file) {
@@ -533,7 +531,10 @@ export default {
           let conPassword = this.moneyPasswordFrom.moneyConPassword;
           console.log(oldPassword, newPassword, conPassword);
 
-          if (newPassword == conPassword&&this.infoData.fund_password==1||this.infoData.fund_password==0) {
+          if (
+            (newPassword == conPassword && this.infoData.fund_password == 1) ||
+            this.infoData.fund_password == 0
+          ) {
             this.post(this.apiUrl.apiChangeFoundPassword, {
               password: newPassword
             }).then(res => {
@@ -573,7 +574,9 @@ export default {
   padding: 25px 35px 0 35px;
   box-sizing: border-box;
 }
-
+.selfTab .el-form {
+  width: 450px;
+}
 /* 头像上传 */
 .selfUser .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;

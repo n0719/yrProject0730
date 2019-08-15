@@ -37,17 +37,17 @@
           </el-table>
           
           <el-table
-            :data="teamData.teamGameRecord"
+            :data="teamTableData"
             stripe
             style="width: 100%"
             class="recoredTable"
-            empty-text="数据为空"
+            empty-text="暂无数据"
           >
-            <el-table-column prop="game_type.dexc" label="游戏种类" width></el-table-column>
+            <el-table-column prop="game_type.desc" label="游戏种类" width></el-table-column>
             <el-table-column prop="count" label="投注笔数" width></el-table-column>
             <el-table-column prop="real_bet_amount" label="有效投注"></el-table-column>
             <el-table-column prop="win_amount" label="实际亏盈"></el-table-column>
-            <el-table-column prop="bobet_amountnus" label="投注金额"></el-table-column>
+            <el-table-column prop="bet_amount" label="投注金额"></el-table-column>
           </el-table>
 
           <!-- <div v-show="teamDataState">
@@ -65,8 +65,7 @@ export default {
     ...mapState(["teamDatas"])
   },
   mounted() {
-    this.teamData = [this.teamDatas];
-    console.log(this.teamData);
+    this.getTeamData();
   },
   data() {
     return {
@@ -74,13 +73,21 @@ export default {
       dataStarrt: "",
       dataEnd: "",
       teamData: [],
-
+      teamTableData:[],
       activeName: "first"
     };
   },
   methods: {
     handleClick(tab, event) {
       console.log(tab, event);
+    },
+    getTeamData() {
+      //获取团队总览
+      this.post(this.apiUrl.apiTeamData).then(res => {
+        var data = res.data;
+        this.teamData .push(data);
+        this.teamTableData =data.teamGameRecord;  
+      });
     }
   }
 };

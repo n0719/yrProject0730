@@ -2,55 +2,64 @@
   <!-- 额度转换 -->
   <div class="contentMain edTransform">
     <div class="contentMainDIv">
-
-      <el-row class="container" >
+      <el-row class="container">
         <el-row class="payNav">
           <span></span>团队余额
         </el-row>
         <el-row class="contentMainTable">
           <div class="teamBalance">
-            <div class="teamTop flex-box-center">
-              <span v-for="(item,index) in listData" v-bind:key="index">{{item.name}}</span>
-            </div>
-            <div class="flex-box-center">
-              <span
-                v-for="(item,index) in itemData"
-                v-bind:key="index"
-                :class="item.name=='失败'?'error':''"
-              >{{item.name}}</span>
-            </div>
+            <el-row :gutter="10">
+              <el-col :md="3">
+                <el-row>
+                  <el-col :span="24" v-for="(item,index) in titList" :key="index">
+                    <div class="grid-content">
+                      <span>{{item.pro}}</span>
+                      <span>{{item.mon}}</span>
+                    </div>
+                  </el-col>
+                </el-row>
+              </el-col>
+              <el-col :md="21">
+                <el-row>
+                  <el-col :md="3" v-for="(item,index) in listData" :key="index">
+                    <div class="grid-content">
+                      <span>{{ item.line_name}}</span>
+                      <span>{{item.balance}}</span>
+                    </div>
+                  </el-col>
+                </el-row>
+              </el-col>
+            </el-row>
           </div>
         </el-row>
         <el-row class="payNav">
           <span></span>额度转换
         </el-row>
         <el-row v-if="step==1" style="height:100%;">
-          <el-row class="flex-box-center" >
-            <el-form ref="form" :model="form" label-width="80px">
+          <el-row class="flex-box-center">
+            <el-form ref="form" :model="form" label-width="80px" :rules="formRules">
               <el-form-item label="转出：">
-                <el-select v-model="form.roleOut" placeholder="请选择活动区域">
-                  <el-option label="CB" value="CB"></el-option>
-                  <el-option label="AG3" value="AG3"></el-option>
-                  <el-option label="M8CG" value="M8CG"></el-option>
-                  <el-option label="CQ9CQ" value="CQ9CQ"></el-option>
-                  <el-option label="VRCQ" value="VRCQ"></el-option>
-                  <el-option label="KYCQ" value="KYCQ"></el-option>
-                  <el-option label="BBCQ" value="BBCQ"></el-option>
-                  <el-option label="BACQ" value="BACQ"></el-option>
-                  <el-option label="PGCQ" value="PGCQ"></el-option>
-                  <el-option label="SACQ" value="SACQ"></el-option>
-                  <el-option label="LCCQ" value="LCCQ"></el-option>
-                  <el-option label="WSCQ" value="WSCQ"></el-option>
+                <el-select v-model="form.zcId" placeholder="请选择活动区域" @change="zcId">
+                  <el-option
+                    v-for="(item,index) in listData"
+                    :key="index"
+                    :label="item.line_name"
+                    :value="item.balance==0?'00':item.line_id"
+                  ></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="转入：">
-                <el-select v-model="form.roleIn" placeholder="请选择活动区域">
-                  <el-option label="区域一" value="shanghai"></el-option>
-                  <el-option label="区域二" value="beijing"></el-option>
+                <el-select v-model="form.zrId" placeholder="请选择活动区域" @change="zrId">
+                  <el-option
+                    v-for="(item,index) in listData"
+                    :key="index"
+                    :label="item.line_name"
+                    :value="item.line_id"
+                  ></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="金额：">
-                <el-input v-model="form.num"></el-input>
+              <el-form-item label="金额：" prop="money">
+                <el-input v-model="form.money" placeholder="输入转入金额(100-1000.00)"></el-input>
               </el-form-item>
               <el-form-item class="noticeNote">
                 <div>备注：</div>
@@ -65,7 +74,7 @@
               </el-form-item>
             </el-form>
           </el-row>
-          <el-row class="preferentialBox">
+          <!-- <el-row class="preferentialBox">
             <div class="preferentialTitle">我想参与下列彩金优惠</div>
             <div class="preferentialContent">
               <el-radio
@@ -87,19 +96,21 @@
                 </div>
               </el-row>
             </div>
-          </el-row>
+          </el-row>-->
         </el-row>
         <el-row v-else-if="step==2" class="successBox">
           <img src="../../../../assets/user/userSuccess.png" alt />
           <div>
-              完成转换
-          <span class="againTrans errorColor" @click="againTrans">再转一笔</span>
+            完成转换
+            <span class="againTrans errorColor" @click="againTrans">再转一笔</span>
           </div>
         </el-row>
         <el-row v-else class="successBox">
-            <img src="../../../../assets/user/userError.png" alt />
-            <div>转换失败
-          <span class="errorColor againTrans" @click="againTrans">重试</span></div>
+          <img src="../../../../assets/user/userError.png" alt />
+          <div>
+            转换失败
+            <span class="errorColor againTrans" @click="againTrans">重试</span>
+          </div>
           <div class="errorColor mg-t-10">失败原因：账户余额不足</div>
         </el-row>
       </el-row>
@@ -112,50 +123,99 @@ export default {
     return {
       step: 1,
       radio: "1",
-      listData: [
-        { name: "项目" },
-        { name: "CB" },
-        { name: "AG3" },
-        { name: "M8CG" },
-        { name: "CQ9CQ" },
-        { name: "VRCQ" },
-        { name: "KYCQ" },
-        { name: "BBCQ" },
-        { name: "BACQ" },
-        { name: "PGCQ" },
-        { name: "SACQ" },
-        { name: "LCCQ" },
-        { name: "WSCQ" }
-      ],
-      itemData: [
-        { name: "余额" },
-        { name: "1000.00" },
-        { name: "0.00" },
-        { name: "0.00" },
-        { name: "0.00" },
-        { name: "0.00" },
-        { name: "失败" },
-        { name: "0.00" },
-        { name: "0.00" },
-        { name: "0.00" },
-        { name: "0.00" },
-        { name: "0.00" },
-        { name: "0.00" }
+      listData: [],
+
+      titList: [
+        {
+          pro: "项目",
+          mon: "余额"
+        }
       ],
       form: {
-        num: "1000.00",
-        roleOut: "CB",
-        roleIn: "CQ9CQ",
-        desc: ""
+        zcId: "",
+        zrId: "",
+        money: ""
+      },
+      formRules: {
+        money: [
+          {
+            required: true,
+            pattern: "",
+            message: "金额范围为100-10000.00"
+          }
+        ]
       }
     };
   },
+  mounted() {
+    this.getProList();
+  },
   methods: {
     onSubmit() {
-      this.step = 2;
+      const t = this;
+
+      t.$refs["form"].validate(valid => {
+        if (valid == false) {
+        } else {
+          this.post(this.apiUrl.apiTransferOther, {
+            in_line_id: this.form.zcId,
+            out_line_id: this.form.zrId,
+            value: this.form.money
+          }).then(res => {
+            if (res.code == 0) {
+              this.step = 2;
+            }
+          });
+        }
+      });
+
+      //
     },
-    againTrans(){
-        this.step = 1;
+    againTrans() {
+      this.step = 1;
+    },
+    getProList() {
+      this.post(this.apiUrl.apiBalances, {}).then(res => {
+        if (res.data != "") {
+          var listData = res.data;
+          listData.shift();
+          this.listData = listData;
+          if (res.data.length - 1 > 8) {
+            var n = Math.floor((res.data.length - 1) / 8);
+            for (var i = 1; i <= n; i++) {
+              this.titList[i] = {
+                pro: "项目",
+                mon: "余额"
+              };
+            }
+          }
+        }
+      });
+    },
+    zcId(value) {
+      this.form.zcId = value;
+     if(value=="00"){
+        this.$alert("转出项目余额不能少于100元整,请确认当前项目余额信息,或者重新选择转出项目", "提示", {
+          confirmButtonText: "确定",
+          callback: action => {
+            this.form.zcId = "";
+          }
+        });
+     }
+      
+    },
+    zrId(value) {
+      if (this.form.zcId == value) {
+        this.$alert("相同项目之间不能相互转入,请重新选择转入项目", "提示", {
+          confirmButtonText: "确定",
+          callback: action => {
+            this.form.zrId = "";
+          }
+        });
+      } else {
+        this.form.zrId = value;
+        
+      }
     }
   }
 };
@@ -232,6 +292,9 @@ export default {
   border: 0;
   padding: 12px 66px;
 }
+.edTransform .noticeNote {
+  margin-top: 50px;
+}
 .edTransform .noticeNote .el-form-item__content {
   display: flex;
   align-items: flex-start;
@@ -270,7 +333,8 @@ export default {
   width: 10px;
   height: 10px;
 }
-.edTransform .el-radio__input.is-checked .el-radio__inner,.edTransform .el-radio__inner{
+.edTransform .el-radio__input.is-checked .el-radio__inner,
+.edTransform .el-radio__inner {
   border-color: #836426;
   width: 22px;
   height: 22px;
@@ -291,12 +355,6 @@ export default {
   border: 1px solid #836426;
 }
 
-.edTransform .teamBalance span {
-  flex: 1;
-  padding: 13px 10px;
-  text-align: center;
-  line-height: 23px;
-}
 .edTransform .teamTop {
   font-size: 12px;
   border-bottom: 1px solid #836426;
@@ -314,8 +372,20 @@ export default {
   margin-left: 24px;
   cursor: pointer;
 }
-.edTransform .errorColor{
-    color: #ff0000;
+.edTransform .errorColor {
+  color: #ff0000;
+}
+
+/*  */
+.edTransform .grid-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+}
+.edTransform .grid-content span {
+  margin: 2px 0;
 }
 </style>
 

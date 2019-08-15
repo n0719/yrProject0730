@@ -52,7 +52,10 @@ export default new Router({
       components: {
         abc: UserContent
       },
-
+      meta: {
+        requireAuth: true,
+        keepAlive: true // 用户列表需要被缓存
+    },
       // redirect:"/myPay",
       children: [
         {
@@ -60,98 +63,154 @@ export default new Router({
           name: "myPay",
           components: {
             abc: MyPay
-          }
+          },
+          meta: {
+            requireAuth: true,
+            keepAlive: true // 用户列表需要被缓存
+        }
         },
         {
           path: "/bankCard",
           name: "bankCard",
           components: {
             abc: BankCard
-          }
+          },
+          meta: {
+            requireAuth: true,
+            keepAlive: true // 用户列表需要被缓存
+        }
         },
         {
           path: "/edTransform",
           name: "edTransform",
           components: {
             abc: EdTransform
-          }
+          },
+          meta: {
+            requireAuth: true,
+            keepAlive: true // 用户列表需要被缓存
+        }
         },
         {
           path: "/gameRecords",
           name: "gameRecords",
           components: {
             abc: GameRecords
-          }
+          },
+          meta: {
+            requireAuth: true,
+            keepAlive: true // 用户列表需要被缓存
+        }
         },
         {
           path: "/moneyDealings",
           name: "moneyDealings",
           components: {
             abc: MoneyDealings
-          }
+          },
+          meta: {
+            requireAuth: true,
+            keepAlive: true // 用户列表需要被缓存
+        }
         },
         {
           path: "/returnHome",
           name: "returnHome",
           components: {
             abc: ReturnHome
-          }
+          },
+          meta: {
+            requireAuth: true,
+            keepAlive: true // 用户列表需要被缓存
+        }
         },
         {
           path: "/subordAdmin",
           name: "subordAdmin",
           components: {
             abc: SubordAdmin
-          }
+          },
+          meta: {
+            requireAuth: true,
+            keepAlive: true // 用户列表需要被缓存
+        }
         },
         {
           path: "/teamOverview",
           name: "teamOverview",
           components: {
             abc: TeamOverview
-          }
+          },
+          meta: {
+            requireAuth: true,
+            keepAlive: true // 用户列表需要被缓存
+        }
         },
         {
           path: "/webNotice",
           name: "webNotice",
           components: {
             abc: WebNotice
-          }
+          },
+          meta: {
+            requireAuth: true,
+            keepAlive: true // 用户列表需要被缓存
+        }
         },
         {
           path: "/mydiscount",
           name: "mydiscount",
           components: {
             abc: Mydiscount
-          }
+          },
+          meta: {
+            requireAuth: true,
+            keepAlive: true // 用户列表需要被缓存
+        }
         },
         {
           path: "/recharge",
           name: "recharge",
           components: {
             abc: Recharge
-          }
+          },   
+          meta: {
+            requireAuth: true,
+            keepAlive: true // 用户列表需要被缓存
+        }
         },
         {
           path: "/cashwithdrawal",
           name: "cashwithdrawal",
           components: {
             abc: Cashwithdrawal
-          }
+          },
+          meta: {
+            requireAuth: true,
+            keepAlive: true // 用户列表需要被缓存
+        }
         },
         {
           path: "/cashsweep",
           name: "cashsweep",
           components: {
             abc: Cashsweep
-          }
+          },
+          meta: {
+            requireAuth: true,
+            keepAlive: true // 用户列表需要被缓存
+        }
         },
         {
           path: "/selfUser",
           name: "selfUser",
           components: {
             abc: SelfUser
-          }
+          },
+          meta: {
+            requireAuth: true,
+            keepAlive: true // 用户列表需要被缓存
+        }
         },
         {
           path: "/subordMems",

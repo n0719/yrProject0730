@@ -82,9 +82,7 @@
             localStorage.dictionariesData=dictionariesData;
         } catch (e) {}
     },
-    teamDatas(state,teamDatas){
-        state.teamDatas =teamDatas
-    },
+
     noticeList(state,noticeList){
         state.noticeList =noticeList
     },
@@ -97,6 +95,12 @@
     lineList(state,lineList){
         state.lineList =lineList
     },
+    bankList(state,bankList){
+      state.bankList=bankList;
+    },
+    cashsweepData(state,cashsweepData){
+        state.cashsweepData=cashsweepData//游戏
+    }
     // lowerLevel(state,lowerLevel){
     //     state.lowerLevel =lowerLevel
     // },

@@ -315,7 +315,6 @@ export default {
   },
   mounted() {
     this.getBankList();
-    console.log(this.$store.state.dictionariesData);
   },
   methods: {
     getBankList() {
@@ -390,6 +389,7 @@ export default {
           let code = this.onlineLabelForm.code;
           let money = this.onlineLabelForm.money;
 
+   
           this.post(this.apiUrl.apiThirdPaymentSubmit, {
             id: id,
             code: code,
