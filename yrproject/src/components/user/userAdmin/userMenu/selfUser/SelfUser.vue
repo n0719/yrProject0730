@@ -13,7 +13,7 @@
                 :before-upload="beforeAvatarUpload"
                 accept="image/jpeg, image/gif, image/png, image/bmp"
               >
-                <img v-if="imageUrlState" :src="imageUrl" class="avatar" />
+                <img v-if="imageUrlState" :src=" ruleForm.avatar"  class="avatar" />
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
               <el-form-item label="用户名：" prop="uName">
@@ -196,6 +196,8 @@ export default {
     ...mapState(["infoData", "regRule"])
   },
   mounted() {
+    console.log(this.$store.state.infoData.avatar);
+    
     this.rules.uName[0].pattern = this.getReg.getReg(
       this.regRule.Public.login.username.validation
     );
@@ -226,14 +228,12 @@ export default {
     this.logRules.logNewPassword[0].pattern = this.getReg.getReg(
       this.regRule.CurrUser.changePassword.password.validation
     );
-    console.log(this.$store.state.infoData);
-    
     this.ruleForm.uName = this.$store.state.infoData.username;
     this.ruleForm.nickName = this.$store.state.infoData.nickname;
     this.ruleForm.fullName = this.$store.state.infoData.real_name;
     this.ruleForm.uTel = this.$store.state.infoData.phone;
     this.ruleForm.uBirth = this.$store.state.infoData.birthday;
-   this.imageUrl=this.$store.state.infoData.avatar;
+    this.ruleForm.avatar = this.$store.state.infoData.avatar;
     this.getCodeImg();
   },
   data() {
@@ -248,6 +248,7 @@ export default {
       num: 20,
       ruleForm: {
         //个人资料字段
+        avatar:"",
         uName: "",
         nickName: "",
         fullName: "",
@@ -280,14 +281,12 @@ export default {
         ],
         uTel: [
           {
-            required: true,
             pattern: "",
             message: "请输入有效的手机号码"
           }
         ],
         uYz: [
           {
-            required: true,
             pattern: "",
             message: "请输入有效的验证码"
           }
@@ -446,9 +445,12 @@ export default {
       }
     },
     handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
-      // this.imageUrl = "user_icon/06654/" + file.name;
-      console.log(file.name);
+      //  this.ruleForm.avatar =URL.createObjectURL(file.raw);
+       this.ruleForm.avatar=file.name;
+       console.log(file);
+       
+      // // this.imageUrl = "";
+  
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
@@ -468,31 +470,35 @@ export default {
     submitForm1() {
       const t = this;
 
-      t.$refs["ruleForm"].validate(valid => {
-        console.log(valid);
-        if (valid == false) {
-        } else {
-          let avatar = t.imageUrl;
-          let uname = t.ruleForm.uName;
-          let nickname = t.ruleForm.nickname;
-          let real_name = t.ruleForm.fullName;
-          let email = t.ruleForm.uAddress;
-          let birthday = t.ruleForm.uBirth;
-          this.post(this.apiUrl.apiSelfUser, {
-            avatar: avatar,
-            uname: uname,
-            nickname: nickname,
-            real_name: real_name,
-            email: email,
-            birthday: birthday
-          }).then(res => {
-            this.$message("更新信息成功！");
-            try {
-              this.$refs["ruleForm"].resetFields();
-            } catch (e) {}
-          });
+      // t.$refs["ruleForm"].validate(valid => {
+
+      // if (valid == false) {
+      // } else {
+      let avatar = t.ruleForm.avatar;
+      let uname = t.ruleForm.uName;
+      let nickname = t.ruleForm.nickname;
+      let real_name = t.ruleForm.fullName;
+      let email = t.ruleForm.uAddress;
+      let birthday = t.ruleForm.uBirth;
+      this.post(this.apiUrl.apiSelfUser, {
+        avatar: avatar,
+        uname: uname,
+        nickname: nickname,
+        real_name: real_name,
+        email: email,
+        birthday: birthday
+      }).then(res => {
+        
+        if(res.code==0){
+ this.$message("更新信息成功！");
         }
+       
+        try {
+          this.$refs["ruleForm"].resetFields();
+        } catch (e) {}
       });
+      // }
+      // });
     },
     submitForm2() {
       const t = this;
@@ -520,6 +526,7 @@ export default {
         }
       });
     },
+
     submitForm3() {
       const t = this;
 

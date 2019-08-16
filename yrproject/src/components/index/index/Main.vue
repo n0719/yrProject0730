@@ -41,6 +41,7 @@ export default {
   },
   methods: {
     noticeDetail(){
+     
       this.$store.commit("umodelShow", true);
       this.$router.push({
         path: "/webNotice"

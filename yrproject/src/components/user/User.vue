@@ -10,12 +10,12 @@
             </el-aside>
             <el-container>
               <el-header>
-               <keep-alive> <user-header></user-header></keep-alive>
+               <user-header></user-header>
               </el-header>
               <el-main>
                 <user-content>
-                 <kepp-alive ><router-view v-if="!$route.meta.keepAlive"></router-view></kepp-alive>
-                 <router-view v-if="$route.meta.keepAlive"></router-view>
+               <router-view></router-view>
+                 <router-view ></router-view>
                 </user-content>
               </el-main>
             </el-container>

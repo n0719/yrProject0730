@@ -1,27 +1,24 @@
 <template>
   <div id="app">
-    <keep-alive><yr-index></yr-index></keep-alive>
+    <yr-index></yr-index>
   </div>
 </template>
 
 <script>
-import Index from '@/components/index/Index'
 
+import Index from "@/components/index/Index";
 
 export default {
-  name: 'App',
+  name: "App",
 
-  components:{yrIndex:Index},
-  data(){
+  components: { yrIndex: Index },
+  data() {
     return {
-     
-    }
+ 
+    };
   },
-   mounted(){
- 
-   },
- 
-}
+
+};
 </script>
 
 <style>
@@ -34,7 +31,9 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 } */
-body{padding-right:0!important;}
+body {
+  padding-right: 0 !important;
+}
 html,
 body {
   height: 100%;

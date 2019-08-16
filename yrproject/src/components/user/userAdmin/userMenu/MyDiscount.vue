@@ -24,6 +24,9 @@
                 <el-button class="yrBtn">立即参与</el-button>
               </div>
             </div>
+            <div v-if="discountData.length!=0?false:true" class="noContent">
+               <img src="../../../../assets/noContent.png" alt="">
+            </div>
           </div>
         </el-row>
         <el-row class="pagination">

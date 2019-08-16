@@ -40,6 +40,8 @@ export const apiUrl = {
   apiWithdrawPre:"MoneyOut/withdrawPre",//36提现，预提交信息
  apiWithdrawAdd:"MoneyOut/withdrawAdd",//提现新增
  apiTransferOther:"Game/transferOther",//51资金平台互转
+ apiUploadAvator:"CurrUser/uploadAvatar",//27上传头像
+ apiUploadBaseAvator:"CurrUser/uploadBase64Avatar"//28base64
 }
 // export const apiLogin = p => post('Public/login', p);
 

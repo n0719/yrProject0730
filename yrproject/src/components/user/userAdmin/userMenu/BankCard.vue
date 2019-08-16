@@ -18,24 +18,6 @@
                 </el-row>
 
                 <el-row style="padding: 0 80px;" class="raTable">
-                  <!-- <el-table
-                    :data="tableData"
-                    stripe
-                    style="width: 100%"
-                    class="recoredTable"
-                    ref="test"
-                     @row-click="openDetails"
-                  >
-                    <el-table-column width="40" :key="Math.random()"  v-if="this.systemType1 == 'OPORE'" >
-                     <label class="my_protocol" v-if="checkShow1">
-                        <input class="input_agreement_protocol"  type="checkbox" v-model="checkBank" />
-                        <span ></span>
-                      </label>
-                    </el-table-column>
-                    <el-table-column prop="bankName" label="银行名称" width></el-table-column>
-                    <el-table-column prop="cardNum" label="卡号" width></el-table-column>
-                    <el-table-column prop="openInfor" label="开户信息"></el-table-column>
-                  </el-table>-->
                   <table border="0" cellspacing="0" cellpadding="0">
                     <thead>
                       <tr>
@@ -44,7 +26,7 @@
                         <td>开户信息</td>
                       </tr>
                     </thead>
-                    <tbody v-if="tableData.length!=0?true:false">
+                    <tbody>
                       <tr v-for="(item,index) in tableData" :key="index">
                         <td>
                           <el-checkbox v-show="checkShow1" @change="checkSel(index)"></el-checkbox>
@@ -54,8 +36,12 @@
                         <td>{{item.bank_address}}</td>
                       </tr>
                     </tbody>
-                    <div v-else style="padding:20px;color:#ff0000">暂无绑定的银行卡!</div>
+                   
+                    <!-- <div v-else class="noContent"></div> -->
                   </table>
+                   <div v-if="tableData.length!=0?false:true" class="noContent">
+                      <img src="../../../../assets/noContent.png" alt />
+                    </div>
                   <el-row class="xz">
                     <el-col :span="24" class="flex-box-column" v-if="!checkShow1">
                       <img src="../../../../assets/user/xinzeng.png" @click="xzBank" alt />
@@ -153,7 +139,7 @@ export default {
       checkList: ["选中且禁用", "复选框 A"],
       tableData: [],
       ruleForm: {
-        bank:"",
+        bank: "",
         real_name: "",
         selBank: "",
         bankNum: "",
@@ -230,14 +216,14 @@ export default {
     },
     addBank() {
       const t = this;
-       
+
       t.$refs["ruleForm"].validate(valid => {
         console.log(valid);
         if (valid == false) {
         } else {
           let address = this.selectedOptions.join("");
           this.post(this.apiUrl.apiBankAccountAdd, {
-            bank:this.ruleForm.bank,
+            bank: this.ruleForm.bank,
             bank_real_name: this.ruleForm.real_name,
             bank_card: this.ruleForm.bankNum,
             bank_address: address,
@@ -252,17 +238,16 @@ export default {
       this.post(this.apiUrl.apiBankAccountList, {}).then(res => {
         if (res.data != "") {
           this.tableData = res.data;
-          this.$store.commit("bankList",res.data)
+          this.$store.commit("bankList", res.data);
         }
       });
     },
     handleChange(value) {
       console.log(value);
     },
-    selBank(value){
-     this.ruleForm.bank=value;
-       console.log(value);
-       
+    selBank(value) {
+      this.ruleForm.bank = value;
+      console.log(value);
     }
   }
 };
@@ -297,7 +282,7 @@ export default {
   margin-top: 39px;
 }
 .bankTab .xz .el-col-24 {
-  height: 380px;
+  height: 180px;
 }
 .bankTab .xz .el-col-24 img {
   margin: 4px 15px;

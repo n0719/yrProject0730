@@ -34,6 +34,9 @@
                   </tr>
                 </tbody>
               </table>
+                 <div v-if="cashsweepData.length!=0?false:true" class="noContent">
+                      <img src="../../../../assets/noContent.png" alt />
+                    </div>
             </el-col>
             <el-col :span="8" class="yjgj" v-if="cashsweepData.length==0?false:true">
               <img :src="zjgjImg" @click="yjZjgj" alt />

@@ -49,7 +49,9 @@
             <el-table-column prop="win_amount" label="实际亏盈"></el-table-column>
             <el-table-column prop="bet_amount" label="投注金额"></el-table-column>
           </el-table>
-
+           <div class="noContent" v-if="teamTableData.length!=0?false:true">
+             <img src="../../../../assets/noContent.png" alt="">
+           </div>
           <!-- <div v-show="teamDataState">
               暂无相关记录
           </div>-->

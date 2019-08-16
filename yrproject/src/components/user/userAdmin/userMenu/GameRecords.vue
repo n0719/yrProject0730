@@ -22,7 +22,12 @@
           </el-select>
           <span class="common-color">状态：</span>
           <el-select v-model="chooseStatus" placeholder="请选择">
-            <el-option v-for="item in gameStatus" :key="item.id" :label="item.desc" :value="item.id"></el-option>
+            <el-option
+              v-for="item in gameStatus"
+              :key="item.id"
+              :label="item.desc"
+              :value="item.id"
+            ></el-option>
           </el-select>
           <span class="common-color">时间：</span>
           <el-date-picker
@@ -41,7 +46,13 @@
           <el-button type="primary" class="btnColor" @click="searchRecords">查询</el-button>
 
           <el-row>
-            <el-table :data="tableData" stripe style="width: 100%" class="recoredTable" empty-text="暂无记录">
+            <el-table
+              :data="tableData"
+              stripe
+              style="width: 100%"
+              class="recoredTable"
+              empty-text="暂无记录"
+            >
               <el-table-column prop="record_id" label="序号" width></el-table-column>
               <el-table-column prop="game_type.desc" label="游戏名称" width></el-table-column>
               <el-table-column prop="bet_amount" label="投注金额"></el-table-column>
@@ -49,11 +60,21 @@
               <el-table-column prop="real_bet_amount" label="有效投注"></el-table-column>
               <el-table-column prop="bet_time" label="游戏时间"></el-table-column>
             </el-table>
+            <div v-if="tableData.length!=0?false:true" class="noContent">
+              <img src="../../../../assets/noContent.png" alt />
+            </div>
           </el-row>
         </el-row>
 
         <el-row class="text-center">
-          <el-pagination background layout="prev, pager, next" :current-page.sync="recordsPage" :total="recordsTotal" :page-size="pageSize" @current-change="handleCurrentChange"></el-pagination>
+          <el-pagination
+            background
+            layout="prev, pager, next"
+            :current-page.sync="recordsPage"
+            :total="recordsTotal"
+            :page-size="pageSize"
+            @current-change="handleCurrentChange"
+          ></el-pagination>
         </el-row>
       </el-row>
     </div>
@@ -69,12 +90,12 @@ export default {
       gameType: [],
       gamePlatform: [],
       gameStatus: [],
-      chooseType:'',
-      choosePlatform:'',
-      chooseStatus:'',
-      recordsPage:1,
-      pageSize:10,
-      recordsTotal:0,
+      chooseType: "",
+      choosePlatform: "",
+      chooseStatus: "",
+      recordsPage: 1,
+      pageSize: 10,
+      recordsTotal: 0
     };
   },
   mounted() {
@@ -84,35 +105,35 @@ export default {
     this.getRecords();
   },
   methods: {
-    searchRecords(){
+    searchRecords() {
       this.recordsPage = 1;
       this.getRecords();
     },
-    getRecords(){
+    getRecords() {
       var params = {
-          platform: this.choosePlatform,
-          game_type:this.chooseType,
-          game_status:this.chooseStatus,
-          page: this.recordsPage,
-      }
-      if(this.dataStart&&this.dataStart!=''){
+        platform: this.choosePlatform,
+        game_type: this.chooseType,
+        game_status: this.chooseStatus,
+        page: this.recordsPage
+      };
+      if (this.dataStart && this.dataStart != "") {
         params.start = this.dataStart;
       }
-      if(this.dataEnd&&this.dataEnd!=''){
+      if (this.dataEnd && this.dataEnd != "") {
         params.end = this.dataEnd;
       }
       this.post(this.apiUrl.apiGameRecordList, params).then(response => {
-          if (response.code == 0) {
-            this.tableData = response.data.items;
-            this.recordsTotal = response.data.total;
-          } else {
-            this.tableData = [];
-          }
-        });
+        if (response.code == 0) {
+          this.tableData = response.data.items;
+          this.recordsTotal = response.data.total;
+        } else {
+          this.tableData = [];
+        }
+      });
     },
-    handleCurrentChange(curPage){
+    handleCurrentChange(curPage) {
       this.recordsPage = curPage;
-      this.getRecords()
+      this.getRecords();
     }
   }
 };
