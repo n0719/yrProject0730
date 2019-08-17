@@ -241,11 +241,11 @@ export default {
     //获取验证码图片
     getCodeImg() {
       if (this.maskShow == 0) {
-        this.loginImgCode = "http://a1.w20.vip/verifyImg?" + Math.random();
+        this.loginImgCode = "http://a1.w20.vip/Api/verifyImg?" + Math.random();
       } else if (this.maskShow == 1) {
-        this.regImgCode = "http://a1.w20.vip/verifyImg?" + Math.random();
+        this.regImgCode = "http://a1.w20.vip/Api/verifyImg?" + Math.random();
       } else {
-        this.forgetImgCode = "http://a1.w20.vip/verifyImg?" + Math.random();
+        this.forgetImgCode = "http://a1.w20.vip/Api/verifyImg?" + Math.random();
       }
     },
 

@@ -5,7 +5,7 @@ export const apiUrl = {
   apiVerAccount:'Public/verifyAccount', //3.找回密码-验证账号
   apiSendVerifyCode:'Public/sendVerifyCode', //5.找回密码-发送验证码
   apiRetrievePassword:'Public/retrievePassword', //4.找回密码-修改新密码
-  apiVerifyImg:'verifyImg',
+  apiVerifyImg:'/Api/verifyImg',
   apiSelfUser:"CurrUser/updateInfo",//跟新用户信息
   apiGetInfo:"CurrUser/info",//获取用户信息
   apiChangePassword:"CurrUser/changePassword",//更改用户密码

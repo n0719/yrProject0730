@@ -423,7 +423,7 @@ export default {
       });
     },
     getCodeImg() {
-      this.imgYZ = "http://a1.w20.vip/verifyImg?" + Math.random();
+      this.imgYZ = "http://a1.w20.vip/Api/verifyImg?" + Math.random();
     },
     yzEmailClick() {
       var yz = this.ruleForm.uAddress;
