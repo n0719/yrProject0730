@@ -36,6 +36,9 @@
             <el-table-column prop="after_money" label="余额"></el-table-column>
             <el-table-column prop="note" label="备注"></el-table-column>
           </el-table>
+          <div class="noContent" v-if="tableData.length!=0?false:true">
+            <img src="../../../../assets/noContent.png" alt="">
+          </div>
         </el-row>
         <!-- 分页 -->
         <el-row class="text-center">

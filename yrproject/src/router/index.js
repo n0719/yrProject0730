@@ -52,10 +52,6 @@ export default new Router({
       components: {
         abc: UserContent
       },
-      meta: {
-        requireAuth: true,
-        keepAlive: true // 用户列表需要被缓存
-    },
       // redirect:"/myPay",
       children: [
         {
@@ -64,10 +60,6 @@ export default new Router({
           components: {
             abc: MyPay
           },
-          meta: {
-            requireAuth: true,
-            keepAlive: true // 用户列表需要被缓存
-        }
         },
         {
           path: "/bankCard",
@@ -75,21 +67,14 @@ export default new Router({
           components: {
             abc: BankCard
           },
-          meta: {
-            requireAuth: true,
-            keepAlive: true // 用户列表需要被缓存
-        }
+
         },
         {
           path: "/edTransform",
           name: "edTransform",
           components: {
             abc: EdTransform
-          },
-          meta: {
-            requireAuth: true,
-            keepAlive: true // 用户列表需要被缓存
-        }
+          }
         },
         {
           path: "/gameRecords",
@@ -97,10 +82,7 @@ export default new Router({
           components: {
             abc: GameRecords
           },
-          meta: {
-            requireAuth: true,
-            keepAlive: true // 用户列表需要被缓存
-        }
+
         },
         {
           path: "/moneyDealings",
@@ -108,10 +90,7 @@ export default new Router({
           components: {
             abc: MoneyDealings
           },
-          meta: {
-            requireAuth: true,
-            keepAlive: true // 用户列表需要被缓存
-        }
+
         },
         {
           path: "/returnHome",
@@ -119,10 +98,7 @@ export default new Router({
           components: {
             abc: ReturnHome
           },
-          meta: {
-            requireAuth: true,
-            keepAlive: true // 用户列表需要被缓存
-        }
+
         },
         {
           path: "/subordAdmin",
@@ -130,10 +106,7 @@ export default new Router({
           components: {
             abc: SubordAdmin
           },
-          meta: {
-            requireAuth: true,
-            keepAlive: true // 用户列表需要被缓存
-        }
+
         },
         {
           path: "/teamOverview",
@@ -141,10 +114,7 @@ export default new Router({
           components: {
             abc: TeamOverview
           },
-          meta: {
-            requireAuth: true,
-            keepAlive: true // 用户列表需要被缓存
-        }
+
         },
         {
           path: "/webNotice",
@@ -152,10 +122,7 @@ export default new Router({
           components: {
             abc: WebNotice
           },
-          meta: {
-            requireAuth: true,
-            keepAlive: true // 用户列表需要被缓存
-        }
+
         },
         {
           path: "/mydiscount",
@@ -163,10 +130,7 @@ export default new Router({
           components: {
             abc: Mydiscount
           },
-          meta: {
-            requireAuth: true,
-            keepAlive: true // 用户列表需要被缓存
-        }
+
         },
         {
           path: "/recharge",
@@ -174,10 +138,7 @@ export default new Router({
           components: {
             abc: Recharge
           },   
-          meta: {
-            requireAuth: true,
-            keepAlive: true // 用户列表需要被缓存
-        }
+
         },
         {
           path: "/cashwithdrawal",
@@ -185,10 +146,7 @@ export default new Router({
           components: {
             abc: Cashwithdrawal
           },
-          meta: {
-            requireAuth: true,
-            keepAlive: true // 用户列表需要被缓存
-        }
+
         },
         {
           path: "/cashsweep",
@@ -196,10 +154,7 @@ export default new Router({
           components: {
             abc: Cashsweep
           },
-          meta: {
-            requireAuth: true,
-            keepAlive: true // 用户列表需要被缓存
-        }
+
         },
         {
           path: "/selfUser",
@@ -207,10 +162,7 @@ export default new Router({
           components: {
             abc: SelfUser
           },
-          meta: {
-            requireAuth: true,
-            keepAlive: true // 用户列表需要被缓存
-        }
+
         },
         {
           path: "/subordMems",
@@ -220,7 +172,7 @@ export default new Router({
           }
         },
       ],
-
+      redirect:"/myPay"
     },
     {
       path: "/userLeft",

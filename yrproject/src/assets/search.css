@@ -78,7 +78,7 @@
     border:none;
   }
   .contentMainContent .container{display:flex;flex-direction: column;}
-  .contentMainContent .contentMainBottom{flex:1;display:flex;justify-content: flex-end;align-items: flex-end;padding:0 37px 30px 0; }
+  .contentMainContent .contentMainBottom{flex:1;display:flex;justify-content: flex-end;align-items: center;;padding:0 37px 30px 0; }
   .contentMainBottom .el-button.is-round{padding:6px 15px;font-size:12px;background:#E6CF68;color:#836426;border:none;}
   .contentMainBottom p{text-align: right;}
   .contentMainBottom p:last-child{letter-spacing: 2px;}

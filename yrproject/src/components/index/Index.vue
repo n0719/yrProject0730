@@ -6,7 +6,6 @@
     background-size: 100% 100%;
     background-repeat: no-repeat;"
   >
- 
     <div class="indexTop">
       <div class="topNav">
         <div class="logo">
@@ -47,10 +46,11 @@
             <!-- <a >
               {{this.$store.state.uname}}
             
-            </a> -->
+            </a>-->
           </li>
           <li v-else class="flex-box">
-            <a @click="userModel">会员中心 </a><span @click="closeUser">[退出]</span>
+            <a @click="userModel">会员中心</a>
+            <span @click="closeUser">[退出]</span>
           </li>
         </ul>
       </div>
@@ -68,12 +68,18 @@
         <yr-user v-if="userShow"></yr-user>
     </div>
     <div class="indexBottom"></div>
-    <el-dialog title="" :visible.sync="dialogVisible" width="500px" @click="dialogVisible = false" class="indexDialog">
-      <img :src="dialogContent.image" alt="">
+    <el-dialog
+      title
+      :visible.sync="dialogVisible"
+      width="500px"
+      @click="dialogVisible = false"
+      class="indexDialog"
+    >
+      <img :src="dialogContent.image" alt />
       <div class="dialogBottom">
         <div class="logContent mg-b-10">{{dialogContent.content}}</div>
-      <div class="text-right mg-b-10">{{dialogContent.author}}</div>
-      <div class="text-right">{{dialogContent.created_at}}</div>
+        <div class="text-right mg-b-10">{{dialogContent.author}}</div>
+        <div class="text-right">{{dialogContent.created_at}}</div>
       </div>
     </el-dialog>
   </div>
@@ -104,7 +110,7 @@ export default {
   data() {
     return {
       active: -1,
-      activeName:'首页',
+      activeName: "首页",
       loginSHow: "",
       userShow: "",
       indexBg: require("../../assets/index/indexBg.png"),
@@ -112,20 +118,20 @@ export default {
       activeIndex2: "1",
       mainShow: true,
       dialogVisible: false,
-      dialogContent:{},
+      dialogContent: {},
       navA: [
         {
-          id:"首页",
-          name:"首页"
+          id: "首页",
+          name: "首页"
         },
         {
-          id:"优惠活动",
-          name:"优惠活动"
+          id: "优惠活动",
+          name: "优惠活动"
         },
         {
-          id:"在线客服",
-          name:"在线客服"
-        },
+          id: "在线客服",
+          name: "在线客服"
+        }
       ]
     };
   },
@@ -135,7 +141,10 @@ export default {
     this.getDataDictionaries();
     this.getCommon();
     this.getGeme();
-    if (localStorage.getItem("token") != null) {
+    let isLogin = localStorage.getItem("token");
+
+    if (isLogin) {
+      this.getInfo();
     }
   },
   methods: {
@@ -165,36 +174,39 @@ export default {
       this.noScroll();
     },
     userModel() {
-  
       var that = this;
-
-      if (localStorage.getItem("token") != null) {
-        this.$store.commit("umodelShow", true);
-        this.userShow = !this.userShow;
-        this.loginSHow = false;
-        this.noScroll();
-    
-      } else {
-        this.$confirm("用户登录需登录后才可以访问", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        })
-          .then(() => {
-            that.$store.commit("lmodelShow", true);
-            that.userShow = false;
-            that.loginSHow = !this.loginShow;
-            that.$router.push({
+      this.getInfo();
+      this.$router.push({
               path: "/myPay"
             });
-          })
-          .catch(() => {});
-      }
+      this.$store.commit("umodelShow", true);
+      this.userShow = !this.userShow;
+      this.loginSHow = false;
+      this.noScroll();
+      // let isLogin = localStorage.getItem("token");
+      // if (isLogin) {
+
+      // } else {
+      //   this.$confirm("用户登录需登录后才可以访问", "提示", {
+      //     confirmButtonText: "确定",
+      //     cancelButtonText: "取消",
+      //     type: "warning"
+      //   })
+      //     .then(() => {
+      //       that.$store.commit("lmodelShow", true);
+      //       that.userShow = false;
+      //       that.loginSHow = !this.loginShow;
+      //       that.$router.push({
+      //         path: "/myPay"
+      //       });
+      //     })
+      //     .catch(() => {});
+      // }
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
-    viewToggle(index,name) {
+    viewToggle(index, name) {
       this.active = index;
       this.activeName = name;
     },
@@ -203,15 +215,23 @@ export default {
         .then(() => {
           this.$store.commit("uname", "游客");
           localStorage.removeItem("token");
-         
         })
         .catch(() => {});
     },
-      getDataDictionaries() {
+    getDataDictionaries() {
       //获取数据字典
       this.post(this.apiUrl.apiDataDataDictionaries).then(res => {
         var data = res.data;
         this.$store.commit("dictionariesData", data);
+      });
+    },
+    getInfo() {
+      //获取个人数据信息
+      var that = this;
+      this.post(this.apiUrl.apiGetInfo).then(res => {
+        var data = res.data;
+        // console.log(data)
+        this.$store.commit("infoData", data);
       });
     },
     getCommon() {
@@ -234,14 +254,14 @@ export default {
                name:gameName[i].name
              }            
              that.navA.splice(navInit++,0,item)
+            }
           }
-         }
-          if(res.data.dialog){
+          if (res.data.dialog) {
             that.dialogVisible = true;
             that.dialogContent = res.data.dialog;
           }
         }
-      });
+      })
     },
     getGeme() {
       //获取单线游戏列表
@@ -254,7 +274,6 @@ export default {
       });
     }
   },
-
   watch: {
     umodelShow(newName, oldName) {
       if (oldName == true) {
@@ -284,7 +303,7 @@ export default {
     yrEgames: Egames,
     yrExports: Exports,
     yrPoker: Poker,
-    yrActivity:Activity
+    yrActivity: Activity
   }
 };
 </script>
@@ -326,8 +345,8 @@ export default {
   border: none;
 }
 .indexLogin {
-    cursor: pointer;
-    /* flex: 1;
+  cursor: pointer;
+  /* flex: 1;
     display: flex;
     justify-content: flex-end; */
 }
@@ -366,20 +385,20 @@ export default {
   font-size: 12px;
   color: #999;
 }
-.indexDialog .el-dialog__body{
+.indexDialog .el-dialog__body {
   color: #836426;
   padding: 0;
 }
-.indexDialog .dialogBottom{
+.indexDialog .dialogBottom {
   padding: 20px;
 }
-.indexDialog img{
+.indexDialog img {
   width: 100%;
 }
-.indexDialog .el-dialog__headerbtn{
+.indexDialog .el-dialog__headerbtn {
   top: 1px;
-    right: 7px;
-    font-size: 25px;
+  right: 7px;
+  font-size: 25px;
 }
 @media screen and (max-width: 1450px) {
   .indexTop .topNav {

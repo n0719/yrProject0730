@@ -9,7 +9,10 @@
           <el-row v-if="moneyState">
             <el-row class="getMOney">
               <!-- <el-col :span="22">用户名：Ck chen</el-col> -->
-              <el-col :span="22">账户余额{{this.$store.state.infoData.money}}</el-col>
+              <el-col :span="22">
+                账户余额
+                <span style="font-size:30px;padding-left:5px;">{{this.$store.state.infoData.money}}</span>
+              </el-col>
               <el-col :span="22">
                 <el-button class="getMoneyBtn" @click="getMoney">取款</el-button>
               </el-col>
@@ -43,6 +46,9 @@
                       </tr>
                     </tbody>
                   </table>
+                  <div v-if="tableData.length!=0?false:true" class="noContent">
+                    <img src="../../../../assets/noContent.png" alt />
+                  </div>
                 </el-col>
                 <el-col
                   :span="8"
@@ -264,7 +270,7 @@ export default {
         }
       ],
       moneyState: true,
-      getMoneyData: [],
+      getMoneyData: {},
       cashForm: {
         id: "",
         selectBank: "",
@@ -308,7 +314,14 @@ export default {
   },
   methods: {
     getMoney() {
-      this.moneyState = false;
+      if (this.$store.state.infoData.money > 100) {
+        this.moneyState = false;
+      } else {
+        this.$alert("您的账户余额不足，无法发起取款次业务，谢谢", "提示", {
+          confirmButtonText: "确定",
+          callback: action => {}
+        });
+      }
     },
     continueNoney() {
       var maxDay = this.getMoneyData.withraw_times; //三天内最大次数限制
@@ -318,8 +331,9 @@ export default {
       //  var b=this.getMoneyData.withraw_max;//每次最大数量
       var audit = this.getMoneyData.audit; //稽核
       var withraw_play_lacking_fee = this.getMoneyData.withraw_play_lacking_fee; //稽核打码量不足的手续费
-
-      if (this.$store.state.infoData.phone != null) {
+    console.log(this.$store.state.infoData.phone);
+    
+      if (this.$store.state.infoData.phone == "") {
         this.$confirm("您还未绑定手机号,暂时无法操作此出款功能", "提示", {})
           .then(() => {
             this.$router.push({
@@ -671,7 +685,6 @@ export default {
 .banktab .yjgj img {
   margin-bottom: 10px;
 }
-
 </style>
 
 

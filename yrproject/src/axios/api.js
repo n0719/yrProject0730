@@ -42,6 +42,8 @@ export const apiUrl = {
  apiTransferOther:"Game/transferOther",//51资金平台互转
  apiLineStatus:"Game/lineStatus",//50. 拉取线路状态
 
+ apiUploadAvator:"CurrUser/uploadAvatar",//27上传头像
+ apiUploadBaseAvator:"CurrUser/uploadBase64Avatar"//28base64
 }
 // export const apiLogin = p => post('Public/login', p);
 

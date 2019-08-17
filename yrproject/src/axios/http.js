@@ -5,9 +5,9 @@ import axios from 'axios'; // 引入axios
 import QS from 'qs'; // 引入qs模块，用来序列化post类型的数据，后面会提到
 // vant的toast提示框组件，大家可根据自己的ui组件更改。
 import { Message } from 'element-ui';
-
-import store from '../store/index';
 import httpInit from './httpInit';
+import { showLoading, hideLoading } from '../assets/loading';
+import store from '../store/index'
 import { log } from 'util';
 
 /*aes加密接口 返回url*/
@@ -34,7 +34,7 @@ axios.defaults.timeout = 10000;
 
 // post请求头
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-axios.defaults.withCredentials = true; 
+axios.defaults.withCredentials = true;
 
 // 请求拦截器
 axios.interceptors.request.use(
@@ -46,6 +46,8 @@ axios.interceptors.request.use(
     // 即使本地存在token，也有可能token是过期的，所以在响应拦截器中要对返回状态进行判断
     const token = localStorage.getItem("token");
     token && (config.headers.Authorization = 'Bearer ' + token);
+
+    showLoading();
     return config;
   },
   error => {
@@ -58,13 +60,16 @@ axios.interceptors.response.use(data => {
   if (code == 1001) { //未登录
     // this.$store.commit("lmodelShow", true);
     Message.error('未登录')
-  }else if(code == 1003){
-    Message.error(Object.values(data.data.message)[0]); 
-  }else if(code == 1){
-    Message.error(data.data.message); 
+  } else if (code == 1003) {
+    Message.error(Object.values(data.data.message)[0]);
+  } else if (code == 1) {
+    Message.error(data.data.message);
   }
+  hideLoading();
   return Promise.resolve(data);
 }, error => {
+  
+  hideLoading();
   Message.error({
     message: '网络不给力,请稍后再试'
   })

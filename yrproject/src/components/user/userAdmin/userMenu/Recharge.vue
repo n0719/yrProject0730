@@ -319,27 +319,30 @@ export default {
   methods: {
     getBankList() {
       this.post(this.apiUrl.apiPayments, {}).then(res => {
-        this.banks = res.data.banks;
-        this.third_pay = res.data.third_pay;
-
-        this.qr_code = res.data.qr_code;
+        console.log(res);
         
+     
+          this.banks = res.data.banks;
+          this.third_pay = res.data.third_pay;
 
-        if (this.qr_code.length != 0) {
-          this.smTit = "扫码支付";
-        } else {
-          this.smTit = "";
-        }
-        if (this.banks.length == 0) {
-          this.bankTit = "";
-        } else {
-          this.bankTit = "银行卡充值";
-        }
+          this.qr_code = res.data.qr_code;
 
-        this.third_pay = res.data.third_pay[0];
-        this.bankLabel = this.banks;
-        this.onlineLabel = this.third_pay.list;
-        this.bankPayLabel = this.qr_code;
+          if (this.qr_code.length != 0) {
+            this.smTit = "扫码支付";
+          } else {
+            this.smTit = "";
+          }
+          if (this.banks.length == 0) {
+            this.bankTit = "";
+          } else {
+            this.bankTit = "银行卡充值";
+          }
+
+          this.third_pay = res.data.third_pay[0];
+          this.bankLabel = this.banks;
+          this.onlineLabel = this.third_pay.list;
+          this.bankPayLabel = this.qr_code;
+      
       });
     },
     bankSubmit() {
@@ -389,7 +392,6 @@ export default {
           let code = this.onlineLabelForm.code;
           let money = this.onlineLabelForm.money;
 
-   
           this.post(this.apiUrl.apiThirdPaymentSubmit, {
             id: id,
             code: code,

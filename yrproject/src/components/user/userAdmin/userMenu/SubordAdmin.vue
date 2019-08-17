@@ -24,6 +24,9 @@
             <el-table-column prop="child_info_count" label="下级总数"></el-table-column>
             <el-table-column prop="created_at" label="创建时间"></el-table-column>
           </el-table>
+            <div class="noContent" v-if="tableData.length!=0?false:true">
+             <img src="../../../../assets/noContent.png" alt="">
+           </div>
           <el-row class="text-center">
           <el-pagination background layout="prev, pager, next" :current-page.sync="recordsPage" :total="recordsTotal" :page-size="pageSize" @current-change="handleCurrentChange"></el-pagination>
         </el-row>
@@ -49,6 +52,8 @@ export default {
   },
   mounted() {
     this.getRecords();
+    console.log(this.tableData);
+    
   },
   methods: {
     searchSubord(){
@@ -120,6 +125,7 @@ export default {
   width: auto;
 }
 .subordAdmin .el-table__header , .subordAdmin .el-table__body{width:100%!important;}
+.contentMainTable{min-height:500px;}
 </style>
 
 

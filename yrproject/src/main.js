@@ -11,6 +11,9 @@ import VueAxios from 'vue-axios'
 import "element-ui/lib/theme-chalk/index.css"
 import { get, post } from "@/axios/http";
 import { apiUrl } from "@/axios/api";
+
+import Clipboard from 'clipboard'; //复制
+Vue.prototype.Clipboard=Clipboard;
 //
 Vue.prototype.get = get
 Vue.prototype.post = post
@@ -37,7 +40,7 @@ Vue.prototype.canScroll = function () {
 }
 Vue.use("comfirm")
 router.beforeEach((to, from, next) => {
-  //我在这里模仿了一个获取用户信息的方法
+
   let isLogin = localStorage.getItem('token');
 
 
@@ -46,7 +49,7 @@ router.beforeEach((to, from, next) => {
     next()
   } else {
     //如果用户token不存在则跳转到login页面
-    if (to.path === '/webNotice'||to.path==="/") {
+    if (to.path === '/webNotice'||to.path==="/") {                                              
       next()
     } else {
       if (store.state.lmodelShow == true) {
