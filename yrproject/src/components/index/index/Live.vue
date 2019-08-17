@@ -1,7 +1,6 @@
 <template>
   <!-- 真人视讯 -->
-  <div class="liveBox" v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-text="加载中" element-loading-background="rgba(0, 0, 0, 0.8)">
+  <div class="liveBox">
     <img :src="list.image" alt="" class="topImg">
     <div class="container">
       <el-row class="flex-box mg-b-20">
@@ -67,8 +66,6 @@ export default {
       gameData:'',
       gameName:'',
       gameLineId:'',
-      fullscreenLoading:false,
-      gameItemStatus:true
     };
   },
   mounted() {
@@ -89,9 +86,6 @@ export default {
     },
     intoGame(item) {    
       this.gameLineId = item.game_line_id;
-      this.getGameStatus()
-      if(this.gameItemStatus){
-          this.fullscreenLoading = true;
         this.post(this.apiUrl.apiGamePlay, {
           line_id: this.gameLineId,
           device: 1,
@@ -100,13 +94,8 @@ export default {
           if (res.code == 0) {
             this.clientUrl = res.data.client_url;
             this.getGameBalance();
-          } else {
-            this.fullscreenLoading = false;
           }
         });
-      }else{
-        this.$message.error("线路维护中");
-      }
     },
     getGameBalance(){
       this.post(this.apiUrl.apiGameBalances, {
@@ -119,7 +108,6 @@ export default {
           this.accountBalance = res.data[0].balance;
         }
       });
-       this.fullscreenLoading = false;
     },
     transferIn(){
       if(this.transferNum == ""||this.transferNum==0){
@@ -135,19 +123,6 @@ export default {
           }
         }); 
       }
-    }, 
-    getGameStatus(){
-      this.post(this.apiUrl.apiLineStatus, {
-          game_line_id: this.gameLineId,
-        }).then(res => {
-          if (res.code == 0) {
-            if(res.data[0].line_maintenance==1){
-              this.gameItemStatus =  false;
-            }else{
-              this.gameItemStatus =  true;
-            }
-          }
-      });
     },
     goIn(){
       this.dialogFormVisible = false;
