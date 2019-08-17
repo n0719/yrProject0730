@@ -100,7 +100,10 @@
     },
     cashsweepData(state,cashsweepData){
         state.cashsweepData=cashsweepData//游戏
-    }
+    },
+    apiUrl(state, apiUrl) {
+        state.apiUrl = apiUrl;
+    },
     // lowerLevel(state,lowerLevel){
     //     state.lowerLevel =lowerLevel
     // },

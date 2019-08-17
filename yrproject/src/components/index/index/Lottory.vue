@@ -71,7 +71,8 @@ export default {
       gameData: "",
       gameName: "",
       gameLineId: "",
-      fullscreenLoading: false
+      fullscreenLoading: false,
+      gameItemStatus:true
     };
   },
   mounted() {
@@ -93,9 +94,8 @@ export default {
     },
     intoGame(item) {
       this.gameLineId = item.game_line_id;
-      if (item.line_maintenance == 1) {
-        this.$message.error("线路维护中");
-      } else {
+      this.getGameStatus()
+      if(this.gameItemStatus){
          this.fullscreenLoading = true;
         this.post(this.apiUrl.apiGamePlay, {
           line_id: this.gameLineId,
@@ -108,6 +108,8 @@ export default {
             this.fullscreenLoading = false;
           }
         });
+      }else{
+        this.$message.error("线路维护中");
       }
     },
     getGameBalance() {
@@ -137,6 +139,19 @@ export default {
           }
         });
       }
+    }, 
+    getGameStatus(){
+      this.post(this.apiUrl.apiLineStatus, {
+          game_line_id: this.gameLineId,
+        }).then(res => {
+          if (res.code == 0) {
+            if(res.data[0].line_maintenance==1){
+              this.gameItemStatus =  false;
+            }else{
+              this.gameItemStatus =  true;
+            }
+          }
+      });
     },
     goIn() {
       this.dialogFormVisible = false;

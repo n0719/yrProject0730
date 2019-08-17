@@ -6,8 +6,18 @@ import QS from 'qs'; // 引入qs模块，用来序列化post类型的数据，�
 // vant的toast提示框组件，大家可根据自己的ui组件更改。
 import { Message } from 'element-ui';
 
-import store from '../store/index'
+import store from '../store/index';
+import httpInit from './httpInit';
 import { log } from 'util';
+
+/*aes加密接口 返回url*/
+var httpUrl = httpInit.initHttp();
+var baseURL = '';
+httpUrl.then((res) => {
+  baseURL = res;
+}, (err) => {
+  console.log(err)
+})
 
 // 环境的切换
 // if (process.env.NODE_ENV == 'development') {    

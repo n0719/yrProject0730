@@ -59,9 +59,9 @@
         <yr-main v-if="active==0?true:false"></yr-main>
         <yr-lottory v-if="activeName==1?true:false" :gameId="activeName"></yr-lottory>        
         <yr-live v-if="activeName==2?true:false" :gameId="activeName"></yr-live>
+        <yr-poker v-if="activeName==3?true:false"></yr-poker>
         <yr-egames v-if="activeName==4?true:false" :gameId="activeName"></yr-egames>
-        <yr-exports v-if="activeName=='体育游戏'?true:false" :gameId="activeName"></yr-exports>
-        <yr-poker v-if="activeName=='棋牌游戏'?true:false"></yr-poker>
+        <yr-exports v-if="activeName==5?true:false" :gameId="activeName"></yr-exports>
         <yr-activity v-if="activeName=='优惠活动'?true:false"></yr-activity>
         <yr-service v-if="activeName=='在线客服'?true:false"></yr-service>
         <yr-login v-if="loginSHow"></yr-login>
@@ -227,7 +227,7 @@ export default {
           this.$store.commit("gameList", data.homeGame.lines);
           var gameName = res.data.homeGame.lines;
           var navInit = 1;
-         if(gameName.length>0){
+         if(gameName&&gameName.length>0){
             for(var i = 0;i<gameName.length;i++){
              var item = {
                id:gameName[i].id,

@@ -1,8 +1,12 @@
 <template>
   <!-- 体育游戏 -->
-  <div class="exportsBox" v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-text="加载中" element-loading-background="rgba(0, 0, 0, 0.8)">
-    <img :src="list.image" alt="" class="topImg">
+  <div
+    class="exportsBox"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-text="加载中"
+    element-loading-background="rgba(0, 0, 0, 0.8)"
+  >
+    <img :src="list.image" alt class="topImg" />
     <div class="container">
       <el-row class="flex-box mg-b-20">
         <div class="noticeTitle">
@@ -21,21 +25,20 @@
       </el-row>
       <el-row class="middleBox" type="flex" justify="space-between">
         <el-col :span="7" v-for="item in list.child" :key="item.game_line_id" class="itemGame">
-                <img :src="item.h5_image" alt class="itemImg" />
-                <div class="itemTitle font-bold">
-                    <h2>{{item.display_name}}</h2>
-                    <div class="locked">进入游戏</div>
-            </div>
+          <img :src="item.h5_image" alt class="itemImg" />
+          <div class="itemTitle font-bold">
+            <h2>{{item.display_name}}</h2>
+            <div class="locked" @click="intoGame(item)">进入游戏</div>
+          </div>
         </el-col>
-        
       </el-row>
     </div>
-     <el-dialog title="额度转换" :visible.sync="dialogFormVisible" width="450px" center>
+    <el-dialog title="额度转换" :visible.sync="dialogFormVisible" width="450px" center>
       <el-form>
         <el-form-item :label="gameName+'余额：'" :label-width="formLabelWidth">
           <el-input v-model="gameBalance" readonly></el-input>
         </el-form-item>
-         <el-form-item label="主账号余额：" :label-width="formLabelWidth">
+        <el-form-item label="主账号余额：" :label-width="formLabelWidth">
           <el-input v-model="accountBalance" readonly></el-input>
         </el-form-item>
         <el-form-item :label="'转入'+gameName+'：'" :label-width="formLabelWidth">
@@ -43,8 +46,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button  @click="transferIn">转换并进入</el-button>
-        <el-button  @click="goIn">直接进入</el-button>
+        <el-button @click="transferIn">转换并进入</el-button>
+        <el-button @click="goIn">直接进入</el-button>
       </div>
     </el-dialog>
   </div>
@@ -53,55 +56,62 @@
 import { mapState } from "vuex";
 export default {
   computed: {
-    ...mapState(["gameList","noticeList"])
+    ...mapState(["gameList", "noticeList"])
   },
+  props: ["gameId"], 
   data() {
     return {
-        list:[],
+      list: [],
       clientUrl: "",
       dialogFormVisible: false,
-      formLabelWidth: '140px',
-      gameBalance:'',
-      accountBalance:'',
-      transferNum:'',
-      gameData:'',
-      gameName:'',
-      gameLineId:'',
-      fullscreenLoading:false
+      formLabelWidth: "140px",
+      gameBalance: "",
+      accountBalance: "",
+      transferNum: "",
+      gameData: "",
+      gameName: "",
+      gameLineId: "",
+      fullscreenLoading: false,
+      gameItemStatus: true
     };
   },
   mounted() {
-    if (this.gameList!= "") {
-         for(var i = 0;i<this.gameList.length;i++){
-          if(this.gameList[i].id==3){
-            this.list = this.gameList[i];
-          }         
-        } 
+    if (this.gameList != "") {
+      for (var i = 0; i < this.gameList.length; i++) {
+        if (this.gameList[i].id == this.gameId) {
+          this.list = this.gameList[i];
+        }
+      }
     }
   },
   methods: {
-    noticeDetail(){
+    noticeDetail() {
       this.$store.commit("umodelShow", true);
       this.$router.push({
         path: "/webNotice"
       });
     },
     intoGame(item) {
-      this.fullscreenLoading = true;
-      this.gameLineId = item.game_line_id
-      this.post(this.apiUrl.apiGamePlay, {
-        line_id: this.gameLineId,
-        device: 1
-      }).then(res => {
-        if (res.code == 0) {
-          this.clientUrl = res.data.client_url;
-          this.getGameBalance()
-        }else{
-          this.fullscreenLoading = false;
-        }
-      });
+      this.gameLineId = item.game_line_id;
+      this.getGameStatus();
+      if (this.gameItemStatus) {
+        this.fullscreenLoading = true;
+        this.post(this.apiUrl.apiGamePlay, {
+          line_id: this.gameLineId,
+          device: 1
+        }).then(res => {
+          if (res.code == 0) {
+            this.clientUrl = res.data.client_url;
+            this.getGameBalance();
+          } else {
+            this.fullscreenLoading = false;
+          }
+        });
+      } else {
+        this.$message.error("线路维护中");
+      }
     },
-    getGameBalance(){
+    getGameBalance() {
       this.post(this.apiUrl.apiGameBalances, {
         line_id: this.gameLineId
       }).then(res => {
@@ -112,24 +122,37 @@ export default {
           this.accountBalance = res.data[0].balance;
         }
       });
-       this.fullscreenLoading = false;
+      this.fullscreenLoading = false;
     },
-    transferIn(){
-      if(this.transferNum == ""||this.transferNum==0){
-         this.$message.error("请输入转入数量");
-      }else{
+    transferIn() {
+      if (this.transferNum == "" || this.transferNum == 0) {
+        this.$message.error("请输入转入数量");
+      } else {
         this.post(this.apiUrl.apiGameTransferOut, {
           line_id: this.gameLineId,
-          value:this.transferNum 
+          value: this.transferNum
         }).then(res => {
           if (res.code == 0) {
             this.dialogFormVisible = false;
             location.href = this.clientUrl;
           }
-        }); 
+        });
       }
+    }, 
+    getGameStatus(){
+      this.post(this.apiUrl.apiLineStatus, {
+          game_line_id: this.gameLineId,
+        }).then(res => {
+          if (res.code == 0) {
+            if(res.data[0].line_maintenance==1){
+              this.gameItemStatus =  false;
+            }else{
+              this.gameItemStatus =  true;
+            }
+          }
+      });
     },
-    goIn(){
+    goIn() {
       this.dialogFormVisible = false;
       location.href = this.clientUrl;
     }
@@ -172,68 +195,70 @@ export default {
   height: 100%;
   width: 100%;
 }
-.exportsBox .itemGame{
-    position: relative;
-    font-size: 0;
-    margin-bottom: 20px;
-    height: 260px;
+.exportsBox .itemGame {
+  position: relative;
+  font-size: 0;
+  margin-bottom: 20px;
+  height: 260px;
 }
-.exportsBox .itemGame::before{
-    content: '';
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.6);
-    opacity: 0;
-    transition: .5s;
+.exportsBox .itemGame::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transition: 0.5s;
 }
-.exportsBox .itemGame img{
-    width: 100%;
-    height: 100%;
+.exportsBox .itemGame img {
+  width: 100%;
+  height: 100%;
 }
-.exportsBox .itemTitle{
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    text-align: center;
-    transform: translate(-50%,-50%);
-    font-size: 16px;
-    color: #e6cf68;
-    transition: .5s;
-     opacity: 0;
+.exportsBox .itemTitle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  color: #e6cf68;
+  transition: 0.5s;
+  opacity: 0;
 }
-.exportsBox .locked{
-    background-color: #e6cf68;
-    color: #fff;
-    font-size: 14px;
-    padding: 10px 30px;
-    border-radius: 4px;
-    transition: .5s;
-    font-weight: bold;
-    margin-top: 10px;
-    cursor: pointer;
+.exportsBox .locked {
+  background-color: #e6cf68;
+  color: #fff;
+  font-size: 14px;
+  padding: 10px 30px;
+  border-radius: 4px;
+  transition: 0.5s;
+  font-weight: bold;
+  margin-top: 10px;
+  cursor: pointer;
 }
-.exportsBox .itemGame:hover .itemTitle,.exportsBox .itemGame:hover:before{
-    opacity: 1;
+.exportsBox .itemGame:hover .itemTitle,
+.exportsBox .itemGame:hover:before {
+  opacity: 1;
 }
 /*弹出框*/
-.exportsBox .el-dialog__title,.exportsBox .el-dialog__headerbtn .el-dialog__close{
+.exportsBox .el-dialog__title,
+.exportsBox .el-dialog__headerbtn .el-dialog__close {
   color: #836426;
 }
-.exportsBox .el-dialog .el-button{
-  background: #E6CF68;
+.exportsBox .el-dialog .el-button {
+  background: #e6cf68;
   color: #836426;
   width: 30%;
 }
-.exportsBox .el-form-item{
+.exportsBox .el-form-item {
   border-bottom: 1px solid #eee;
 }
-.exportsBox .el-input__inner{
+.exportsBox .el-input__inner {
   border: 0;
 }
-.exportsBox .el-form-item__label{
+.exportsBox .el-form-item__label {
   text-align: left;
 }
 </style>
