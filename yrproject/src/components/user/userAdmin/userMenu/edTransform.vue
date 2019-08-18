@@ -9,7 +9,7 @@
         <el-row class="contentMainTable">
           <div class="teamBalance">
             <el-row :gutter="10">
-              <el-col :md="3">
+              <el-col :md="2">
                 <el-row>
                   <el-col :span="24" v-for="(item,index) in titList" :key="index">
                     <div class="grid-content">
@@ -19,7 +19,7 @@
                   </el-col>
                 </el-row>
               </el-col>
-              <el-col :md="21">
+              <el-col :md="22">
                 <el-row>
                   <el-col :md="3" v-for="(item,index) in listData" :key="index">
                     <div class="grid-content">
@@ -149,6 +149,8 @@ export default {
   },
   mounted() {
     this.getProList();
+   
+    
   },
   methods: {
     onSubmit() {
@@ -180,6 +182,7 @@ export default {
           var listData = res.data;
           listData.shift();
           this.listData = listData;
+           console.log(this.listData);
           if (res.data.length - 1 > 8) {
             var n = Math.floor((res.data.length - 1) / 8);
             for (var i = 1; i <= n; i++) {

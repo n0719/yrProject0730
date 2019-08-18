@@ -5,17 +5,19 @@
         <el-tab-pane label="个人资料" name="first">
           <div class="first flex-box-center">
             <el-form ref="ruleForm" :model="ruleForm" label-width="100px" :rules="rules">
-              <el-upload
-                class="avatar-uploader flex-box-center"
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :show-file-list="false"
-                :on-success="handleAvatarSuccess"
-                :before-upload="beforeAvatarUpload"
-                accept="image/jpeg, image/gif, image/png, image/bmp"
-              >
-                <img v-if="imageUrlState" :src=" ruleForm.avatar"  class="avatar" />
-                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-              </el-upload>
+              <div class="user-header">
+                <input
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  @change="onchangeImgFun"
+                  class="header-upload-btn user-header-com"
+                />
+                <!-- <img alt :src="this.showImg" class="user-header-img user-header-com" v-if="imgShow" /> -->
+                <img alt :src="ruleForm.avatar" class="avatar" />
+                <!-- <p class="tip">(图片限制300kb) <span class="error">{{errorStr}}</span></p> -->
+              </div>
+
               <el-form-item label="用户名：" prop="uName">
                 <el-input v-model="ruleForm.uName" name="uName" aria-required placeholder="3-16个字符"></el-input>
               </el-form-item>
@@ -55,7 +57,7 @@
                 </el-form-item>
                 <el-form-item prop="uYz" v-else>
                   <el-input placeholder="请输入验证码" v-model="ruleForm.uYz"></el-input>
-                  <el-button class="yzBtn">输入验证码</el-button>
+                  <el-button class="yzBtn">确认</el-button>
                 </el-form-item>
               </el-row>
               <el-form-item label="手机：" prop="uTel" v-else>
@@ -197,7 +199,7 @@ export default {
   },
   mounted() {
     console.log(this.$store.state.infoData.avatar);
-    
+
     this.rules.uName[0].pattern = this.getReg.getReg(
       this.regRule.Public.login.username.validation
     );
@@ -238,6 +240,7 @@ export default {
   },
   data() {
     return {
+      imgStr: "",
       togYz: false,
       loginImgCode: "",
       imgYZ: "",
@@ -248,7 +251,7 @@ export default {
       num: 20,
       ruleForm: {
         //个人资料字段
-        avatar:"",
+        avatar: "",
         uName: "",
         nickName: "",
         fullName: "",
@@ -376,6 +379,47 @@ export default {
     };
   },
   methods: {
+    onchangeImgFun(e) {
+      var file = e.target.files[0];
+      // console.log(file)
+      // 获取图片的大小，做大小限制有用
+      let imgSize = file.size;
+      // console.log(imgSize)
+      var _this = this; // this指向问题，所以在外面先定义
+      // 比如上传头像限制5M大小，这里获取的大小单位是b
+      if (imgSize <= 1000 * 1024) {
+        // 合格
+        _this.errorStr = "";
+        console.log("大小合适");
+        // 开始渲染选择的图片
+        // 本地路径方法 1
+        // this.imgStr = window.URL.createObjectURL(e.target.files[0])
+        //  this.imgStr =e.target.files[0];
+        // console.log(e.target.files[0])// 获取当前文件的信息
+        //  this.dataURL=this.imgStr;
+        // base64方法 2
+        var reader = new FileReader();
+        reader.readAsDataURL(file); // 读出 base64
+        reader.onloadend = function() {
+          // 图片的 base64 格式, 可以直接当成 img 的 src 属性值
+          var dataURL = reader.result;
+          _this.ruleForm.avatar = dataURL;
+
+          _this
+            .post(_this.apiUrl.apiUploadBaseAvator, {
+              url: "http://bao-wang.oss-cn-hongkong.aliyuncs.com",
+              avatar: dataURL
+            })
+            .then(res => {
+              console.log(res);
+            });
+          // 下面逻辑处理
+        };
+      } else {
+        console.log("大小不合适");
+        _this.errorStr = "图片大小超出范围";
+      }
+    },
     yzTelClick() {
       var yz = this.ruleForm.uTel;
       var bb = this.getReg.getReg(
@@ -446,27 +490,25 @@ export default {
     },
     handleAvatarSuccess(res, file) {
       //  this.ruleForm.avatar =URL.createObjectURL(file.raw);
-       this.ruleForm.avatar=file.name;
-       console.log(file);
-       
+      // this.ruleForm.avatar = "user_icon/06654/" + file.name;
+      // console.log(file);
       // // this.imageUrl = "";
-  
     },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isGIF = file.type === "image/gif";
-      const isPNG = file.type === "image/png";
-      const isBMP = file.type === "image/bmp";
-      const isLt2M = file.size / 1024 / 1024 < 2;
+    // beforeAvatarUpload(file) {
+    //   const isJPG = file.type === "image/jpeg";
+    //   const isGIF = file.type === "image/gif";
+    //   const isPNG = file.type === "image/png";
+    //   const isBMP = file.type === "image/bmp";
+    //   const isLt2M = file.size / 1024 / 1024 < 2;
 
-      if (!isJPG && !isGIF && !isPNG && !isBMP) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
-      }
-      if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
-      }
-      return (isJPG || isBMP || isGIF || isPNG) && isLt2M;
-    },
+    //   if (!isJPG && !isGIF && !isPNG && !isBMP) {
+    //     this.$message.error("上传头像图片只能是 JPG 格式!");
+    //   }
+    //   if (!isLt2M) {
+    //     this.$message.error("上传头像图片大小不能超过 2MB!");
+    //   }
+    //   return (isJPG || isBMP || isGIF || isPNG) && isLt2M;
+    // },
     submitForm1() {
       const t = this;
 
@@ -474,27 +516,28 @@ export default {
 
       // if (valid == false) {
       // } else {
-      let avatar = t.ruleForm.avatar;
+      // let avatar = t.ruleForm.avatar;
       let uname = t.ruleForm.uName;
-      let nickname = t.ruleForm.nickname;
+      let nickname = t.ruleForm.nickName;
       let real_name = t.ruleForm.fullName;
-      let email = t.ruleForm.uAddress;
-      let birthday = t.ruleForm.uBirth;
+  
+      // let birthday = t.ruleForm.uBirth;
+      // console.log(avatar);
+
       this.post(this.apiUrl.apiSelfUser, {
-        avatar: avatar,
         uname: uname,
         nickname: nickname,
         real_name: real_name,
-        email: email,
-        birthday: birthday
+        phone:phone
+
       }).then(res => {
-        
-        if(res.code==0){
- this.$message("更新信息成功！");
+        if (res.code == 0) {
+          this.$message("更新信息成功！");
+          console.log(this.$store.state.infoData);
         }
-       
+
         try {
-          this.$refs["ruleForm"].resetFields();
+          // this.$refs["ruleForm"].resetFields();
         } catch (e) {}
       });
       // }
@@ -609,6 +652,11 @@ export default {
   width: 76px;
   height: 76px;
   display: block;
+  border:1px solid #ddd;
+  border-radius:5px;
+  margin-left:80px;
+  margin-bottom:30px;
+  margin-top:20px;
 }
 
 .selfUser .el-button:focus,
@@ -670,6 +718,39 @@ export default {
 .selfUser .second .el-form,
 .selfUser .third .el-form {
   margin-top: 100px;
+}
+.user-header {
+  position: relative;
+  display: inline-block;
+}
+
+.user-header-com {
+  width: 76px;
+  height: 76px;
+  display: inline-block;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+
+}
+
+.header-upload-btn {
+  position: absolute;
+  left: 80px;
+  top: 0;
+  opacity: 0;
+  /* 通过定位把input放在img标签上面，通过不透明度隐藏 */
+}
+
+.tip {
+  font-size: 12px;
+  color: #666;
+}
+
+/* error是用于错误提示 */
+.error {
+  font-size: 12px;
+  color: tomato;
+  margin-left: 10px;
 }
 </style>
 

@@ -244,7 +244,7 @@ export default {
 .myPay .el-table__body {
   width: 100% !important;
 }
-.contentMainTable{min-height:400px;}
+.myPay .contentMainTable{min-height:400px;}
 @media screen and (max-width: 1530px) {
   .contentMainTable .el-tabs__header {
     position: relative;
