@@ -7,8 +7,8 @@
           <span></span>资金往来
         </el-row>
         <el-row class="contentMainTable">
-          <el-row class="pd-l-20" :gutter="10">
-            <el-col :md="10" :sm="24">
+          <el-row class="pd-l-20">
+            <el-col :md="8" :sm="24">
               <span class="common-color">类型：</span>
               <el-select v-model="dealignTypes" placeholder="请选择" @change="chooseType">
                 <el-option
@@ -19,7 +19,7 @@
                 ></el-option>
               </el-select>
             </el-col>
-            <el-col :md="14" :sm="24">
+            <el-col :md="16" :sm="24">
               <span class="common-color timeLabel">时间段：</span>
               <el-date-picker
                 v-model="dataStart"
