@@ -181,10 +181,11 @@ export default {
     },
     userModel() {
       var that = this;
-      this.getInfo();
+    
       this.$router.push({
         path: "/myPay"
       });
+      this.getInfo();
       this.$store.commit("umodelShow", true);
       this.userShow = !this.userShow;
       this.loginSHow = false;
@@ -303,6 +304,8 @@ export default {
       if (newName == true) {
         this.getInfo();
         this.$store.commit("refreshUser", false);
+      }else{
+     
       }
     }
   },

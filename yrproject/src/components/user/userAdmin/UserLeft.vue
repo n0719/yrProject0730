@@ -1,10 +1,10 @@
 <template>
   <div class="userLeft">
     <div class="userImg">
-      <img :src="avatar" @click="selfUser" alt />
-      <span>用户名:{{username}}</span>
-      <span>余额:{{money}}</span>
-      <span>等级:{{level}}</span>
+      <img :src="this.infoData?this.infoData.avatar:avatar" @click="selfUser" alt />
+      <span>用户名:{{isLogin==true?this.infoData.username:username}}</span>
+      <span>余额:{{isLogin==true?this.infoData.money:money}}</span>
+      <span>等级:{{isLogin==true?this.infoData.level:level}}</span>
     </div>
     <div class="userBtn">
       <el-row>
@@ -34,14 +34,15 @@
 <script>
 import { mapState } from "vuex";
 export default {
-    computed: {
-    ...mapState(["infoData","refreshUser"]),
+  computed: {
+    ...mapState(["infoData", "refreshUser"])
   },
   name: "userLeft",
   data() {
     return {
       urlName: "",
       active: -1,
+      isLogin:false,
       imgList: [
         {
           backgroundImage:
@@ -135,23 +136,19 @@ export default {
     };
   },
   mounted() {
-    
     this.getLowerLevelData();
-     let isLogin = localStorage.getItem('token');
-    
-      if(isLogin){
-      this.username = this.$store.state.infoData.username;
-      this.money = this.$store.state.infoData.money;
-      this.avatar =this.$store.state.infoData.avatar;
-      this.level = this.$store.state.infoData.level;
+    let isLogin = localStorage.getItem("token");
+  if(isLogin){
+    this.isLogin=true;
+  }
+  else{
+     this.isLogin=false;
+  }
+    // this.username = this.$store.state.infoData.username;
+    // this.money = this.$store.state.infoData.money;
+    // this.avatar =this.$store.state.infoData.avatar;
+    // this.level = this.$store.state.infoData.level;
 
-      }else{
-        this.username="游客";
-         this.money="0.00";
-          this.avatar=require("../../../assets/user/mrUser.png");
-           this.level="0"
-      }
- 
   },
   methods: {
     goPage(id) {
@@ -225,7 +222,6 @@ export default {
       this.active = -1;
     },
 
-
     getLowerLevelData() {
       //下级管理
       // this.post(this.apiUrl.apiLowerLevel,{
@@ -239,7 +235,7 @@ export default {
       //   .catch(err => {
       //   });
     }
-  },
+  }
 };
 </script>
  <style scoped>

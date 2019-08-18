@@ -44,7 +44,9 @@ export default {
     };
   },
 
-  mounted() {},
+  mounted() {
+    
+  },
   methods: {},
   components: {
     UserHeader,

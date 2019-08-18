@@ -310,9 +310,6 @@ export default {
         }).then(response => {
           if (response.code == 0) {
             Message.success("登陆成功");
-            // this.$router.push({
-            //   path: "/myPAy"
-            // });
             this.$store.commit("token", response.data.access_token);
             this.closeModel();
             this.$store.commit("uname", this.loginCount);
