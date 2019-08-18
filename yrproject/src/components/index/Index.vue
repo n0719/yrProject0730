@@ -415,11 +415,14 @@ export default {
 }
 @media screen and (max-width: 1450px) {
   .indexTop .topNav {
-    font-size: 16px;
+    font-size: 14px;
   }
   .indexNav a {
     width: 100px;
   }
+  .indexTop {
+ height:60px;
+}
 }
 </style>
 
