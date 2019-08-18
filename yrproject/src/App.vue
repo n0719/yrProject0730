@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <yr-index></yr-index>
+   <keep-alive> <yr-index></yr-index></keep-alive>
   </div>
 </template>
 
@@ -46,4 +46,15 @@ body {
 #app {
   height: 100%;
 }
+/* 使用伪类选择器 ::-webkit-scrollbar ,兼容chrome和safari浏览器 */
+body::-webkit-scrollbar {
+  width: 0 !important; /* remove scrollbar space */
+  background: transparent; /* optional: just make scrollbar invisible */
+}
+
+/* 兼容IE10+ */
+body {
+  -ms-overflow-style: none;
+}
+
 </style>

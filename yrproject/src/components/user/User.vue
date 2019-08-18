@@ -10,12 +10,11 @@
             </el-aside>
             <el-container>
               <el-header>
-               <user-header></user-header>
+                <user-header></user-header>
               </el-header>
               <el-main>
                 <user-content>
-               <router-view></router-view>
-                 <router-view ></router-view>
+                   <keep-alive> <router-view></router-view></keep-alive>
                 </user-content>
               </el-main>
             </el-container>
@@ -45,12 +44,8 @@ export default {
     };
   },
 
-  mounted() {
-
-  },
-  methods: {
-  
-  },
+  mounted() {},
+  methods: {},
   components: {
     UserHeader,
     UserLeft,

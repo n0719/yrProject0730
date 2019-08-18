@@ -125,7 +125,7 @@ export default {
   width: auto;
 }
 .subordAdmin .el-table__header , .subordAdmin .el-table__body{width:100%!important;}
-.contentMainTable{min-height:500px;}
+.subordAdmin .contentMainTable{min-height:500px;}
 </style>
 
 

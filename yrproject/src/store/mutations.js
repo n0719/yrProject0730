@@ -98,6 +98,9 @@
     bankList(state,bankList){
       state.bankList=bankList;
     },
+    refreshUser(state,refreshUser){
+        state.refreshUser=refreshUser;
+    },
     cashsweepData(state,cashsweepData){
         state.cashsweepData=cashsweepData//游戏
     }

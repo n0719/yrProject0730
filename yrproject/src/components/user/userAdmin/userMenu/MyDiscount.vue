@@ -185,7 +185,7 @@ export default {
   flex-direction: column;
   justify-content: space-around;
   width: 180px;
-  border: 1px solid #F9F8F6;
+  border: 1px solid #eee;
   align-items: center;
   margin-right:40px;
   overflow:hidden;
