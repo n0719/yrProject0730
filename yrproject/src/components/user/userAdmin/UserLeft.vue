@@ -32,7 +32,11 @@
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
 export default {
+    computed: {
+    ...mapState(["infoData","refreshUser"]),
+  },
   name: "userLeft",
   data() {
     return {
@@ -136,8 +140,6 @@ export default {
      let isLogin = localStorage.getItem('token');
     
       if(isLogin){
- console.log(this.$store.state.infoData);
- 
       this.username = this.$store.state.infoData.username;
       this.money = this.$store.state.infoData.money;
       this.avatar =this.$store.state.infoData.avatar;
@@ -237,7 +239,7 @@ export default {
       //   .catch(err => {
       //   });
     }
-  }
+  },
 };
 </script>
  <style scoped>

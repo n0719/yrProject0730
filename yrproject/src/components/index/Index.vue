@@ -56,16 +56,24 @@
       </div>
     </div>
     <div class="indexMain">
-      <yr-main v-if="active==0?true:false"></yr-main>
-      <yr-lottory v-if="activeName==1?true:false" :gameId="activeName"></yr-lottory>
-      <yr-live v-if="activeName==2?true:false" :gameId="activeName"></yr-live>
-      <yr-egames v-if="activeName==4?true:false" :gameId="activeName"></yr-egames>
+  <keep-alive>    <yr-main v-if="active==0?true:false"></yr-main></keep-alive>
+     <keep-alive> <yr-lottory v-if="activeName==1?true:false" :gameId="activeName"></yr-lottory></keep-alive>
+     <keep-alive> <yr-live v-if="activeName==2?true:false" :gameId="activeName"></yr-live></keep-alive>
+      <keep-alive>
+        <yr-egames v-if="activeName==4?true:false" :gameId="activeName"></yr-egames>
+      </keep-alive>
       <yr-exports v-if="activeName=='体育游戏'?true:false" :gameId="activeName"></yr-exports>
       <yr-poker v-if="activeName=='棋牌游戏'?true:false"></yr-poker>
-      <yr-activity v-if="activeName=='优惠活动'?true:false"></yr-activity>
+      <keep-alive>
+        <yr-activity v-if="activeName=='优惠活动'?true:false"></yr-activity>
+      </keep-alive>
       <yr-service v-if="activeName=='在线客服'?true:false"></yr-service>
-      <yr-login v-if="loginSHow"></yr-login>
-      <yr-user v-if="userShow"></yr-user>
+      <keep-alive>
+        <yr-login v-if="loginSHow"></yr-login>
+      </keep-alive>
+      <keep-alive>
+        <transition name="fade"><yr-user v-if="userShow"></yr-user></transition>
+      </keep-alive>
     </div>
     <div class="indexBottom"></div>
     <el-dialog
@@ -99,7 +107,7 @@ import Activity from "@/components/index/index/Activity";
 import axios from "axios"; // 引入axios
 export default {
   computed: {
-    ...mapState(["umodelShow", "lmodelShow"])
+    ...mapState(["umodelShow", "lmodelShow", "refreshUser"])
   },
   name: "login",
   beforeRouteEnter(to, from, next) {
@@ -168,17 +176,15 @@ export default {
       this.$store.commit("lmodelShow", true);
       this.userShow = false;
       this.loginSHow = !this.loginShow;
-      this.$router.push({
-        path: "/myPAy"
-      });
+     
       this.noScroll();
     },
     userModel() {
       var that = this;
       this.getInfo();
       this.$router.push({
-              path: "/myPay"
-            });
+        path: "/myPay"
+      });
       this.$store.commit("umodelShow", true);
       this.userShow = !this.userShow;
       this.loginSHow = false;
@@ -291,6 +297,12 @@ export default {
         this.canScroll();
       } else {
         this.loginSHow = true;
+      }
+    },
+    refreshUser(newName, oldName) {
+      if (newName == true) {
+        this.getInfo();
+        this.$store.commit("refreshUser", false);
       }
     }
   },

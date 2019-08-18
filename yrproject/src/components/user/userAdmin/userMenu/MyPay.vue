@@ -162,7 +162,6 @@ export default {
       //获取团队总览
       this.post(this.apiUrl.apiTeamData).then(res => {
         var data = res.data;
-        this.teamData .push(data);
         this.teamTableData =data.teamGameRecord;  
       });
     }

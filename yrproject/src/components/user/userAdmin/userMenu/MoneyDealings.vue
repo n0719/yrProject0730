@@ -9,7 +9,7 @@
         <el-row class="contentMainTable">
           <el-row class="pd-l-20">
             <el-col :md="8" :sm="24">
-              <span class="common-color">类型：</span>
+              <span class="common-color timeLabel">类型：</span>
               <el-select v-model="dealignTypes" placeholder="请选择" @change="chooseType">
                 <el-option
                   v-for="item in dealingsType"
@@ -164,6 +164,21 @@ export default {
 .moneyDealing .el-table__header,
 .moneyDealing .el-table__body {
   width: 100% !important;
+}
+@media screen and (max-width:1800px){
+  .moneyDealing .timeLabel {
+    margin:0;
+ display: inline-block;width:60px;text-align: right;
+}
+.moneyDealing .pd-l-20 .el-col-md-8{
+  width:100%;
+  margin-bottom:5px;
+}
+.moneyDealing .el-date-editor.el-input,
+.moneyDealing .el-date-editor.el-input__inner {
+  width: 140px;
+
+}
 }
 </style>
 

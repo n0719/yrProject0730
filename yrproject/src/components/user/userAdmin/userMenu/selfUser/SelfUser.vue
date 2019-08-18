@@ -18,8 +18,8 @@
                 <!-- <p class="tip">(图片限制300kb) <span class="error">{{errorStr}}</span></p> -->
               </div>
 
-              <el-form-item label="用户名：" prop="uName">
-                <el-input v-model="ruleForm.uName" name="uName" aria-required placeholder="3-16个字符"></el-input>
+              <el-form-item label="用户名：" prop="username">
+                <el-input v-model="ruleForm.username" readonly aria-required placeholder="3-16个字符"></el-input>
               </el-form-item>
               <el-form-item label="昵称：" prop="nickName">
                 <el-input v-model="ruleForm.nickName" placeholder="必须真实有效"></el-input>
@@ -57,11 +57,11 @@
                 </el-form-item>
                 <el-form-item prop="uYz" v-else>
                   <el-input placeholder="请输入验证码" v-model="ruleForm.uYz"></el-input>
-                  <el-button class="yzBtn">确认</el-button>
+                  <el-button class="yzBtn">输入验证码</el-button>
                 </el-form-item>
               </el-row>
               <el-form-item label="手机：" prop="uTel" v-else>
-                <el-input v-model="ruleForm.uTel" placeholder="输入正确的手机号码"></el-input>
+                <el-input v-model="ruleForm.uTel" readonly placeholder="输入正确的手机号码"></el-input>
               </el-form-item>
 
               <!-- <el-form-item label="邮箱：" required prop="uAddress">
@@ -92,7 +92,7 @@
                 ></el-date-picker>
               </el-form-item>-->
               <el-form-item class="subBtn">
-                <el-button type="default" @click="resert">取消</el-button>
+                <!-- <el-button type="default" @click="resert">取消</el-button> -->
                 <el-button type="default" @click="submitForm1(ruleForm)">提交</el-button>
               </el-form-item>
             </el-form>
@@ -134,7 +134,7 @@
                 ></el-input>
               </el-form-item>
               <el-form-item class="subBtn">
-                <el-button type="default">取消</el-button>
+                <!-- <el-button type="default">取消</el-button> -->
                 <el-button type="default" @click="submitForm2(ruleForm)">提交</el-button>
               </el-form-item>
             </el-form>
@@ -180,7 +180,7 @@
                 ></el-input>
               </el-form-item>
               <el-form-item class="subBtn">
-                <el-button type="default">取消</el-button>
+                <!-- <el-button type="default">取消</el-button> -->
                 <el-button type="default" @click="submitForm3(ruleForm)">提交</el-button>
               </el-form-item>
             </el-form>
@@ -198,8 +198,6 @@ export default {
     ...mapState(["infoData", "regRule"])
   },
   mounted() {
-    console.log(this.$store.state.infoData.avatar);
-
     this.rules.uName[0].pattern = this.getReg.getReg(
       this.regRule.Public.login.username.validation
     );
@@ -230,7 +228,7 @@ export default {
     this.logRules.logNewPassword[0].pattern = this.getReg.getReg(
       this.regRule.CurrUser.changePassword.password.validation
     );
-    this.ruleForm.uName = this.$store.state.infoData.username;
+    this.ruleForm.username = this.$store.state.infoData.username;
     this.ruleForm.nickName = this.$store.state.infoData.nickname;
     this.ruleForm.fullName = this.$store.state.infoData.real_name;
     this.ruleForm.uTel = this.$store.state.infoData.phone;
@@ -252,7 +250,7 @@ export default {
       ruleForm: {
         //个人资料字段
         avatar: "",
-        uName: "",
+        username: "",
         nickName: "",
         fullName: "",
         uTel: "",
@@ -284,6 +282,7 @@ export default {
         ],
         uTel: [
           {
+            required: true,
             pattern: "",
             message: "请输入有效的手机号码"
           }
@@ -390,7 +389,7 @@ export default {
       if (imgSize <= 1000 * 1024) {
         // 合格
         _this.errorStr = "";
-        console.log("大小合适");
+
         // 开始渲染选择的图片
         // 本地路径方法 1
         // this.imgStr = window.URL.createObjectURL(e.target.files[0])
@@ -405,14 +404,6 @@ export default {
           var dataURL = reader.result;
           _this.ruleForm.avatar = dataURL;
 
-          _this
-            .post(_this.apiUrl.apiUploadBaseAvator, {
-              url: "http://bao-wang.oss-cn-hongkong.aliyuncs.com",
-              avatar: dataURL
-            })
-            .then(res => {
-              console.log(res);
-            });
           // 下面逻辑处理
         };
       } else {
@@ -488,60 +479,44 @@ export default {
         //  this.yzTel="20s后重新获取";
       }
     },
-    handleAvatarSuccess(res, file) {
-      //  this.ruleForm.avatar =URL.createObjectURL(file.raw);
-      // this.ruleForm.avatar = "user_icon/06654/" + file.name;
-      // console.log(file);
-      // // this.imageUrl = "";
-    },
-    // beforeAvatarUpload(file) {
-    //   const isJPG = file.type === "image/jpeg";
-    //   const isGIF = file.type === "image/gif";
-    //   const isPNG = file.type === "image/png";
-    //   const isBMP = file.type === "image/bmp";
-    //   const isLt2M = file.size / 1024 / 1024 < 2;
 
-    //   if (!isJPG && !isGIF && !isPNG && !isBMP) {
-    //     this.$message.error("上传头像图片只能是 JPG 格式!");
-    //   }
-    //   if (!isLt2M) {
-    //     this.$message.error("上传头像图片大小不能超过 2MB!");
-    //   }
-    //   return (isJPG || isBMP || isGIF || isPNG) && isLt2M;
-    // },
     submitForm1() {
       const t = this;
 
-      // t.$refs["ruleForm"].validate(valid => {
+      t.$refs["ruleForm"].validate(valid => {
+        if (valid == false) {
+        } else {
+          let nickname = t.ruleForm.nickName;
+          let real_name = t.ruleForm.fullName;
+          this.post(this.apiUrl.apiSelfUser, {
+            nickname: nickname,
+            real_name: real_name
+          }).then(res => {
+            if (res.code == 0) {
+              this.$message("更新信息成功！");
+              this.$store.commit("refreshUser", true);
+            }
 
-      // if (valid == false) {
-      // } else {
-      // let avatar = t.ruleForm.avatar;
-      let uname = t.ruleForm.uName;
-      let nickname = t.ruleForm.nickName;
-      let real_name = t.ruleForm.fullName;
-  
-      // let birthday = t.ruleForm.uBirth;
-      // console.log(avatar);
-
-      this.post(this.apiUrl.apiSelfUser, {
-        uname: uname,
-        nickname: nickname,
-        real_name: real_name,
-        phone:phone
-
-      }).then(res => {
-        if (res.code == 0) {
-          this.$message("更新信息成功！");
-          console.log(this.$store.state.infoData);
+            try {
+              // this.$refs["ruleForm"].resetFields();
+            } catch (e) {}
+          });
+          if (this.$store.state.infoData.phone != "") {
+          } else {
+            this.post(this.apiUrl.apiBindPhone, {
+              phone: this.ruleForm.uTel,
+              verify_code: this.ruleForm.uYz
+            }).then(res => {});
+          }
+          if (this.ruleForm.avatar == this.$store.state.infoData.avatar) {
+          } else {
+            this.post(this.apiUrl.apiUploadBaseAvator, {
+              url: "http://bao-wang.oss-cn-hongkong.aliyuncs.com",
+              avatar: this.ruleForm.avatar
+            }).then(res => {});
+          }
         }
-
-        try {
-          // this.$refs["ruleForm"].resetFields();
-        } catch (e) {}
       });
-      // }
-      // });
     },
     submitForm2() {
       const t = this;
@@ -652,11 +627,11 @@ export default {
   width: 76px;
   height: 76px;
   display: block;
-  border:1px solid #ddd;
-  border-radius:5px;
-  margin-left:80px;
-  margin-bottom:30px;
-  margin-top:20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+
+  margin-bottom: 30px;
+  margin-top: 20px;
 }
 
 .selfUser .el-button:focus,
@@ -730,13 +705,12 @@ export default {
   display: inline-block;
   border: 1px solid #ddd;
   border-radius: 50%;
-
 }
 
 .header-upload-btn {
   position: absolute;
-  left: 80px;
-  top: 0;
+  left: 0;
+  top: 20px;
   opacity: 0;
   /* 通过定位把input放在img标签上面，通过不透明度隐藏 */
 }
