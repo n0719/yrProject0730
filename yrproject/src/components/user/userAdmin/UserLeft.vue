@@ -42,7 +42,7 @@ export default {
     return {
       urlName: "",
       active: -1,
-      isLogin:false,
+      isLogin: false,
       imgList: [
         {
           backgroundImage:
@@ -138,17 +138,17 @@ export default {
   mounted() {
     this.getLowerLevelData();
     let isLogin = localStorage.getItem("token");
-  if(isLogin){
-    this.isLogin=true;
-  }
-  else{
-     this.isLogin=false;
-  }
+    if (isLogin) {
+      this.isLogin = true;
+      this.avatar = this.infoData.avatar;
+    } else {
+      this.isLogin = false;
+      this.avatar = require("../../../assets/user/mrUser.png");
+    }
     // this.username = this.$store.state.infoData.username;
     // this.money = this.$store.state.infoData.money;
     // this.avatar =this.$store.state.infoData.avatar;
     // this.level = this.$store.state.infoData.level;
-
   },
   methods: {
     goPage(id) {

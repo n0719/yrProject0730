@@ -28,7 +28,7 @@
           <el-menu-item index="6">登录</el-menu-item>
           <el-menu-item index="6">会员中心</el-menu-item>
         </el-menu>-->
-        <div class="main" v-title :data-title="this.$store.state.dictionariesData.website.site_title"></div>
+
         <div class="indexNav">
           <a
             v-for="(item,index) in navA"
@@ -155,6 +155,7 @@ export default {
         }
       ],
       webLogo: "",
+      tit: ""
     };
   },
   mounted() {
@@ -165,11 +166,8 @@ export default {
     this.getGeme();
     let isLogin = localStorage.getItem("token");
 
-    
-   
     if (isLogin) {
       this.getInfo();
-      
     }
   },
   methods: {
@@ -249,6 +247,15 @@ export default {
         var data = res.data;
         this.$store.commit("dictionariesData", data);
         that.webLogo = data.website.m_site_logo;
+        let link =
+          document.querySelector("link[rel*='icon']") ||
+          document.createElement("link");
+        link.type = "image/x-icon";
+        link.rel = "shortcut icon";
+        link.href = data.website.favicon;
+        document.getElementsByTagName("head")[0].appendChild(link);
+         window.document.title = data.website.site_title
+        
       });
     },
     getInfo() {

@@ -18,13 +18,13 @@
               
               </div>
               <el-form-item label="用户名：" prop="username">
-                <el-input v-model="ruleForm.username" readonly aria-required placeholder="3-16个字符"></el-input>
+                <el-input v-model="ruleForm.username"  aria-required placeholder="3-16个字符"></el-input>
               </el-form-item>
               <el-form-item label="昵称：" prop="nickName">
                 <el-input v-model="ruleForm.nickName" placeholder="必须真实有效"></el-input>
               </el-form-item>
               <el-form-item label="姓名：" prop="fullName">
-                <el-input v-model="ruleForm.fullName" placeholder="姓名必须真实有效"></el-input>
+                <el-input v-model="ruleForm.fullName" readonly="" placeholder="姓名必须真实有效"></el-input>
               </el-form-item>
               <el-row v-if="this.$store.state.infoData.phone!=''?false:true">
                 <el-form-item label="手机：" prop="uTel">
@@ -38,7 +38,7 @@
                 </el-form-item>
               </el-row>
               <el-form-item label="手机：" prop="uTel" v-else>
-                <el-input v-model="ruleForm.uTel" placeholder="输入正确的手机号码"></el-input>
+                <el-input v-model="ruleForm.uTel" readonly="" placeholder="输入正确的手机号码"></el-input>
               </el-form-item>
               <div class="phoneModel" v-if="phoneModel">
                 <div class="modelBox">
@@ -258,10 +258,12 @@ export default {
       this.regRule.CurrUser.changeFoundPassword.password.validation
     );
   if(this.infoData.avatar!=""){
-  this.ruleForm.avatar = this.$store.state.infoData.avatar;
+   this.ruleForm.avatar = this.$store.state.infoData.avatar;
   }else{
     this.ruleForm.avatar=require("../../../../../assets/user/mrUser.png");
   }
+
+  
     this.ruleForm.username = this.$store.state.infoData.username;
     this.ruleForm.nickName = this.$store.state.infoData.nickname;
     this.ruleForm.fullName = this.$store.state.infoData.real_name;

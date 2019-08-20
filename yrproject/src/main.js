@@ -24,6 +24,8 @@ import VueRouter from 'vue-router';
 Vue.prototype.getReg = getReg
 
 
+  
+
 
 Vue.directive('title', {
   inserted: function (el, binding) {
