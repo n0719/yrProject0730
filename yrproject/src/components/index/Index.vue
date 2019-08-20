@@ -190,12 +190,13 @@ export default {
     },
     userModel() {
       var that = this;
-
+    this.getInfo();
       this.$router.push({
         path: "/myPay"
       });
-      this.getInfo();
+     
       this.$store.commit("umodelShow", true);
+
       this.userShow = !this.userShow;
       this.loginSHow = false;
       this.noScroll();
@@ -257,7 +258,6 @@ export default {
       var that = this;
       this.post(this.apiUrl.apiGetInfo).then(res => {
         var data = res.data;
-        // console.log(data)
         this.$store.commit("infoData", data);
       });
     },
@@ -306,9 +306,11 @@ export default {
       if (oldName == true) {
         this.userShow = false;
         this.canScroll();
+           
       } else {
         this.userShow = true;
         this.noScroll();
+      
       }
     },
     lmodelShow(newName, oldName) {

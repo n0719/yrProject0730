@@ -117,7 +117,6 @@ export default {
       });
     },
     transferIn() {
-      console.log(1);
       
       if (this.transferNum == "" || this.transferNum == 0) {
         this.$message.error("请输入转入数量");

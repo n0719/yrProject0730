@@ -1,7 +1,7 @@
 <template>
   <div class="userLeft">
     <div class="userImg">
-      <img :src="avatar" @click="selfUser" alt />
+      <img :src="this.$store.state.infoData.avatar!=''?this.$store.state.infoData.avatar:avatar" @click="selfUser" alt />
       <span>用户名:{{isLogin==true?this.infoData.username:username}}</span>
       <span>余额:{{isLogin==true?this.infoData.money:money}}</span>
       <span>等级:{{isLogin==true?this.infoData.level:level}}</span>
@@ -130,17 +130,23 @@ export default {
       ],
       avatar: require("../../../assets/user/mrUser.png"),
       username: "游客",
-      money: 0,
-      level: 0,
+      money: 10,
+      level: 10,
       info: []
     };
   },
   mounted() {
+    console.log(this.$store.state.infoData);
+    
     this.getLowerLevelData();
     let isLogin = localStorage.getItem("token");
     if (isLogin) {
       this.isLogin = true;
-      this.avatar = this.infoData.avatar;
+      if(this.$store.state.infoData.avatar!=""){
+        //  this.avatar = this.infoData.avatar;
+      }else{
+         this.avatar = require("../../../assets/user/mrUser.png");
+      }
     } else {
       this.isLogin = false;
       this.avatar = require("../../../assets/user/mrUser.png");
@@ -235,7 +241,8 @@ export default {
       //   .catch(err => {
       //   });
     }
-  }
+  },
+
 };
 </script>
  <style scoped>
