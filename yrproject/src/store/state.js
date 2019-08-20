@@ -57,6 +57,7 @@ export default {
     // gameData:"",
     // testData:"",
     isLogin:false,
+    refreshUser:false,
     //个人信息
     infoData:"",//个人基本信息
     dictionariesData:{},//数据字典

@@ -56,16 +56,36 @@
       </div>
     </div>
     <div class="indexMain">
+      <keep-alive>
         <yr-main v-if="active==0?true:false"></yr-main>
-        <yr-lottory v-if="activeName==1?true:false" :gameId="activeName"></yr-lottory>        
+      </keep-alive>
+      <keep-alive>
+        <yr-lottory v-if="activeName==1?true:false" :gameId="activeName"></yr-lottory>
+      </keep-alive>
+      <keep-alive>
         <yr-live v-if="activeName==2?true:false" :gameId="activeName"></yr-live>
-        <yr-poker v-if="activeName==3?true:false"></yr-poker>
+      </keep-alive>
+      <keep-alive>
         <yr-egames v-if="activeName==4?true:false" :gameId="activeName"></yr-egames>
-        <yr-exports v-if="activeName==5?true:false" :gameId="activeName"></yr-exports>
+      </keep-alive>
+      <keep-alive>
+      <yr-exports v-if="activeName==5?true:false" :gameId="activeName"></yr-exports>
+      </keep-alive>
+      <keep-alive>
+      <yr-poker v-if="activeName==3?true:false"></yr-poker>
+      </keep-alive>
+      <keep-alive>
         <yr-activity v-if="activeName=='优惠活动'?true:false"></yr-activity>
-        <yr-service v-if="activeName=='在线客服'?true:false"></yr-service>
+      </keep-alive>
+      <yr-service v-if="activeName=='在线客服'?true:false"></yr-service>
+      <keep-alive>
         <yr-login v-if="loginSHow"></yr-login>
-        <yr-user v-if="userShow"></yr-user>
+      </keep-alive>
+      <keep-alive>
+        <transition name="fade">
+          <yr-user v-if="userShow"></yr-user>
+        </transition>
+      </keep-alive>
     </div>
     <div class="indexBottom"></div>
     <el-dialog
@@ -99,7 +119,7 @@ import Activity from "@/components/index/index/Activity";
 import axios from "axios"; // 引入axios
 export default {
   computed: {
-    ...mapState(["umodelShow", "lmodelShow"])
+    ...mapState(["umodelShow", "lmodelShow", "refreshUser"])
   },
   name: "login",
   beforeRouteEnter(to, from, next) {
@@ -168,17 +188,16 @@ export default {
       this.$store.commit("lmodelShow", true);
       this.userShow = false;
       this.loginSHow = !this.loginShow;
-      this.$router.push({
-        path: "/myPAy"
-      });
+
       this.noScroll();
     },
     userModel() {
       var that = this;
-      this.getInfo();
+
       this.$router.push({
-              path: "/myPay"
-            });
+        path: "/myPay"
+      });
+      this.getInfo();
       this.$store.commit("umodelShow", true);
       this.userShow = !this.userShow;
       this.loginSHow = false;
@@ -247,13 +266,13 @@ export default {
           this.$store.commit("gameList", data.homeGame.lines);
           var gameName = res.data.homeGame.lines;
           var navInit = 1;
-         if(gameName&&gameName.length>0){
-            for(var i = 0;i<gameName.length;i++){
-             var item = {
-               id:gameName[i].id,
-               name:gameName[i].name
-             }            
-             that.navA.splice(navInit++,0,item)
+          if (gameName && gameName.length > 0) {
+            for (var i = 0; i < gameName.length; i++) {
+              var item = {
+                id: gameName[i].id,
+                name: gameName[i].name
+              };
+              that.navA.splice(navInit++, 0, item);
             }
           }
           if (res.data.dialog) {
@@ -261,7 +280,7 @@ export default {
             that.dialogContent = res.data.dialog;
           }
         }
-      })
+      });
     },
     getGeme() {
       //获取单线游戏列表
@@ -290,6 +309,13 @@ export default {
         this.canScroll();
       } else {
         this.loginSHow = true;
+      }
+    },
+    refreshUser(newName, oldName) {
+      if (newName == true) {
+        this.getInfo();
+        this.$store.commit("refreshUser", false);
+      } else {
       }
     }
   },
@@ -402,10 +428,13 @@ export default {
 }
 @media screen and (max-width: 1450px) {
   .indexTop .topNav {
-    font-size: 16px;
+    font-size: 14px;
   }
   .indexNav a {
     width: 100px;
+  }
+  .indexTop {
+    height: 60px;
   }
 }
 </style>

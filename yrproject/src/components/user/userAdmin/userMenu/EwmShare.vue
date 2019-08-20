@@ -22,8 +22,6 @@ export default {
     };
   },
   mounted() {
-    console.log(this.$store.state.infoData.invite_url);
-
     this.qrcode = "data:image/png;base64," + this.$store.state.infoData.qrcode;
     this.invite_url = this.$store.state.infoData.invite_url;
   },

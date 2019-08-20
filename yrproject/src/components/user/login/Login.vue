@@ -152,26 +152,26 @@
                 :disabled="isVerify"
                 :class="isVerify?'btn_default':'btn'"
               >{{isVerify?forgetDown+'s后重新获取':'获取验证码'}}</el-button>
-            </div>           
+            </div>
           </div>
-           <div class="flex-box common-color mg-b-10">
-              <label>新密码：</label>
-              <el-input
-                class="input-row flex-con"
-                placeholder="请输入新密码"
-                v-model="newPwd"
-                type="password"
-              ></el-input>
-            </div>
-            <div class="flex-box common-color mg-b-10">
-              <label>确认密码：</label>
-              <el-input
-                class="input-row flex-con"
-                placeholder="再次输入新密码"
-                v-model="newRepeatPwd"
-                type="password"
-              ></el-input>
-            </div>
+          <div class="flex-box common-color mg-b-10">
+            <label>新密码：</label>
+            <el-input
+              class="input-row flex-con"
+              placeholder="请输入新密码"
+              v-model="newPwd"
+              type="password"
+            ></el-input>
+          </div>
+          <div class="flex-box common-color mg-b-10">
+            <label>确认密码：</label>
+            <el-input
+              class="input-row flex-con"
+              placeholder="再次输入新密码"
+              v-model="newRepeatPwd"
+              type="password"
+            ></el-input>
+          </div>
           <el-button @click="forgetPwd" class="btn">设置新密码</el-button>
         </div>
       </div>
@@ -252,7 +252,7 @@ export default {
     //切换显示框
     maskStatus(code) {
       this.maskShow = code;
-      if (code == 0 || code == 1|| code == 4) {
+      if (code == 0 || code == 1 || code == 4) {
         this.getCodeImg();
       }
       this.loginCount = "";
@@ -269,6 +269,9 @@ export default {
     //关闭弹框
     closeModel() {
       this.$store.commit("lmodelShow", false);
+      this.$router.push({
+        path:"/"
+      })
     },
     //注册后倒计时跳转登录
     goLogin(isGo) {
@@ -295,13 +298,12 @@ export default {
         !initReg(this.apiUrl.apiLogin, "username", this.loginCount) ||
         !initReg(this.apiUrl.apiLogin, "password", this.loginPwd)
       ) {
-    
         return false;
       } else if (this.loginCode == "") {
         Message.error("请输入验证码");
         return false;
       } else {
-       this.post(this.apiUrl.apiLogin, {
+        this.post(this.apiUrl.apiLogin, {
           username: this.loginCount,
           password: this.loginPwd,
           verify: this.loginCode
@@ -388,13 +390,12 @@ export default {
             this.timer = setInterval(() => {
               if (this.forgetDown > 0 && this.forgetDown <= TIME_COUNT) {
                 this.forgetDown--;
-                  this.isVerify = true;
+                this.isVerify = true;
               } else {
                 this.isVerify = false;
                 clearInterval(this.timer);
               }
             }, 1000);
-          
           } else {
             this.forgetImgCode = "";
             this.getCodeImg();
@@ -408,7 +409,11 @@ export default {
         !initReg(apiUrl.apiRetrievePassword, "username", this.forgetName) ||
         !initReg(apiUrl.apiRetrievePassword, "code", this.forgetCode) ||
         !initReg(apiUrl.apiRetrievePassword, "password", this.newPwd) ||
-        !initReg(apiUrl.apiRetrievePassword, "confirm_password", this.newRepeatPwd)
+        !initReg(
+          apiUrl.apiRetrievePassword,
+          "confirm_password",
+          this.newRepeatPwd
+        )
       ) {
         return false;
       } else {
@@ -427,7 +432,7 @@ export default {
           }
         });
       }
-    },
+    }
   }
 };
 </script>

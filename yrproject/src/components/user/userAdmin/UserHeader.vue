@@ -22,6 +22,9 @@ export default {
   methods: {
     closeModel() {
       this.$store.commit("umodelShow", false);
+       this.$router.push({
+        path:"/"
+      })
     }
   },
 

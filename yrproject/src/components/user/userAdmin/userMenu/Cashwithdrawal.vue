@@ -66,15 +66,15 @@
               <el-col :span="24" class="modelTips">自出款成功后，第一次存款起到现在所有产品的有效投注额</el-col>
             </el-row>
             <el-row class="listModel">
-              <el-col :span="4" class="modelList">
+              <el-col :span="8" class="modelList">
                 <span>{{getMoneyData.moneyLogs[0].created_at}}</span>
                 <span>存款区间</span>
               </el-col>
-              <el-col :span="4" class="modelList">
+              <el-col :span="8" class="modelList">
                 <span>{{moneyTotal}}元</span>
                 <span>存款</span>
               </el-col>
-              <el-col :span="4" class="modelList">
+              <el-col :span="8" class="modelList">
                 <span>{{total}}元</span>
                 <span>有效投注</span>
               </el-col>

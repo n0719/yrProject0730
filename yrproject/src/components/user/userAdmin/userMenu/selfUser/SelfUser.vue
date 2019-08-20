@@ -5,19 +5,21 @@
         <el-tab-pane label="个人资料" name="first">
           <div class="first flex-box-center">
             <el-form ref="ruleForm" :model="ruleForm" label-width="100px" :rules="rules">
-              <el-upload
-                class="avatar-uploader flex-box-center"
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :show-file-list="false"
-                :on-success="handleAvatarSuccess"
-                :before-upload="beforeAvatarUpload"
-                accept="image/jpeg, image/gif, image/png, image/bmp"
-              >
-                <img v-if="imageUrlState" :src=" ruleForm.avatar"  class="avatar" />
-                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-              </el-upload>
-              <el-form-item label="用户名：" prop="uName">
-                <el-input v-model="ruleForm.uName" name="uName" aria-required placeholder="3-16个字符"></el-input>
+              <div class="user-header">
+                <input
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  @change="onchangeImgFun"
+                  class="header-upload-btn user-header-com"
+                />
+                <!-- <img alt :src="this.showImg" class="user-header-img user-header-com" v-if="imgShow" /> -->
+                <img alt :src="ruleForm.avatar" class="avatar" />
+                <!-- <p class="tip">(图片限制300kb) <span class="error">{{errorStr}}</span></p> -->
+              </div>
+
+              <el-form-item label="用户名：" prop="username">
+                <el-input v-model="ruleForm.username" readonly aria-required placeholder="3-16个字符"></el-input>
               </el-form-item>
               <el-form-item label="昵称：" prop="nickName">
                 <el-input v-model="ruleForm.nickName" placeholder="必须真实有效"></el-input>
@@ -59,7 +61,7 @@
                 </el-form-item>
               </el-row>
               <el-form-item label="手机：" prop="uTel" v-else>
-                <el-input v-model="ruleForm.uTel" placeholder="输入正确的手机号码"></el-input>
+                <el-input v-model="ruleForm.uTel" readonly placeholder="输入正确的手机号码"></el-input>
               </el-form-item>
 
               <!-- <el-form-item label="邮箱：" required prop="uAddress">
@@ -90,7 +92,7 @@
                 ></el-date-picker>
               </el-form-item>-->
               <el-form-item class="subBtn">
-                <el-button type="default" @click="resert">取消</el-button>
+                <!-- <el-button type="default" @click="resert">取消</el-button> -->
                 <el-button type="default" @click="submitForm1(ruleForm)">提交</el-button>
               </el-form-item>
             </el-form>
@@ -132,7 +134,7 @@
                 ></el-input>
               </el-form-item>
               <el-form-item class="subBtn">
-                <el-button type="default">取消</el-button>
+                <!-- <el-button type="default">取消</el-button> -->
                 <el-button type="default" @click="submitForm2(ruleForm)">提交</el-button>
               </el-form-item>
             </el-form>
@@ -178,7 +180,7 @@
                 ></el-input>
               </el-form-item>
               <el-form-item class="subBtn">
-                <el-button type="default">取消</el-button>
+                <!-- <el-button type="default">取消</el-button> -->
                 <el-button type="default" @click="submitForm3(ruleForm)">提交</el-button>
               </el-form-item>
             </el-form>
@@ -196,8 +198,6 @@ export default {
     ...mapState(["infoData", "regRule"])
   },
   mounted() {
-    console.log(this.$store.state.infoData.avatar);
-    
     this.rules.uName[0].pattern = this.getReg.getReg(
       this.regRule.Public.login.username.validation
     );
@@ -228,7 +228,7 @@ export default {
     this.logRules.logNewPassword[0].pattern = this.getReg.getReg(
       this.regRule.CurrUser.changePassword.password.validation
     );
-    this.ruleForm.uName = this.$store.state.infoData.username;
+    this.ruleForm.username = this.$store.state.infoData.username;
     this.ruleForm.nickName = this.$store.state.infoData.nickname;
     this.ruleForm.fullName = this.$store.state.infoData.real_name;
     this.ruleForm.uTel = this.$store.state.infoData.phone;
@@ -238,6 +238,7 @@ export default {
   },
   data() {
     return {
+      imgStr: "",
       togYz: false,
       loginImgCode: "",
       imgYZ: "",
@@ -248,8 +249,8 @@ export default {
       num: 20,
       ruleForm: {
         //个人资料字段
-        avatar:"",
-        uName: "",
+        avatar: "",
+        username: "",
         nickName: "",
         fullName: "",
         uTel: "",
@@ -281,6 +282,7 @@ export default {
         ],
         uTel: [
           {
+            required: true,
             pattern: "",
             message: "请输入有效的手机号码"
           }
@@ -376,6 +378,39 @@ export default {
     };
   },
   methods: {
+    onchangeImgFun(e) {
+      var file = e.target.files[0];
+      // console.log(file)
+      // 获取图片的大小，做大小限制有用
+      let imgSize = file.size;
+      // console.log(imgSize)
+      var _this = this; // this指向问题，所以在外面先定义
+      // 比如上传头像限制5M大小，这里获取的大小单位是b
+      if (imgSize <= 1000 * 1024) {
+        // 合格
+        _this.errorStr = "";
+
+        // 开始渲染选择的图片
+        // 本地路径方法 1
+        // this.imgStr = window.URL.createObjectURL(e.target.files[0])
+        //  this.imgStr =e.target.files[0];
+        // console.log(e.target.files[0])// 获取当前文件的信息
+        //  this.dataURL=this.imgStr;
+        // base64方法 2
+        var reader = new FileReader();
+        reader.readAsDataURL(file); // 读出 base64
+        reader.onloadend = function() {
+          // 图片的 base64 格式, 可以直接当成 img 的 src 属性值
+          var dataURL = reader.result;
+          _this.ruleForm.avatar = dataURL;
+
+          // 下面逻辑处理
+        };
+      } else {
+        console.log("大小不合适");
+        _this.errorStr = "图片大小超出范围";
+      }
+    },
     yzTelClick() {
       var yz = this.ruleForm.uTel;
       var bb = this.getReg.getReg(
@@ -444,61 +479,44 @@ export default {
         //  this.yzTel="20s后重新获取";
       }
     },
-    handleAvatarSuccess(res, file) {
-      //  this.ruleForm.avatar =URL.createObjectURL(file.raw);
-       this.ruleForm.avatar=file.name;
-       console.log(file);
-       
-      // // this.imageUrl = "";
-  
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isGIF = file.type === "image/gif";
-      const isPNG = file.type === "image/png";
-      const isBMP = file.type === "image/bmp";
-      const isLt2M = file.size / 1024 / 1024 < 2;
 
-      if (!isJPG && !isGIF && !isPNG && !isBMP) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
-      }
-      if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
-      }
-      return (isJPG || isBMP || isGIF || isPNG) && isLt2M;
-    },
     submitForm1() {
       const t = this;
 
-      // t.$refs["ruleForm"].validate(valid => {
+      t.$refs["ruleForm"].validate(valid => {
+        if (valid == false) {
+        } else {
+          let nickname = t.ruleForm.nickName;
+          let real_name = t.ruleForm.fullName;
+          this.post(this.apiUrl.apiSelfUser, {
+            nickname: nickname,
+            real_name: real_name
+          }).then(res => {
+            if (res.code == 0) {
+              this.$message("更新信息成功！");
+              this.$store.commit("refreshUser", true);
+            }
 
-      // if (valid == false) {
-      // } else {
-      let avatar = t.ruleForm.avatar;
-      let uname = t.ruleForm.uName;
-      let nickname = t.ruleForm.nickname;
-      let real_name = t.ruleForm.fullName;
-      let email = t.ruleForm.uAddress;
-      let birthday = t.ruleForm.uBirth;
-      this.post(this.apiUrl.apiSelfUser, {
-        avatar: avatar,
-        uname: uname,
-        nickname: nickname,
-        real_name: real_name,
-        email: email,
-        birthday: birthday
-      }).then(res => {
-        
-        if(res.code==0){
- this.$message("更新信息成功！");
+            try {
+              // this.$refs["ruleForm"].resetFields();
+            } catch (e) {}
+          });
+          if (this.$store.state.infoData.phone != "") {
+          } else {
+            this.post(this.apiUrl.apiBindPhone, {
+              phone: this.ruleForm.uTel,
+              verify_code: this.ruleForm.uYz
+            }).then(res => {});
+          }
+          if (this.ruleForm.avatar == this.$store.state.infoData.avatar) {
+          } else {
+            this.post(this.apiUrl.apiUploadBaseAvator, {
+              url: "http://bao-wang.oss-cn-hongkong.aliyuncs.com",
+              avatar: this.ruleForm.avatar
+            }).then(res => {});
+          }
         }
-       
-        try {
-          this.$refs["ruleForm"].resetFields();
-        } catch (e) {}
       });
-      // }
-      // });
     },
     submitForm2() {
       const t = this;
@@ -609,6 +627,11 @@ export default {
   width: 76px;
   height: 76px;
   display: block;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+
+  margin-bottom: 30px;
+  margin-top: 20px;
 }
 
 .selfUser .el-button:focus,
@@ -670,6 +693,38 @@ export default {
 .selfUser .second .el-form,
 .selfUser .third .el-form {
   margin-top: 100px;
+}
+.user-header {
+  position: relative;
+  display: inline-block;
+}
+
+.user-header-com {
+  width: 76px;
+  height: 76px;
+  display: inline-block;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+}
+
+.header-upload-btn {
+  position: absolute;
+  left: 0;
+  top: 20px;
+  opacity: 0;
+  /* 通过定位把input放在img标签上面，通过不透明度隐藏 */
+}
+
+.tip {
+  font-size: 12px;
+  color: #666;
+}
+
+/* error是用于错误提示 */
+.error {
+  font-size: 12px;
+  color: tomato;
+  margin-left: 10px;
 }
 </style>
 

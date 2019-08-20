@@ -7,44 +7,55 @@
           <span></span>游戏记录
         </el-row>
         <el-row class="contentMainTable">
-          <span class="common-color">类型：</span>
-          <el-select v-model="chooseType" placeholder="请选择">
-            <el-option v-for="item in gameType" :key="item.id" :label="item.desc" :value="item.id"></el-option>
-          </el-select>
-          <span class="common-color">平台：</span>
-          <el-select v-model="choosePlatform" placeholder="请选择">
-            <el-option
-              v-for="item in gamePlatform"
-              :key="item.id"
-              :label="item.desc"
-              :value="item.id"
-            ></el-option>
-          </el-select>
-          <span class="common-color">状态：</span>
-          <el-select v-model="chooseStatus" placeholder="请选择">
-            <el-option
-              v-for="item in gameStatus"
-              :key="item.id"
-              :label="item.desc"
-              :value="item.id"
-            ></el-option>
-          </el-select>
-          <span class="common-color">时间：</span>
-          <el-date-picker
-            v-model="dataStart"
-            type="date"
-            placeholder="选择日期"
-            value-format="yyyy-MM-dd"
-          ></el-date-picker>
-          <span class="common-color">至：</span>
-          <el-date-picker
-            v-model="dataEnd"
-            type="date"
-            placeholder="选择日期"
-            value-format="yyyy-MM-dd"
-          ></el-date-picker>
-          <el-button type="primary" class="btnColor" @click="searchRecords">查询</el-button>
-
+          <el-row>
+              <el-col :span="24">
+            <span class="common-color">类型：</span>
+            <el-select v-model="chooseType" placeholder="请选择">
+              <el-option
+                v-for="item in gameType"
+                :key="item.id"
+                :label="item.desc"
+                :value="item.id"
+              ></el-option>
+            </el-select>
+            <span class="common-color">平台：</span>
+            <el-select v-model="choosePlatform" placeholder="请选择">
+              <el-option
+                v-for="item in gamePlatform"
+                :key="item.id"
+                :label="item.desc"
+                :value="item.id"
+              ></el-option>
+            </el-select>
+            <span class="common-color">状态：</span>
+            <el-select v-model="chooseStatus" placeholder="请选择">
+              <el-option
+                v-for="item in gameStatus"
+                :key="item.id"
+                :label="item.desc"
+                :value="item.id"
+              ></el-option>
+            </el-select>
+          </el-col>
+          <el-col :span="24">
+            <span class="common-color">时间：</span>
+            <el-date-picker
+              v-model="dataStart"
+              type="date"
+              placeholder="选择日期"
+              value-format="yyyy-MM-dd"
+            ></el-date-picker>
+            <span class="common-color" style="text-align:Center;">至：</span>
+            <el-date-picker
+              v-model="dataEnd"
+              type="date"
+              placeholder="选择日期"
+              value-format="yyyy-MM-dd"
+            ></el-date-picker>
+            <el-button type="primary" class="btnColor" @click="searchRecords">查询</el-button>
+          </el-col>
+          </el-row>
+      
           <el-row>
             <el-table
               :data="tableData"
@@ -167,6 +178,12 @@ export default {
 .gameRecords .el-table__body {
   width: 100% !important;
 }
+.gameRecords .el-col-24{margin-bottom:5px;}
+.gameRecords .common-color{
+  display: inline-block;width:60px;
+  text-align: right;
+}
+.gameRecords .el-button{margin-left:20px;}
 </style>
 
 

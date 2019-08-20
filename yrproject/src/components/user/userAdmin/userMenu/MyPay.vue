@@ -162,7 +162,6 @@ export default {
       //获取团队总览
       this.post(this.apiUrl.apiTeamData).then(res => {
         var data = res.data;
-        this.teamData .push(data);
         this.teamTableData =data.teamGameRecord;  
       });
     }
@@ -244,7 +243,7 @@ export default {
 .myPay .el-table__body {
   width: 100% !important;
 }
-.contentMainTable{min-height:400px;}
+.myPay .contentMainTable{min-height:400px;}
 @media screen and (max-width: 1530px) {
   .contentMainTable .el-tabs__header {
     position: relative;

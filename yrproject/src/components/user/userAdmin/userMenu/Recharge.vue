@@ -319,8 +319,6 @@ export default {
   methods: {
     getBankList() {
       this.post(this.apiUrl.apiPayments, {}).then(res => {
-        console.log(res);
-        
      
           this.banks = res.data.banks;
           this.third_pay = res.data.third_pay;

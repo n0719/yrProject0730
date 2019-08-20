@@ -1,8 +1,9 @@
 <template>
   <div class="userContent">
- <keep-alive>
+    <keep-alive>
       <router-view name="abc"></router-view>
- </keep-alive>
+    </keep-alive>
+
     <!-- <router-view v-if="isRouterAlive" name="Recharge"></router-view> -->
   </div>
 </template>
@@ -14,22 +15,19 @@ export default {
   //     reload: this.reload
   //   }
   // },
-  data(){
+  data() {
     return {
       //  isRouterAlive:true
-    }
+    };
   },
-  mounted(){
-
-  },
-  
+  mounted() {}
 };
 </script>
 <style >
 .userContent {
   background: #e9f1f9;
-  height:100%;
- 
+  height: 100%;
+
   /* box-sizing: border-box;  
  */
 }
