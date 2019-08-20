@@ -1,15 +1,15 @@
 <template>
   <el-row class="contentMainBottom">
     <div>
-       <p>推广链接：{{invite_url}}</p>
+       <p>推广链接：{{this.$store.state.infoData.invite_url}}</p>
       <p>
-        <el-button type="primary" round @click="copyUrl(invite_url)">复制链接</el-button>
+        <el-button type="primary" round @click="copyUrl(this.$store.state.infoData.invite_url)">复制链接</el-button>
         <!-- <el-button type="primary" round @click="navSubordMems">注册下级会员</el-button> -->
       </p>
      
     </div>
     <div>
-      <img :src="qrcode" style="width:80px;height:80px;" alt />
+      <img :src="'data:image/png;base64,' + this.$store.state.infoData.qrcode" style="width:80px;height:80px;" alt />
     </div>
   </el-row>
 </template>
@@ -22,8 +22,10 @@ export default {
     };
   },
   mounted() {
-    this.qrcode = "data:image/png;base64," + this.$store.state.infoData.qrcode;
-    this.invite_url = this.$store.state.infoData.invite_url;
+    console.log(this.$store.state.infoData);
+    
+    // this.qrcode = ;
+    // this.invite_url = ;
   },
   methods: {
     navSubordMems() {

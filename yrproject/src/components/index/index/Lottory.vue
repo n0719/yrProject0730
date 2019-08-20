@@ -1,7 +1,6 @@
 <template>
   <!-- 彩票游戏 -->
-  <div
-    class="lottoryBox">
+  <div class="lottoryBox">
     <img :src="list.image" alt class="topImg" />
     <div class="container">
       <el-row v-if="noticeList.length>0" class="flex-box mg-b-20">
@@ -66,7 +65,7 @@ export default {
       transferNum: "",
       gameData: "",
       gameName: "",
-      gameLineId: "",
+      gameLineId: ""
     };
   },
   mounted() {
@@ -87,7 +86,8 @@ export default {
       });
     },
     intoGame(item) {
-      this.gameLineId = item.game_line_id;
+      if (localStorage.getItem("token")) {
+        this.gameLineId = item.game_line_id;
         this.post(this.apiUrl.apiGamePlay, {
           line_id: this.gameLineId,
           device: 1
@@ -97,6 +97,14 @@ export default {
             this.getGameBalance();
           }
         });
+      } else {
+        this.$confirm("您还没有登录,无法进入游戏，前往登录账号", "提示", {})
+          .then(() => {
+            this.$store.commit("umodelShow", false);
+            this.$store.commit("lmodelShow", true);
+          })
+          .catch(() => {});
+      }
     },
     getGameBalance() {
       this.post(this.apiUrl.apiGameBalances, {

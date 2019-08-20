@@ -176,7 +176,7 @@ export default {
         versionName: "MemberAppV001"
       })
         .then(function(response) {
-          that.$store.commit("regRule", response.data.data);
+          that.$store.commit("regRule", response.data);
           // var data1 = response.data.data;
           // let getRulesData = JSON.stringify(data1);
           // that.$store.commit("getRules", getRulesData);
@@ -194,12 +194,13 @@ export default {
     },
     userModel() {
       var that = this;
-
+    this.getInfo();
       this.$router.push({
         path: "/myPay"
       });
-      this.getInfo();
+     
       this.$store.commit("umodelShow", true);
+
       this.userShow = !this.userShow;
       this.loginSHow = false;
       this.noScroll();
@@ -261,7 +262,6 @@ export default {
       var that = this;
       this.post(this.apiUrl.apiGetInfo).then(res => {
         var data = res.data;
-        // console.log(data)
         this.$store.commit("infoData", data);
       });
     },
@@ -310,9 +310,11 @@ export default {
       if (oldName == true) {
         this.userShow = false;
         this.canScroll();
+           
       } else {
         this.userShow = true;
         this.noScroll();
+      
       }
     },
     lmodelShow(newName, oldName) {
