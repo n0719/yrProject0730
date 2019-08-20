@@ -193,6 +193,8 @@
 <script>
 import { mapState } from "vuex";
 import { Message } from "element-ui";
+import { baseURL } from "@/axios/http"; 
+import { apiUrl } from "@/axios/api"; 
 export default {
   computed: {
     ...mapState(["infoData", "regRule"])
@@ -469,7 +471,7 @@ export default {
       });
     },
     getCodeImg() {
-      this.imgYZ = "http://m1.w20.vip/Api/verifyImg?" + Math.random();
+      this.imgYZ = baseURL+apiUrl.apiVerifyImg+"?" + Math.random();
     },
     yzEmailClick() {
       var yz = this.ruleForm.uAddress;

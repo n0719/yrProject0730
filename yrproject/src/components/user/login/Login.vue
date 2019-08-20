@@ -192,9 +192,8 @@
 <script>
 import { initReg } from "@/axios/regRule"; // 验证方法
 import { Message } from "element-ui";
-// import axios from "axios"; // 引入axios
-// import { get, post } from "@/axios/http";
-// import { apiUrl } from "@/axios/api";
+import { baseURL } from "@/axios/http"; 
+import { apiUrl } from "@/axios/api"; 
 export default {
   data() {
     return {
@@ -241,11 +240,11 @@ export default {
     //获取验证码图片
     getCodeImg() {
       if (this.maskShow == 0) {
-        this.loginImgCode = "http://m1.w20.vip/Api/verifyImg?" + Math.random();
+        this.loginImgCode = baseURL+apiUrl.apiVerifyImg+"?" + Math.random();
       } else if (this.maskShow == 1) {
-        this.regImgCode = "http://m1.w20.vip/Api/verifyImg?" + Math.random();
+        this.regImgCode = baseURL+apiUrl.apiVerifyImg+"?" + Math.random();
       } else {
-        this.forgetImgCode = "http://m1.w20.vip/Api/verifyImg?" + Math.random();
+        this.forgetImgCode = baseURL+apiUrl.apiVerifyImg+"?" + Math.random();
       }
     },
 

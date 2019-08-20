@@ -9,7 +9,7 @@
     <div class="indexTop">
       <div class="topNav">
         <div class="logo">
-          <img src="../../assets/index/indexLogo.png" alt />
+          <img :src="webLogo" alt />
         </div>
         <!-- <el-menu
           :default-active="activeIndex2"
@@ -152,7 +152,8 @@ export default {
           id: "在线客服",
           name: "在线客服"
         }
-      ]
+      ],
+      webLogo:''
     };
   },
   mounted() {
@@ -238,10 +239,12 @@ export default {
         .catch(() => {});
     },
     getDataDictionaries() {
+      var that = this;
       //获取数据字典
       this.post(this.apiUrl.apiDataDataDictionaries).then(res => {
         var data = res.data;
-        this.$store.commit("dictionariesData", data);
+        this.$store.commit("dictionariesData", data);        
+        that.webLogo = data.website.m_site_logo;
       });
     },
     getInfo() {
@@ -364,8 +367,13 @@ export default {
   justify-content: space-between;
   padding: 0 10px;
 }
-.logo {
+.index .logo {
   margin-right: 64px;
+  width: 300px;
+  font-size: 0;
+}
+.index .logo img{
+  width: 100%;
 }
 .index .el-menu.el-menu--horizontal {
   border: none;
@@ -426,6 +434,7 @@ export default {
   right: 7px;
   font-size: 25px;
 }
+
 @media screen and (max-width: 1450px) {
   .indexTop .topNav {
     font-size: 14px;

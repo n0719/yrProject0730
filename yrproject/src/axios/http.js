@@ -12,12 +12,12 @@ import { log } from 'util';
 
 /*aes加密接口 返回url*/
 var httpUrl = httpInit.initHttp();
-var baseURL = '';
-httpUrl.then((res) => {
-  baseURL = res;
-}, (err) => {
-  console.log(err)
-})
+var baseURL = 'http://m1.w20.vip/Api/';
+// httpUrl.then((res) => {
+//   baseURL = res;
+// }, (err) => {
+//   console.log(err)
+// })
 
 // 环境的切换
 // if (process.env.NODE_ENV == 'development') {    
@@ -27,7 +27,7 @@ httpUrl.then((res) => {
 // } else if (process.env.NODE_ENV == 'production') {    
 //     axios.defaults.baseURL = 'http://api.123dailu.com/';
 // }
-axios.defaults.baseURL ="http://m1.w20.vip/Api/"// 'http://m1.w20.vip/Api/'http://a1.w20.vip/Api;/
+axios.defaults.baseURL = 'http://m1.w20.vip/Api/';//http://a1.w20.vip/Api/ http://m1.w20.vip/Api/
 
 // 请求超时时间
 axios.defaults.timeout = 10000;
@@ -111,3 +111,4 @@ export function post(url, params) {
   });
 }
 
+export { baseURL }
