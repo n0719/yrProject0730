@@ -65,8 +65,9 @@ export default {
 .fade-leave-active {
   transition: opacity 0.5s;
 }
-.el-main {
+.user .el-main {
   padding: 0;
+  height: 100%;
 }
 .user {
   position: fixed;

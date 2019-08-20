@@ -36,10 +36,6 @@
             :class="active==index?'navABg':''"
             @click="viewToggle(index,item.id)"
           >{{item.name}}</a>
-          <!-- <a>优惠</a>
-          <a>充值</a>
-          <a>客服</a>
-          <a>管理</a>-->
         </div>
         <ul class="indexLogin">
           <li v-if="this.$store.state.uname=='游客'?true:false">
@@ -176,7 +172,7 @@ export default {
         versionName: "MemberAppV001"
       })
         .then(function(response) {
-          that.$store.commit("regRule", response.data.data);
+          that.$store.commit("regRule", response.data);
           // var data1 = response.data.data;
           // let getRulesData = JSON.stringify(data1);
           // that.$store.commit("getRules", getRulesData);
