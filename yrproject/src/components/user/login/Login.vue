@@ -340,7 +340,7 @@ export default {
         this.post(this.apiUrl.apiRegister, {
           username: this.regCount,
           password: this.regPwd,
-          // icode: this.inviteUser,
+           icode: this.inviteUser,
           verify: this.regCode
         }).then(response => {
           this.loading = false;
@@ -358,7 +358,7 @@ export default {
     forgetAccount() {
       if (initReg(apiUrl.apiVerAccount, "username", this.forgetName)) {
         this.loading = true;
-        post(apiUrl.apiVerAccount, {
+        this.post(this.apiUrl.apiVerAccount, {
           username: this.forgetName
         }).then(response => {
           this.loading = false;
@@ -378,7 +378,7 @@ export default {
         Message.error("请输入图片验证码");
         return false;
       } else {
-        post(apiUrl.apiSendVerifyCode, {
+        this.post(this.apiUrl.apiSendVerifyCode, {
           secret: this.forgetSecret,
           verify: this.forgetVerCode
         }).then(response => {
@@ -416,7 +416,7 @@ export default {
       ) {
         return false;
       } else {
-        post(apiUrl.apiRetrievePassword, {
+        this.post(this.apiUrl.apiRetrievePassword, {
           username: this.forgetName,
           code: this.forgetCode,
           password: this.newPwd,

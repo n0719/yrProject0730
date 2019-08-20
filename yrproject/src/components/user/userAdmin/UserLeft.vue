@@ -1,7 +1,7 @@
 <template>
   <div class="userLeft">
     <div class="userImg">
-      <img :src="this.infoData?this.infoData.avatar:avatar" @click="selfUser" alt />
+      <img :src="avatar" @click="selfUser" alt />
       <span>用户名:{{isLogin==true?this.infoData.username:username}}</span>
       <span>余额:{{isLogin==true?this.infoData.money:money}}</span>
       <span>等级:{{isLogin==true?this.infoData.level:level}}</span>

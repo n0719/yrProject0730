@@ -44,6 +44,7 @@ export const apiUrl = {
  apiUploadAvator:"CurrUser/uploadAvatar",//27上传头像
  apiUploadBaseAvator:"CurrUser/uploadBase64Avatar",//28base64
  apiRequestRule:"ApiDoc/requestRule",//5. 应用-接口参数规则
+ apiActivitiesJoin:"CurrUser/activitiesJoin"//24活动参与
 }
 // export const apiLogin = p => post('Public/login', p);
 

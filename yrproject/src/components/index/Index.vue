@@ -28,6 +28,7 @@
           <el-menu-item index="6">登录</el-menu-item>
           <el-menu-item index="6">会员中心</el-menu-item>
         </el-menu>-->
+        <div class="main" v-title :data-title="this.$store.state.dictionariesData.website.site_title"></div>
         <div class="indexNav">
           <a
             v-for="(item,index) in navA"
@@ -69,10 +70,10 @@
         <yr-egames v-if="activeName==4?true:false" :gameId="activeName"></yr-egames>
       </keep-alive>
       <keep-alive>
-      <yr-exports v-if="activeName==5?true:false" :gameId="activeName"></yr-exports>
+        <yr-exports v-if="activeName==5?true:false" :gameId="activeName"></yr-exports>
       </keep-alive>
       <keep-alive>
-      <yr-poker v-if="activeName==3?true:false"></yr-poker>
+        <yr-poker v-if="activeName==3?true:false"></yr-poker>
       </keep-alive>
       <keep-alive>
         <yr-activity v-if="activeName=='优惠活动'?true:false"></yr-activity>
@@ -153,7 +154,7 @@ export default {
           name: "在线客服"
         }
       ],
-      webLogo:''
+      webLogo: "",
     };
   },
   mounted() {
@@ -164,8 +165,11 @@ export default {
     this.getGeme();
     let isLogin = localStorage.getItem("token");
 
+    
+   
     if (isLogin) {
       this.getInfo();
+      
     }
   },
   methods: {
@@ -243,7 +247,7 @@ export default {
       //获取数据字典
       this.post(this.apiUrl.apiDataDataDictionaries).then(res => {
         var data = res.data;
-        this.$store.commit("dictionariesData", data);        
+        this.$store.commit("dictionariesData", data);
         that.webLogo = data.website.m_site_logo;
       });
     },
@@ -372,7 +376,7 @@ export default {
   width: 300px;
   font-size: 0;
 }
-.index .logo img{
+.index .logo img {
   width: 100%;
 }
 .index .el-menu.el-menu--horizontal {
