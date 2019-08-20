@@ -1,13 +1,13 @@
 <template>
   <!-- 首页 -->
   <div class="mainBox">
-    <el-carousel trigger="click" height="520px" class="banner topImg" :autoplay="true">
+    <el-carousel v-if="bannerList.length>0" trigger="click" height="520px" class="banner topImg" :autoplay="true">
       <el-carousel-item v-for="item in bannerList" :key="item">
         <img :src="item" alt />
       </el-carousel-item>
     </el-carousel>
     <div class="container">
-      <el-row class="flex-box mg-b-20">
+      <el-row v-if="noticeList.length>0" class="flex-box mg-b-20">
         <div class="noticeTitle">
           <img src="../../../assets/index/notice.png" alt /> 传奇咨询
         </div>

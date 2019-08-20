@@ -21,7 +21,7 @@
       </el-row>
       <el-row class="middleBox" type="flex" justify="space-between">
         <el-col :span="7" v-for="item in list.child" :key="item.game_line_id" class="itemGame">
-          <img :src="item.h5_image" alt class="itemImg" />
+          <img :src="item.pc_image" alt class="itemImg" />
           <div class="itemTitle font-bold">
             <h2>{{item.display_name}}</h2>
             <div class="locked" @click="intoGame(item)">进入游戏</div>

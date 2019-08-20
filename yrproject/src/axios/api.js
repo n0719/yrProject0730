@@ -5,7 +5,7 @@ export const apiUrl = {
   apiVerAccount:'Public/verifyAccount', //3.找回密码-验证账号
   apiSendVerifyCode:'Public/sendVerifyCode', //5.找回密码-发送验证码
   apiRetrievePassword:'Public/retrievePassword', //4.找回密码-修改新密码
-  apiVerifyImg:'/Api/verifyImg',
+  apiVerifyImg:'verifyImg',//获取验证码
   apiSelfUser:"CurrUser/updateInfo",//跟新用户信息
   apiGetInfo:"CurrUser/info",//获取用户信息
   apiChangePassword:"CurrUser/changePassword",//更改用户密码
@@ -41,9 +41,9 @@ export const apiUrl = {
  apiWithdrawAdd:"MoneyOut/withdrawAdd",//提现新增
  apiTransferOther:"Game/transferOther",//51资金平台互转
  apiLineStatus:"Game/lineStatus",//50. 拉取线路状态
-
  apiUploadAvator:"CurrUser/uploadAvatar",//27上传头像
- apiUploadBaseAvator:"CurrUser/uploadBase64Avatar"//28base64
+ apiUploadBaseAvator:"CurrUser/uploadBase64Avatar",//28base64
+ apiRequestRule:"ApiDoc/requestRule",//5. 应用-接口参数规则
 }
 // export const apiLogin = p => post('Public/login', p);
 

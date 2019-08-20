@@ -32,7 +32,7 @@
       <div class="gameComment">
         <el-row class="middleBox" type="flex" justify="space-between">
           <el-col :span="5" class="itemGame" v-for="game in itemList.child" :key="game.id">
-            <img :src="game.img_mobile" alt class="itemImg" />
+            <img :src="game.img_pc" alt class="itemImg" />
             <div class="itemTitle" @click="intoGame(game)">{{game.zh_name}}</div>
           </el-col>
         </el-row>
