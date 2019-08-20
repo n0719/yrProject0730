@@ -174,6 +174,12 @@ export default {
   width:100%;
   margin-bottom:5px;
 }
+.moneyDealing .pd-l-20 .el-col-md-16{
+  width:100%;
+
+}
+.moneyDealing .el-date-editor.el-input, .moneyDealing .el-date-editor.el-input__inner{margin:0;}
+.moneyDealing .el-date-editor.datePicker.el-input{width:217px;}
 .moneyDealing .el-date-editor.el-input,
 .moneyDealing .el-date-editor.el-input__inner {
   width: 140px;

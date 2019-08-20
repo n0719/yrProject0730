@@ -21,11 +21,11 @@
                 <a class="divTit" :title="item.title">{{item.title}}</a>
                 <img :src="item.banner" alt />
                 <a class="divSubTit" :title="item.sub_title">{{item.sub_title}}</a>
-                <el-button class="yrBtn">立即参与</el-button>
+                <el-button class="yrBtn"  @click="ActivitiesJoin(item.id,item.join_able)">{{btnText}}</el-button>
               </div>
             </div>
             <div v-if="discountData.length!=0?false:true" class="noContent">
-               <img src="../../../../assets/noContent.png" alt="">
+              <img src="../../../../assets/noContent.png" alt />
             </div>
           </div>
         </el-row>
@@ -46,16 +46,20 @@ export default {
       dictionariesData: this.$store.state.dictionariesData.table_map
         .member_activities.type,
       active: 0,
-      total:1
+      total: 1,
+      btnText:"立即参与"
     };
   },
   mounted() {
     // table_map.member_activities.type
     // console.log(this.discountData);
-     this.getActivitiesList(1);
+    this.getActivitiesList(1);
+    
+
   },
   methods: {
     getActivitiesList(n) {
+      var that=this;
       this.post(this.apiUrl.apiActivitiesList, {
         limit: "10",
         page: "1",
@@ -63,16 +67,41 @@ export default {
       }).then(res => {
         if (res.data != "") {
           this.discountData = res.data.items;
-          this.total=this.discountData.length
+          this.total = this.discountData.length;
+          let discountData=res.data.items;
+          for(var i=0;i<discountData.length;i++){
+            console.log(discountData[i].join_able.value);
+            
+            if(discountData[i].join_able.value==0){
+              that.btnText=discountData[i].join_able.desc
+            }
+             if(discountData[i].join_able.value==1){
+             that.btnText=discountData[i].join_able.desc
+
+            }
+             if(discountData[i].join_able.value==2){
+             that.btnText=discountData[i].join_able.desc
+            }
+          }
         }
       });
     },
-    handleClick(tab, event) {
-      var n = parseInt(tab.index) + 1;
-    },
     clickTab(e) {
       this.getActivitiesList(e + 1);
-      this.active = e;
+      this.active = e;  
+      console.log(this.discountData);
+        
+    },
+    ActivitiesJoin(id, able) { 
+      console.log(able.value);
+      
+      if (able.value == 1) {
+        this.post(this.apiUrl.apiActivitiesJoin, {
+          activitie_id: id
+        }).then(res => {
+        });
+      }
+
     }
   }
 };
@@ -165,20 +194,20 @@ export default {
 .myDiscount .tabTit li {
   text-align: center;
   padding: 10px 30px 10px 30px;
-  width:12%;
-  background:#EEECE6;
+  width: 12%;
+  background: #eeece6;
 }
 .myDiscount .tabTit li.liActive {
- background:#E6CF68;
+  background: #e6cf68;
 }
 .myDiscount .tabContent {
   display: flex;
   margin-top: 15px;
-  height:574px;
-    flex-wrap: wrap
+  height: 574px;
+  flex-wrap: wrap;
 }
-.myDiscount .tabContent>div:nth-of-type(5n) .tabContentDIv {
-  margin-right:0;
+.myDiscount .tabContent > div:nth-of-type(5n) .tabContentDIv {
+  margin-right: 0;
 }
 .myDiscount .tabContentDIv {
   display: flex;
@@ -187,33 +216,49 @@ export default {
   width: 180px;
   border: 1px solid #eee;
   align-items: center;
-  margin-right:40px;
-  overflow:hidden;
-  margin-bottom:15px;
- 
+  margin-right: 40px;
+  overflow: hidden;
+  margin-bottom: 15px;
 }
 
 .myDiscount .tabContentDIv img {
   width: 100%;
   height: 130px;
 }
-.myDiscount .divTit{padding:0 10px;height:45px;overflow:hidden; background:#F6F5F2;width:100%;
-white-space:nowrap; 
-text-overflow:ellipsis; 
-box-sizing: border-box;
--o-text-overflow:ellipsis; 
-overflow: hidden;
-text-align: center;
-line-height:45px;
-border:1px solid #C6B89D; color:#836426;}
-.myDiscount .divSubTit{padding:0 5px;height:30px;background:#E3006E;width:100%;overflow: hidden;white-space:nowrap; 
-text-overflow:ellipsis; 
-box-sizing: border-box;
--o-text-overflow:ellipsis; 
-overflow: hidden;
-text-align: center;
-line-height:30px;color:#fff; }
-.myDiscount .yrBtn{margin:5px 0;}
+.myDiscount .divTit {
+  padding: 0 10px;
+  height: 45px;
+  overflow: hidden;
+  background: #f6f5f2;
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+  -o-text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: center;
+  line-height: 45px;
+  border: 1px solid #c6b89d;
+  color: #836426;
+}
+.myDiscount .divSubTit {
+  padding: 0 5px;
+  height: 30px;
+  background: #e3006e;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+  -o-text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: center;
+  line-height: 30px;
+  color: #fff;
+}
+.myDiscount .yrBtn {
+  margin: 5px 0;
+}
 </style>
 
 

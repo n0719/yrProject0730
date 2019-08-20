@@ -70,6 +70,8 @@ export default {
     };
   },
   mounted() {
+  
+    
     if (this.gameList != "") {
       for (var i = 0; i < this.gameList.length; i++) {
         if (this.gameList[i].id == this.gameId) {
@@ -110,6 +112,8 @@ export default {
       });
     },
     transferIn() {
+      console.log(1);
+      
       if (this.transferNum == "" || this.transferNum == 0) {
         this.$message.error("请输入转入数量");
       } else {

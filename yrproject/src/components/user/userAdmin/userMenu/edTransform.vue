@@ -182,7 +182,6 @@ export default {
           var listData = res.data;
           listData.shift();
           this.listData = listData;
-           console.log(this.listData);
           if (res.data.length - 1 > 8) {
             var n = Math.floor((res.data.length - 1) / 8);
             for (var i = 1; i <= n; i++) {

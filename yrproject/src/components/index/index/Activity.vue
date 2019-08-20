@@ -70,6 +70,7 @@ export default {
   methods: {
       getActivity(){
       //获取游戏列表
+      
       this.post(this.apiUrl.apiNotice, {
         limit: this.pageSize,
           page: this.noticePage,

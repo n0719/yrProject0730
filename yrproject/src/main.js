@@ -23,6 +23,15 @@ import { log } from 'util';
 import VueRouter from 'vue-router';
 Vue.prototype.getReg = getReg
 
+
+  
+
+
+Vue.directive('title', {
+  inserted: function (el, binding) {
+    document.title = el.dataset.title
+  }
+})
 // 弹框底部页面滚动问题
 //1.禁止滚动
 Vue.prototype.noScroll = function () {

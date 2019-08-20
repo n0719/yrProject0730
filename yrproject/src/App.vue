@@ -1,13 +1,14 @@
 <template>
   <div id="app">
    <keep-alive> <yr-index></yr-index></keep-alive>
+  
   </div>
 </template>
 
 <script>
 
 import Index from "@/components/index/Index";
-
+import store from "./store/index"
 export default {
   name: "App",
 
@@ -19,6 +20,8 @@ export default {
   },
 
 };
+
+
 </script>
 
 <style>
