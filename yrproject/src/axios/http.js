@@ -27,7 +27,7 @@ httpUrl.then((res) => {
 // } else if (process.env.NODE_ENV == 'production') {    
 //     axios.defaults.baseURL = 'http://api.123dailu.com/';
 // }
-axios.defaults.baseURL = 'http://m1.w20.vip/Api/';//http://a1.w20.vip/Api/
+axios.defaults.baseURL ="http://m1.w20.vip/Api/"// 'http://m1.w20.vip/Api/'http://a1.w20.vip/Api;/
 
 // 请求超时时间
 axios.defaults.timeout = 10000;

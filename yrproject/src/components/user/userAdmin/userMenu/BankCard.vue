@@ -102,7 +102,7 @@
                     <el-input v-model="ruleForm.bankBranch" aria-required placeholder="请输入开户支行"></el-input>
                   </el-form-item>
                   <el-form-item label="资金密码：" prop="moneyPassword">
-                    <el-input v-model="ruleForm.moneyPassword" aria-required placeholder="请输入资金密码"></el-input>
+                    <el-input type="password" v-model="ruleForm.moneyPassword" aria-required placeholder="请输入资金密码"></el-input>
                   </el-form-item>
                   <el-form-item class="subBtn">
                     <el-button type="default" @click="addBank(ruleForm)">提交</el-button>
@@ -127,6 +127,7 @@ export default {
     this.rules.moneyPassword[0].pattern = this.getReg.getReg(
       this.$store.state.regRule.MoneyOut.bankAccountAdd.fund_password.validation
     );
+    
   },
   data() {
     return {
@@ -243,7 +244,7 @@ export default {
       });
     },
     handleChange(value) {
-      console.log(value);
+   
     },
     selBank(value) {
       this.ruleForm.bank = value;

@@ -228,6 +228,15 @@ export default {
     this.logRules.logNewPassword[0].pattern = this.getReg.getReg(
       this.regRule.CurrUser.changePassword.password.validation
     );
+    //资金密码
+    this.moneyRules.moneyOldPassword[0].pattern = this.getReg.getReg(
+      this.regRule.CurrUser.changeFoundPassword.oldPassword.validation
+    );
+    this.moneyRules.moneyNewPassword[0].pattern = this.getReg.getReg(
+      this.regRule.CurrUser.changeFoundPassword.password.validation
+    );
+ 
+
     this.ruleForm.username = this.$store.state.infoData.username;
     this.ruleForm.nickName = this.$store.state.infoData.nickname;
     this.ruleForm.fullName = this.$store.state.infoData.real_name;
@@ -235,6 +244,7 @@ export default {
     this.ruleForm.uBirth = this.$store.state.infoData.birthday;
     this.ruleForm.avatar = this.$store.state.infoData.avatar;
     this.getCodeImg();
+  
   },
   data() {
     return {
@@ -356,6 +366,7 @@ export default {
       moneyRules: {
         moneyOldPassword: [
           {
+            required: true,
             message: "原始密码不符合格式",
             trigger: "blur"
           }
@@ -458,7 +469,7 @@ export default {
       });
     },
     getCodeImg() {
-      this.imgYZ = "http://a1.w20.vip/Api/verifyImg?" + Math.random();
+      this.imgYZ = "http://m1.w20.vip/Api/verifyImg?" + Math.random();
     },
     yzEmailClick() {
       var yz = this.ruleForm.uAddress;
@@ -561,9 +572,15 @@ export default {
             this.infoData.fund_password == 0
           ) {
             this.post(this.apiUrl.apiChangeFoundPassword, {
+              oldPassword: oldPassword,
               password: newPassword
             }).then(res => {
-              console.log(res);
+              if (res.code == 0) {
+                  this.$message("资金密码更改成功！");
+                try {
+                   this.$refs["moneyPasswordFrom"].resetFields();
+                } catch (e) {}
+              }
             });
           } else {
             this.$message("两次输入密码不一致，请重新输入");

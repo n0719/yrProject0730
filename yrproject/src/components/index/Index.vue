@@ -171,7 +171,7 @@ export default {
     getRule() {
       var that = this;
       axios
-        .post("http://a1.w20.vip/Api/ApiDoc/requestRule", {
+        .post("http://m1.w20.vip/Api/ApiDoc/requestRule", {
           versionName: "MemberAppV001"
         })
         .then(function(response) {

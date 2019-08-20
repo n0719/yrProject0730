@@ -241,11 +241,11 @@ export default {
     //获取验证码图片
     getCodeImg() {
       if (this.maskShow == 0) {
-        this.loginImgCode = "http://a1.w20.vip/Api/verifyImg?" + Math.random();
+        this.loginImgCode = "http://m1.w20.vip/Api/verifyImg?" + Math.random();
       } else if (this.maskShow == 1) {
-        this.regImgCode = "http://a1.w20.vip/Api/verifyImg?" + Math.random();
+        this.regImgCode = "http://m1.w20.vip/Api/verifyImg?" + Math.random();
       } else {
-        this.forgetImgCode = "http://a1.w20.vip/Api/verifyImg?" + Math.random();
+        this.forgetImgCode = "http://m1.w20.vip/Api/verifyImg?" + Math.random();
       }
     },
 
@@ -293,7 +293,7 @@ export default {
     },
     //登录
     login() {
-      //登录
+      //登录     
       if (
         !initReg(this.apiUrl.apiLogin, "username", this.loginCount) ||
         !initReg(this.apiUrl.apiLogin, "password", this.loginPwd)
@@ -341,7 +341,7 @@ export default {
         this.post(this.apiUrl.apiRegister, {
           username: this.regCount,
           password: this.regPwd,
-          icode: this.inviteUser,
+          // icode: this.inviteUser,
           verify: this.regCode
         }).then(response => {
           this.loading = false;

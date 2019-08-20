@@ -363,8 +363,6 @@ export default {
     moneyList() {
       this.post(this.apiUrl.apiWithdrawPre, {}).then(res => {
         this.getMoneyData = res.data;
-        console.log(this.getMoneyData);
-
         this.getMoneyData1 = res.data.moneyLogs;
         for (var i = 0; i < this.getMoneyData1.length; i++) {
           this.moneyTotal += parseInt(this.getMoneyData1[i].money);
