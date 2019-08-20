@@ -4,7 +4,7 @@
     class="gamesBox">
     <img :src="list.image" alt class="topImg" />
     <div class="container">
-      <el-row class="flex-box mg-b-20">
+      <el-row v-if="noticeList.length>0" class="flex-box mg-b-20">
         <div class="noticeTitle">
           <img src="../../../assets/index/notice.png" alt /> 传奇咨询
         </div>

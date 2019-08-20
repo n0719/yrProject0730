@@ -267,6 +267,7 @@ export default {
     },
     //关闭弹框
     closeModel() {
+      this.maskShow = 0;
       this.$store.commit("lmodelShow", false);
       this.$router.push({
         path:"/"

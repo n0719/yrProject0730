@@ -66,14 +66,15 @@
         <yr-live v-if="activeName==2?true:false" :gameId="activeName"></yr-live>
       </keep-alive>
       <keep-alive>
+        <yr-poker v-if="activeName==3?true:false" :gameId="activeName"></yr-poker>
+      </keep-alive>
+      <keep-alive>
         <yr-egames v-if="activeName==4?true:false" :gameId="activeName"></yr-egames>
       </keep-alive>
       <keep-alive>
-      <yr-exports v-if="activeName==5?true:false" :gameId="activeName"></yr-exports>
+        <yr-exports v-if="activeName==5?true:false" :gameId="activeName"></yr-exports>
       </keep-alive>
-      <keep-alive>
-      <yr-poker v-if="activeName==3?true:false"></yr-poker>
-      </keep-alive>
+
       <keep-alive>
         <yr-activity v-if="activeName=='优惠活动'?true:false"></yr-activity>
       </keep-alive>
@@ -116,7 +117,6 @@ import Egames from "@/components/index/index/Egames";
 import Exports from "@/components/index/index/Exports";
 import Poker from "@/components/index/index/Poker";
 import Activity from "@/components/index/index/Activity";
-import axios from "axios"; // 引入axios
 export default {
   computed: {
     ...mapState(["umodelShow", "lmodelShow", "refreshUser"])
@@ -153,7 +153,7 @@ export default {
           name: "在线客服"
         }
       ],
-      webLogo:''
+      webLogo: ""
     };
   },
   mounted() {
@@ -171,10 +171,9 @@ export default {
   methods: {
     getRule() {
       var that = this;
-      axios
-        .post("http://a1.w20.vip/Api/ApiDoc/requestRule", {
-          versionName: "MemberAppV001"
-        })
+      this.post(this.apiUrl.apiRequestRule, {
+        versionName: "MemberAppV001"
+      })
         .then(function(response) {
           that.$store.commit("regRule", response.data.data);
           // var data1 = response.data.data;
@@ -243,7 +242,7 @@ export default {
       //获取数据字典
       this.post(this.apiUrl.apiDataDataDictionaries).then(res => {
         var data = res.data;
-        this.$store.commit("dictionariesData", data);        
+        this.$store.commit("dictionariesData", data);
         that.webLogo = data.website.m_site_logo;
       });
     },
@@ -372,7 +371,7 @@ export default {
   width: 300px;
   font-size: 0;
 }
-.index .logo img{
+.index .logo img {
   width: 100%;
 }
 .index .el-menu.el-menu--horizontal {

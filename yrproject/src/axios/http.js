@@ -10,11 +10,14 @@ import { showLoading, hideLoading } from '../assets/loading';
 import store from '../store/index'
 import { log } from 'util';
 
+
 /*aes加密接口 返回url*/
-var httpUrl = httpInit.initHttp();
+// var httpUrl = httpInit.initHttp();
 var baseURL = 'http://m1.w20.vip/Api/';
 // httpUrl.then((res) => {
-//   baseURL = res;
+//   // baseURL = res;
+//   // console.log(res);
+  
 // }, (err) => {
 //   console.log(err)
 // })
@@ -39,7 +42,7 @@ axios.defaults.withCredentials = true;
 // 请求拦截器
 axios.interceptors.request.use(
   config => {
-    if (!config.data.versionName) {
+    if (!config.data.includes('versionName')) {
       config.headers.Accept = 'application/x.LegendAgent.MemberAppV001+json';
     }
     // 每次发送请求之前判断是否存在token，如果存在，则统一在http请求的header都加上token，不用每次请求都手动添加了
