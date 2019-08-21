@@ -31,11 +31,8 @@
                 <div class="time">{{item.created_at}}</div>
               </template>
               <div class="contentBox">
-                <div class="contentTitle text-center">
-                   {{item.title}}
-                </div>
-                <div class="content text-left">
-                  {{item.content}}
+                <div v-html="item.title" class="contentTitle text-center"></div>
+                <div v-html="item.content" class="content text-left">
                 </div>
                 <div class="text-right mg-b-10">{{item.author}}</div>
                 <div class="text-right">{{item.created_at}}</div>
