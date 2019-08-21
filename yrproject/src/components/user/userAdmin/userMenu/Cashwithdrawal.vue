@@ -246,7 +246,7 @@
 </template>
 <script>
 export default {
-    inject:["reload"],
+
   data() {
     return {
       active: -1,
