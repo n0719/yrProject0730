@@ -104,8 +104,8 @@
     cashsweepData(state,cashsweepData){
         state.cashsweepData=cashsweepData//游戏
     },
-    apiUrl(state, apiUrl) {
-        state.apiUrl = apiUrl;
+    httpUrl(state, httpUrl) {
+        state.httpUrl = httpUrl;
     },
     // lowerLevel(state,lowerLevel){
     //     state.lowerLevel =lowerLevel

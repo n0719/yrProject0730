@@ -10,10 +10,11 @@ import { showLoading, hideLoading } from '../assets/loading';
 import store from '../store/index'
 import { log } from 'util';
 
+// console.log(window.location.host);
 
 /*aes加密接口 返回url*/
 // var httpUrl = httpInit.initHttp();
-var baseURL = 'http://m1.w20.vip/Api/';
+var baseURL = window.location.host;
 // httpUrl.then((res) => {
 //   // baseURL = res;
 //   // console.log(res);
@@ -30,7 +31,7 @@ var baseURL = 'http://m1.w20.vip/Api/';
 // } else if (process.env.NODE_ENV == 'production') {    
 //     axios.defaults.baseURL = 'http://api.123dailu.com/';
 // }
-axios.defaults.baseURL = 'http://m1.w20.vip/Api/';//http://a1.w20.vip/Api/ http://m1.w20.vip/Api/
+// axios.defaults.baseURL = 'http://m1.w20.vip/Api/';//http://a1.w20.vip/Api/ http://m1.w20.vip/Api/
 
 // 请求超时时间
 axios.defaults.timeout = 10000;
