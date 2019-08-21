@@ -46,7 +46,7 @@
           <el-input v-model="accountBalance" readonly></el-input>
         </el-form-item>
         <el-form-item :label="'转入'+gameName+'：'" :label-width="formLabelWidth">
-          <el-input v-model.number="transferNum" type="number"></el-input>
+          <el-input v-model.number="transferNum" type="number" placeholder="请输入转入金额"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -82,6 +82,13 @@ export default {
       gameLineId: "",
       gameItemId: ""
     };
+  },
+  watch:{
+    dialogFormVisible(newVal, oldVal) {
+      if(oldVal){
+        this.transferNum = '';
+      }
+    },
   },
   mounted() {
     if (this.gameList != "") {
