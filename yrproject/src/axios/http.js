@@ -22,6 +22,7 @@ var baseURL = '';
 // }, (err) => {
 //   console.log(err)
 // })
+// console.log(window.location.host);
 
 // 环境的切换
 if (process.env.NODE_ENV == 'development') {    
@@ -29,9 +30,8 @@ if (process.env.NODE_ENV == 'development') {
     baseURL = process.env.API_ROOT;
 } else if (process.env.NODE_ENV == 'production') {    
     axios.defaults.baseURL = '';
-    baseURL = '';
+    baseURL = window.location.host;
 }
-// axios.defaults.baseURL = 'http://m1.w20.vip/Api/';//http://a1.w20.vip/Api/ http://m1.w20.vip/Api/
 
 // 请求超时时间
 axios.defaults.timeout = 10000;
