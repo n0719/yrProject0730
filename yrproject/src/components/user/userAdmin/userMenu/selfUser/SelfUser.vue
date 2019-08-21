@@ -21,10 +21,10 @@
                 <el-input v-model="ruleForm.username"  aria-required placeholder="3-16个字符"></el-input>
               </el-form-item>
               <el-form-item label="昵称：" prop="nickName">
-                <el-input v-model="ruleForm.nickName" placeholder="必须真实有效"></el-input>
+                <el-input v-model="ruleForm.nickName" placeholder="输入昵称"></el-input>
               </el-form-item>
-              <el-form-item label="姓名：" prop="fullName">
-                <el-input v-model="ruleForm.fullName" readonly="" placeholder="姓名必须真实有效"></el-input>
+              <el-form-item label="真实姓名：" prop="fullName">
+                <el-input v-model="ruleForm.fullName"  placeholder="姓名必须真实有效"></el-input>
               </el-form-item>
               <el-row v-if="this.$store.state.infoData.phone!=''?false:true">
                 <el-form-item label="手机：" prop="uTel">
@@ -218,7 +218,7 @@ import { baseURL } from "@/axios/http";
 import { apiUrl } from "@/axios/api";
 export default {
   computed: {
-    ...mapState(["infoData", "regRule"])
+    ...mapState(["infoData", "regRule","upass"])
   },
   mounted() {
     this.rules.uName[0].pattern = this.getReg.getReg(
@@ -273,6 +273,10 @@ export default {
     this.ruleForm.uBirth = this.$store.state.infoData.birthday;
   
     this.getCodeImg();
+  if(this.upass==true){
+    this.activeName="third";
+    this.$store.commit("upass",false)
+  }
 
   },
   data() {
@@ -621,7 +625,7 @@ export default {
         this.$refs["ruleForm"].resetFields();
       } catch (e) {}
     }
-  }
+  },
 };
 </script>
 <style >

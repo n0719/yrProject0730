@@ -136,8 +136,6 @@ export default {
     };
   },
   mounted() {
-    console.log(this.$store.state.infoData);
-    
     this.getLowerLevelData();
     let isLogin = localStorage.getItem("token");
     if (isLogin) {

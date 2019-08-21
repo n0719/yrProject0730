@@ -107,6 +107,9 @@
     apiUrl(state, apiUrl) {
         state.apiUrl = apiUrl;
     },
+    upass(state,upass){
+        state.upass=upass;
+    }
     // lowerLevel(state,lowerLevel){
     //     state.lowerLevel =lowerLevel
     // },

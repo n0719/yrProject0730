@@ -7,7 +7,7 @@
           <span></span>选择充值方式
         </el-row>
         <el-row>
-          <el-tabs v-model="activeName" class="selfTab">
+          <el-tabs v-model="activeName" class="selfTab" @tab-click="handleClick">
             <el-tab-pane label="我的银行卡" name="first">
               <div class="first">
                 <el-row class="bankTit">
@@ -30,18 +30,18 @@
                       <tr v-for="(item,index) in tableData" :key="index">
                         <td>
                           <el-checkbox v-show="checkShow1" @change="checkSel(index)"></el-checkbox>
-                          {{item.bank.desc}}
+                          {{item.bank_name}}
                         </td>
                         <td>{{item.bank_card}}</td>
                         <td>{{item.bank_address}}</td>
                       </tr>
                     </tbody>
-                   
+
                     <!-- <div v-else class="noContent"></div> -->
                   </table>
-                   <div v-if="tableData.length!=0?false:true" class="noContent">
-                      <img src="../../../../assets/noContent.png" alt />
-                    </div>
+                  <div v-if="tableData.length!=0?false:true" class="noContent">
+                    <img src="../../../../assets/noContent.png" alt />
+                  </div>
                   <el-row class="xz">
                     <el-col :span="24" class="flex-box-column" v-if="!checkShow1">
                       <img src="../../../../assets/user/xinzeng.png" @click="xzBank" alt />
@@ -70,6 +70,7 @@
                     <el-input
                       name="uName"
                       v-model="ruleForm.real_name"
+                      readonly
                       aria-required
                       placeholder="请输入真实姓名"
                     ></el-input>
@@ -102,7 +103,12 @@
                     <el-input v-model="ruleForm.bankBranch" aria-required placeholder="请输入开户支行"></el-input>
                   </el-form-item>
                   <el-form-item label="资金密码：" prop="moneyPassword">
-                    <el-input type="password" v-model="ruleForm.moneyPassword" aria-required placeholder="请输入资金密码"></el-input>
+                    <el-input
+                      type="password"
+                      v-model="ruleForm.moneyPassword"
+                      aria-required
+                      placeholder="请输入资金密码"
+                    ></el-input>
                   </el-form-item>
                   <el-form-item class="subBtn">
                     <el-button type="default" @click="addBank(ruleForm)">提交</el-button>
@@ -121,13 +127,14 @@ import cityData from "../../../../assets/country-level2-data.js";
 export default {
   mounted() {
     var aa = this.$store.state.moneyOutData;
-    var bb = this.$store.state.dictionariesData;
-    this.ruleForm.selBank = bb.table_map.member_withdraw_account.bank;
+    // var bb = this.$store.state.dictionariesData;
+    // this.ruleForm.selBank = bb.table_map.member_withdraw_account.bank;
     this.getBankList();
     this.rules.moneyPassword[0].pattern = this.getReg.getReg(
       this.$store.state.regRule.MoneyOut.bankAccountAdd.fund_password.validation
     );
-    
+
+    this.getAllBankList();
   },
   data() {
     return {
@@ -141,20 +148,21 @@ export default {
       tableData: [],
       ruleForm: {
         bank: "",
-        real_name: "",
+        real_name: this.$store.state.infoData.real_name,
         selBank: "",
         bankNum: "",
         provinces: cityData,
         city: "",
         bankBranch: "",
-        moneyPassword: ""
+        moneyPassword: "",
+        bank_name: ""
       },
       // options:[],
       rules: {
         real_name: [
           {
-            required: true,
-            pattern: /^[a-zA-Z0-9_-]{2,16}$/,
+            // required: true,
+            // pattern: /^[a-zA-Z0-9_-]{2,16}$/,
             message: "真实姓名不能少于2位"
           }
         ],
@@ -198,6 +206,13 @@ export default {
     };
   },
   methods: {
+    getAllBankList() {
+      this.post(this.apiUrl.apiBankList, {}).then(res => {
+        if ((res.code == 0) & (res.data.length != 0)) {
+          this.ruleForm.selBank = res.data;
+        }
+      });
+    },
     deleteTrr() {
       //删除按钮
       this.checkShow1 = true;
@@ -206,10 +221,33 @@ export default {
       //新增银行卡
       this.activeName = "second";
     },
-
-    hideCheck() {
+    handleClick(e) {
+      if (e.name == "second") {
+        if (this.$store.state.infoData.real_name == "") {
+          this.$confirm("系统检测当前真实姓名为空，请前往添加修改", "提示", {})
+            .then(() => {
+              this.$router.push({
+                path: "/selfUser"
+              });
+            })
+            .catch(() => {});
+        }
+        if (this.$store.state.infoData.fund_password == 1) {
+          this.$confirm("系统检测当前您未创建资金密码，请前往创建", "提示", {})
+            .then(() => {
+              this.$router.push({
+                path: "/selfUser"
+              });
+              this.$store.commit("upass", true);
+            })
+            .catch(() => {});
+        }
+      }
+    },
+    hideCheck(e) {
       //checkBox显示隐藏
       this.checkShow1 = false;
+      console.log(e);
     },
     conDelete() {},
     checkSel(e) {
@@ -227,11 +265,10 @@ export default {
             bank: this.ruleForm.bank,
             bank_real_name: this.ruleForm.real_name,
             bank_card: this.ruleForm.bankNum,
+            bank_name: this.ruleForm.bank_name,
             bank_address: address,
             fund_password: this.ruleForm.moneyPassword
-          }).then(res => {
-            console.log(res);
-          });
+          }).then(res => {});
         }
       });
     },
@@ -243,12 +280,15 @@ export default {
         }
       });
     },
-    handleChange(value) {
-   
-    },
-    selBank(value) {
-      this.ruleForm.bank = value;
-      console.log(value);
+    handleChange(value) {},
+    selBank(id, type) {
+      this.ruleForm.bank = id;
+      let selectedWorkName = {};
+      selectedWorkName = this.ruleForm.selBank.find(item => {
+        //这里的chargingWorkNameList就是上面遍历的数据源
+        return item.id === id;
+      });
+      this.ruleForm.bank_name = selectedWorkName;
     }
   }
 };

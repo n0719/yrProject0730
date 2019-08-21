@@ -310,6 +310,8 @@ export default {
   mounted() {
     this.moneyList();
     this.getRecordList();
+ 
+    
     // this.getBank();
   },
   methods: {
@@ -381,6 +383,9 @@ export default {
     },
     handleClick() {},
     conSubmit() {
+      if(this.$store.state.infoData.fund_password==0){
+        
+      }
       let fund_password = this.cashForm.fund_password;
       let info = this.cashForm.indo;
       let money = this.cashForm.money;
