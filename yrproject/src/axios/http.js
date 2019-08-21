@@ -10,11 +10,11 @@ import { showLoading, hideLoading } from '../assets/loading';
 import store from '../store/index'
 import { log } from 'util';
 
-// console.log(window.location.host);
+
 
 /*aes加密接口 返回url*/
 // var httpUrl = httpInit.initHttp();
-var baseURL = window.location.host;
+var baseURL = '';
 // httpUrl.then((res) => {
 //   // baseURL = res;
 //   // console.log(res);
@@ -24,13 +24,13 @@ var baseURL = window.location.host;
 // })
 
 // 环境的切换
-// if (process.env.NODE_ENV == 'development') {    
-//     axios.defaults.baseURL = '/api';
-// } else if (process.env.NODE_ENV == 'debug') {    
-//     axios.defaults.baseURL = '';
-// } else if (process.env.NODE_ENV == 'production') {    
-//     axios.defaults.baseURL = 'http://api.123dailu.com/';
-// }
+if (process.env.NODE_ENV == 'development') {    
+    axios.defaults.baseURL = process.env.API_ROOT;
+    baseURL = process.env.API_ROOT;
+} else if (process.env.NODE_ENV == 'production') {    
+    axios.defaults.baseURL = '';
+    baseURL = '';
+}
 // axios.defaults.baseURL = 'http://m1.w20.vip/Api/';//http://a1.w20.vip/Api/ http://m1.w20.vip/Api/
 
 // 请求超时时间
