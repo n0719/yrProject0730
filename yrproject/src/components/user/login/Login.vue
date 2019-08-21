@@ -255,9 +255,11 @@ export default {
       }
       this.loginCount = "";
       this.loginPwd = "";
+      this.loginCode = "";
       this.regCount = "";
       this.regPwd = "";
       this.regRepeatPwd = "";
+      this.regCode = "";
       this.checkedDeal = false;
       this.forgetPhone = "";
       this.forgetCode = "";
@@ -267,6 +269,18 @@ export default {
     //关闭弹框
     closeModel() {
       this.maskShow = 0;
+      this.loginCount = "";
+      this.loginPwd = "";
+      this.loginCode = "";
+      this.regCount = "";
+      this.regPwd = "";
+      this.regRepeatPwd = "";
+      this.regCode = "";
+      this.checkedDeal = false;
+      this.forgetPhone = "";
+      this.forgetCode = "";
+      this.newPwd = "";
+      this.newRepeatPwd = "";
       this.$store.commit("lmodelShow", false);
       this.$router.push({
         path:"/"
