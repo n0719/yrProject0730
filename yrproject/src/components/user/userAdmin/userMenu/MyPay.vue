@@ -174,17 +174,17 @@ export default {
   height: 100%;
 }
 .myPay .el-date-editor.el-input,
-.el-date-editor.el-input__inner {
+.myPay .el-date-editor.el-input__inner {
   width: 140px;
 }
-.contentMain {
+.myPay .contentMain {
   padding: 20px;
   /* display: flex;
   flex-direction: column; */
   height: 100%;
   /* box-sizing: border-box; */
 }
-.contentMain .container {
+.myPay .contentMain .container {
   width: 100%;
 }
 .myPay .contentMainTop {
