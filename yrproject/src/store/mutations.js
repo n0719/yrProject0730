@@ -107,6 +107,9 @@
     httpUrl(state, httpUrl) {
         state.httpUrl = httpUrl;
     },
+    upass(state,upass){
+        state.upass=upass;
+    }
     // lowerLevel(state,lowerLevel){
     //     state.lowerLevel =lowerLevel
     // },

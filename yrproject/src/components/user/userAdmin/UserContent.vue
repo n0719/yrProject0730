@@ -9,18 +9,21 @@
 </template>
 <script>
 export default {
-  name: "userContent",
-  // provide() {
-  //   return {
-  //     reload: this.reload
-  //   }
-  // },
-  data() {
+  provide() {
     return {
-      //  isRouterAlive:true
+
     };
   },
-  mounted() {}
+  name: "userContent",
+  data() {
+    return {
+   
+    };
+  },
+  mounted() {},
+  methods: {
+ 
+  }
 };
 </script>
 <style >

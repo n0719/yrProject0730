@@ -152,6 +152,7 @@
             </el-row>
             <el-row class="moneyBtn">
               <el-button class="yrBtn" @click="continueNoney">继续出款</el-button>
+
               <el-button class @click="resertNoney">放弃</el-button>
             </el-row>
           </el-row>
@@ -245,6 +246,7 @@
 </template>
 <script>
 export default {
+    inject:["reload"],
   data() {
     return {
       active: -1,
@@ -310,9 +312,12 @@ export default {
   mounted() {
     this.moneyList();
     this.getRecordList();
+ 
+    
     // this.getBank();
   },
   methods: {
+
     getMoney() {
       if (this.$store.state.infoData.money > 100) {
         this.moneyState = false;
@@ -381,6 +386,9 @@ export default {
     },
     handleClick() {},
     conSubmit() {
+      if(this.$store.state.infoData.fund_password==0){
+        
+      }
       let fund_password = this.cashForm.fund_password;
       let info = this.cashForm.indo;
       let money = this.cashForm.money;

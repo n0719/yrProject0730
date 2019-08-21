@@ -14,13 +14,14 @@
               </el-header>
               <el-main>
                 <user-content>
-                   <keep-alive> <router-view></router-view></keep-alive>
+                  <keep-alive>
+                    <!-- <router-view v-if="isRouterAlive"></router-view> -->
+                  </keep-alive>
                 </user-content>
               </el-main>
             </el-container>
           </el-container>
         </transition>
-  
       </div>
     </div>
   </div>
@@ -32,6 +33,7 @@ import UserLeft from "@/components/user/userAdmin/UserLeft";
 import UserContent from "@/components/user/userAdmin/UserContent";
 
 export default {
+
   computed: {
     ...mapState(["modelShow"])
   },
@@ -41,14 +43,15 @@ export default {
       winWidth: document.documentElement.clientWidth,
       aaa: "1465px",
       bbb: "75%",
-      ccc: "90%"
+      ccc: "90%",
+    
     };
   },
 
-  mounted() {
-    
+  mounted() {},
+  methods: {
+
   },
-  methods: {},
   components: {
     UserHeader,
     UserLeft,

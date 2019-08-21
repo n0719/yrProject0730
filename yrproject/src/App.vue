@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-   <keep-alive> <yr-index></yr-index></keep-alive>
+   <keep-alive> <yr-index ></yr-index></keep-alive>
   
   </div>
 </template>
@@ -15,10 +15,12 @@ export default {
   components: { yrIndex: Index },
   data() {
     return {
- 
+       
     };
   },
-
+   methods:{
+  
+   }
 };
 
 
