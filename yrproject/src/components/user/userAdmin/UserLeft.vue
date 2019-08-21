@@ -200,8 +200,8 @@ export default {
           this.$store.commit("changeUname", "网站公告");
           break;
         case (id = 10):
-          this.$router.push({ path: "/returnHome" });
-          this.$store.commit("changeUname", "返回首页");
+          // this.$router.push({ path: "/returnHome" });
+          this.$store.commit("umodelShow", false);
           break;
 
         default:

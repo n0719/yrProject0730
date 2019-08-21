@@ -22,7 +22,7 @@ export default {
     };
   },
   mounted() {
-    console.log(this.$store.state.infoData);
+
     
     // this.qrcode = ;
     // this.invite_url = ;

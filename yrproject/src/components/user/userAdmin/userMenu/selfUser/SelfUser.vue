@@ -40,7 +40,8 @@
               <el-form-item label="手机：" prop="uTel" v-else>
                 <el-input v-model="ruleForm.uTel" readonly="" placeholder="输入正确的手机号码"></el-input>
               </el-form-item>
-              <div class="phoneModel" v-if="phoneModel">
+             <transition name="fade">
+                 <div class="phoneModel" v-if="phoneModel">
                 <div class="modelBox">
                   <el-form ref="ruleForm" :model="ruleForm" label-width="100px" :rules="rules">
                     <el-form-item>
@@ -82,6 +83,7 @@
                   </el-form>
                 </div>
               </div>
+             </transition>
 
               <!-- <el-form-item label="邮箱：" required prop="uAddress">
                 <el-input v-model="ruleForm.uAddress" placeholder="输入合法的邮箱地址"></el-input>
@@ -632,7 +634,7 @@ export default {
   margin-top: -220px;
   left: 50%;
   margin-left: -110px;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(43,54,67,0.8);
   border-radius: 8px;
   z-index: 100;
 }

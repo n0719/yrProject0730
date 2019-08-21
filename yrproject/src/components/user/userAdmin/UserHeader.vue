@@ -2,7 +2,7 @@
   <div class="userHeader">
     <div class="headerLeft">
       <el-breadcrumb separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item>首页</el-breadcrumb-item>
+        <el-breadcrumb-item ><span @click="returnHome">首页</span></el-breadcrumb-item>
         <el-breadcrumb-item>会员中心</el-breadcrumb-item>
         <el-breadcrumb-item>{{this.urlName}}</el-breadcrumb-item>
       </el-breadcrumb>
@@ -25,7 +25,11 @@ export default {
        this.$router.push({
         path:"/"
       })
-    }
+    },
+ returnHome(){
+  this.$router.push({path:"/"});
+  this.$store.commit("umodelShow",false);
+ }
   },
 
   mounted() {}
@@ -64,6 +68,7 @@ export default {
 .userHeader .el-breadcrumb__item:last-child .el-breadcrumb__inner:hover {
   color: #fff;
 }
+.userHeader .el-breadcrumb__inner span{color:#e6cf68!important;}
 </style>
 
 
