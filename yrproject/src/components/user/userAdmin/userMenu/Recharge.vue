@@ -321,8 +321,10 @@ export default {
       this.post(this.apiUrl.apiPayments, {}).then(res => {
      
           this.banks = res.data.banks;
+          
+          
           this.third_pay = res.data.third_pay;
-
+           console.log( this.third_pay);
           this.qr_code = res.data.qr_code;
 
           if (this.qr_code.length != 0) {
