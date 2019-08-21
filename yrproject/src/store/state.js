@@ -68,7 +68,7 @@ export default {
     lineList:{},//单线路游戏列表
     bankList:[],
     cashsweepData:[],
-    apiUrl:'',
+    httpUrl:'',
     upass:false
     // lowerLevel:{}//下级管理
 

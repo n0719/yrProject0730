@@ -48,7 +48,7 @@ var initHttp =function() {
                 var api = paramsDecrypt.data.api[0];//域名     
                 // console.log(api);
                 apiUrl = paramsDecrypt.data.api[0];//域名    
-                store.commit("apiUrl", apiUrl);
+                store.commit("httpUrl", apiUrl);
                 // console.log(apiUrl);
                 resolve(apiUrl);
             }).catch(function (error) {
