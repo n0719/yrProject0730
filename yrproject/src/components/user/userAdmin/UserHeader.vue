@@ -2,7 +2,9 @@
   <div class="userHeader">
     <div class="headerLeft">
       <el-breadcrumb separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item ><span @click="returnHome">首页</span></el-breadcrumb-item>
+        <el-breadcrumb-item>
+          <span @click="returnHome">首页</span>
+        </el-breadcrumb-item>
         <el-breadcrumb-item>会员中心</el-breadcrumb-item>
         <el-breadcrumb-item>{{this.urlName}}</el-breadcrumb-item>
       </el-breadcrumb>
@@ -21,22 +23,25 @@ export default {
   name: "userHeader",
   methods: {
     closeModel() {
+      this.$router.push({
+        path: "/"
+      });
       this.$store.commit("umodelShow", false);
-       this.$router.push({
-        path:"/"
-      })
     },
- returnHome(){
-  this.$router.push({path:"/"});
-  this.$store.commit("umodelShow",false);
- }
+    returnHome() {
+      this.$router.push({ path: "/" });
+      this.$store.commit("umodelShow", false);
+    }
   },
 
   mounted() {}
 };
 </script>
 <style>
-.el-header{padding:0;height:50px!important;}
+.el-header {
+  padding: 0;
+  height: 50px !important;
+}
 .userHeader {
   background: #2b3643;
   height: 50px;
@@ -44,7 +49,8 @@ export default {
   color: #836426;
   display: flex;
   justify-content: space-between;
-  padding: 0 30px;box-sizing: border-box;
+  padding: 0 30px;
+  box-sizing: border-box;
 }
 .userHeader .headerLeft span {
   letter-spacing: 0.8px;
@@ -68,7 +74,9 @@ export default {
 .userHeader .el-breadcrumb__item:last-child .el-breadcrumb__inner:hover {
   color: #fff;
 }
-.userHeader .el-breadcrumb__inner span{color:#e6cf68!important;}
+.userHeader .el-breadcrumb__inner span {
+  color: #e6cf68 !important;
+}
 </style>
 
 

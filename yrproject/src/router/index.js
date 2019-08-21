@@ -39,13 +39,7 @@ export default new Router({
         indexView: Main
       }
     },
-    {
-      path:"/",
-      name:"index",
-      components: {
-        indexView1: Index,
-      }
-    },
+ 
     {
       path: '/service',
       name: "service",

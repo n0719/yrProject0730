@@ -194,9 +194,7 @@ export default {
       this.$router.push({
         path: "/myPay"
       });
-     
       this.$store.commit("umodelShow", true);
-
       this.userShow = !this.userShow;
       this.loginSHow = false;
       this.noScroll();
