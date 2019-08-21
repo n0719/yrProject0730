@@ -33,6 +33,7 @@ if (process.env.NODE_ENV == 'development') {
     baseURL = window.location.host;
 }
 
+
 // 请求超时时间
 axios.defaults.timeout = 10000;
 
