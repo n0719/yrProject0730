@@ -1,7 +1,7 @@
 <template>
   <div class="userContent">
     <keep-alive>
-      <router-view name="abc" v-if="isRouterAlive"></router-view>
+      <router-view name="abc"></router-view>
     </keep-alive>
 
     <!-- <router-view v-if="isRouterAlive" name="Recharge"></router-view> -->
@@ -11,23 +11,18 @@
 export default {
   provide() {
     return {
-      reload: this.reload
+
     };
   },
   name: "userContent",
   data() {
     return {
-      isRouterAlive: true
+   
     };
   },
   mounted() {},
   methods: {
-    reload() {
-      this.isRouterAlive = false;
-      this.$nextTick(function() {
-        this.isRouterAlive = true;
-      });
-    }
+ 
   }
 };
 </script>

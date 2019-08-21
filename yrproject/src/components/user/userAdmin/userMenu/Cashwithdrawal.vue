@@ -152,7 +152,7 @@
             </el-row>
             <el-row class="moneyBtn">
               <el-button class="yrBtn" @click="continueNoney">继续出款</el-button>
-              <el-button @click="ref">刷新</el-button>
+
               <el-button class @click="resertNoney">放弃</el-button>
             </el-row>
           </el-row>
@@ -317,11 +317,7 @@ export default {
     // this.getBank();
   },
   methods: {
-    ref(){
-      this.reload();
 
-      
-    },
     getMoney() {
       if (this.$store.state.infoData.money > 100) {
         this.moneyState = false;
