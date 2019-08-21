@@ -102,7 +102,7 @@ export default {
     }
   },
   methods: {
-    getGeme() {
+    getGeme(types) {
       var that = this;
       var params = {
         game_line_id: this.gameLineId
@@ -115,7 +115,8 @@ export default {
           if (!that.change) {
             this.lineList = response.data;
           }
-          this.itemList = response.data[0];
+          types = types?types:0;
+          this.itemList = response.data[types];
         } else {
           this.lineList = [];
           this.itemList = [];
@@ -126,7 +127,7 @@ export default {
       this.change = true;
       this.cur = index;
       this.gameTypeId = gid;
-      this.getGeme();
+      this.getGeme(index);
     },
     noticeDetail() {
       this.$store.commit("umodelShow", true);

@@ -152,9 +152,9 @@ export default {
   margin-top: 30px;
   margin-bottom: 20px;
 }
-.moneyDealing .timeLabel {
+/* .moneyDealing .timeLabel {
   margin-left: 78px;
-}
+} */
 .moneyDealing .el-date-editor.datePicker.el-input {
   width: 200px;
 }
