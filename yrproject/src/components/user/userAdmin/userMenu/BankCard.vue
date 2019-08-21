@@ -58,6 +58,7 @@
                         <span>确认删除</span>
                       </p>
                     </el-col>
+          
                   </el-row>
                 </el-row>
               </div>
@@ -136,6 +137,7 @@ export default {
 
     this.getAllBankList();
   },
+
   data() {
     return {
       tableDataState: true,
@@ -213,6 +215,7 @@ export default {
         }
       });
     },
+
     deleteTrr() {
       //删除按钮
       this.checkShow1 = true;

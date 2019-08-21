@@ -488,6 +488,7 @@ export default {
   border: 1px solid #ddd;
   position: absolute;
   right: 0;
+  top:0;
 }
 .login .input-row label {
   margin-left: 15px;
