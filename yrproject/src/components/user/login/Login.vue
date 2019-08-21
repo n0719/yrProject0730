@@ -193,7 +193,6 @@
 import { initReg } from "@/axios/regRule"; // 验证方法
 import { Message } from "element-ui";
 import { baseURL } from "@/axios/http"; 
-import { apiUrl } from "@/axios/api"; 
 export default {
   data() {
     return {
@@ -240,11 +239,11 @@ export default {
     //获取验证码图片
     getCodeImg() {
       if (this.maskShow == 0) {
-        this.loginImgCode = baseURL+apiUrl.apiVerifyImg+"?" + Math.random();
+        this.loginImgCode = baseURL+this.apiUrl.apiVerifyImg+"?" + Math.random();
       } else if (this.maskShow == 1) {
-        this.regImgCode = baseURL+apiUrl.apiVerifyImg+"?" + Math.random();
+        this.regImgCode = baseURL+this.apiUrl.apiVerifyImg+"?" + Math.random();
       } else {
-        this.forgetImgCode = baseURL+apiUrl.apiVerifyImg+"?" + Math.random();
+        this.forgetImgCode = baseURL+this.apiUrl.apiVerifyImg+"?" + Math.random();
       }
     },
 
@@ -357,7 +356,7 @@ export default {
     },
     //忘记密码 验证账号
     forgetAccount() {
-      if (initReg(apiUrl.apiVerAccount, "username", this.forgetName)) {
+      if (initReg(this.apiUrl.apiVerAccount, "username", this.forgetName)) {
         this.loading = true;
         this.post(this.apiUrl.apiVerAccount, {
           username: this.forgetName
@@ -406,11 +405,11 @@ export default {
     //忘记密码
     forgetPwd() {
       if (
-        !initReg(apiUrl.apiRetrievePassword, "username", this.forgetName) ||
-        !initReg(apiUrl.apiRetrievePassword, "code", this.forgetCode) ||
-        !initReg(apiUrl.apiRetrievePassword, "password", this.newPwd) ||
+        !initReg(this.apiUrl.apiRetrievePassword, "username", this.forgetName) ||
+        !initReg(this.apiUrl.apiRetrievePassword, "code", this.forgetCode) ||
+        !initReg(this.apiUrl.apiRetrievePassword, "password", this.newPwd) ||
         !initReg(
-          apiUrl.apiRetrievePassword,
+          this.apiUrl.apiRetrievePassword,
           "confirm_password",
           this.newRepeatPwd
         )

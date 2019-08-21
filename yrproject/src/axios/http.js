@@ -26,11 +26,11 @@ var baseURL = '';
 
 // 环境的切换
 if (process.env.NODE_ENV == 'development') {    
-    axios.defaults.baseURL = process.env.API_ROOT;
-    baseURL = process.env.API_ROOT;
+    axios.defaults.baseURL = process.env.API_ROOT + '/Api/';
+    baseURL = axios.defaults.baseURL;
 } else if (process.env.NODE_ENV == 'production') {    
-    axios.defaults.baseURL = '';
-    baseURL = window.location.host;
+    axios.defaults.baseURL = '' + 'Api/';
+    baseURL = axios.defaults.baseURL;
 }
 
 
